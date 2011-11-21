@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "pl"
+	},
+	"lang": {
+		"message": "pl-PL"
+	},
+	"components_0": {
+		"message": "Zaufanie"
+	},
+	"components_1": {
+		"message": "Wiarygodność operatora"
+	},
+	"components_2": {
+		"message": "Prywatność"
+	},
+	"components_4": {
+		"message": "Bezpieczeństwo dzieci"
+	},
+	"components__short_0": {
+		"message": "Zaufanie"
+	},
+	"components__short_1": {
+		"message": "Wiarygodność"
+	},
+	"components__short_2": {
+		"message": "Prywatność"
+	},
+	"components__short_4": {
+		"message": "Bezpiecz. dzieci"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Bardzo zła"
+	},
+	"reputationlevels_r2": {
+		"message": "Zła"
+	},
+	"reputationlevels_r3": {
+		"message": "Słaba"
+	},
+	"reputationlevels_r4": {
+		"message": "Dobra"
+	},
+	"reputationlevels_r5": {
+		"message": "Doskonała"
+	},
+	"messages_initializing": {
+		"message": "Trwa inicjowanie dodatku WOT…"
+	},
+	"messages_notready": {
+		"message": "Trwa włączanie WOT…"
+	},
+	"messages_failed": {
+		"message": "Wczytywanie ocen nie powiodło się."
+	},
+	"messages_notavailable": {
+		"message": "Brak ocen."
+	},
+	"messages_loading": {
+		"message": "Trwa ładowanie ocen…"
+	},
+	"ratingwindow_settings": {
+		"message": "Ustawienia"
+	},
+	"ratingwindow_guide": {
+		"message": "Przewodnik"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Ocena WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Moja ocena"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Szczegółowe oceny są na karcie wyników."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Dodaj komentarz."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "We współpracy z"
+	},
+	"ratingwindow_newversion": {
+		"message": "Dostępna jest nowa wersja – kliknij, aby zaktualizować"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Czy chcesz dodać komentarz?"
+	},
+	"warnings_information": {
+		"message": "Pokaż szczegóły ocen i komentarze"
+	},
+	"warnings_ratesite": {
+		"message": "Ta witryna jest bezpieczna - chcę ją ocenić"
+	},
+	"warnings_gotosite": {
+		"message": "Zignoruj ostrzeżenie i przejdź do witryny"
+	},
+	"warnings_reputation": {
+		"message": "Ta witryna ma złą reputację."
+	},
+	"warnings_rating": {
+		"message": "Ostrzeżenie zostało wyświetlone, ponieważ<br/>ta witryna dostała od Ciebie złą ocenę."
+	},
+	"warnings_unknown": {
+		"message": "Ocena tej witryny jest nieznana."
+	}
+}

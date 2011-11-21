@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "pt_BR"
+	},
+	"lang": {
+		"message": "pt-BR"
+	},
+	"components_0": {
+		"message": "Fidedignidade"
+	},
+	"components_1": {
+		"message": "Confiabilidade do fornecedor"
+	},
+	"components_2": {
+		"message": "Privacidade"
+	},
+	"components_4": {
+		"message": "Segurança para crianças"
+	},
+	"components__short_0": {
+		"message": "Fidedignidade"
+	},
+	"components__short_1": {
+		"message": "Confiabilidade"
+	},
+	"components__short_2": {
+		"message": "Privacidade"
+	},
+	"components__short_4": {
+		"message": "Segur. p/ crianças"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Péssima"
+	},
+	"reputationlevels_r2": {
+		"message": "Má"
+	},
+	"reputationlevels_r3": {
+		"message": "Insatisfatória"
+	},
+	"reputationlevels_r4": {
+		"message": "Boa"
+	},
+	"reputationlevels_r5": {
+		"message": "Excelente"
+	},
+	"messages_initializing": {
+		"message": "Inicializando a WOT…"
+	},
+	"messages_notready": {
+		"message": "Ativando o software da WOT…"
+	},
+	"messages_failed": {
+		"message": "Falha em carregar classificações."
+	},
+	"messages_notavailable": {
+		"message": "As classificações não estão disponíveis."
+	},
+	"messages_loading": {
+		"message": "Carregando classificações…"
+	},
+	"ratingwindow_settings": {
+		"message": "Configurações"
+	},
+	"ratingwindow_guide": {
+		"message": "Guia"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Classificação WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Minha classificação"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Ver indicador de detalhes de classificação."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Adicionar seu comentário."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "Em parceria com"
+	},
+	"ratingwindow_newversion": {
+		"message": "Nova versão disponível – clique para atualizar"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Deixar um comentário?"
+	},
+	"warnings_information": {
+		"message": "Exibir detalhes de classificação e comentários"
+	},
+	"warnings_ratesite": {
+		"message": "Este site é seguro - quero classificá-lo"
+	},
+	"warnings_gotosite": {
+		"message": "Ignorar aviso e ir ao site"
+	},
+	"warnings_reputation": {
+		"message": "Este site tem má reputação."
+	},
+	"warnings_rating": {
+		"message": "Você deu a este site uma classificação<br/>ruim, o que gerou um aviso."
+	},
+	"warnings_unknown": {
+		"message": "Este site tem classificação desconhecida."
+	}
+}

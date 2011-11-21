@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "zh_TW"
+	},
+	"lang": {
+		"message": "zh-TW"
+	},
+	"components_0": {
+		"message": "可靠性"
+	},
+	"components_1": {
+		"message": "供應者可信賴性"
+	},
+	"components_2": {
+		"message": "隱私性"
+	},
+	"components_4": {
+		"message": "兒童安全"
+	},
+	"components__short_0": {
+		"message": "可靠性"
+	},
+	"components__short_1": {
+		"message": "供應者可信賴性"
+	},
+	"components__short_2": {
+		"message": "隱私性"
+	},
+	"components__short_4": {
+		"message": "兒童安全"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "非常差"
+	},
+	"reputationlevels_r2": {
+		"message": "不佳"
+	},
+	"reputationlevels_r3": {
+		"message": "不符要求"
+	},
+	"reputationlevels_r4": {
+		"message": "佳"
+	},
+	"reputationlevels_r5": {
+		"message": "極佳"
+	},
+	"messages_initializing": {
+		"message": "初始化 WOT…"
+	},
+	"messages_notready": {
+		"message": "WOT 啟動中…"
+	},
+	"messages_failed": {
+		"message": "評等載入失敗；立刻重試。"
+	},
+	"messages_notavailable": {
+		"message": "無法提供評等。"
+	},
+	"messages_loading": {
+		"message": "評等載入中…"
+	},
+	"ratingwindow_settings": {
+		"message": "設定"
+	},
+	"ratingwindow_guide": {
+		"message": "指南"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT 評等"
+	},
+	"ratingwindow_myrating": {
+		"message": "我的評等"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "檢視評等詳細內容計分表。"
+	},
+	"ratingwindow_addcomment": {
+		"message": "加入您的評語。"
+	},
+	"ratingwindow_inpartnership": {
+		"message": "In partnership with"
+	},
+	"ratingwindow_newversion": {
+		"message": "有新版本可供下載 -- 按一下進行更新"
+	},
+	"ratingwindow_helptext": {
+		"message": "您的評等不一致。"
+	},
+	"ratingwindow_helplink": {
+		"message": "要留下評語嗎？"
+	},
+	"warnings_information": {
+		"message": "檢視評等詳細內容與評語"
+	},
+	"warnings_ratesite": {
+		"message": "這個網站是安全的 - 我要評等"
+	},
+	"warnings_gotosite": {
+		"message": "忽略警告，前往網站"
+	},
+	"warnings_reputation": {
+		"message": "這個網站聲譽不佳。"
+	},
+	"warnings_rating": {
+		"message": "您給了這個網站會觸動警告的不佳評等。"
+	},
+	"warnings_unknown": {
+		"message": "這個網站的評等不詳。"
+	}
+}

@@ -1,0 +1,670 @@
+/*
+	ratingwindow.css
+	Copyright © 2009  WOT Services Oy <info@mywot.com>
+
+	This file is part of WOT.
+
+	WOT is free software: you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	WOT is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+	License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with WOT. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+body {
+	overflow: hidden;
+}
+#wot-ratingwindow {
+	display: block;
+}
+#wot-elements {
+	background: #ffffff;
+	display: block;
+	font-family: Tahoma, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	width: 316px;
+}
+
+/* header */
+#wot-header {
+	border-bottom: 1px solid #cacaca;
+	display: block;
+	height: 25px;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-top: 2px;
+	width: 312px;
+}
+#wot-header-logo {
+	background: url("fusion/logo.png") top left no-repeat;
+	cursor: pointer;
+	display: block;
+	float: left;
+	height: 17px;
+	margin-bottom: 6px;
+	margin-left: 1px;
+	margin-top: 2px;
+	width: 42px;
+}
+#wot-header-logo.accessible {
+	background: url("fusion/accessible/logo.png") top left no-repeat;
+}
+#wot-header-links {
+	display: block;
+	float: left;
+	margin-top: 1px;
+	padding-right: 10px;
+	text-align: bottom;
+	width: 242px;
+}
+.wot-header-link,
+#wot-header-link-separator {
+	color: #8f8f8f;
+	display: table-cell;
+	float: right;
+	font-size: 11px;
+	height: 16px;
+	line-height: 16px;
+}
+.wot-header-link {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+#wot-header-link-separator {
+	border-right: 1px solid #8f8f8f;
+	height: 11px;
+	margin-bottom: 9px;
+	margin-left: 0px;
+	margin-right: 4px;
+	margin-top: 4px;
+}
+.wot-header-link:hover {
+	color: #3073c5;
+	cursor: pointer;
+}
+.wot-header-link.accessible:hover {
+	color: #333;
+	text-decoration: underline;
+}
+#wot-header-button {
+	background: url("fusion/close.png") top left no-repeat;
+	display: block;
+	float: left;
+	height: 16px;
+	margin-top: 2px;
+	width: 16px;
+}
+#wot-header-button:hover {
+	background: url("fusion/close-hover.png") top left no-repeat;
+	cursor: pointer;
+}
+#wot-header-button:active {
+	background: url("fusion/close-active.png") top left no-repeat;
+}
+#wot-header-button.accessible {
+	background: url("fusion/accessible/close.png") top left no-repeat;
+}
+#wot-header-button.accessible:hover {
+	background: url("fusion/accessible/close-hover.png") top left no-repeat;
+	cursor: pointer;
+}
+#wot-header-button.accessible:active {
+	background: url("fusion/accessible/close-active.png") top left no-repeat;
+}
+
+/* title */
+#wot-title {
+	border-bottom: 1px solid #cacaca;
+	display: block;
+	height: 21px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding-top: 4px;
+	width: 312px;
+}
+#wot-title-text {
+	color: #777676;
+	display: table-cell;
+	font-size: 11px;
+	font-weight: bold;
+	height: 15px;
+	margin-left: 0px;
+	margin-right: 0px;
+	overflow: hidden;
+	padding-left: 3px;
+	vertical-align: middle;
+	width: 312px;
+}
+#wot-ratingwindow[status="disabled"] #wot-title-text:hover {
+	color: #3073c5;
+	cursor: pointer;
+}
+#wot-ratingwindow[status="disabled"] #wot-title-text.accessible:hover {
+	color: #333;
+	text-decoration: underline;
+}
+#wot-title-text[status="information"] {
+	color: #4e4e4e;
+}
+
+/* rating header */
+#wot-rating-header {
+	color: #878787;
+	display: block;
+	font-size: 11px;
+	height: 17px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding-left: 0px;
+	padding-top: 2px;
+	width: 312px;
+}
+#wot-rating-header-wot {
+	display: block;
+	float: left;
+	margin-left: 5px;
+	margin-right: 0px;
+	width: 112px;
+}
+#wot-rating-header-my {
+	display: block;
+	float: left;
+	margin-left: 3px;
+	margin-right: 0px;
+	width: 176px;
+}
+
+/* rating */
+.wot-rating-border {
+	border-top: 1px solid #f4f4f4;
+	display: block;
+	height: 1px;
+	margin-left: 2px;
+	margin-right: 2px;
+	width: 312px;
+}
+.wot-rating {
+	display: block;
+	height: 51px;
+	margin-left: 2px;
+	margin-right: 0px;
+	width: 318px;
+}
+.wot-rating-header {
+	color: #878787;
+	display: block;
+	font-size: 12px;
+	line-height: 12px;
+	margin-bottom: 1px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 7px;
+	padding-left: 3px;
+	padding-right: 0px;
+	width: 312px;
+}
+.wot-rating-data {
+	display: block;
+}
+.wot-rating-reputation {
+	background: url("fusion/28_28/default.png") top left no-repeat;
+	display: block;
+	float: left;
+	height: 28px;
+	margin-left: 4px;
+	margin-top: 2px;
+	width: 28px;
+}
+.wot-rating-reputation[reputation="rx"] {
+	background: url("fusion/28_28/rx.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r0"] {
+	background: url("fusion/28_28/r0.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r1"] {
+	background: url("fusion/28_28/r1.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r2"] {
+	background: url("fusion/28_28/r2.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r3"] {
+	background: url("fusion/28_28/r3.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r4"] {
+	background: url("fusion/28_28/r4.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r5"] {
+	background: url("fusion/28_28/r5.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible {
+	background: url("fusion/accessible/28_28/default.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r0"] {
+	background: url("fusion/accessible/28_28/r0.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="rx"] {
+	background: url("fusion/28_28/rx.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r1"] {
+	background: url("fusion/accessible/28_28/r1.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r2"] {
+	background: url("fusion/accessible/28_28/r2.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r3"] {
+	background: url("fusion/accessible/28_28/r3.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r4"] {
+	background: url("fusion/accessible/28_28/r4.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r5"] {
+	background: url("fusion/accessible/28_28/r5.png") top left no-repeat;
+}
+.wot-rating-confidence {
+	background: url("fusion/confidence-0.png") top left no-repeat;
+	display: block;
+	float: left;
+	height: 18px;
+	margin-left: 12px;
+	margin-top: 6px;
+	width: 51px;
+}
+.wot-rating-confidence[confidence="c1"] {
+	background: url("fusion/confidence-1.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c2"] {
+	background: url("fusion/confidence-2.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c3"] {
+	background: url("fusion/confidence-3.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c4"] {
+	background: url("fusion/confidence-4.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c5"] {
+	background: url("fusion/confidence-5.png") top left no-repeat;
+}
+.wot-rating-testimony {
+	display: block;
+	float: left;
+	height: 16px;
+	margin-left: 0px;
+	margin-top: 5px;
+}
+.wot-rating-stack {
+	display: block;
+	height: 17px;
+	padding-left: 22px;
+	width: 201px;
+}
+.wot-rating-slider {
+	background: url("fusion/slider.png") top left no-repeat;
+	display: block;
+	height: 16px;
+	margin-top: 3px;
+	width: 194px;
+}
+.wot-rating-stack.testimony .wot-rating-slider {
+	background: url("fusion/slider-active.png") top left no-repeat;
+	cursor: pointer;
+}
+.wot-rating-stack:hover .wot-rating-slider
+.wot-rating-stack .wot-rating-slider:hover,
+.wot-rating-stack.hover:hover .wot-rating-slider,
+.wot-rating-stack.hover .wot-rating-slider:hover {
+	background: url("fusion/slider-hover.png") top left no-repeat;
+	cursor: pointer;
+}
+.wot-rating-slider.accessible {
+	background: url("fusion/accessible/slider.png") top left no-repeat;
+}
+.wot-rating-stack.testimony .wot-rating-slider.accessible {
+	background: url("fusion/accessible/slider-active.png") top left no-repeat;
+	cursor: pointer;
+}
+.wot-rating-stack:hover .wot-rating-slider.accessible
+.wot-rating-stack .wot-rating-slider.accessible:hover,
+.wot-rating-stack.hover:hover .wot-rating-slider.accessible,
+.wot-rating-stack.hover .wot-rating-slider.accessible:hover {
+	background: url("fusion/accessible/slider-hover.png") top left no-repeat;
+}
+.wot-rating-indicator {
+	display: block;
+	height: 16px;
+	margin-left: -10px;
+	margin-top: -16px;
+	width: 21px;
+	float: left;
+	position: relative;
+}
+.wot-rating-stack.testimony .wot-rating-indicator {
+	background: url("fusion/indicator.png") top left no-repeat;
+}
+.wot-rating-stack.testimony:hover .wot-rating-indicator,
+.wot-rating-stack.testimony .wot-rating-slider:hover + .wot-rating-indicator,
+.wot-rating-stack.testimony .wot-rating-indicator:hover,
+.wot-rating-stack.hover:hover .wot-rating-indicator,
+.wot-rating-stack.hover .wot-rating-slider:hover + .wot-rating-indicator,
+.wot-rating-stack.hover .wot-rating-indicator:hover {
+	background: url("fusion/indicator-hover.png") top left no-repeat;
+	cursor: pointer;
+}
+.wot-rating-help {
+	display: block;
+	margin-bottom: 0px;
+	margin-left: 24px;
+	margin-right: 0px;
+	margin-top: 0px;
+	width: 175px;
+}
+.wot-rating-helptext,
+.wot-rating-helplink {
+	color: #878787;
+	display: block;
+	float: left;
+	font-size: 10px;
+	line-height: 10px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0.3em;
+	margin-top: 1px;
+}
+.wot-rating-helplink {
+	display: none;
+}
+.wot-rating-helplink.comment {
+	color: #3073c5;
+	cursor: pointer;
+	display: block;
+}
+.wot-rating-helplink.comment.accessible {
+	color: #333;
+	text-decoration: underline;
+}
+
+/* scorecard */
+#wot-scorecard {
+	display: block;
+	margin-bottom: 7px;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 10px;
+	width: 310px;
+}
+#wot-scorecard-content {
+	background: url("fusion/scorecard.png") top left no-repeat;
+	display: block;
+	height: 40px;
+	padding-top: 1px;
+	width: 310px;
+}
+#wot-scorecard-content:hover {
+	background: url("fusion/scorecard-hover.png") top left no-repeat;
+	cursor: pointer;
+}
+#wot-scorecard-content:active {
+	background: url("fusion/scorecard-active.png") top left no-repeat;
+	cursor: pointer;
+}
+#wot-scorecard-content.accessible {
+	background: url("fusion/accessible/scorecard.png") top left no-repeat;
+}
+#wot-scorecard-content.accessible:hover {
+	background: url("fusion/accessible/scorecard-hover.png") top left no-repeat;
+}
+#wot-scorecard-content.accessible:active {
+	background: url("fusion/accessible/scorecard-active.png") top left no-repeat;
+}
+.wot-scorecard-text,
+#wot-scorecard-content:hover #wot-scorecard-visit.inactive {
+	color: #3073c5;
+	display: block;
+	font-size: 11px;
+	height: 11px;
+	line-height: 11px;
+	margin-left: 42px;
+	margin-right: 0px;
+}
+.wot-scorecard-text:hover,
+#wot-scorecard-content:hover #wot-scorecard-visit {
+	color: #4e4e4e;
+	cursor: pointer;
+}
+.wot-scorecard-text.accessible,
+#wot-scorecard-content:hover #wot-scorecard-visit.accessible.inactive {
+	color: #333;
+	text-decoration: underline;
+}
+.wot-scorecard-text.accessible:hover,
+#wot-scorecard-content:hover #wot-scorecard-visit.accessible {
+	color: #4e4e4e;
+	text-decoration: none;
+}
+#wot-scorecard-visit {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 0px;
+	margin-top: 9px;
+}
+#wot-scorecard-comment-container {
+	display: block;
+	margin: 0;
+	width: 310px;
+}
+#wot-scorecard-comment {
+	display: block;
+	margin-bottom: 0px;
+	margin-top: 2px;
+	padding-left: 1px;
+}
+
+/* user */
+.wot-user {
+	display: none;
+	width: 316px;
+}
+.wot-user-content {
+	display: block;
+	height: 30px;
+	margin-bottom: 1px;
+	margin-top: 0px;
+	width: 316px;
+}
+.wot-user-stack {
+	display: block;
+	float: left;
+	height: 23px;
+	margin-left: 6px;
+	margin-top: 0px;
+	width: 145px;
+}
+.wot-user-header {
+	color: #8f8f8f;
+	display: block;
+	font-size: 11px;
+	height: 14px;
+	line-height: 11px;
+	margin-left: 1px;
+	margin-right: 0px;
+	margin-top: 0px;
+	overflow: hidden;
+	width: 144px;
+}
+.wot-user-bar {
+	display: block;
+	float: left;
+	margin-top: 1px;
+}
+.wot-user-bar-image {
+	display: block;
+	float: left;
+	height: 9px;
+	margin-top: 1px;
+	width: 62px;
+}
+.wot-user-bar-image[length="0"] {
+	background: url("fusion/user-bar-0.png") top left no-repeat;
+}
+.wot-user-bar-image[length="1"] {
+	background: url("fusion/user-bar-1.png") top left no-repeat;
+}
+.wot-user-bar-image[length="2"] {
+	background: url("fusion/user-bar-2.png") top left no-repeat;
+}
+.wot-user-bar-image[length="3"] {
+	background: url("fusion/user-bar-3.png") top left no-repeat;
+}
+.wot-user-bar-image[length="4"] {
+	background: url("fusion/user-bar-4.png") top left no-repeat;
+}
+.wot-user-bar-image[length="5"] {
+	background: url("fusion/user-bar-5.png") top left no-repeat;
+}
+.wot-user-bar-image[length="6"] {
+	background: url("fusion/user-bar-6.png") top left no-repeat;
+}
+.wot-user-bar-image[length="7"] {
+	background: url("fusion/user-bar-7.png") top left no-repeat;
+}
+.wot-user-bar-image[length="8"] {
+	background: url("fusion/user-bar-8.png") top left no-repeat;
+}
+.wot-user-bar-image[length="9"] {
+	background: url("fusion/user-bar-9.png") top left no-repeat;
+}
+.wot-user-bar-image[length="10"] {
+	background: url("fusion/user-bar-10.png") top left no-repeat;
+}
+.wot-user-bar-text {
+	color: #8f8f8f;
+	display: block;
+	float: left;
+	font-size: 10px;
+	line-height: 10px;
+	margin-left: 5px;
+	margin-right: 0px;
+	margin-top: 0px;
+	overflow: hidden;
+	width: 76px;
+}
+.wot-user-text-container {
+	display: block;
+	float: left;
+	margin: 0;
+	overflow: hidden;
+	text-align: right;
+	width: 159px;
+}
+.wot-user-text {
+	color: #8f8f8f;
+	display: block;
+	font-size: 11px;
+	height: 23px;
+	line-height: 11px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 7px;
+}
+.wot-user-text[url^="http"]:hover {
+	color: #3073c5;
+	cursor: pointer;
+}
+.wot-user-text.accessible[url^="http"]:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.wot-user-notice {
+	color: #333333;
+	display: block;
+	font-size: 11px;
+	height: 18px;
+	line-height: 11px;
+	margin-bottom: 1px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: -1px;
+	overflow: hidden;
+	padding-left: 6px;
+	width: 316px;
+}
+/* message */
+#wot-message {
+	background: url("fusion/message-background.png") top left no-repeat;
+	display: none;
+	height: 50px;
+	margin-bottom: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 5px;
+	width: 312px;
+}
+#wot-message-text {
+	color: #707070;
+	display: block;
+	font-size: 11px;
+	height: 45px;
+	line-height: 13px;
+	overflow: hidden;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 5px;
+	text-align: center;
+	white-space: normal;
+	width: 298px;
+}
+#wot-message-text[url^="http"]:hover,
+#wot-message[status="important"] #wot-message-text[url^="http"]:hover,
+#wot-message[status="critical"] #wot-message-text[url^="http"]:hover {
+	color: #3073c5;
+	cursor: pointer;
+}
+#wot-message-text.accessible[url^="http"]:hover,
+#wot-message[status="important"] #wot-message-text.accessible[url^="http"]:hover,
+#wot-message[status="critical"] #wot-message-text.accessible[url^="http"]:hover {
+	color: #333;
+}
+#wot-message[status="important"] {
+	background: url("fusion/message-important.png") top left no-repeat;
+}
+#wot-message[status="critical"] {
+	background: url("fusion/message-critical.png") top left no-repeat;
+}
+#wot-message[status="important"] #wot-message-text {
+	color: #ea8b2b;
+}
+#wot-message[status="critical"] #wot-message-text {
+	color: #d81f27;
+}
+/* partner */
+#wot-partner {
+	display: none;
+	height: 32px;
+	margin-bottom: 3px;
+	margin-left: 6px;
+	margin-right: 12px;
+	margin-top: 4px;
+	padding: 0;
+	text-align: left;
+	width: 298px;
+}
+/*#wot-partner[partner="name"] {
+	display: block;
+	background: url("partner/name.png") center right no-repeat;
+}*/
+#wot-partner-text {
+	color: #333;
+	display: block;
+	font-size: 11px;
+	height: 32px;
+	margin: 0;
+	padding-top: 7px;
+	width: 148px;
+}

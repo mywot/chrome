@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "en"
+	},
+	"lang": {
+		"message": "en-US"
+	},
+	"components_0": {
+		"message": "Trustworthiness"
+	},
+	"components_1": {
+		"message": "Vendor reliability"
+	},
+	"components_2": {
+		"message": "Privacy"
+	},
+	"components_4": {
+		"message": "Child safety"
+	},
+	"components__short_0": {
+		"message": "Trustworthiness"
+	},
+	"components__short_1": {
+		"message": "Vendor reliability"
+	},
+	"components__short_2": {
+		"message": "Privacy"
+	},
+	"components__short_4": {
+		"message": "Child safety"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Very poor"
+	},
+	"reputationlevels_r2": {
+		"message": "Poor"
+	},
+	"reputationlevels_r3": {
+		"message": "Unsatisfactory"
+	},
+	"reputationlevels_r4": {
+		"message": "Good"
+	},
+	"reputationlevels_r5": {
+		"message": "Excellent"
+	},
+	"messages_initializing": {
+		"message": "Initializing WOT…"
+	},
+	"messages_notready": {
+		"message": "Activating WOT…"
+	},
+	"messages_failed": {
+		"message": "Failed to load ratings; retrying shortly."
+	},
+	"messages_notavailable": {
+		"message": "Ratings are not available."
+	},
+	"messages_loading": {
+		"message": "Loading ratings…"
+	},
+	"ratingwindow_settings": {
+		"message": "Settings"
+	},
+	"ratingwindow_guide": {
+		"message": "Guide"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT rating"
+	},
+	"ratingwindow_myrating": {
+		"message": "My rating"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "View scorecard for rating details."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Add your comment."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "In partnership with"
+	},
+	"ratingwindow_newversion": {
+		"message": "New version available - click to update"
+	},
+	"ratingwindow_helptext": {
+		"message": "Your rating differs."
+	},
+	"ratingwindow_helplink": {
+		"message": "Leave a comment?"
+	},
+	"warnings_information": {
+		"message": "View rating details and comments"
+	},
+	"warnings_ratesite": {
+		"message": "This site is safe - I want to rate it"
+	},
+	"warnings_gotosite": {
+		"message": "Ignore warning and go to the site"
+	},
+	"warnings_reputation": {
+		"message": "This site has a poor reputation based on<br/>user ratings."
+	},
+	"warnings_rating": {
+		"message": "You have given this site a poor rating,<br/>which triggered a warning."
+	},
+	"warnings_unknown": {
+		"message": "This site has an unknown rating."
+	}
+}

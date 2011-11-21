@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "es"
+	},
+	"lang": {
+		"message": "es-ES"
+	},
+	"components_0": {
+		"message": "Confiabilidad"
+	},
+	"components_1": {
+		"message": "Fiabilidad del vendedor"
+	},
+	"components_2": {
+		"message": "Privacidad"
+	},
+	"components_4": {
+		"message": "Seguridad para menores"
+	},
+	"components__short_0": {
+		"message": "Confiabilidad"
+	},
+	"components__short_1": {
+		"message": "Fiabilidad vendedor"
+	},
+	"components__short_2": {
+		"message": "Privacidad"
+	},
+	"components__short_4": {
+		"message": "Seguridad infantil"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Muy pobre"
+	},
+	"reputationlevels_r2": {
+		"message": "Pobre"
+	},
+	"reputationlevels_r3": {
+		"message": "No satisfactoria"
+	},
+	"reputationlevels_r4": {
+		"message": "Buena"
+	},
+	"reputationlevels_r5": {
+		"message": "Excelente"
+	},
+	"messages_initializing": {
+		"message": "Iniciando WOT…"
+	},
+	"messages_notready": {
+		"message": "Activando WOT…"
+	},
+	"messages_failed": {
+		"message": "Error al cargar las valoraciones."
+	},
+	"messages_notavailable": {
+		"message": "Las valoraciones no están disponibles."
+	},
+	"messages_loading": {
+		"message": "Cargando valoraciones…"
+	},
+	"ratingwindow_settings": {
+		"message": "Configuración"
+	},
+	"ratingwindow_guide": {
+		"message": "Guía"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Valoración de WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Mi valoración"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Ver puntuación para detalles de valoración."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Añadir comentario."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "En asociación con"
+	},
+	"ratingwindow_newversion": {
+		"message": "Nueva versión disponible: haga clic para actualizar"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "¿Desea añadir un comentario?"
+	},
+	"warnings_information": {
+		"message": "Ver detalles de valoración y comentarios"
+	},
+	"warnings_ratesite": {
+		"message": "Este sitio es seguro y deseo valorarlo"
+	},
+	"warnings_gotosite": {
+		"message": "Omitir la advertencia e ir al sitio"
+	},
+	"warnings_reputation": {
+		"message": "Este sitio tiene una reputación pobre."
+	},
+	"warnings_rating": {
+		"message": "Ha asignado a este sitio una valoración pobre,<br/>lo que ha desencadenado una advertencia."
+	},
+	"warnings_unknown": {
+		"message": "Este sitio tiene una valoración desconocida."
+	}
+}

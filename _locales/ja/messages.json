@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "ja"
+	},
+	"lang": {
+		"message": "ja-JP"
+	},
+	"components_0": {
+		"message": "信頼性"
+	},
+	"components_1": {
+		"message": "業者の信頼度"
+	},
+	"components_2": {
+		"message": "プライバシー"
+	},
+	"components_4": {
+		"message": "子供の安全"
+	},
+	"components__short_0": {
+		"message": "信頼性"
+	},
+	"components__short_1": {
+		"message": "業者の信頼度"
+	},
+	"components__short_2": {
+		"message": "プライバシー"
+	},
+	"components__short_4": {
+		"message": "子供の安全"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "非常に悪い"
+	},
+	"reputationlevels_r2": {
+		"message": "悪い"
+	},
+	"reputationlevels_r3": {
+		"message": "満足できない"
+	},
+	"reputationlevels_r4": {
+		"message": "良い"
+	},
+	"reputationlevels_r5": {
+		"message": "非常に優れている"
+	},
+	"messages_initializing": {
+		"message": "WOTを初期化しています…"
+	},
+	"messages_notready": {
+		"message": "WOTを有効化しています…"
+	},
+	"messages_failed": {
+		"message": "格付けを読み込めませんでした。後ほど再試行してください。"
+	},
+	"messages_notavailable": {
+		"message": "格付けをご利用いただけません。"
+	},
+	"messages_loading": {
+		"message": "格付けを読み込んでいます…"
+	},
+	"ratingwindow_settings": {
+		"message": "設定"
+	},
+	"ratingwindow_guide": {
+		"message": "ガイド"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT格付け"
+	},
+	"ratingwindow_myrating": {
+		"message": "自分の評価"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "スコアカードで格付けの詳細を見る。"
+	},
+	"ratingwindow_addcomment": {
+		"message": "コメントを追加してください。"
+	},
+	"ratingwindow_inpartnership": {
+		"message": "提携パートナー："
+	},
+	"ratingwindow_newversion": {
+		"message": "新バージョンを利用できます-クリックして更新"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "コメントを投稿しますか？"
+	},
+	"warnings_information": {
+		"message": "詳しい評価とコメントを見る"
+	},
+	"warnings_ratesite": {
+		"message": "このサイトは安全です - 評価を行います"
+	},
+	"warnings_gotosite": {
+		"message": "警告を無視してサイトにアクセスする"
+	},
+	"warnings_reputation": {
+		"message": "評価の低いサイトです。"
+	},
+	"warnings_rating": {
+		"message": "このサイトに対するあなたの評価が低いために、<br/>警告が表示されました。"
+	},
+	"warnings_unknown": {
+		"message": "評価が不明なサイトです。"
+	}
+}

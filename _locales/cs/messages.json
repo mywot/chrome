@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "cs"
+	},
+	"lang": {
+		"message": "cs-CZ"
+	},
+	"components_0": {
+		"message": "Důvěryhodnost"
+	},
+	"components_1": {
+		"message": "Spolehlivost poskytovatele"
+	},
+	"components_2": {
+		"message": "Ochrana osobních dat"
+	},
+	"components_4": {
+		"message": "Bezpečnost dětí"
+	},
+	"components__short_0": {
+		"message": "Důvěryhodnost"
+	},
+	"components__short_1": {
+		"message": "Spolehl. poskytov."
+	},
+	"components__short_2": {
+		"message": "Ochrana osob. dat"
+	},
+	"components__short_4": {
+		"message": "Bezpečnost dětí"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Velmi špatná"
+	},
+	"reputationlevels_r2": {
+		"message": "Špatná"
+	},
+	"reputationlevels_r3": {
+		"message": "Neuspokojivá"
+	},
+	"reputationlevels_r4": {
+		"message": "Dobrá"
+	},
+	"reputationlevels_r5": {
+		"message": "Excelentní"
+	},
+	"messages_initializing": {
+		"message": "Probíhá inicializace WOT…"
+	},
+	"messages_notready": {
+		"message": "Aktivace doplňku WOT…"
+	},
+	"messages_failed": {
+		"message": "Načtení hodnocení se nezdařilo; pokus bude zanedlouho opakován."
+	},
+	"messages_notavailable": {
+		"message": "Hodnocení nejsou dostupná."
+	},
+	"messages_loading": {
+		"message": "Načítání hodnocení…"
+	},
+	"ratingwindow_settings": {
+		"message": "Nastavení"
+	},
+	"ratingwindow_guide": {
+		"message": "Příručka"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Hodnocení WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Moje hodnocení"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Zobrazit výsledky s detaily hodnocení."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Přidat komentář."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "Ve spolupráci s"
+	},
+	"ratingwindow_newversion": {
+		"message": "K dispozici je nová verze - kliknutím sem proveďte aktualizaci"
+	},
+	"ratingwindow_helptext": {
+		"message": "Váš údaj se liší."
+	},
+	"ratingwindow_helplink": {
+		"message": "Zanechat komentář?"
+	},
+	"warnings_information": {
+		"message": "Zobrazit podrobnosti hodnocení a komentáře"
+	},
+	"warnings_ratesite": {
+		"message": "Tato stránka je bezpečná - Chci ji ohodnotit"
+	},
+	"warnings_gotosite": {
+		"message": "Ignorovat varování a vstoupit na stránku"
+	},
+	"warnings_reputation": {
+		"message": "Reputace této stránky je špatná."
+	},
+	"warnings_rating": {
+		"message": "Dali jste této stránce špatné hodnocení,<br/>což spustilo varování."
+	},
+	"warnings_unknown": {
+		"message": "Hodnocení této stránky není známo."
+	}
+}

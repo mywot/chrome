@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "fi"
+	},
+	"lang": {
+		"message": "fi-FI"
+	},
+	"components_0": {
+		"message": "Luotettavuus"
+	},
+	"components_1": {
+		"message": "Asioinnin turvallisuus"
+	},
+	"components_2": {
+		"message": "Tietosuoja"
+	},
+	"components_4": {
+		"message": "Lapsiturvallisuus"
+	},
+	"components__short_0": {
+		"message": "Luotettavuus"
+	},
+	"components__short_1": {
+		"message": "Asioinnin turvall."
+	},
+	"components__short_2": {
+		"message": "Tietosuoja"
+	},
+	"components__short_4": {
+		"message": "Lapsiturvallisuus"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Erittäin huono"
+	},
+	"reputationlevels_r2": {
+		"message": "Huono"
+	},
+	"reputationlevels_r3": {
+		"message": "Epätyydyttävä"
+	},
+	"reputationlevels_r4": {
+		"message": "Hyvä"
+	},
+	"reputationlevels_r5": {
+		"message": "Erinomainen"
+	},
+	"messages_initializing": {
+		"message": "Alustetaan WOT…"
+	},
+	"messages_notready": {
+		"message": "Otetaan WOT-lisäosa käyttöön…"
+	},
+	"messages_failed": {
+		"message": "Luokitusten lataaminen epäonnistui."
+	},
+	"messages_notavailable": {
+		"message": "Luokitukset eivät ole käytettävissä."
+	},
+	"messages_loading": {
+		"message": "Ladataan luokituksia…"
+	},
+	"ratingwindow_settings": {
+		"message": "Asetukset"
+	},
+	"ratingwindow_guide": {
+		"message": "Opas"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT-luokitus"
+	},
+	"ratingwindow_myrating": {
+		"message": "Oma luokitus"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Näet yksityiskohtaiset tiedot tuloskortista."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Voit myös lisätä oman kommentin."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "Kumppanina"
+	},
+	"ratingwindow_newversion": {
+		"message": "Uusi versio – asenna napsauttamalla tätä"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Haluatko lisätä kommentin?"
+	},
+	"warnings_information": {
+		"message": "Näytä luokitustiedot ja kommentit"
+	},
+	"warnings_ratesite": {
+		"message": "Sivusto on turvallinen, haluan luokitella sen"
+	},
+	"warnings_gotosite": {
+		"message": "Ohita varoitus ja siirry sivustoon"
+	},
+	"warnings_reputation": {
+		"message": "Tällä sivustolla on huono maine käyttäjien<br/>luokitusten perusteella."
+	},
+	"warnings_rating": {
+		"message": "Sivustolle antamasi huono luokitus<br/>laukaisi varoituksen."
+	},
+	"warnings_unknown": {
+		"message": "Tämän sivuston luokitus on tuntematon."
+	}
+}

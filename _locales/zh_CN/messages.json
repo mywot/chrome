@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "zh_CN"
+	},
+	"lang": {
+		"message": "zh-CN"
+	},
+	"components_0": {
+		"message": "可信程度"
+	},
+	"components_1": {
+		"message": "供应商可靠性"
+	},
+	"components_2": {
+		"message": "隐私"
+	},
+	"components_4": {
+		"message": "儿童安全性"
+	},
+	"components__short_0": {
+		"message": "可信程度"
+	},
+	"components__short_1": {
+		"message": "供应商可靠性"
+	},
+	"components__short_2": {
+		"message": "隐私"
+	},
+	"components__short_4": {
+		"message": "儿童安全性"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "极差"
+	},
+	"reputationlevels_r2": {
+		"message": "较差"
+	},
+	"reputationlevels_r3": {
+		"message": "令人不满意"
+	},
+	"reputationlevels_r4": {
+		"message": "较好"
+	},
+	"reputationlevels_r5": {
+		"message": "极佳"
+	},
+	"messages_initializing": {
+		"message": "正在初始化 WOT…"
+	},
+	"messages_notready": {
+		"message": "正在激活 WOT…"
+	},
+	"messages_failed": {
+		"message": "未能加载评级；将立即重试。"
+	},
+	"messages_notavailable": {
+		"message": "评级不可用。"
+	},
+	"messages_loading": {
+		"message": "正在加载评级…"
+	},
+	"ratingwindow_settings": {
+		"message": "设置"
+	},
+	"ratingwindow_guide": {
+		"message": "指南"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT 评级"
+	},
+	"ratingwindow_myrating": {
+		"message": "我的评级"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "查看登记卡上的评级详情。"
+	},
+	"ratingwindow_addcomment": {
+		"message": "添加评论。"
+	},
+	"ratingwindow_inpartnership": {
+		"message": "In partnership with"
+	},
+	"ratingwindow_newversion": {
+		"message": "有新版本可用 – 单击进行更新"
+	},
+	"ratingwindow_helptext": {
+		"message": "您的评级不一致。"
+	},
+	"ratingwindow_helplink": {
+		"message": "留下评论?"
+	},
+	"warnings_information": {
+		"message": "查看评级详情和评论"
+	},
+	"warnings_ratesite": {
+		"message": "此网站是安全的 - 我想对其进行评级"
+	},
+	"warnings_gotosite": {
+		"message": "忽略警告并进入该网站"
+	},
+	"warnings_reputation": {
+		"message": "此网站的声誉较差。"
+	},
+	"warnings_rating": {
+		"message": "您已将此网站评为较差等级，<br/>该评级触发了警告。"
+	},
+	"warnings_unknown": {
+		"message": "此网站的评级未知。"
+	}
+}

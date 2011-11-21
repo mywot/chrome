@@ -1,0 +1,57 @@
+{
+	"name": "WOT",
+	"version": "1.2.6",
+	"default_locale": "en",
+	"description": "Web of Trust shows you which websites people trust for safe surfing, shopping and searching on the web.",
+	"icons": {
+		"16": "skin/fusion/icons/16.png",
+		"32": "skin/fusion/icons/32.png",
+		"48": "skin/fusion/icons/48.png",
+		"128": "skin/fusion/icons/128.png"
+	},
+	"permissions": [
+		"tabs",
+		"http://www.mywot.com/*",
+		"http://api.mywot.com/*",
+		"https://api.mywot.com/*"
+	],
+	"background_page": "background.html",
+	"browser_action": {
+		"default_title": "WOT",
+		"default_icon": "skin/fusion/19_19/default.png",
+		"popup": "ratingwindow.html"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": [
+				"wot.js",
+				"content/common.js",
+				"content/warning.js",
+				"content/url.js",
+				"content/popup.js",
+				"content/search.js"
+			],
+			"run_at": "document_start",
+			"all_frames": true 
+		}, {
+			"matches": [
+				"http://www.mywot.com/*",
+				"https://www.mywot.com/*"
+			],
+			"js": [
+				"wot.js",
+				"content/common.js",
+				"content/my.js",
+				"content/settings.js"
+			],
+			"run_at": "document_start",
+			"all_frames": true 
+		}
+	],
+	"update_url": "http://api.mywot.com/chromeupdates.xml",
+	"options_page": "options.html"
+}

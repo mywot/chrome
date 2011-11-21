@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "fr"
+	},
+	"lang": {
+		"message": "fr-FR"
+	},
+	"components_0": {
+		"message": "Crédibilité"
+	},
+	"components_1": {
+		"message": "Fiabilité commerciale"
+	},
+	"components_2": {
+		"message": "Confidentialité"
+	},
+	"components_4": {
+		"message": "Sécurité des mineurs"
+	},
+	"components__short_0": {
+		"message": "Crédibilité"
+	},
+	"components__short_1": {
+		"message": "Fiabilité com."
+	},
+	"components__short_2": {
+		"message": "Confidentialité"
+	},
+	"components__short_4": {
+		"message": "Sécurité mineurs"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Très mauvais"
+	},
+	"reputationlevels_r2": {
+		"message": "Mauvais"
+	},
+	"reputationlevels_r3": {
+		"message": "Médiocre"
+	},
+	"reputationlevels_r4": {
+		"message": "Bon"
+	},
+	"reputationlevels_r5": {
+		"message": "Excellent"
+	},
+	"messages_initializing": {
+		"message": "Initialisation de WOT…"
+	},
+	"messages_notready": {
+		"message": "Activation de WOT…"
+	},
+	"messages_failed": {
+		"message": "Le chargement des évaluations a échoué."
+	},
+	"messages_notavailable": {
+		"message": "Aucune évaluation n'est disponible."
+	},
+	"messages_loading": {
+		"message": "Chargement des évaluations…"
+	},
+	"ratingwindow_settings": {
+		"message": "Paramètres"
+	},
+	"ratingwindow_guide": {
+		"message": "Guide"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Évaluation WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Mon évaluation"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Afficher le tableau de bord détaillé."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Ajouter votre commentaire."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "En partenariat avec"
+	},
+	"ratingwindow_newversion": {
+		"message": "Nouvelle version disponible : cliquez ici pour actualiser"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Voulez-vous laisser un commentaire ?"
+	},
+	"warnings_information": {
+		"message": "Afficher l'évaluation détaillée et les commentaires"
+	},
+	"warnings_ratesite": {
+		"message": "Ce site est sûr - Je souhaite l'évaluer"
+	},
+	"warnings_gotosite": {
+		"message": "Ignorer l'alerte et accéder au site"
+	},
+	"warnings_reputation": {
+		"message": "Ce site a mauvaise réputation."
+	},
+	"warnings_rating": {
+		"message": "Vous avez attribué à ce site une mauvaise<br/>évaluation ayant déclenché une alerte."
+	},
+	"warnings_unknown": {
+		"message": "Ce site présente une évaluation inconnue."
+	}
+}

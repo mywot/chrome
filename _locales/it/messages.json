@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "it"
+	},
+	"lang": {
+		"message": "it-IT"
+	},
+	"components_0": {
+		"message": "Attendibilità"
+	},
+	"components_1": {
+		"message": "Affidabilità fornitore"
+	},
+	"components_2": {
+		"message": "Riservatezza"
+	},
+	"components_4": {
+		"message": "Sicurezza per i bambini"
+	},
+	"components__short_0": {
+		"message": "Attendibilità"
+	},
+	"components__short_1": {
+		"message": "Affidabilità fornitore"
+	},
+	"components__short_2": {
+		"message": "Riservatezza"
+	},
+	"components__short_4": {
+		"message": "Sicurezza bambini"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Molto scadente"
+	},
+	"reputationlevels_r2": {
+		"message": "Scadente"
+	},
+	"reputationlevels_r3": {
+		"message": "Insoddisfacente"
+	},
+	"reputationlevels_r4": {
+		"message": "Soddisfacente"
+	},
+	"reputationlevels_r5": {
+		"message": "Eccellente"
+	},
+	"messages_initializing": {
+		"message": "Inizializzazione WOT in corso…"
+	},
+	"messages_notready": {
+		"message": "Attivazione WOT in corso…"
+	},
+	"messages_failed": {
+		"message": "Impossibile caricare le valutazioni."
+	},
+	"messages_notavailable": {
+		"message": "Valutazioni non disponibili."
+	},
+	"messages_loading": {
+		"message": "Caricamento valutazioni in corso…"
+	},
+	"ratingwindow_settings": {
+		"message": "Impostazioni"
+	},
+	"ratingwindow_guide": {
+		"message": "Guida"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Valutazione WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Valutazione personale"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Visualizza dettagli scheda di valutazione."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Aggiungi un commento."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "In collaborazione con"
+	},
+	"ratingwindow_newversion": {
+		"message": "Nuova versione disponibile: fare clic per l'aggiornamento"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Lasciare un commento?"
+	},
+	"warnings_information": {
+		"message": "Visualizza dettagli valutazione e commenti"
+	},
+	"warnings_ratesite": {
+		"message": "Questo sito è sicuro - Do valutazione"
+	},
+	"warnings_gotosite": {
+		"message": "Ignora avviso e vai al sito"
+	},
+	"warnings_reputation": {
+		"message": "Questo sito ha una reputazione scadente."
+	},
+	"warnings_rating": {
+		"message": "La valutazione scadente assegnata al<br/>sito ha generato un avviso."
+	},
+	"warnings_unknown": {
+		"message": "Questo sito ha una valutazione sconosciuta."
+	}
+}

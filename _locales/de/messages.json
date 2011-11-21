@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "de"
+	},
+	"lang": {
+		"message": "de-DE"
+	},
+	"components_0": {
+		"message": "Vertrauenswürdigkeit"
+	},
+	"components_1": {
+		"message": "Händlerzuverlässigkeit"
+	},
+	"components_2": {
+		"message": "Datenschutz"
+	},
+	"components_4": {
+		"message": "Jugendschutz"
+	},
+	"components__short_0": {
+		"message": "Vertrauensw."
+	},
+	"components__short_1": {
+		"message": "Händlerzuverl."
+	},
+	"components__short_2": {
+		"message": "Datenschutz"
+	},
+	"components__short_4": {
+		"message": "Jugendschutz"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Sehr schlecht"
+	},
+	"reputationlevels_r2": {
+		"message": "Schlecht"
+	},
+	"reputationlevels_r3": {
+		"message": "Ungenügend"
+	},
+	"reputationlevels_r4": {
+		"message": "Gut"
+	},
+	"reputationlevels_r5": {
+		"message": "Ausgezeichnet"
+	},
+	"messages_initializing": {
+		"message": "WOT wird initialisiert…"
+	},
+	"messages_notready": {
+		"message": "WOT wird aktiviert…"
+	},
+	"messages_failed": {
+		"message": "aden der Bewertungen fehlgeschlagen."
+	},
+	"messages_notavailable": {
+		"message": "Bewertungen sind nicht verfügbar"
+	},
+	"messages_loading": {
+		"message": "Bewertungen werden geladen…"
+	},
+	"ratingwindow_settings": {
+		"message": "Einstellungen"
+	},
+	"ratingwindow_guide": {
+		"message": "Leitfaden"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT rating"
+	},
+	"ratingwindow_myrating": {
+		"message": "My rating"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Detailanzeige auf der Bewertungsliste."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Eigenen Kommentar hinzufügen."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "In Zusammenarbeit mit"
+	},
+	"ratingwindow_newversion": {
+		"message": "Neue Version verfügbar - zum Aktualisieren hier klicken"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Möchten Sie einen Kommentar schreiben?"
+	},
+	"warnings_information": {
+		"message": "Bewertungsdetails und Kommentare anzeigen"
+	},
+	"warnings_ratesite": {
+		"message": "Site ist sicher. Ich möchte sie bewerten"
+	},
+	"warnings_gotosite": {
+		"message": "Warnung ignorieren und Website aufrufen"
+	},
+	"warnings_reputation": {
+		"message": "Diese Seite hat einen schlechten Ruf basierend<br/>auf Benutzerbewertungen."
+	},
+	"warnings_rating": {
+		"message": "Sie haben dieser Website eine schlechte Bewertung<br/>gegeben, die eine Warnung ausgelöst hat."
+	},
+	"warnings_unknown": {
+		"message": "Diese Website besitzt eine unbekannte Bewertung."
+	}
+}

@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "ru"
+	},
+	"lang": {
+		"message": "ru-RU"
+	},
+	"components_0": {
+		"message": "Заслуживает доверие"
+	},
+	"components_1": {
+		"message": "Надежность продавца"
+	},
+	"components_2": {
+		"message": "Конфиденциальность"
+	},
+	"components_4": {
+		"message": "Безопасность для детей"
+	},
+	"components__short_0": {
+		"message": "Заслуж. доверия"
+	},
+	"components__short_1": {
+		"message": "Надежн. продавца"
+	},
+	"components__short_2": {
+		"message": "Конфиденц-ть"
+	},
+	"components__short_4": {
+		"message": "Безоп-ть детей"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Очень плохо"
+	},
+	"reputationlevels_r2": {
+		"message": "Плохо"
+	},
+	"reputationlevels_r3": {
+		"message": "Неудовлетворительно"
+	},
+	"reputationlevels_r4": {
+		"message": "Хорошо"
+	},
+	"reputationlevels_r5": {
+		"message": "Превосходно"
+	},
+	"messages_initializing": {
+		"message": "Инициализация WOT…"
+	},
+	"messages_notready": {
+		"message": "Активация WOT…"
+	},
+	"messages_failed": {
+		"message": "Не удалось загрузить рейтинги."
+	},
+	"messages_notavailable": {
+		"message": "Рейтинги не доступны."
+	},
+	"messages_loading": {
+		"message": "Загрузка рейтингов…"
+	},
+	"ratingwindow_settings": {
+		"message": "Настройки"
+	},
+	"ratingwindow_guide": {
+		"message": "Руководство"
+	},
+	"ratingwindow_wotrating": {
+		"message": "Рейтинг WOT"
+	},
+	"ratingwindow_myrating": {
+		"message": "Мой рейтинг"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Просмотр подробных данных о рейтингах."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Добавьте свой комментарий."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "Сотрудничает с"
+	},
+	"ratingwindow_newversion": {
+		"message": "Доступна новая версия, нажмите для обновления"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Добавить комментарий?"
+	},
+	"warnings_information": {
+		"message": "Посмотреть сведения о рейтинге и комментарии"
+	},
+	"warnings_ratesite": {
+		"message": "Этот сайт безопасен. Я хочу оценить его"
+	},
+	"warnings_gotosite": {
+		"message": "Перейти на веб-сайт несмотря на предупреждение"
+	},
+	"warnings_reputation": {
+		"message": "У этого сайта плохая репутация."
+	},
+	"warnings_rating": {
+		"message": "Вы выставили этому веб-сайту низкий рейтинг, в<br/>результате чего отобразилось предупреждение."
+	},
+	"warnings_unknown": {
+		"message": "Pейтинг этого сайта неизвестен."
+	}
+}

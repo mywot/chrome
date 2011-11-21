@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "sv"
+	},
+	"lang": {
+		"message": "sv-SE"
+	},
+	"components_0": {
+		"message": "Pålitlighet"
+	},
+	"components_1": {
+		"message": "Transaktionssäkerhet"
+	},
+	"components_2": {
+		"message": "Sekretess"
+	},
+	"components_4": {
+		"message": "Barnsäkerhet"
+	},
+	"components__short_0": {
+		"message": "Pålitlighet"
+	},
+	"components__short_1": {
+		"message": "Transakt.säkerhet"
+	},
+	"components__short_2": {
+		"message": "Sekretess"
+	},
+	"components__short_4": {
+		"message": "Barnsäkerhet"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "Mycket dålig"
+	},
+	"reputationlevels_r2": {
+		"message": "Dålig"
+	},
+	"reputationlevels_r3": {
+		"message": "Otillräcklig"
+	},
+	"reputationlevels_r4": {
+		"message": "Bra"
+	},
+	"reputationlevels_r5": {
+		"message": "Utmärkt"
+	},
+	"messages_initializing": {
+		"message": "Initierar WOT…"
+	},
+	"messages_notready": {
+		"message": "Aktiverar WOT…"
+	},
+	"messages_failed": {
+		"message": "Misslyckades att läsa in klassificeringar."
+	},
+	"messages_notavailable": {
+		"message": "Inga tillgängliga klassificeringar."
+	},
+	"messages_loading": {
+		"message": "Läser in klassificeringar…"
+	},
+	"ratingwindow_settings": {
+		"message": "Inställningar"
+	},
+	"ratingwindow_guide": {
+		"message": "Guide"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT-klassificering"
+	},
+	"ratingwindow_myrating": {
+		"message": "Min klassificering"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "Visa scorekort för klassificeringsdetaljer."
+	},
+	"ratingwindow_addcomment": {
+		"message": "Lägg till en kommentar."
+	},
+	"ratingwindow_inpartnership": {
+		"message": "I partnerskap med"
+	},
+	"ratingwindow_newversion": {
+		"message": "Ny version tillgänglig – klicka för att uppdatera"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "Vill du lägga till en kommentar?"
+	},
+	"warnings_information": {
+		"message": "Visa klassificeringsdetaljer och kommentarer"
+	},
+	"warnings_ratesite": {
+		"message": "Webbplatsen är säker - jag vill klassificera den"
+	},
+	"warnings_gotosite": {
+		"message": "Ignorera varningen och gå till webbplatsen"
+	},
+	"warnings_reputation": {
+		"message": "Den här webbplatsen har dåligt rykte."
+	},
+	"warnings_rating": {
+		"message": "Du har gett webbplatsen klassificeringen Dålig,<br/>vilket gav upphov till en varning."
+	},
+	"warnings_unknown": {
+		"message": "Webbplatsen har en okänd klassificering."
+	}
+}

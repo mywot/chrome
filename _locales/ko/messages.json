@@ -1,0 +1,113 @@
+{
+	"locale": {
+		"message": "ko"
+	},
+	"lang": {
+		"message": "ko-KR"
+	},
+	"components_0": {
+		"message": "신뢰성"
+	},
+	"components_1": {
+		"message": "업체 안전성"
+	},
+	"components_2": {
+		"message": "개인정보 보호"
+	},
+	"components_4": {
+		"message": "어린이 안전성"
+	},
+	"components__short_0": {
+		"message": "신뢰성"
+	},
+	"components__short_1": {
+		"message": "업체 안전성"
+	},
+	"components__short_2": {
+		"message": "개인정보 보호"
+	},
+	"components__short_4": {
+		"message": "어린이 안전성"
+	},
+	"reputationlevels_r0": {
+		"message": ""
+	},
+	"reputationlevels_r1": {
+		"message": "매우 나쁨"
+	},
+	"reputationlevels_r2": {
+		"message": "나쁨"
+	},
+	"reputationlevels_r3": {
+		"message": "불만족"
+	},
+	"reputationlevels_r4": {
+		"message": "좋음"
+	},
+	"reputationlevels_r5": {
+		"message": "매우 좋음"
+	},
+	"messages_initializing": {
+		"message": "WOT 초기화…"
+	},
+	"messages_notready": {
+		"message": "WOT를 여는 중…"
+	},
+	"messages_failed": {
+		"message": "평가를 다운받는데 실패하였습니다. 다시 시도해주십시오."
+	},
+	"messages_notavailable": {
+		"message": "이용가능한 평가가 없습니다."
+	},
+	"messages_loading": {
+		"message": "평가를 로딩하는중…"
+	},
+	"ratingwindow_settings": {
+		"message": "설정"
+	},
+	"ratingwindow_guide": {
+		"message": "가이드"
+	},
+	"ratingwindow_wotrating": {
+		"message": "WOT 평가"
+	},
+	"ratingwindow_myrating": {
+		"message": "나의 평가"
+	},
+	"ratingwindow_viewscorecard": {
+		"message": "평가 지수 보기"
+	},
+	"ratingwindow_addcomment": {
+		"message": "후기 쓰기"
+	},
+	"ratingwindow_inpartnership": {
+		"message": "In partnership with"
+	},
+	"ratingwindow_newversion": {
+		"message": "최신 버전이 확인되었습니다 - 업데이트하시려면 클릭하세요"
+	},
+	"ratingwindow_helptext": {
+		"message": ""
+	},
+	"ratingwindow_helplink": {
+		"message": "후기를 남기시겠습니까?"
+	},
+	"warnings_information": {
+		"message": "자세한 평가와 후기 보기"
+	},
+	"warnings_ratesite": {
+		"message": "이 사이트는 안전합니다- 이 사이트를 평가하기"
+	},
+	"warnings_gotosite": {
+		"message": "경고를 무시하고 사이트로 들어가기"
+	},
+	"warnings_reputation": {
+		"message": "이 사이트는 나쁜 평가를 가지고 있습니다."
+	},
+	"warnings_rating": {
+		"message": "사용자님은 이 사이트에 나쁜 평가를 주셨습니다.<br/>나쁜 평가는 경고를 작동시킵니다."
+	},
+	"warnings_unknown": {
+		"message": "이 사이트는 평가를 가지고 있지 않습니다."
+	}
+}
