@@ -38,7 +38,8 @@ $.extend(wot, { api: {
 			submit:	   5 * 60 * 1000,
 			update:	  15 * 60 * 1000
 		},
-		maxlinkretries: 3
+		maxlinkretries: 3,
+        maxregisterretries: 5
 	},
 
 	state: {},
@@ -153,13 +154,45 @@ $.extend(wot, { api: {
 		}
 	},
 
+    error: function(message)
+    {
+        console.log(message + "\n");
+
+        var nonce = wot.crypto.getnonce("error");
+
+        var params = {
+            id:		 (wot.witness || {}).id,
+            nonce:   nonce,
+            partner: wot.partner,
+            lang:	 wot.i18n("lang"),
+            version: wot.platform + "-" + wot.version,
+            message: message
+        };
+
+        var components = [];
+
+        for (var i in params) {
+            if (params[i] != null) {
+                    components.push(i + "=" + encodeURIComponent(params[i]));
+                }
+        }
+
+        var path = "/error?" + components.join("&");
+
+        $.ajax({
+            dataType: "xml",
+            timeout: wot.api.info.timeout,
+            url: "http://" + wot.api.info.server + path
+        });
+    },
+
 	setids: function(tag, data)
 	{
 		try {
 			var elems = data.getElementsByTagName(tag);
 
 			if (!elems || !elems.length) {
-				console.log("api.setids: missing tag " + tag + "\n");
+                this.error("api.setids: missing tag " + tag);
 				return false;
 			}
 
@@ -167,14 +200,14 @@ $.extend(wot, { api: {
 			var key = elems[0].getAttribute("key");
 
 			if (!id || !key) {
-				console.log("api.setids: missing attribute\n");
+				this.log("api.setids: missing attribute");
 				return false;
 			}
 
 			var re  = /^[a-f0-9]{40}$/;
 
 			if (!re.test(id) || !re.test(key)) {
-				console.log("api.setids: invalid data\n");
+				this.log("api.setids: invalid data");
 				return false;
 			}
 
@@ -186,11 +219,11 @@ $.extend(wot, { api: {
 			wot.log("api.setids: id = " + id + "\n");
 			return true;
 		} catch (e) {
-			console.log("api.setids: failed with " + e + "\n");
+			this.log("api.setids: failed with " + e);
 		}
 
 		/* prevent register loops */
-		return true;
+		return false;
 	},
 
 	processpending: function()
@@ -453,14 +486,21 @@ $.extend(wot, { api: {
 			});
 	},
 
-	register: function(onsuccess)
+	register: function(onsuccess, retrycount)
 	{
 		onsuccess = onsuccess || function() {};
 
-		if (this.isregistered()) {
-			onsuccess();
-			return true;
-		}
+        if (this.isregistered()) {
+            onsuccess();
+            return true;
+        }
+
+
+        retrycount = retrycount || 0;
+
+        if (++retrycount > this.info.maxregisterretries) {
+            return false;
+        }
 
 		this.call("register", {
 				secure: true
@@ -469,7 +509,10 @@ $.extend(wot, { api: {
 			function(request)
 			{
 				if (request.status != 403) {
-					wot.api.retry("register", [ onsuccess ]);
+                    wot.api.retry("register", [ onsuccess, retrycount ]);
+                    wot.api.error("api.register: failed with status " +
+                        request.status);
+
 				}
 			},
 			function(data)
@@ -477,7 +520,7 @@ $.extend(wot, { api: {
 				if (wot.api.setids("register", data)) {
 					onsuccess();
 				} else {
-					wot.api.retry("register", [ onsuccess ]);
+                    wot.api.retry("register", [ onsuccess, retrycount ]);
 				}
 			});
 	},
