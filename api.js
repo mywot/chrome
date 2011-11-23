@@ -508,12 +508,22 @@ $.extend(wot, { api: {
 			}, {
 				retrycount: retrycount
 			},
-			function(request)
+			function(request, status)
 			{
+				if (request.status == 200) {
+					/* jQuery error */
+					if (wot.api.setids("register", request.responseXML)) {
+						onsuccess();
+						wot.api.error("api.register: recovered from jQuery " +
+							"error: " + status);
+						return;
+					}
+				}
+
 				if (request.status != 403) {
 					wot.api.retry("register", [ onsuccess, retrycount ]);
 					wot.api.error("api.register: failed with status " +
-						request.status);
+						request.status + " (" + status + ")");
 				}
 			},
 			function(data)
