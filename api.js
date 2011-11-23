@@ -39,7 +39,7 @@ $.extend(wot, { api: {
 			update:	  15 * 60 * 1000
 		},
 		maxlinkretries: 3,
-        maxregisterretries: 5
+		maxregisterretries: 5
 	},
 
 	state: {},
@@ -131,16 +131,22 @@ $.extend(wot, { api: {
 
 	isregistered: function()
 	{
-		wot.witness = wot.witness || {
-			id:  wot.prefs.get("witness_id"),
-			key: wot.prefs.get("witness_key")
-		};
+		try {
+			wot.witness = wot.witness || {
+				id:  wot.prefs.get("witness_id"),
+				key: wot.prefs.get("witness_key")
+			};
 
-		var re  = /^[a-f0-9]{40}$/;
-		var rv = (re.test(wot.witness.id) && re.test(wot.witness.key));
+			var re  = /^[a-f0-9]{40}$/;
+			var rv = (re.test(wot.witness.id) && re.test(wot.witness.key));
 
-		wot.log("api.isregistered: " + rv + ", id = " + wot.witness.id + "\n");
-		return rv;
+			wot.log("api.isregistered: " + rv + ", id = " + wot.witness.id + "\n");
+			return rv;
+		} catch (e) {
+			console.log("api.isregistered: failed with " + e + "\n");
+		}
+
+		return false;
 	},
 
 	retry: function(apiname, params, customtimeout)
@@ -154,37 +160,34 @@ $.extend(wot, { api: {
 		}
 	},
 
-    error: function(message)
-    {
-        console.log(message + "\n");
+	error: function(message)
+	{
+		console.log(message + "\n");
 
-        var nonce = wot.crypto.getnonce("error");
+		var nonce = wot.crypto.getnonce("error");
 
-        var params = {
-            id:		 (wot.witness || {}).id,
-            nonce:   nonce,
-            partner: wot.partner,
-            lang:	 wot.i18n("lang"),
-            version: wot.platform + "-" + wot.version,
-            message: message
-        };
+		var params = {
+			id:		 (wot.witness || {}).id,
+			nonce:   nonce,
+			partner: wot.partner,
+			lang:	 wot.i18n("lang"),
+			version: wot.platform + "-" + wot.version,
+			message: message
+		};
 
-        var components = [];
+		var components = [];
 
-        for (var i in params) {
-            if (params[i] != null) {
-                    components.push(i + "=" + encodeURIComponent(params[i]));
-                }
-        }
+		for (var i in params) {
+			if (params[i] != null) {
+				components.push(i + "=" + encodeURIComponent(params[i]));
+			}
+		}
 
-        var path = "/error?" + components.join("&");
+		var url = "http://" + this.info.server + "/error?" +
+					components.join("&");
 
-        $.ajax({
-            dataType: "xml",
-            timeout: wot.api.info.timeout,
-            url: "http://" + wot.api.info.server + path
-        });
-    },
+		$.ajax({ url: url });
+	},
 
 	setids: function(tag, data)
 	{
@@ -192,7 +195,7 @@ $.extend(wot, { api: {
 			var elems = data.getElementsByTagName(tag);
 
 			if (!elems || !elems.length) {
-                this.error("api.setids: missing tag " + tag);
+				this.error("api.setids: missing tag " + tag);
 				return false;
 			}
 
@@ -200,14 +203,14 @@ $.extend(wot, { api: {
 			var key = elems[0].getAttribute("key");
 
 			if (!id || !key) {
-				this.log("api.setids: missing attribute");
+				this.error("api.setids: missing attribute");
 				return false;
 			}
 
 			var re  = /^[a-f0-9]{40}$/;
 
 			if (!re.test(id) || !re.test(key)) {
-				this.log("api.setids: invalid data");
+				this.error("api.setids: invalid data");
 				return false;
 			}
 
@@ -219,10 +222,9 @@ $.extend(wot, { api: {
 			wot.log("api.setids: id = " + id + "\n");
 			return true;
 		} catch (e) {
-			this.log("api.setids: failed with " + e);
+			this.error("api.setids: failed with " + e);
 		}
 
-		/* prevent register loops */
 		return false;
 	},
 
@@ -490,29 +492,28 @@ $.extend(wot, { api: {
 	{
 		onsuccess = onsuccess || function() {};
 
-        if (this.isregistered()) {
-            onsuccess();
-            return true;
-        }
+		if (this.isregistered()) {
+			onsuccess();
+			return true;
+		}
+		
+		retrycount = retrycount || 0;
 
-
-        retrycount = retrycount || 0;
-
-        if (++retrycount > this.info.maxregisterretries) {
-            return false;
-        }
+		if (++retrycount > this.info.maxregisterretries) {
+			return false;
+		}
 
 		this.call("register", {
 				secure: true
 			}, {
+				retrycount: retrycount
 			},
 			function(request)
 			{
 				if (request.status != 403) {
-                    wot.api.retry("register", [ onsuccess, retrycount ]);
-                    wot.api.error("api.register: failed with status " +
-                        request.status);
-
+					wot.api.retry("register", [ onsuccess, retrycount ]);
+					wot.api.error("api.register: failed with status " +
+						request.status);
 				}
 			},
 			function(data)
@@ -520,7 +521,7 @@ $.extend(wot, { api: {
 				if (wot.api.setids("register", data)) {
 					onsuccess();
 				} else {
-                    wot.api.retry("register", [ onsuccess, retrycount ]);
+					wot.api.retry("register", [ onsuccess, retrycount ]);
 				}
 			});
 	},
