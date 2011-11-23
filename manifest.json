@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "1.2.6",
+	"version": "1.2.7",
 	"default_locale": "en",
 	"description": "Web of Trust shows you which websites people trust for safe surfing, shopping and searching on the web.",
 	"icons": {
