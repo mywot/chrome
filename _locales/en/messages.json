@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "en-US"
 	},
+	"ext_description": {
+	    "message": "Web of Trust shows you which websites people trust for safe surfing, shopping and searching on the web."
+	},
 	"components_0": {
 		"message": "Trustworthiness"
 	},

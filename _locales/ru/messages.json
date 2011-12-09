@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "ru-RU"
 	},
+	"ext_description": {
+		"message": "Web Of Trust показывает, каким сайтам люди доверяют в интернете."
+	},
 	"components_0": {
 		"message": "Заслуживает доверие"
 	},
