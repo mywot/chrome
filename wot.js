@@ -1,6 +1,6 @@
 /*
 	wot.js
-	Copyright © 2009, 2010, 2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2011  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20111125,
+	version: 20111227,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
@@ -28,7 +28,7 @@ var wot = {
 		{ name: 0 },
 		{ name: 1 },
 		{ name: 2 },
-		{ name: 4 },
+		{ name: 4 }
 	],
 
 	reputationlevels: [
