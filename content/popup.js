@@ -242,8 +242,6 @@ wot.popup = {
 			layer.style.width  = this.width  + "px";
 
 			var height = window.innerHeight - this.barsize;
-			console.log(window.innerHeight, height, this.barsize);
-
 			var width  = window.innerWidth  - this.barsize;
 
 			if (height < popupheight ||	width < this.width) {
