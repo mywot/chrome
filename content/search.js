@@ -299,7 +299,7 @@ wot.search = {
 	getreputation: function(data)
 	{
 		try {
-			var r = data[0] ? data[0].r : -1;
+			var r = data[0] && data[0].r ? data[0].r : -1;
 
 			if (this.settings.search_type == wot.searchtypes.trustworthiness) {
 				return r;

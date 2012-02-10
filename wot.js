@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20120203,
+	version: 20120210,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
@@ -375,7 +375,7 @@ var wot = {
 	geticon: function(r, size, accessible, plain)
 	{
 		var name = "/";
-		
+
 		if (typeof(r) == "number") {
 			name += this.getlevel(this.reputationlevels, r).name;
 		} else {
