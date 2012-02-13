@@ -197,7 +197,7 @@ $.extend(wot, { ratingwindow: {
 				cachedv = cached.value[item.name];
 
 			if (t >= 0) {
-				var r = (cachedv && cachedv.r != undefined) ?
+				var r = (cachedv && cachedv.r != null) ?
 					cachedv.r : -1;
 
 				if (r >= 0 && Math.abs(r - t) > 35) {

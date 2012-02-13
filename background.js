@@ -1,6 +1,6 @@
 /*
 	background.js
-	Copyright © 2009-2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -83,10 +83,11 @@ $.extend(wot, { core: {
 		
 			if (cached.status == wot.cachestatus.ok) {
 				/* reputation */
+				var def_comp = cached.value[wot.default_component];
+
 				var result = wot.getlevel(wot.reputationlevels,
-								cached.value[wot.default_component] ?
-									cached.value[wot.default_component].r :
-									-1).name;
+								(def_comp && def_comp.r != null) ?
+									def_comp.r : -1).name;
 
 				/* additional classes */
 				if (result != "rx") {
@@ -110,7 +111,7 @@ $.extend(wot, { core: {
 			
 			return "default";
 		} catch (e) {
-			console.log("core.geticon: failed with " + e + "\n");
+			console.log("core.geticon: failed with " + e);
 		}
 
 		return "error";

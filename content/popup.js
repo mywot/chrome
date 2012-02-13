@@ -125,7 +125,7 @@ wot.popup = {
 				wot.popup.onmousemove(event);
 			}, false);
 		} catch (e) {
-			console.log("popup.add: failed with " + e + "\n");
+			console.log("popup.add: failed with " + e);
 		}
 	},
 
@@ -142,8 +142,10 @@ wot.popup = {
 			this.offsetheight = 0;
 
 			wot.components.forEach(function(item) {
-				var r = cached.value[item.name] ?
-					cached.value[item.name].r : -1;
+
+				var cachedv = cached.value[item.name];
+
+				var r = (cachedv && cachedv.r != null) ? cachedv.r : -1;
 
 				var elem = document.getElementById("wot-r" + item.name +
 					"-rep" + wot.popup.postfix);
@@ -153,8 +155,7 @@ wot.popup = {
 						wot.getlevel(wot.reputationlevels, r).name);
 				}
 
-				var c = cached.value[item.name] ?
-					cached.value[item.name].c : -1;
+				var c = (cachedv && cachedv.c != null) ? cachedv.c : -1;
 
 				elem = document.getElementById("wot-r" + item.name +
 					"-cnf" + wot.popup.postfix);
@@ -192,7 +193,7 @@ wot.popup = {
 
 			return true;
 		} catch (e) {
-			console.log("popup.updatecontents: failed with " + e + "\n");
+			console.log("popup.updatecontents: failed with " + e);
 		}
 
 		return false;
@@ -287,7 +288,7 @@ wot.popup = {
 				this.delayedshow(layer, posy, posx);
 			}
 		} catch (e) {
-			console.log("popup.show: failed with " + e + "\n");
+			console.log("popup.show: failed with " + e);
 		}
 	},
 
@@ -312,10 +313,10 @@ wot.popup = {
 			if (layer && (!version || version == this.version) &&
 				(force || !this.onpopup)) {
 				layer.style.display = "none";
-				wot.log("popup.hide: version = " + version + "\n");
+				wot.log("popup.hide: version = " + version);
 			}
 		} catch (e) {
-			console.log("popup.hide: failed with " + e + "\n");
+			console.log("popup.hide: failed with " + e);
 		}
 	},
 
@@ -348,7 +349,7 @@ wot.popup = {
 			this.onpopup = onpopup;
 			return (elem && attr) ? elem : null;
 		} catch (e) {
-			console.log("popup.findelem: failed with " + e + "\n");
+			console.log("popup.findelem: failed with " + e);
 		}
 
 		return null;
@@ -385,7 +386,7 @@ wot.popup = {
 				}
 			}
 		} catch (e) {
-			console.log("popup.onmousemove: failed with " + e + "\n");
+			console.log("popup.onmousemove: failed with " + e);
 		}
 	},
 
@@ -404,7 +405,7 @@ wot.popup = {
 				}
 			}
 		} catch (e) {
-			console.log("popup.onclick: failed with " + e + "\n");
+			console.log("popup.onclick: failed with " + e);
 		}
 	}
 };

@@ -225,9 +225,11 @@ wot.warning = {
 			];
 
 			wot.components.forEach(function(item) {
+
+				var cachedv = data.cached.value[item.name];
+
 				var level = wot.getlevel(wot.reputationlevels,
-								data.cached.value[item.name] ?
-									data.cached.value[item.name].r : -1);
+								(cachedv && cachedv.r != null) ? cachedv.r : -1);
 
 				replaces.push({
 					from: "RATINGDESC" + item.name,
