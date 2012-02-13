@@ -244,6 +244,9 @@ $.extend(wot, { ratingwindow: {
 
 		/* reputations */
 		wot.components.forEach(function(item) {
+
+			var cachedv = cached.value[item.name];
+
 			if (bg.wot.prefs.get("show_application_" + item.name)) {
 				$("#wot-rating-" + item.name + ", #wot-rating-" + item.name +
 					"-border").css("display", "block");
@@ -255,16 +258,12 @@ $.extend(wot, { ratingwindow: {
 			$("#wot-rating-" + item.name + "-reputation").attr("reputation",
 				(cached.status == wot.cachestatus.ok) ?
 					wot.getlevel(wot.reputationlevels,
-						(cached.value[item.name] &&
-							cached.value[item.name].r != undefined) ?
-						cached.value[item.name].r : -1).name : "");
+						(cachedv && cachedv.r != null) ? cachedv.r : -1).name : "");
 
 			$("#wot-rating-" + item.name + "-confidence").attr("confidence",
 				(cached.status == wot.cachestatus.ok) ?
 					wot.getlevel(wot.confidencelevels,
-						(cached.value[item.name] &&
-							cached.value[item.name].c != undefined)?
-						cached.value[item.name].c : -1).name : "");
+						(cachedv && cachedv.c != null)? cachedv.c : -1).name : "");
 		});
 
 		/* ratings */
