@@ -38,8 +38,11 @@ $.extend(wot, { ratingwindow: {
 		/* add existing ratings to state */
 		if (data && data.status == wot.cachestatus.ok) {
 			wot.components.forEach(function(item) {
-				if (data.value[item.name] && data.value[item.name].t >= 0) {
-					state[item.name] = { t: data.value[item.name].t };
+
+				var datav = data.value[item.name];
+
+				if (datav && datav.t >= 0) {
+					state[item.name] = { t: datav.t };
 				}
 			});
 		}
