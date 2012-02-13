@@ -299,7 +299,9 @@ wot.search = {
 	getreputation: function(data)
 	{
 		try {
-			var r = data[0] && data[0].r ? data[0].r : -1;
+			var def_comp = data[wot.default_component];
+
+			var r = (def_comp && def_comp.r != null) ? def_comp.r : -1;
 
 			if (this.settings.search_type == wot.searchtypes.trustworthiness) {
 				return r;
@@ -311,31 +313,32 @@ wot.search = {
 					return;
 				}
 
-				switch (wot.search.settings.search_type) {
-				case wot.searchtypes.optimized:
-					var type = wot.getwarningtypeforcomponent(item.name, data,
-									wot.search.settings);
+				var comp_obj = data[item.name];
 
-					if (type && data[item.name] && r > data[item.name].r) {
-						r = data[item.name].r;
-					}
-					break;
-				case wot.searchtypes.worst:
-					if (data[item.name] && data[item.name].r >= 0 &&
-							r > data[item.name].r) {
-						r = data[item.name].r;
-					}
-					break;
-				default:
-					wot.log("search.getreputation: unknown search type: " +
-						wot.search.settings.search_type + "\n");
-					return;
+				switch (wot.search.settings.search_type) {
+					case wot.searchtypes.optimized:
+						var type = wot.getwarningtypeforcomponent(item.name, data,
+										wot.search.settings);
+
+						if (type && comp_obj && r > comp_obj.r) {
+							r = comp_obj.r;
+						}
+						break;
+					case wot.searchtypes.worst:
+						if (comp_obj && comp_obj.r >= 0 && r > comp_obj.r) {
+							r = comp_obj.r;
+						}
+						break;
+					default:
+						wot.log("search.getreputation: unknown search type: " +
+							wot.search.settings.search_type);
+						return;
 				}
 			});
 
 			return r;
 		} catch (e) {
-			console.log("search.getreputation: failed with " + e + "\n");
+			console.log("search.getreputation: failed with " + e);
 		}
 
 		return -1;
