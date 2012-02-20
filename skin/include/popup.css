@@ -26,6 +26,8 @@
 	position: absolute;
 	z-index: 2147483647;
 	width: 136px;
+	cursor: default;
+	-webkit-user-select: none;
 }
 #wot-logo {
 	background: url("../fusion/popup-logo.png") top left no-repeat;

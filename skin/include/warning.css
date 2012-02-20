@@ -27,6 +27,8 @@
 	position: fixed ! important;
 	top: 0 ! important;
 	width: 100% ! important;
+	cursor: default;
+	-webkit-user-select: none;
 }
 #wotwarning {
 	background-color: #000000 ! important;
