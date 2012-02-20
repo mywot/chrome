@@ -78,10 +78,10 @@
 		"message": "Мой рейтинг"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Просмотр подробных данных о рейтингах."
+		"message": "Посмотреть подробности о рейтинге"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Добавьте свой комментарий."
+		"message": "(или добавить свой комментарий)"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "Сотрудничает с"
