@@ -376,9 +376,10 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:search:openscorecard", function(port, data) {
-				chrome.tabs.create({
-					url: wot.urls.scorecard + encodeURIComponent(data.target)
-				});
+				var url = wot.contextedurl(wot.urls.scorecard +
+					encodeURIComponent(data.target), data.ctx);
+
+				chrome.tabs.create({ url: url });
 			});
 
 			wot.bind("message:my:update", function(port, data) {

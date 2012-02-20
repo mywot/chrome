@@ -1,6 +1,6 @@
 /*
 	content/warning.js
-	Copyright © 2009-2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -124,7 +124,7 @@ wot.warning = {
 				return document.body.clientHeight;
 			}
 		} catch (e) {
-			console.log("warning.getheight: failed with " + e + "\n");
+			console.log("warning.getheight: failed with " + e);
 		}
 
 		return -1;
@@ -153,7 +153,7 @@ wot.warning = {
 				}
 			}
 		} catch (e) {
-			console.log("warning.hideobjects: failed with " + e + "\n");
+			console.log("warning.hideobjects: failed with " + e);
 		}
 	},
 
@@ -167,7 +167,7 @@ wot.warning = {
 
 			return html;
 		} catch (e) {
-			console.log("warning.processhtml: failed with " + e + "\n");
+			console.log("warning.processhtml: failed with " + e);
 		}
 
 		return "";
@@ -185,7 +185,7 @@ wot.warning = {
 				}
 			}
 		} catch (e) {
-			console.log("warning.hide: failed with " + e + "\n");
+			console.log("warning.hide: failed with " + e);
 		}
 	},
 
@@ -327,14 +327,15 @@ wot.warning = {
 
 			document.getElementById("wotinfobutton").addEventListener("click",
 				function() {
-					window.location.href = wot.urls.scorecard +
-						encodeURIComponent(data.target);
+					var url = wot.urls.scorecard + encodeURIComponent(data.target);
+					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
 				}, false);
 
 			document.getElementById("wotratebutton").addEventListener("click",
 				function() {
-					window.location.href = wot.urls.scorecard +
+					var url = wot.urls.scorecard +
 						encodeURIComponent(data.target) + "/rate";
+					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
 				}, false);
 
 			document.getElementById("wotgotobutton").addEventListener("click",
@@ -347,7 +348,7 @@ wot.warning = {
 					});
 				}, false);
 		} catch (e) {
-			console.log("warning.add: failed with " + e + "\n");
+			console.log("warning.add: failed with " + e);
 		}
 	},
 

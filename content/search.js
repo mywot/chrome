@@ -287,7 +287,7 @@ wot.search = {
 				insertpoint[0].appendChild(style);
 			}
 		} catch (e) {
-			console.log("search.addstyle: failed with " + e + "\n");
+			console.log("search.addstyle: failed with " + e);
 		}
 	},
 
@@ -397,7 +397,7 @@ wot.search = {
 				}
 			});
 		} catch (e) {
-			console.log("search.processframe: failed with " + e + "\n");
+			console.log("search.processframe: failed with " + e);
 		}
 	},
 
@@ -431,7 +431,7 @@ wot.search = {
 
 	onprocess: function(data)
 	{
-		wot.log("search.onprocess: " + data.url + "\n");
+		wot.log("search.onprocess: " + data.url);
 
 		if (this.matchrule(data.rule, window)) {
 			this.processframe(data.rule, window, function(targets) {
@@ -502,11 +502,16 @@ wot.search = {
 				event.target.getAttribute(wot.search.getattrname("target"));
 
 			if (target) {
-				wot.post("search", "openscorecard", { target: target });
+
+				wot.post("search", "openscorecard", {
+					target: target,
+					ctx: wot.urls.contexts.popupdonuts
+				});
+
 				event.stopPropagation();
 			}
 		} catch (e) {
-			console.log("search.onclickrating: failed with " + e + "\n");
+			console.log("search.onclickrating: failed with " + e);
 		}
 	},
 
@@ -538,7 +543,7 @@ wot.search = {
 				}
 			}
 		} catch (e) {
-			console.log("search.onload: failed with " + e + "\n");
+			console.log("search.onload: failed with " + e);
 		}
 	}
 };
