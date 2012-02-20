@@ -6,6 +6,7 @@ CHANGELOG
   #7, Make sure we don't assume blindly existance of r member
   #10, Prevent text selection in popover, warning screen and popup
   #12, Change russian text to better sounds
+  #11, Distinguish a context when opening mywot.com pages from an addon
 
 1.2.11, 20120203
 
