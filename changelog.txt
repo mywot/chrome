@@ -1,12 +1,13 @@
 CHANGELOG
 
-1.2.12, 20120220
+1.2.12, 20120305
 
   #5, Search results missing a rating symbol for unrated sites sometimes
   #7, Make sure we don't assume blindly existance of r member
   #10, Prevent text selection in popover, warning screen and popup
   #12, Change russian text to better sounds
   #11, Distinguish a context when opening mywot.com pages from an addon
+  #16, Don't show warning screen immediately after rating site
 
 1.2.11, 20120203
 
