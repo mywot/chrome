@@ -73,6 +73,10 @@ $.extend(wot, { ratingwindow: {
 			/* check for rating changes */
 			if (bg.wot.cache.cacheratingstate(this.state.target,
 							this.state)) {
+
+				// don't show warning screen immediately after rating
+				bg.wot.cache.setflags(this.state.target, {warned: true });
+
 				/* submit new ratings */
 				var params = {};
 
@@ -84,6 +88,7 @@ $.extend(wot, { ratingwindow: {
 				});
 
 				bg.wot.api.submit(this.state.target, params);
+
 			}
 
 			/* update all views */
