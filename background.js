@@ -150,7 +150,7 @@ $.extend(wot, { core: {
 				this.seticon(tab, data);
 
 				/* update the rating window */
-				var views = chrome.extension.getViews();
+				var views = chrome.extension.getViews({});
 
 				for (var i in views) {
 					if (views[i].wot.ratingwindow) {
