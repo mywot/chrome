@@ -353,8 +353,10 @@ wot.search = {
 
 			var r = this.getreputation(obj);
 
-			if (this.settings.use_search_level &&
-					r >= this.settings.search_level) {
+			if ((this.settings.use_search_level &&
+					r >= this.settings.search_level) ||
+					(rule.searchlevel != null &&
+						r >= rule.searchlevel)) {
 				return css;
 			}
 
