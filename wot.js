@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20120119,
+	version: 20120409,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
@@ -76,7 +76,20 @@ var wot = {
 		scorecard:	"http://www.mywot.com/scorecard/",
 		settings:	"http://www.mywot.com/settings",
 		setcookies:	"http://www.mywot.com/setcookies.php",
-		update:		"http://www.mywot.com/update"
+		update:		"http://www.mywot.com/update",
+
+		contexts: {
+			rwlogo:     "rw-logo",
+			rwsettings: "rw-settings",
+			rwguide:    "rw-guide",
+			rwviewsc:   "rw-viewsc",
+			rwprofile:  "rw-profile",
+			rwmsg:      "rw-msg",
+			warnviewsc: "warn-viewsc",
+			warnrate:   "warn-rate",
+			popupviewsc: "popup",
+			popupdonuts: "popup-donuts"
+	    }
 	},
 
 	firstrunupdate: 1, /* increase to show a page after an update */
@@ -375,7 +388,7 @@ var wot = {
 	geticon: function(r, size, accessible, plain)
 	{
 		var name = "/";
-		
+
 		if (typeof(r) == "number") {
 			name += this.getlevel(this.reputationlevels, r).name;
 		} else {
@@ -393,5 +406,17 @@ var wot = {
 		}
 
 		return path + size + "_" + size + name + ".png";
+	},
+
+	contextedurl: function(url, context)
+	{
+		var newurl = url;
+		context = "addon-" + context;
+		if(url.indexOf("?") > 0) {
+			newurl += "&src=" + context;
+		} else {
+			newurl += "?src=" + context;
+		}
+		return newurl;
 	}
 };

@@ -38,8 +38,11 @@ $.extend(wot, { ratingwindow: {
 		/* add existing ratings to state */
 		if (data && data.status == wot.cachestatus.ok) {
 			wot.components.forEach(function(item) {
-				if (data.value[item.name] && data.value[item.name].t >= 0) {
-					state[item.name] = { t: data.value[item.name].t };
+
+				var datav = data.value[item.name];
+
+				if (datav && datav.t >= 0) {
+					state[item.name] = { t: datav.t };
 				}
 			});
 		}
@@ -70,6 +73,10 @@ $.extend(wot, { ratingwindow: {
 			/* check for rating changes */
 			if (bg.wot.cache.cacheratingstate(this.state.target,
 							this.state)) {
+
+				// don't show warning screen immediately after rating
+				bg.wot.cache.setflags(this.state.target, {warned: true });
+
 				/* submit new ratings */
 				var params = {};
 
@@ -81,24 +88,26 @@ $.extend(wot, { ratingwindow: {
 				});
 
 				bg.wot.api.submit(this.state.target, params);
+
 			}
 
 			/* update all views */
 			bg.wot.core.update();
 		} catch (e) {
-			console.log("ratingwindow.finishstate: failed with " + e + "\n");
+			console.log("ratingwindow.finishstate: failed with " + e);
 		}
 	},
 
 	/* helpers */
 
-	navigate: function(url)
+	navigate: function(url, context)
 	{
 		try {
-			chrome.tabs.create({ url: url });
+			var contextedurl = wot.contextedurl(url, context);
+			chrome.tabs.create({ url: contextedurl });
 			this.hide();
 		} catch (e) {
-			console.log("ratingwindow.navigate: failed with " + e + "\n");
+			console.log("ratingwindow.navigate: failed with " + e);
 		}
 	},
 
@@ -134,7 +143,7 @@ $.extend(wot, { ratingwindow: {
 				return position;
 			}
 		} catch (e) {
-			console.log("ratingwindow.getrating: failed with " + e + "\n");
+			console.log("ratingwindow.getrating: failed with " + e);
 		}
 
 		return -1;
@@ -168,11 +177,11 @@ $.extend(wot, { ratingwindow: {
 				elems[elem] = $("#wot-rating-" + item.name + "-" + elem);
 			});
 
-			var t = -1;
+			var t = -1,
+				wrs = wot.ratingwindow.state[item.name];
 
-			if (wot.ratingwindow.state[item.name] &&
-					wot.ratingwindow.state[item.name].t != null) {
-				t = wot.ratingwindow.state[item.name].t;
+			if (wrs && wrs.t != null) {
+				t = wrs.t;
 			}
 
 			if (t >= 0) {
@@ -193,11 +202,12 @@ $.extend(wot, { ratingwindow: {
 				elems.stack.removeClass("testimony").removeClass("hover");
 			}
 
-			var helptext = "";
+			var helptext = "",
+				cachedv = cached.value[item.name];
 
 			if (t >= 0) {
-				var r = cached.value[item.name] ?
-							cached.value[item.name].r : -1;
+				var r = (cachedv && cachedv.r != null) ?
+					cachedv.r : -1;
 
 				if (r >= 0 && Math.abs(r - t) > 35) {
 					helptext = wot.i18n("ratingwindow", "helptext");
@@ -243,6 +253,9 @@ $.extend(wot, { ratingwindow: {
 
 		/* reputations */
 		wot.components.forEach(function(item) {
+
+			var cachedv = cached.value[item.name];
+
 			if (bg.wot.prefs.get("show_application_" + item.name)) {
 				$("#wot-rating-" + item.name + ", #wot-rating-" + item.name +
 					"-border").css("display", "block");
@@ -254,14 +267,12 @@ $.extend(wot, { ratingwindow: {
 			$("#wot-rating-" + item.name + "-reputation").attr("reputation",
 				(cached.status == wot.cachestatus.ok) ?
 					wot.getlevel(wot.reputationlevels,
-						cached.value[item.name] ?
-						cached.value[item.name].r : -1).name : "");
+						(cachedv && cachedv.r != null) ? cachedv.r : -1).name : "");
 
 			$("#wot-rating-" + item.name + "-confidence").attr("confidence",
 				(cached.status == wot.cachestatus.ok) ?
 					wot.getlevel(wot.confidencelevels,
-						cached.value[item.name] ?
-						cached.value[item.name].c : -1).name : "");
+						(cachedv && cachedv.c != null)? cachedv.c : -1).name : "");
 		});
 
 		/* ratings */
@@ -390,15 +401,17 @@ $.extend(wot, { ratingwindow: {
 
 		/* user interface event handlers */
 
+		var wurls = wot.urls;
+
 		$("#wot-header-logo").bind("click", function() {
-			wot.ratingwindow.navigate(wot.urls.base);
+			wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
 		});
 
 		$("#wot-header-link-settings").bind("click", function() {
-			wot.ratingwindow.navigate(wot.urls.settings);
+			wot.ratingwindow.navigate(wurls.settings, wurls.contexts.rwsettings);
 		});
 		$("#wot-header-link-guide").bind("click", function() {
-			wot.ratingwindow.navigate(wot.urls.settings + "/guide");
+			wot.ratingwindow.navigate(wurls.settings + "/guide", wurls.contexts.rwguide);
 		});
 
 		$("#wot-header-button").bind("click", function() {
@@ -412,9 +425,11 @@ $.extend(wot, { ratingwindow: {
 		$(".wot-rating-helplink, #wot-scorecard-comment").bind("click",
 			function(event) {
 				if (wot.ratingwindow.current.target) {
-					wot.ratingwindow.navigate(wot.urls.scorecard +
+					var url = wurls.scorecard +
 						encodeURIComponent(wot.ratingwindow.current.target) +
-						"/comment");
+						"/comment";
+
+					wot.ratingwindow.navigate(url, wurls.contexts.rwviewsc);
 				}
 				event.stopPropagation();
 			});
@@ -430,21 +445,22 @@ $.extend(wot, { ratingwindow: {
 		$("#wot-scorecard-content").bind("click", function() {
 			if (wot.ratingwindow.current.target) {
 				wot.ratingwindow.navigate(wot.urls.scorecard +
-					encodeURIComponent(wot.ratingwindow.current.target));
+					encodeURIComponent(wot.ratingwindow.current.target),
+						wurls.contexts.rwviewsc);
 			}
 		});
 
 		$(".wot-user-text").bind("click", function() {
 			var url = $(this).attr("url");
 			if (url) {
-				wot.ratingwindow.navigate(url);
+				wot.ratingwindow.navigate(url, wurls.contexts.rwprofile);
 			}
 		});
 
 		$("#wot-message").bind("click", function() {
 			var url = $("#wot-message-text").attr("url");
 			if (url) {
-				wot.ratingwindow.navigate(url);
+				wot.ratingwindow.navigate(url, wurls.contexts.rwmsg);
 			}
 		});
 

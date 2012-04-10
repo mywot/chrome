@@ -287,7 +287,7 @@ wot.search = {
 				insertpoint[0].appendChild(style);
 			}
 		} catch (e) {
-			console.log("search.addstyle: failed with " + e + "\n");
+			console.log("search.addstyle: failed with " + e);
 		}
 	},
 
@@ -299,7 +299,9 @@ wot.search = {
 	getreputation: function(data)
 	{
 		try {
-			var r = data[0] ? data[0].r : -1;
+			var def_comp = data[wot.default_component];
+
+			var r = (def_comp && def_comp.r != null) ? def_comp.r : -1;
 
 			if (this.settings.search_type == wot.searchtypes.trustworthiness) {
 				return r;
@@ -311,31 +313,32 @@ wot.search = {
 					return;
 				}
 
-				switch (wot.search.settings.search_type) {
-				case wot.searchtypes.optimized:
-					var type = wot.getwarningtypeforcomponent(item.name, data,
-									wot.search.settings);
+				var comp_obj = data[item.name];
 
-					if (type && data[item.name] && r > data[item.name].r) {
-						r = data[item.name].r;
-					}
-					break;
-				case wot.searchtypes.worst:
-					if (data[item.name] && data[item.name].r >= 0 &&
-							r > data[item.name].r) {
-						r = data[item.name].r;
-					}
-					break;
-				default:
-					wot.log("search.getreputation: unknown search type: " +
-						wot.search.settings.search_type + "\n");
-					return;
+				switch (wot.search.settings.search_type) {
+					case wot.searchtypes.optimized:
+						var type = wot.getwarningtypeforcomponent(item.name, data,
+										wot.search.settings);
+
+						if (type && comp_obj && r > comp_obj.r) {
+							r = comp_obj.r;
+						}
+						break;
+					case wot.searchtypes.worst:
+						if (comp_obj && comp_obj.r >= 0 && r > comp_obj.r) {
+							r = comp_obj.r;
+						}
+						break;
+					default:
+						wot.log("search.getreputation: unknown search type: " +
+							wot.search.settings.search_type);
+						return;
 				}
 			});
 
 			return r;
 		} catch (e) {
-			console.log("search.getreputation: failed with " + e + "\n");
+			console.log("search.getreputation: failed with " + e);
 		}
 
 		return -1;
@@ -350,8 +353,10 @@ wot.search = {
 
 			var r = this.getreputation(obj);
 
-			if (this.settings.use_search_level &&
-					r >= this.settings.search_level) {
+			if ((this.settings.use_search_level &&
+					r >= this.settings.search_level) ||
+					(rule.searchlevel != null &&
+						r >= rule.searchlevel)) {
 				return css;
 			}
 
@@ -394,7 +399,7 @@ wot.search = {
 				}
 			});
 		} catch (e) {
-			console.log("search.processframe: failed with " + e + "\n");
+			console.log("search.processframe: failed with " + e);
 		}
 	},
 
@@ -428,7 +433,7 @@ wot.search = {
 
 	onprocess: function(data)
 	{
-		wot.log("search.onprocess: " + data.url + "\n");
+		wot.log("search.onprocess: " + data.url);
 
 		if (this.matchrule(data.rule, window)) {
 			this.processframe(data.rule, window, function(targets) {
@@ -499,11 +504,16 @@ wot.search = {
 				event.target.getAttribute(wot.search.getattrname("target"));
 
 			if (target) {
-				wot.post("search", "openscorecard", { target: target });
+
+				wot.post("search", "openscorecard", {
+					target: target,
+					ctx: wot.urls.contexts.popupdonuts
+				});
+
 				event.stopPropagation();
 			}
 		} catch (e) {
-			console.log("search.onclickrating: failed with " + e + "\n");
+			console.log("search.onclickrating: failed with " + e);
 		}
 	},
 
@@ -535,7 +545,7 @@ wot.search = {
 				}
 			}
 		} catch (e) {
-			console.log("search.onload: failed with " + e + "\n");
+			console.log("search.onload: failed with " + e);
 		}
 	}
 };

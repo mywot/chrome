@@ -20,6 +20,8 @@
 
 body {
 	overflow: hidden;
+	cursor: default;
+	-webkit-user-select: none;
 }
 #wot-ratingwindow {
 	display: block;
@@ -142,6 +144,7 @@ body {
 	padding-left: 3px;
 	vertical-align: middle;
 	width: 312px;
+	-webkit-user-select: text;
 }
 #wot-ratingwindow[status="disabled"] #wot-title-text:hover {
 	color: #3073c5;

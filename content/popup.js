@@ -1,47 +1,47 @@
 /*
-	content/popup.js
-	Copyright © 2009  WOT Services Oy <info@mywot.com>
+ content/popup.js
+ Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
 
-	This file is part of WOT.
+ This file is part of WOT.
 
-	WOT is free software: you can redistribute it and/or modify it
-	under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
+ WOT is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-	WOT is distributed in the hope that it will be useful, but WITHOUT
-	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-	License for more details.
+ WOT is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with WOT. If not, see <http://www.gnu.org/licenses/>.
-*/
+ You should have received a copy of the GNU General Public License
+ along with WOT. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 const WOT_POPUP_HTML =
 	"<div id=\"wot-logo\" class=\"{ACCESSIBLE}\"></div>" +
-	"<div id=\"wot-ratings{ID}\" class=\"wot-ratings\">" +
+		"<div id=\"wot-ratings{ID}\" class=\"wot-ratings\">" +
 		"<div id=\"wot-r0-stack{ID}\" class=\"wot-stack\">" +
-			"<div id=\"wot-r0-header{ID}\" class=\"wot-header\">{POPUPTEXT0}</div>" +
-			"<div id=\"wot-r0-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
-			"<div id=\"wot-r0-cnf{ID}\" class=\"wot-cnf\"></div>" +
+		"<div id=\"wot-r0-header{ID}\" class=\"wot-header\">{POPUPTEXT0}</div>" +
+		"<div id=\"wot-r0-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
+		"<div id=\"wot-r0-cnf{ID}\" class=\"wot-cnf\"></div>" +
 		"</div>" +
 		"<div id=\"wot-r1-stack{ID}\" class=\"wot-stack\">" +
-			"<div id=\"wot-r1-header{ID}\" class=\"wot-header\">{POPUPTEXT1}</div>" +
-			"<div id=\"wot-r1-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
-			"<div id=\"wot-r1-cnf{ID}\" class=\"wot-cnf\"></div>" +
+		"<div id=\"wot-r1-header{ID}\" class=\"wot-header\">{POPUPTEXT1}</div>" +
+		"<div id=\"wot-r1-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
+		"<div id=\"wot-r1-cnf{ID}\" class=\"wot-cnf\"></div>" +
 		"</div>" +
 		"<div id=\"wot-r2-stack{ID}\" class=\"wot-stack\">" +
-			"<div id=\"wot-r2-header{ID}\" class=\"wot-header\">{POPUPTEXT2}</div>" +
-			"<div id=\"wot-r2-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
-			"<div id=\"wot-r2-cnf{ID}\" class=\"wot-cnf\"></div>" +
+		"<div id=\"wot-r2-header{ID}\" class=\"wot-header\">{POPUPTEXT2}</div>" +
+		"<div id=\"wot-r2-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
+		"<div id=\"wot-r2-cnf{ID}\" class=\"wot-cnf\"></div>" +
 		"</div>" +
 		"<div id=\"wot-r4-stack{ID}\" class=\"wot-stack\">" +
-			"<div id=\"wot-r4-header{ID}\" class=\"wot-header\">{POPUPTEXT4}</div>" +
-			"<div id=\"wot-r4-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
-			"<div id=\"wot-r4-cnf{ID}\" class=\"wot-cnf\"></div>" +
+		"<div id=\"wot-r4-header{ID}\" class=\"wot-header\">{POPUPTEXT4}</div>" +
+		"<div id=\"wot-r4-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
+		"<div id=\"wot-r4-cnf{ID}\" class=\"wot-cnf\"></div>" +
 		"</div>" +
-	"</div>";
+		"</div>";
 
 wot.popup = {
 	cache:			{},
@@ -82,7 +82,7 @@ wot.popup = {
 			style.setAttribute("type", "text/css");
 			style.innerText = "@import \"" +
 				chrome.extension.getURL(wot.getincludepath("popup.css")) +
-					"\";";
+				"\";";
 
 			var head = document.getElementsByTagName("head");
 
@@ -99,15 +99,15 @@ wot.popup = {
 			layer.setAttribute("style", "display: none; cursor: pointer;");
 
 			var accessible = wot.search.settings.accessible ?
-								"accessible" : "";
+				"accessible" : "";
 
 			var replaces = [ {
-					from: "ID",
-					to: wot.popup.postfix
-				}, {
-					from: "ACCESSIBLE",
-					to: accessible
-				} ];
+				from: "ID",
+				to: wot.popup.postfix
+			}, {
+				from: "ACCESSIBLE",
+				to: accessible
+			} ];
 
 			wot.components.forEach(function(item) {
 				replaces.push({
@@ -122,59 +122,19 @@ wot.popup = {
 			layer.addEventListener("click", this.onclick, false);
 
 			document.addEventListener("mousemove", function(event) {
-					wot.popup.onmousemove(event);
-				}, false);
+				wot.popup.onmousemove(event);
+			}, false);
 		} catch (e) {
-			console.log("popup.add: failed with " + e + "\n");
+			console.log("popup.add: failed with " + e);
 		}
-	},
-
-	getelemposx: function(elem)
-	{
-	    var curtop = 0;
-
-		try {
-		    if (elem.offsetParent) {
-		        while (elem.offsetParent) {
-		            curtop += elem.offsetLeft;
-		            elem = elem.offsetParent;
-		        }
-		    } else if (elem.x) {
-		        curtop += elem.x;
-		    }
-		} catch (e) {
-			console.log("popup.getelemposx: failed with " + e + "\n");
-		}
-
-	    return curtop;
-	},
-
-	getelemposy: function(elem)
-	{
-	    var curtop = 0;
-
-		try {
-		    if (elem.offsetParent) {
-		        while (elem.offsetParent) {
-		            curtop += elem.offsetTop;
-		            elem = elem.offsetParent;
-		        }
-		    } else if (elem.y) {
-		        curtop += elem.y;
-		    }
-		} catch (e) {
-			console.log("popup.getelemposx: failed with " + e + "\n");
-		}
-
-	    return curtop;
 	},
 
 	updatecontents: function(cached)
 	{
 		try {
 			if (!cached ||
-					(cached.status != wot.cachestatus.ok &&
-					 cached.status != wot.cachestatus.link)) {
+				(cached.status != wot.cachestatus.ok &&
+					cached.status != wot.cachestatus.link)) {
 				return false;
 			}
 
@@ -182,22 +142,23 @@ wot.popup = {
 			this.offsetheight = 0;
 
 			wot.components.forEach(function(item) {
-				var r = cached.value[item.name] ?
-							cached.value[item.name].r : -1;
+
+				var cachedv = cached.value[item.name];
+
+				var r = (cachedv && cachedv.r != null) ? cachedv.r : -1;
 
 				var elem = document.getElementById("wot-r" + item.name +
-							"-rep" + wot.popup.postfix);
+					"-rep" + wot.popup.postfix);
 
 				if (elem) {
 					elem.setAttribute("reputation",
 						wot.getlevel(wot.reputationlevels, r).name);
 				}
 
-				var c = cached.value[item.name] ?
-							cached.value[item.name].c : -1;
+				var c = (cachedv && cachedv.c != null) ? cachedv.c : -1;
 
 				elem = document.getElementById("wot-r" + item.name +
-							"-cnf" + wot.popup.postfix);
+					"-cnf" + wot.popup.postfix);
 
 				if (elem) {
 					elem.setAttribute("confidence",
@@ -205,7 +166,7 @@ wot.popup = {
 				}
 
 				elem = document.getElementById("wot-r" + item.name + "-stack" +
-							wot.popup.postfix);
+					wot.popup.postfix);
 
 				if (elem) {
 					if (wot.search.settings["show_application_" + item.name]) {
@@ -223,7 +184,7 @@ wot.popup = {
 			}
 
 			var ratings = document.getElementById("wot-ratings" +
-							this.postfix);
+				this.postfix);
 
 			if (ratings) {
 				ratings.style.height = wot.popup.offsetheight +
@@ -232,7 +193,7 @@ wot.popup = {
 
 			return true;
 		} catch (e) {
-			console.log("popup.updatecontents: failed with " + e + "\n");
+			console.log("popup.updatecontents: failed with " + e);
 		}
 
 		return false;
@@ -262,15 +223,15 @@ wot.popup = {
 		var version = this.version;
 
 		window.setTimeout(function() {
-				if (wot.popup.target && version == wot.popup.version) {
-					layer.style.top  = posy + "px";
-					layer.style.left = posx + "px";
-					layer.style.display = "block";
+			if (wot.popup.target && version == wot.popup.version) {
+				layer.style.top  = posy + "px";
+				layer.style.left = posx + "px";
+				layer.style.display = "block";
 
-					wot.log("popup.delayedshow: x = " + posx + ", y = " +
-						posy + ", version = " + version + "\n");
-				}
-			}, wot.search.settings.popup_show_delay || 200);
+				wot.log("popup.delayedshow: x = " + posx + ", y = " +
+					posy + ", version = " + version + "\n");
+			}
+		}, wot.search.settings.popup_show_delay || 200);
 	},
 
 	show: function(layer)
@@ -292,10 +253,20 @@ wot.popup = {
 			var vscroll = window.pageYOffset;
 			var hscroll = window.pageXOffset;
 
-			var y = this.getelemposy(this.target);
-			var x = this.getelemposx(this.target);
+			// more accurate way to calc position
+			// got from http://javascript.ru/ui/offset
+			var elem = this.target;
+			var box = elem.getBoundingClientRect();
+			var body = document.body;
+			var docElem = document.documentElement;
+			var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+			var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+			var clientTop = docElem.clientTop || body.clientTop || 0;
+			var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+			var y  = box.top +  scrollTop - clientTop;
+			var x = box.left + scrollLeft - clientLeft;
 
-			var posy = this.offsety + y + this.target.offsetHeight;
+			var posy = this.offsety + y;//  + this.target.offsetHeight;
 			var posx = this.offsetx + x + this.target.offsetWidth;
 
 			if (posy + popupheight > height + vscroll) {
@@ -317,7 +288,7 @@ wot.popup = {
 				this.delayedshow(layer, posy, posx);
 			}
 		} catch (e) {
-			console.log("popup.show: failed with " + e + "\n");
+			console.log("popup.show: failed with " + e);
 		}
 	},
 
@@ -328,9 +299,9 @@ wot.popup = {
 			var version = this.version;
 
 			window.setTimeout(function() {
-					wot.popup.hide(version);
-					wot.popup.waitingforhide = false;
-				}, wot.search.settings.popup_hide_delay || 1000);
+				wot.popup.hide(version);
+				wot.popup.waitingforhide = false;
+			}, wot.search.settings.popup_hide_delay || 1000);
 		}
 	},
 
@@ -340,12 +311,12 @@ wot.popup = {
 			var layer = document.getElementById(this.id + this.postfix);
 
 			if (layer && (!version || version == this.version) &&
-					(force || !this.onpopup)) {
+				(force || !this.onpopup)) {
 				layer.style.display = "none";
-				wot.log("popup.hide: version = " + version + "\n");
+				wot.log("popup.hide: version = " + version);
 			}
 		} catch (e) {
-			console.log("popup.hide: failed with " + e + "\n");
+			console.log("popup.hide: failed with " + e);
 		}
 	},
 
@@ -378,7 +349,7 @@ wot.popup = {
 			this.onpopup = onpopup;
 			return (elem && attr) ? elem : null;
 		} catch (e) {
-			console.log("popup.findelem: failed with " + e + "\n");
+			console.log("popup.findelem: failed with " + e);
 		}
 
 		return null;
@@ -398,8 +369,8 @@ wot.popup = {
 
 					if (target) {
 						if (layer.style.display != "block" ||
-								layer.getAttribute(attr + this.postfix) !=
-									target) {
+							layer.getAttribute(attr + this.postfix) !=
+								target) {
 							layer.setAttribute(attr + this.postfix, target);
 
 							this.update(target, function() {
@@ -415,7 +386,7 @@ wot.popup = {
 				}
 			}
 		} catch (e) {
-			console.log("popup.onmousemove: failed with " + e + "\n");
+			console.log("popup.onmousemove: failed with " + e);
 		}
 	},
 
@@ -426,15 +397,17 @@ wot.popup = {
 
 			if (layer) {
 				var target = layer.getAttribute(wot.search.getattrname("target") +
-									wot.popup.postfix);
+					wot.popup.postfix);
 
 				if (target) {
-					wot.post("search", "openscorecard", { target: target });
+					wot.post("search", "openscorecard", { target: target,
+						ctx: wot.urls.contexts.popupviewsc });
+
 					wot.popup.hide(wot.popup.version, true);
 				}
 			}
 		} catch (e) {
-			console.log("popup.onclick: failed with " + e + "\n");
+			console.log("popup.onclick: failed with " + e);
 		}
 	}
 };
