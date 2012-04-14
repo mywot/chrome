@@ -232,7 +232,7 @@ $.extend(wot, { core: {
 					});
 
 				if (obj.id && obj.type &&
-						(obj.target == "all" || obj.target == "chrome") &&
+						(obj.target == "all" || obj.target == wot.platform) &&
 						(!obj.version || !obj.than ||
 						 	(obj.version == "eq" && wot.version == obj.than) ||
 							(obj.version == "le" && wot.version <= obj.than) ||
