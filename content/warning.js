@@ -344,7 +344,7 @@ wot.warning = {
 					wot.warning.hideobjects(false);
 					wot.post("cache", "setflags", {
 						target: data.target,
-						flags: { warned: true }
+						flags: { warned: true, warned_expire: null }
 					});
 				}, false);
 		} catch (e) {

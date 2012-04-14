@@ -168,9 +168,21 @@ $.extend(wot, { core: {
 
 	updatetabwarning: function(tab, data)
 	{
+		var cached = data.cached, warned = null;
 		try {
-			if (data.cached.status != wot.cachestatus.ok ||
-					data.cached.flags.warned) {
+
+
+			/* Check if "warned" flag is expired */
+			if(cached.flags && cached.flags.warned) {
+				warned = cached.flags.warned;
+
+				var ctime = (new Date()).getTime();
+				if(cached.flags.warned_expire && (ctime > cached.flags.warned_expire)) {
+					warned = false;
+				}
+			}
+
+			if (cached.status != wot.cachestatus.ok || warned) {
 				return; /* don't change the current status */
 			}
 			
@@ -193,7 +205,7 @@ $.extend(wot, { core: {
 				settings[item] = wot.prefs.get(item);
 			});
 
-			var type = wot.getwarningtype(data.cached.value, settings);
+			var type = wot.getwarningtype(cached.value, settings);
 
 			if (type && type.type == wot.warningtypes.overlay) {
 				var port = chrome.tabs.connect(tab.id, { name: "warning" });
@@ -208,7 +220,7 @@ $.extend(wot, { core: {
 				}
 			}
 		} catch (e) {
-			wot.log("core.updatetabwarning: failed with " + e + "\n");
+			wot.log("core.updatetabwarning: failed with " + e);
 		}
 	},
 

@@ -74,8 +74,9 @@ $.extend(wot, { ratingwindow: {
 			if (bg.wot.cache.cacheratingstate(this.state.target,
 							this.state)) {
 
-				// don't show warning screen immediately after rating
-				bg.wot.cache.setflags(this.state.target, {warned: true });
+				// don't show warning screen immediately after rating and set "expire to" flag
+				var warned_expire = (new Date()).getTime() + wot.expire_warned_after;
+				bg.wot.cache.setflags(this.state.target, {warned: true, warned_expire: warned_expire });
 
 				/* submit new ratings */
 				var params = {};
