@@ -78,10 +78,10 @@
 		"message": "My rating"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "View scorecard for rating details."
+		"message": "View scorecard for rating details"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Add your comment."
+		"message": "Add your comment"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "In partnership with"
@@ -105,12 +105,15 @@
 		"message": "Ignore warning and go to the site"
 	},
 	"warnings_reputation": {
-		"message": "This site has a poor reputation based on<br/>user ratings."
+		"message": "This site has a poor reputation based on<br/>user ratings"
 	},
 	"warnings_rating": {
-		"message": "You have given this site a poor rating,<br/>which triggered a warning."
+		"message": "You have given this site a poor rating,<br/>which triggered a warning"
 	},
 	"warnings_unknown": {
-		"message": "This site has an unknown rating."
+		"message": "This site has an unknown rating"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

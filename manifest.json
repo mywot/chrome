@@ -15,6 +15,7 @@
 	},
 	"permissions": [
 		"tabs",
+		"contextMenus",
 		"http://www.mywot.com/*",
 		"http://api.mywot.com/*",
 		"https://api.mywot.com/*"

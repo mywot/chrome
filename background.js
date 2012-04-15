@@ -355,6 +355,39 @@ $.extend(wot, { core: {
 		xhr.send();
 	},
 
+	open_scorecard: function(target, context)
+	{
+		if(!target) return;
+		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context);
+		chrome.tabs.create({ url: url });
+	},
+
+	handlemenu: function(info, tab)
+	{
+		var hostname = "",
+			re = /^.+\/{2}([\w.\-_+]+)(:\d+)?\/?.*$/;
+
+		if(info.linkUrl) {
+			var res = re.exec(info.linkUrl);
+			hostname = res[1] || "";
+		} else if (info.selectionText) {
+			hostname = info.selectionText || "";
+		} else {
+			return;
+		}
+
+		wot.core.open_scorecard(hostname, "contextmenu");
+	},
+
+	createmenu: function()
+	{
+		var menu_id = chrome.contextMenus.create({
+			title: wot.i18n("contextmenu", "open_scorecard"),
+			contexts: ["link", "selection"],
+			onclick: wot.core.handlemenu
+		});
+	},
+
 	onload: function()
 	{
 		try {
@@ -388,10 +421,7 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:search:openscorecard", function(port, data) {
-				var url = wot.contextedurl(wot.urls.scorecard +
-					encodeURIComponent(data.target), data.ctx);
-
-				chrome.tabs.create({ url: url });
+				wot.core.open_scorecard(data.target, data.ctx);
 			});
 
 			wot.bind("message:my:update", function(port, data) {
@@ -411,6 +441,8 @@ $.extend(wot, { core: {
 			chrome.tabs.onSelectionChanged.addListener(function(id, obj) {
 				wot.core.updatetab(id);
 			});
+
+			wot.core.createmenu();
 
 			if (wot.debug) {
 				wot.prefs.clear("update:state");
