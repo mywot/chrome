@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20120416,
+	version: 20120509,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
@@ -413,12 +413,8 @@ var wot = {
 	contextedurl: function(url, context)
 	{
 		var newurl = url;
-		context = "addon-" + context;
-		if(url.indexOf("?") > 0) {
-			newurl += "&src=" + context;
-		} else {
-			newurl += "?src=" + context;
-		}
+		newurl += ( (url.indexOf("?") > 0) ? "&" : "?" );
+		newurl += "utm_source=addon&utm_content=" + context;
 		return newurl;
 	}
 };
