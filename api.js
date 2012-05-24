@@ -326,6 +326,9 @@ $.extend(wot, { api: {
 			wot.prefs.set("firstrun:welcome", true);
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 
+			// remove this when experiment "Ninja donuts" is over
+			wot.prefs.set("ninja_donuts", true);
+
 			chrome.tabs.create({
 					url: wot.urls.settings + "/welcome"
 				}, onready);

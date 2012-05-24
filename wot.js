@@ -102,8 +102,6 @@ var wot = {
 		link:	4
 	},
 
-	ninja_donuts: true,
-
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
 	/* logging */

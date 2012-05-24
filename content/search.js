@@ -237,7 +237,7 @@ wot.search = {
 	{
 		try {
 			// ninja - is experimental feature to make donuts on the SERP hidden
-			var is_ninja = rule.ninja && wot.ninja_donuts;
+			var is_ninja = rule.ninja && wot.search.settings.ninja_donuts;
 
 			var elem = frame.document.createElement("div");
 
@@ -444,7 +444,8 @@ wot.search = {
 			"search_level",
 			"search_type",
 			"show_search_popup",
-			"use_search_level"
+			"use_search_level",
+			"ninja_donuts"
 		];
 
 		wot.components.forEach(function(item) {

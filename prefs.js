@@ -38,6 +38,7 @@ $.extend(wot, { prefs: {
 		show_application_4:		true,
 		show_search_popup:		true,
 		use_search_level:		false,
+		ninja_donuts:           false,
 		status_level:			"",
 		warning_level_0:		wot.reputationlevels[4].min - 1,
 		warning_level_1:		wot.reputationlevels[4].min - 1,
