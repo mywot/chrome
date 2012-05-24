@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20120509,
+	version: 20120524,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
@@ -101,6 +101,8 @@ var wot = {
 		retry:	3,
 		link:	4
 	},
+
+	ninja_donuts: true,
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 

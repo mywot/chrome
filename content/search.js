@@ -229,7 +229,7 @@ wot.search = {
 			});
 
 		} catch (e) {
-			console.log("search.processrule: failed with " + e + "\n");
+			console.log("search.processrule: failed with " + e);
 		}
 	},
 
@@ -241,11 +241,37 @@ wot.search = {
 			if (elem) {
 				elem.setAttribute(this.getattrname("target"), target);
 
-				elem.setAttribute("style",
-					"display: inline-block; " +
-					"cursor: pointer; " +
+				var initial_style = "cursor: pointer; " +
 					"width: 16px; " +
-					"height: 16px;");
+					"height: 16px;" +
+					"display: inline-block;";
+
+				if(wot.ninja_donuts)
+					initial_style += "visibility: hidden !important;";
+
+				elem.setAttribute("style", initial_style);
+
+				if(wot.ninja_donuts) {
+
+					function do_ninja(event) {
+						// It needs to be called as clojure to access "elem"
+						var visibility = " visible ";
+						if(event.type == "mouseout")
+							visibility = " hidden ";
+
+						var style = elem.getAttribute("style");
+
+						// simply replace "visibility" value
+						var new_style = style.replace(/(visibility:) (hidden|visible) (!important)/g,
+							function(str, g1, g2, g3, s) { return g1 + visibility + g3 })
+
+						elem.setAttribute("style", new_style)
+					}
+
+					// use parent to avoid hiding donut when cursor moves to it but goes out of the link
+					link.parentNode.addEventListener("mouseover", do_ninja, false);
+					link.parentNode.addEventListener("mouseout", do_ninja, false);
+				}
 
 				elem.addEventListener("click", this.onclickrating, false);
 
@@ -258,7 +284,7 @@ wot.search = {
 				elem.innerHTML = "&nbsp;";
 			}
 		} catch (e) {
-			console.log("search.addrating: failed with " + e + "\n");
+			console.log("search.addrating: failed with " + e);
 		}
 	},
 
