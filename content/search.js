@@ -263,7 +263,7 @@ wot.search = {
 
 						// simply replace "visibility" value
 						var new_style = style.replace(/(visibility:) (hidden|visible) (!important)/g,
-							function(str, g1, g2, g3, s) { return g1 + visibility + g3 })
+							function(str, g1, g2, g3, s) { return g1 + visibility + g3 });
 
 						elem.setAttribute("style", new_style)
 					}
@@ -282,6 +282,8 @@ wot.search = {
 				}
 
 				elem.innerHTML = "&nbsp;";
+
+				initial_style = undefined;  // clean up
 			}
 		} catch (e) {
 			console.log("search.addrating: failed with " + e);
