@@ -233,9 +233,12 @@ wot.search = {
 		}
 	},
 
-	addrating: function(target, link, frame)
+	addrating: function(target, link, frame, rule)
 	{
 		try {
+			// ninja - is experimental feature to make donuts on the SERP hidden
+			var is_ninja = rule.ninja && wot.ninja_donuts;
+
 			var elem = frame.document.createElement("div");
 
 			if (elem) {
@@ -246,12 +249,12 @@ wot.search = {
 					"height: 16px;" +
 					"display: inline-block;";
 
-				if(wot.ninja_donuts)
+				if(is_ninja)
 					initial_style += "visibility: hidden !important;";
 
 				elem.setAttribute("style", initial_style);
 
-				if(wot.ninja_donuts) {
+				if(is_ninja) {
 
 					function do_ninja(event) {
 						// It needs to be called as clojure to access "elem"
@@ -414,7 +417,7 @@ wot.search = {
 				link.setAttribute(this.getattrname("processed"), true);
 
 				this.processrule(rule, link, function(elem, target) {
-					wot.search.addrating(target, elem, frame);
+					wot.search.addrating(target, elem, frame, rule);
 					targets.push(target);
 				});
 			}
