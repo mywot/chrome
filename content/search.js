@@ -242,6 +242,9 @@ wot.search = {
 			var elem = frame.document.createElement("div");
 
 			if (elem) {
+
+				var link_parent = link.parentNode;
+
 				elem.setAttribute(this.getattrname("target"), target);
 
 				var initial_style = "cursor: pointer; " +
@@ -256,12 +259,11 @@ wot.search = {
 
 				if(is_ninja) {
 
-					function do_ninja(event) {
-						// It needs to be called as clojure to access "elem"
-						var visibility = " visible ";
-						if(event.type == "mouseout")
-							visibility = " hidden ";
+					var ninja_timer = null,
+						visibility = null;
 
+					// clojure
+					function set_visibility() {
 						var style = elem.getAttribute("style");
 
 						// simply replace "visibility" value
@@ -271,17 +273,35 @@ wot.search = {
 						elem.setAttribute("style", new_style)
 					}
 
+					function do_ninja(event) {
+						// It needs to be called as clojure to access "elem"
+
+						if (ninja_timer) clearTimeout(ninja_timer);
+
+						if(event.type == "mouseout") {
+
+								visibility = " hidden ";
+								// delay, to prevent premature hiding causes by bubled events from element's children
+								ninja_timer = setTimeout(set_visibility, 100);
+								return;
+						} else {
+								visibility = " visible ";
+						}
+
+						set_visibility();
+					}
+
 					// use parent to avoid hiding donut when cursor moves to it but goes out of the link
-					link.parentNode.addEventListener("mouseover", do_ninja, false);
-					link.parentNode.addEventListener("mouseout", do_ninja, false);
+					link_parent.addEventListener("mouseover", do_ninja, false);
+					link_parent.addEventListener("mouseout", do_ninja, false);
 				}
 
 				elem.addEventListener("click", this.onclickrating, false);
 
 				if (link.nextSibling) {
-					elem = link.parentNode.insertBefore(elem, link.nextSibling);
+					elem = link_parent.insertBefore(elem, link.nextSibling);
 				} else {
-					elem = link.parentNode.appendChild(elem);
+					elem = link_parent.appendChild(elem);
 				}
 
 				elem.innerHTML = "&nbsp;";
