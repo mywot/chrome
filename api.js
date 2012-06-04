@@ -327,7 +327,10 @@ $.extend(wot, { api: {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 
 			// remove this when experiment "Ninja donuts" is over
-			wot.prefs.set("ninja_donuts", true);
+			if(wot.i18n("lang") == "en-US") {
+				// enable ninja experiment only for english speakers
+				wot.prefs.set("ninja_donuts", true);
+			}
 
 			chrome.tabs.create({
 					url: wot.urls.settings + "/welcome"
