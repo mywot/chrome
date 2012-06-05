@@ -69,10 +69,10 @@
 		"message": "Leitfaden"
 	},
 	"ratingwindow_wotrating": {
-		"message": "WOT rating"
+		"message": "WOT-Bewertung"
 	},
 	"ratingwindow_myrating": {
-		"message": "My rating"
+		"message": "Meine Bewertung"
 	},
 	"ratingwindow_viewscorecard": {
 		"message": "Detailanzeige auf der Bewertungsliste."
@@ -102,12 +102,15 @@
 		"message": "Warnung ignorieren und Website aufrufen"
 	},
 	"warnings_reputation": {
-		"message": "Diese Seite hat einen schlechten Ruf basierend<br/>auf Benutzerbewertungen."
+		"message": "Diese Seite hat einen schlechten Ruf basierend<br/>auf Benutzerbewertungen"
 	},
 	"warnings_rating": {
-		"message": "Sie haben dieser Website eine schlechte Bewertung<br/>gegeben, die eine Warnung ausgelöst hat."
+		"message": "Sie haben dieser Website eine schlechte Bewertung<br/>gegeben, die eine Warnung ausgelöst hat"
 	},
 	"warnings_unknown": {
-		"message": "Diese Website besitzt eine unbekannte Bewertung."
+		"message": "Diese Website besitzt eine unbekannte Bewertung"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

@@ -109,5 +109,8 @@
 	},
 	"warnings_unknown": {
 		"message": "이 사이트는 평가를 가지고 있지 않습니다."
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

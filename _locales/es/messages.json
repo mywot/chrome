@@ -102,12 +102,15 @@
 		"message": "Omitir la advertencia e ir al sitio"
 	},
 	"warnings_reputation": {
-		"message": "Este sitio tiene una reputación pobre."
+		"message": "Este sitio tiene una reputación pobre"
 	},
 	"warnings_rating": {
-		"message": "Ha asignado a este sitio una valoración pobre,<br/>lo que ha desencadenado una advertencia."
+		"message": "Ha asignado a este sitio una valoración pobre,<br/>lo que ha desencadenado una advertencia"
 	},
 	"warnings_unknown": {
-		"message": "Este sitio tiene una valoración desconocida."
+		"message": "Este sitio tiene una valoración desconocida"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

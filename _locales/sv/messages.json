@@ -109,5 +109,8 @@
 	},
 	"warnings_unknown": {
 		"message": "Webbplatsen har en okänd klassificering."
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

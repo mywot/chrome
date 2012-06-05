@@ -102,12 +102,15 @@
 		"message": "Ohita varoitus ja siirry sivustoon"
 	},
 	"warnings_reputation": {
-		"message": "Tällä sivustolla on huono maine käyttäjien<br/>luokitusten perusteella."
+		"message": "Tällä sivustolla on huono maine käyttäjien<br/>luokitusten perusteella"
 	},
 	"warnings_rating": {
-		"message": "Sivustolle antamasi huono luokitus<br/>laukaisi varoituksen."
+		"message": "Sivustolle antamasi huono luokitus<br/>laukaisi varoituksen"
 	},
 	"warnings_unknown": {
-		"message": "Tämän sivuston luokitus on tuntematon."
+		"message": "Tämän sivuston luokitus on tuntematon"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

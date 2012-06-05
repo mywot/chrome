@@ -109,5 +109,8 @@
 	},
 	"warnings_unknown": {
 		"message": "此网站的评级未知。"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

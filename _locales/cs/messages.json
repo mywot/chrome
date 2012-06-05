@@ -102,12 +102,15 @@
 		"message": "Ignorovat varování a vstoupit na stránku"
 	},
 	"warnings_reputation": {
-		"message": "Reputace této stránky je špatná."
+		"message": "Reputace této stránky je špatná"
 	},
 	"warnings_rating": {
-		"message": "Dali jste této stránce špatné hodnocení,<br/>což spustilo varování."
+		"message": "Dali jste této stránce špatné hodnocení,<br/>což spustilo varování"
 	},
 	"warnings_unknown": {
-		"message": "Hodnocení této stránky není známo."
+		"message": "Hodnocení této stránky není známo"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

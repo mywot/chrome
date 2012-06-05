@@ -109,5 +109,8 @@
 	},
 	"warnings_unknown": {
 		"message": "Este site tem classificação desconhecida."
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

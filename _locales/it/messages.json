@@ -102,12 +102,15 @@
 		"message": "Ignora avviso e vai al sito"
 	},
 	"warnings_reputation": {
-		"message": "Questo sito ha una reputazione scadente."
+		"message": "Questo sito ha una reputazione scadente"
 	},
 	"warnings_rating": {
-		"message": "La valutazione scadente assegnata al<br/>sito ha generato un avviso."
+		"message": "La valutazione scadente assegnata al<br/>sito ha generato un avviso"
 	},
 	"warnings_unknown": {
-		"message": "Questo sito ha una valutazione sconosciuta."
+		"message": "Questo sito ha una valutazione sconosciuta"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }

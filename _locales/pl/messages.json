@@ -109,5 +109,8 @@
 	},
 	"warnings_unknown": {
 		"message": "Ocena tej witryny jest nieznana."
+	},
+	"contextmenu_open_scorecard": {
+		"message": "Open WOT scorecard"
 	}
 }
