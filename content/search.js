@@ -243,7 +243,6 @@ wot.search = {
 		try {
 			// ninja - is experimental feature to make donuts on the SERP hidden
 			var is_ninja = wot.search.is_ninja(rule);
-
 			var elem = frame.document.createElement("div");
 
 			if (elem) {
@@ -267,7 +266,7 @@ wot.search = {
 
 					// clojure
 					function set_visibility() {
-						elem.setAttribute("class", visibility)
+						elem.setAttribute("class", visibility);
 					}
 
 					function do_ninja(event) {
@@ -276,13 +275,12 @@ wot.search = {
 						if (ninja_timer) clearTimeout(ninja_timer);
 
 						if(event.type == "mouseout") {
-
-								visibility = "invisible";
+							visibility = "invisible";
 							// delay, to prevent premature hiding causes by bubled events from element's children
-								ninja_timer = setTimeout(set_visibility, 100);
-								return;
+							ninja_timer = setTimeout(set_visibility, 100);
+							return;
 						} else {
-								visibility = "visible";
+							visibility = "visible";
 						}
 
 						set_visibility();
