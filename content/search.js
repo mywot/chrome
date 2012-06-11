@@ -247,30 +247,22 @@ wot.search = {
 
 				elem.setAttribute(this.getattrname("target"), target);
 
-				var initial_style = "cursor: pointer; " +
+				if(is_ninja) elem.setAttribute("class", "invisible");
+
+				elem.setAttribute("style",
+					"cursor: pointer; " +
 					"width: 16px; " +
 					"height: 16px;" +
-					"display: inline-block;";
-
-				if(is_ninja)
-					initial_style += "visibility: hidden !important;";
-
-				elem.setAttribute("style", initial_style);
+					"display: inline-block;");
 
 				if(is_ninja) {
 
 					var ninja_timer = null,
-						visibility = null;
+						visibility = null; // class name to control donuts' visibility
 
 					// clojure
 					function set_visibility() {
-						var style = elem.getAttribute("style");
-
-						// simply replace "visibility" value
-						var new_style = style.replace(/(visibility:) (hidden|visible) (!important)/g,
-							function(str, g1, g2, g3, s) { return g1 + visibility + g3 });
-
-						elem.setAttribute("style", new_style)
+						elem.setAttribute("class", visibility)
 					}
 
 					function do_ninja(event) {
@@ -280,12 +272,12 @@ wot.search = {
 
 						if(event.type == "mouseout") {
 
-								visibility = " hidden ";
-								// delay, to prevent premature hiding causes by bubled events from element's children
+								visibility = "invisible";
+							// delay, to prevent premature hiding causes by bubled events from element's children
 								ninja_timer = setTimeout(set_visibility, 100);
 								return;
 						} else {
-								visibility = " visible ";
+								visibility = "visible";
 						}
 
 						set_visibility();
@@ -305,8 +297,6 @@ wot.search = {
 				}
 
 				elem.innerHTML = "&nbsp;";
-
-				initial_style = undefined;  // clean up
 			}
 		} catch (e) {
 			console.log("search.addrating: failed with " + e);
