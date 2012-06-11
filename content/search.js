@@ -233,11 +233,16 @@ wot.search = {
 		}
 	},
 
+	is_ninja: function(rule)
+	{
+		return rule.ninja && wot.search.settings.ninja_donuts;
+	},
+
 	addrating: function(target, link, frame, rule)
 	{
 		try {
 			// ninja - is experimental feature to make donuts on the SERP hidden
-			var is_ninja = rule.ninja && wot.search.settings.ninja_donuts;
+			var is_ninja = wot.search.is_ninja(rule);
 
 			var elem = frame.document.createElement("div");
 
@@ -480,6 +485,23 @@ wot.search = {
 		if (this.matchrule(data.rule, window)) {
 			this.processframe(data.rule, window, function(targets) {
 				/* add common styles */
+
+				if(wot.search.is_ninja(data.rule)) {
+					/* Visibility and CSS transitions for Ninja-donuts */
+					var ninja_style = "" +
+						"div[wotsearchtarget] {" +
+							"-webkit-transition: opacity 0.1s cubic-bezier(0.25,0.1,0.25,1) 0.5s;" +
+						"} " +
+						"div[wotsearchtarget].visible {" +
+							"-webkit-transition: opacity 0s;" +
+							"opacity: 1.0;" +
+						"} " +
+						"div[wotsearchtarget].invisible {" +
+							"opacity: 0.0;" +
+						"}";
+					wot.search.addstyle(ninja_style, window, "wotninja");
+				}
+
 				if (data.rule.prestyle) {
 					wot.search.addstyle(
 						wot.search.formatcss(data.rule.prestyle), window,
