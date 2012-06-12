@@ -329,7 +329,7 @@ $.extend(wot, { api: {
 			// remove this when experiment "Ninja donuts" is over
 //			if(wot.i18n("lang") == "en-US") {
 //				// enable ninja experiment only for english speakers
-//				wot.prefs.set("ninja_donuts", true);
+				wot.prefs.set("ninja_donuts", true);
 //			}
 
 			chrome.tabs.create({
