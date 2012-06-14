@@ -465,7 +465,6 @@ $.extend(wot, { core: {
 
 				if (wot.api.isregistered()) {
 					wot.api.setcookies();
-					wot.api.make_me_lucky(); // ninja test
 					wot.api.update();
 					wot.api.processpending();
 				}

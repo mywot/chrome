@@ -38,7 +38,7 @@ $.extend(wot, { prefs: {
 		show_application_4:		true,
 		show_search_popup:		true,
 		use_search_level:		false,
-		ninja_donuts:           0,
+		ninja_donuts:           false,
 		ninja_updateshown:      false,
 		ninja_announceshown:    0,
 		ninja_wave:             0,
