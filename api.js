@@ -288,47 +288,18 @@ $.extend(wot, { api: {
 		return setcookies;
 	},
 
-	showupdatepage: function()
-	{
-		var update = wot.prefs.get("firstrun:update") || 0;
-
-		if (update < wot.firstrunupdate) {
-			wot.prefs.set("firstrun:update", wot.firstrunupdate);
-
-			chrome.tabs.create({
-				url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
-						wot.platform + "/" + wot.version
-			});
-		}
-	},
-
 	setcookies: function(onready)
 	{
 		onready = onready || function() {};
+		var cookies = this.processcookies();
 
-		if (wot.prefs.get("firstrun:welcome")) {
-			this.showupdatepage();
-
-			var cookies = this.processcookies();
-
-			if (cookies) {
-				/* this sets our authentication cookies (and only them) if
-					they haven't been set already */
-				$.ajax({
-					url: wot.urls.setcookies + "?" + cookies.join("&"),
-					complete: onready
-				});
-			} else {
-				onready();
-			}
-		} else {
-			/* use the welcome page to set the cookies on the first run */
-			wot.prefs.set("firstrun:welcome", true);
-			wot.prefs.set("firstrun:update", wot.firstrunupdate);
-
-			chrome.tabs.create({
-					url: wot.urls.settings + "/welcome"
-				}, onready);
+		if (cookies) {
+			/* this sets our authentication cookies (and only them) if
+				they haven't been set already */
+			$.ajax({
+				url: wot.urls.setcookies + "?" + cookies.join("&"),
+				complete: onready
+			});
 		}
 	},
 

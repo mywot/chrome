@@ -24,6 +24,11 @@ var wot = {
 	debug: false,
 	default_component: 0,
 
+	// environment (browser, etc)
+	env: {
+		is_mailru: false
+	},
+
 	components: [
 		{ name: 0 },
 		{ name: 1 },

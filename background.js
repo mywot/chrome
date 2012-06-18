@@ -388,12 +388,52 @@ $.extend(wot, { core: {
 		});
 	},
 
+	detect_environment: function()
+	{
+		// try to understand in which environment we are run
+
+		var user_agent = window.navigator.userAgent || "";
+		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
+	},
+
+	show_updatepage: function()
+	{
+		var update = wot.prefs.get("firstrun:update") || 0;
+
+		if (update < wot.firstrunupdate) {
+			wot.prefs.set("firstrun:update", wot.firstrunupdate);
+
+			chrome.tabs.create({
+				url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
+					wot.platform + "/" + wot.version
+			});
+		}
+	},
+
+	welcome_user: function()
+	{
+		// check if add-on runs not for a first time
+		if (wot.prefs.get("firstrun:welcome")) {
+			wot.core.show_updatepage();
+			wot.api.setcookies();
+		} else {
+			/* use the welcome page to set the cookies on the first run */
+			wot.prefs.set("firstrun:welcome", true);
+			wot.prefs.set("firstrun:update", wot.firstrunupdate);
+
+			chrome.tabs.create({
+				url: wot.urls.settings + "/welcome"
+			});
+		}
+	},
+
 	onload: function()
 	{
 		try {
 			/* load the manifest for reference */
 
 			this.loadmanifest();
+			this.detect_environment();
 
 			/* messages */
 
@@ -449,12 +489,12 @@ $.extend(wot, { core: {
 
 				wot.bind("cache:set", function(name, value) {
 					console.log("cache.set: " + name + " = " +
-						JSON.stringify(value) + "\n");
+						JSON.stringify(value));
 				});
 
 				wot.bind("prefs:set", function(name, value) {
 					console.log("prefs.set: " + name + " = " +
-						JSON.stringify(value) + "\n");
+						JSON.stringify(value));
 				});
 			}
 
@@ -464,7 +504,7 @@ $.extend(wot, { core: {
 				wot.core.update();
 
 				if (wot.api.isregistered()) {
-					wot.api.setcookies();
+					wot.core.welcome_user();
 					wot.api.update();
 					wot.api.processpending();
 				}
@@ -472,7 +512,7 @@ $.extend(wot, { core: {
 
 			wot.cache.purge();
 		} catch (e) {
-			console.log("core.onload: failed with " + e + "\n");
+			console.log("core.onload: failed with " + e);
 		}
 	}
 }});
