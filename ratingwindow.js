@@ -280,12 +280,20 @@ $.extend(wot, { ratingwindow: {
 		this.updateratings();
 
 		/* message */
-		if (bg.wot.core.usermessage.text) {
+
+		var msg = bg.wot.core.usermessage; // usual case: show a message from WOT server
+
+		// if we have something to tell a user
+		if (msg.text) {
+			var status = msg.type || "";
 			$("#wot-message-text")
-				.attr("url", bg.wot.core.usermessage.url || "")
-				.attr("status", bg.wot.core.usermessage.type || "")
-				.text(bg.wot.core.usermessage.text);
-			$("#wot-message").show();
+				.attr("url", msg.url || "")
+				.attr("status", status)
+				.text(msg.text);
+
+			$("#wot-message")
+				.attr("status", status)
+				.show();
 		} else {
 			$("#wot-message").hide();
 		}
@@ -347,6 +355,14 @@ $.extend(wot, { ratingwindow: {
 	onload: function()
 	{
 		var bg = chrome.extension.getBackgroundPage();
+
+		// show welcome page if we haven't done it before (embedded add-on case)
+		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
+			chrome.tabs.create({ url: wot.urls.welcome }, function(tab) {
+				bg.wot.prefs.set("firstrun:welcome", true);
+				bg.wot.core.set_badge(false); // reset badge
+			});
+		}
 
 		/* accessibility */
 		$("#wot-header-logo, " +

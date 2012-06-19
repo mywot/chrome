@@ -80,6 +80,7 @@ var wot = {
 		base:		"http://www.mywot.com/",
 		scorecard:	"http://www.mywot.com/scorecard/",
 		settings:	"http://www.mywot.com/settings",
+		welcome:	"http://www.mywot.com/settings/welcome",
 		setcookies:	"http://www.mywot.com/setcookies.php",
 		update:		"http://www.mywot.com/update",
 
@@ -105,6 +106,17 @@ var wot = {
 		busy:	2,
 		retry:	3,
 		link:	4
+	},
+
+	badge_types: {
+		notice: {   // for system notifications
+			color: [240,0,0,255],
+			text: "1"
+		},
+		message: { // for messages from another users
+			color: [160,160,160,255],
+			text: ""
+		}
 	},
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired

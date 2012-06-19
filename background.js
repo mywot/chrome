@@ -21,6 +21,7 @@
 $.extend(wot, { core: {
 	usermessage: {},
 	usercontent: [],
+	badge_status: null,
 
 	loadratings: function(hosts, onupdate)
 	{
@@ -388,16 +389,34 @@ $.extend(wot, { core: {
 		});
 	},
 
+	set_badge: function(type, text)
+	{   /* set the badge on the BrowserAction icon. If no params provided sets the "notice" type */
+		var type = type || false,
+			text = text || "", color = "";
+
+		if(type !== false) {
+			type = type || wot.badge_types.notice;
+			text = text || type.text;
+			color = type.color || "#ffffff";
+			chrome.browserAction.setBadgeBackgroundColor({ color: color });
+			wot.core.badge_status = type;   // remember badge's status ot prevent concurrent badges
+		} else {
+			wot.core.badge_status = null;
+		}
+
+		chrome.browserAction.setBadgeText({ text: text });
+	},
+
 	detect_environment: function()
 	{
 		// try to understand in which environment we are run
-
 		var user_agent = window.navigator.userAgent || "";
 		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
 	},
 
 	show_updatepage: function()
 	{
+		// show update page only if constant wot.firstrunupdate was increased
 		var update = wot.prefs.get("firstrun:update") || 0;
 
 		if (update < wot.firstrunupdate) {
@@ -413,18 +432,26 @@ $.extend(wot, { core: {
 	welcome_user: function()
 	{
 		// check if add-on runs not for a first time
-		if (wot.prefs.get("firstrun:welcome")) {
-			wot.core.show_updatepage();
-			wot.api.setcookies();
-		} else {
-			/* use the welcome page to set the cookies on the first run */
-			wot.prefs.set("firstrun:welcome", true);
+		if (!wot.prefs.get("firstrun:welcome")) {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 
-			chrome.tabs.create({
-				url: wot.urls.settings + "/welcome"
-			});
+			// now we have only mail.ru case which requires to postpone opening welcome page
+			var postpone_welcome = wot.env.is_mailru;
+
+			if(!postpone_welcome) {
+				/* use the welcome page to set the cookies on the first run */
+				chrome.tabs.create({ url: wot.urls.welcome });
+				wot.prefs.set("firstrun:welcome", true);
+
+			} else {
+				wot.core.set_badge(wot.badge_types.notice); // set icon's badge to "notice"
+			}
+
+		} else {
+			wot.core.show_updatepage();
+			wot.api.setcookies();
 		}
+
 	},
 
 	onload: function()
