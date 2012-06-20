@@ -19,14 +19,16 @@
 */
 
 var wot = {
-	version: 20120614,
+	version: 20120619,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
 
 	// environment (browser, etc)
 	env: {
-		is_mailru: false
+		is_mailru: false,
+		is_yandex: false,
+		is_rambler: false
 	},
 
 	components: [
