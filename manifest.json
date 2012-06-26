@@ -1,7 +1,8 @@
 {
 	"name": "WOT",
-	"version": "1.2.14.6",
+	"version": "1.2.15",
 	"manifest_version": 2,
+	"minimum_chrome_version": "18",
 	"default_locale": "en",
 	"description": "__MSG_ext_description__",
 	"background": {
