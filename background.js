@@ -415,8 +415,10 @@ $.extend(wot, { core: {
 
 		if(wot.env.is_mailru) {
 			// set param to label requests
-			wot.partner = "mail.ru";
+			wot.partner = "mailru";
 		}
+
+		wot.prefs.set("partner", wot.partner);
 	},
 
 	show_updatepage: function()
