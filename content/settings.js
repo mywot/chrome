@@ -280,15 +280,26 @@ wot.settings = {
 		var match = window.location.href.match(this.forward);
 
 		if (match) {
-			/* redirect to the correct settings language and version */
-			var section = match[this.match];
 
-			/* make sure we have set up authentication cookies */
-			wot.bind("my:ready", function() {
-				window.location.href = wot.urls.settings + "/" +
-					wot.i18n("lang") + "/" + wot.platform + "/" + wot.version +
-					((section) ? "/" + section : "");
+			wot.prefs.get("partner", function(n, partner){
+
+				wot.partner = partner;
+				/* redirect to the correct settings language and version */
+				var section = match[wot.settings.match];
+
+				/* make sure we have set up authentication cookies */
+				wot.bind("my:ready", function() {
+					 var loc = wot.urls.settings + "/" +
+						wot.i18n("lang") + "/" + wot.platform + "/" + wot.version +
+						(wot.partner ? "/" + wot.partner : "") +
+						(section ? "/" + section : "");
+
+					loc += (wot.partner ? "#ratings" : ""); // fix for a bug "empty settings tab if partner is set"
+
+					window.location.href = loc;
+				});
 			});
+
 		} else if (this.trigger.test(window.location.href)) {
 			/* load settings for this page */
 			document.addEventListener("DOMContentLoaded", function() {
