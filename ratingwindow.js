@@ -359,6 +359,10 @@ $.extend(wot, { ratingwindow: {
 		// show welcome page if we haven't done it before (embedded add-on case)
 		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
 			chrome.tabs.create({ url: wot.urls.welcome }, function(tab) {
+
+				// workaround for https://github.com/mywot/chrome/issues/38 (hide rating window in Chrome 17)
+				chrome.tabs.update(tab.id, { selected: true });
+
 				bg.wot.prefs.set("firstrun:welcome", true);
 				bg.wot.core.set_badge(false); // reset badge
 			});
