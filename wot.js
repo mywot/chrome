@@ -435,5 +435,28 @@ var wot = {
 		newurl += ( (url.indexOf("?") > 0) ? "&" : "?" );
 		newurl += "utm_source=addon&utm_content=" + context;
 		return newurl;
+	},
+
+	detect_environment: function(readonly)
+	{
+		var readonly = readonly || false;
+		// try to understand in which environment we are run
+		var user_agent = window.navigator.userAgent || "";
+		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
+
+		if(wot.env.is_mailru) {
+			// set param to label requests
+			wot.partner = "mailru";
+
+			// temporary override child_safety warning settings
+			// see https://github.com/mywot/chrome/issues/40
+			// TODO: this should be set in the WelcomePage
+			if(!readonly) {
+				wot.prefs.set("warning_level_4", 39);
+				wot.prefs.set("warning_type_4", wot.warningtypes.overlay);
+			}
+		}
+
+		if(!readonly) wot.prefs.set("partner", wot.partner);
 	}
 };

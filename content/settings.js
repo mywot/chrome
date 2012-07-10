@@ -119,12 +119,24 @@ wot.settings = {
 		}
 	},
 
+	override_setting: function(param_name)
+	{
+		var skip_params = {
+			"warning_level_4": true,
+			"warning_type_4": true
+		};
+
+		return !!skip_params[param_name] && wot.env.is_mailru; // skip only for MRU browser
+	},
+
 	saveinputs: function()
 	{
 		var inputs = document.getElementsByTagName("input");
 
 		for (var i = 0; i < inputs.length; ++i) {
-			this.savesetting(inputs[i]);
+			if(!this.override_setting(inputs[i].id)) {
+				this.savesetting(inputs[i]);
+			}
 		}
 	},
 
@@ -276,6 +288,8 @@ wot.settings = {
 		if (window != window.top) {
 			return; /* ignore the settings page if it's in a frame */
 		}
+
+		wot.detect_environment(true); // detect but don't change preferences
 
 		var match = window.location.href.match(this.forward);
 
