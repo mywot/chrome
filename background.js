@@ -407,26 +407,6 @@ $.extend(wot, { core: {
 		chrome.browserAction.setBadgeText({ text: text });
 	},
 
-	detect_environment: function()
-	{
-		// try to understand in which environment we are run
-		var user_agent = window.navigator.userAgent || "";
-		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
-
-		if(wot.env.is_mailru) {
-			// set param to label requests
-			wot.partner = "mailru";
-
-			// temporary override child_safety warning settings
-			// see https://github.com/mywot/chrome/issues/40
-			// TODO: this should be set in the WelcomePage
-			wot.prefs.set("warning_level_4", 39);
-			wot.prefs.set("warning_type_4", wot.warningtypes.overlay);
-		}
-
-		wot.prefs.set("partner", wot.partner);
-	},
-
 	show_updatepage: function()
 	{
 		// show update page only if constant wot.firstrunupdate was increased
@@ -473,7 +453,7 @@ $.extend(wot, { core: {
 			/* load the manifest for reference */
 
 			this.loadmanifest();
-			this.detect_environment();
+			wot.detect_environment();
 
 			/* messages */
 
