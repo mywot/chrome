@@ -310,6 +310,15 @@ wot.warning = {
 
 			warning.setAttribute("id", "wotwarning");
 
+			// For child safety we'll set opaque background on adult sites
+			var data_4 = data.cached.value[4];
+			if (data_4 && data_4.r != undefined && data_4.c != undefined ) {
+				if(data_4.r <= this.settings.warning_level_4 && data_4.c >= this.settings.min_confidence_level) {
+					this.settings.warning_opacity = 1;
+				}
+			}
+
+			// set opacity
 			if (this.settings.warning_opacity &&
 					Number(this.settings.warning_opacity) >= 0 &&
 					Number(this.settings.warning_opacity) <= 1) {
