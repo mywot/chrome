@@ -416,6 +416,12 @@ $.extend(wot, { core: {
 		if(wot.env.is_mailru) {
 			// set param to label requests
 			wot.partner = "mailru";
+
+			// temporary override child_safety warning settings
+			// see https://github.com/mywot/chrome/issues/40
+			// TODO: this should be set in the WelcomePage
+			wot.prefs.set("warning_level_4", 39);
+			wot.prefs.set("warning_type_4", wot.warningtypes.overlay);
 		}
 
 		wot.prefs.set("partner", wot.partner);
