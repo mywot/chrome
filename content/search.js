@@ -414,66 +414,6 @@ wot.search = {
 		return css;
 	},
 
-	show_ninja_announcement: function(rule, frame)
-	{
-		if(!wot.search.is_ninja(rule)) return; // skip if ninjas are disabled
-		if(wot.search.settings.ninja_wave != 2) return; // show Banner only for "wave 2" test users
-
-		if(rule.name && rule.name == "google") {
-
-			var ninja_announceshown = wot.search.settings.ninja_announceshown || 0;
-
-			if (ninja_announceshown < 1) {
-
-				var doc = frame.document,
-					ann_id = "wotninjaannoucement";
-
-				if(doc.getElementById(ann_id)) return; // if already injected
-
-				var serp = doc.getElementById("search");
-
-				if(!serp) return; // do nothing if can't find usual SERP
-
-				var ann = doc.createElement("div"); // wrapper
-				ann.setAttribute("id", ann_id);
-
-				ann.setAttribute("style", "font-size: 80%;" +
-					"padding: 0.9em;" +
-					"border: 1px solid silver;" +
-					"border-radius: 5px;" +
-					"");
-
-				ann.innerHTML = '<div style="">' +
-						'WOT has changed the way WOT icons are displayed. ' +
-					'You now only see them when you move your mouse over the search results. ' +
-					'We’d love to <a href="http://www.mywot.com/en/discussion/chrome/20120611" wotsearchprocessed="true">hear your comments</a>.' +
-					'</div>' +
-					'<div style="padding-top: 0.5em; text-align: right;">'  +
-						'<span id="wotninjaannoucement-close" ' +
-							'style="' +
-							'color: #0D45D3; ' +
-							'text-decoration: underline; ' +
-							'cursor: pointer;"' +
-						'>close</span></div>';
-
-				serp.insertBefore(ann, serp.childNodes[0]);
-
-				var close_elem = doc.getElementById("wotninjaannoucement-close");
-
-				if (close_elem) {
-					close_elem.addEventListener("click", function() {
-						// increase number of announcement showing and remove it
-						wot.prefs.set("ninja_announceshown", ninja_announceshown + 1);
-						serp.removeChild(ann);
-					});
-				}
-
-			}
-
-
-		}
-	},
-
 	processframe: function(rule, frame, oncomplete)
 	{
 		try {
@@ -494,7 +434,6 @@ wot.search = {
 					targets.push(target);
 				});
 
-				wot.search.show_ninja_announcement(rule, frame);
 			}
 
 			wot.bind("url:ready", function() {
