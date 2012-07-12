@@ -682,7 +682,6 @@ $.extend(wot, { api: {
 					wot.prefs.set("update:state", newstate);
 					wot.api.state = newstate;
 					wot.url.updatestate(newstate);
-					wot.api.make_me_lucky(); // test luck for Ninjas
 
 					/* poll for updates regularly */
 					wot.api.retry("update", [], updateinterval);
@@ -691,77 +690,6 @@ $.extend(wot, { api: {
 					wot.api.retry("update");
 				}
 			});
-	},
-
-	make_me_lucky: function() {
-		/* checks if ID is in the "lucky list" and enable/disable experimental
-		   "ninja-donuts" mode */
-		try {
-			var is_ninja = wot.prefs.get("ninja_donuts"),
-				/*
-				* wave 0 - add-on doesn't know yet if ninjas were enabled and when
-				* wave 1 - Ninjas are enabled for new users during 2 days of test
-				* wave 2 - Ninjas are enabled for existing users by Lucky List
-				* */
-				ninja_wave = wot.prefs.get("ninja_wave");
-
-			if(is_ninja && ninja_wave === 0) {
-				// user got Ninjas from wave 1.
-				ninja_wave = 1;
-				wot.prefs.set("ninja_wave", ninja_wave);
-			}
-
-			// We need to have ability to enable/disable Ninjas remotely regardless of test wave
-			var lucky_url = "http://api.mywot.com/lucky.js"; //  http://api.mywot.com/lucky.js
-
-			$.getJSON(lucky_url, { nocache: Math.random() },function(data) {
-
-				var my_id = wot.prefs.get("witness_id");
-				var ninja_donuts = false;
-
-				if(data[my_id] === "1") {
-					// we are lucky to have ninjas enabled!
-
-					// User was forces to enable ninjas in wave 2
-					if(ninja_wave === 0) {
-						ninja_wave = 2;
-						wot.prefs.set("ninja_wave", ninja_wave);
-					}
-
-					ninja_donuts = true; // enable ninjas
-
-					// Open Update page only if it wasn't shown before, and if user wasn't in the wave 1
-					if(!wot.prefs.get("ninja_updateshown") && ninja_wave != 1) {
-						chrome.tabs.create({
-							url: "http://www.mywot.com/update/en-US/chrome/20120614"
-						}, function(e){
-							wot.prefs.set("ninja_updateshown", true);
-						});
-					}
-
-				} else if(data[my_id] === "0") {
-					// force to disable ninja-donuts
-					ninja_donuts = false;   // disable ninjas
-
-					// user was forced to disable ninjas from wave 2
-					if(ninja_wave === 0) {
-						ninja_wave = 2;
-						wot.prefs.set("ninja_wave", ninja_wave);
-					}
-				}
-
-				// change state only if we enabling ninjas, or forced to disable.
-				// Don't put negative ninjas flag in the storage, if it wasn't there.
-				if(is_ninja || ninja_donuts)
-					wot.prefs.set("ninja_donuts", ninja_donuts);
-
-			}).error(function(data){
-					console.log("Error when loading Lucky List");
-				});
-		} catch (e) {
-			console.log("api.make_me_lucky: failed with " + e);
-		}
-
 	}
 
 }});
