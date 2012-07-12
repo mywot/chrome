@@ -75,10 +75,10 @@
 		"message": "Oma luokitus"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Näet yksityiskohtaiset tiedot tuloskortista."
+		"message": "Näet yksityiskohtaiset tiedot tuloskortista"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Voit myös lisätä oman kommentin."
+		"message": "Voit myös lisätä oman kommentin"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "Kumppanina"
@@ -96,7 +96,7 @@
 		"message": "Näytä luokitustiedot ja kommentit"
 	},
 	"warnings_ratesite": {
-		"message": "Sivusto on turvallinen, haluan luokitella sen"
+		"message": "Sivusto on turvallinen, haluan <a>luokitella sen</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Ohita varoitus ja siirry sivustoon"
@@ -109,6 +109,18 @@
 	},
 	"warnings_unknown": {
 		"message": "Tämän sivuston luokitus on tuntematon"
+	},
+	"warnings_warning": {
+		"message": "Varoitus!"
+	},
+	"warnings_goto": {
+		"message": "Siirry sivustoon"
+	},
+	"warnings_leave": {
+		"message": "Poistu sivustolta"
+	},
+	"warnings_back": {
+		"message": "Takaisin"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"

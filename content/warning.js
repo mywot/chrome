@@ -18,96 +18,53 @@
 	along with WOT. If not, see <http://www.gnu.org/licenses/>.
 */
 
-const WOT_WARNING_HTML =
-	"<table id=\"wotcontainer\" cellspacing=\"0\" lang=\"{LANG}\" class=\"{CLASS} {ACCESSIBLE}\">" +
-	"<tr id=\"wotheadline\" style=\"background: url({HEADLINE}) top center no-repeat ! important;\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotcontainertop\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotdescription\" class=\"wotcontainermiddle\">" +
-		"<td colspan=\"2\">" +
-			"<div id=\"wotdescriptiontext\" class=\"wotlimitwidth {DESCCLASS}\">{DESC}</div>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wottarget\" class=\"wotcontainermiddle\">" +
-		"<td colspan=\"2\">" +
-			"<div id=\"wotwebsite\" class=\"wotlimitwidth\" title=\"{TITLE}\">{TITLE}</div>" +
-		"</td>	" +
-	"</tr>" +
-	"<tr id=\"wotinfo\" class=\"wotcontainermiddle\">" +
-		"<td colspan=\"2\">" +
-			"<div id=\"wotinfobutton\">" +
-				"<span id=\"wotinfotext\">{INFO}</span>" +
-			"</div>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wotratingtop\" class=\"wotcontainermiddle\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotratingareatop\" class=\"wotratingarea\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotrating0\" class=\"wotratingarea wotratingrow wotreputation{RATING0}\">" +
-		"<td class=\"wotratingcol wotratingcolleft\">" +
-			"<span class=\"wotratingname\">{RATINGDESC0}</span>" +
-		"</td>" +
-		"<td class=\"wotratingcol wotratingcolright\">" +
-			"<span id=\"wotratingexpl0\" class=\"wotratingexpl\">{RATINGEXPL0}</span>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wotrating1\" class=\"wotratingarea wotratingrow wotreputation{RATING1}\">" +
-		"<td class=\"wotratingcol wotratingcolleft\">" +
-			"<span class=\"wotratingname\">{RATINGDESC1}</span>" +
-		"</td>" +
-		"<td class=\"wotratingcol wotratingcolright\">" +
-			"<span id=\"wotratingexpl1\" class=\"wotratingexpl\">{RATINGEXPL1}</span>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wotrating2\" class=\"wotratingarea wotratingrow wotreputation{RATING2}\">" +
-		"<td class=\"wotratingcol wotratingcolleft\">" +
-			"<span class=\"wotratingname\">{RATINGDESC2}</span>" +
-		"</td>" +
-		"<td class=\"wotratingcol wotratingcolright\">" +
-			"<span id=\"wotratingexpl2\" class=\"wotratingexpl\">{RATINGEXPL2}</span>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wotrating4\" class=\"wotratingarea wotratingrow wotreputation{RATING4}\">" +
-		"<td class=\"wotratingcol wotratingcolleft\">" +
-			"<span class=\"wotratingname\">{RATINGDESC4}</span>" +
-		"</td>" +
-		"<td class=\"wotratingcol wotratingcolright\">" +
-			"<span id=\"wotratingexpl4\" class=\"wotratingexpl\">{RATINGEXPL4}</span>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wotratingareabottom\" class=\"wotratingarea\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotratingbottom\" class=\"wotcontainermiddle\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotbuttonstop\" class=\"wotcontainermiddle\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotbuttons\" class=\"wotcontainermiddle\">" +
-		"<td id=\"wotbuttonrate\">" +
-			"<span id=\"wotratebutton\" class=\"wotbutton\">{RATETEXT}</span>" +
-		"</td>" +
-		"<td id=\"wotbuttongoto\">" +
-			"<span id=\"wotgotobutton\" class=\"wotbutton\">{GOTOTEXT}</span>" +
-		"</td>" +
-	"</tr>" +
-	"<tr id=\"wotcontainerbottom\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"<tr id=\"wotlogo\">" +
-		"<td colspan=\"2\"></td>" +
-	"</tr>" +
-	"</table>";
-
 wot.warning = {
 	minheight: 600,
+	exit_mode: "back",
+
+	make_warning: function()
+	{
+		var wot_warning = "<div id='wotcontainer' class='wotcontainer {CLASS} {ACCESSIBLE}'>" +
+			"<div class='wot-logo'></div>" +
+			"<div class='wot-warning'>{WARNING}</div>" +
+			"<div class='wot-title'>{TITLE}</div>" +
+			"<div class='wot-desc'>{DESC}</div>" +
+			"<div class='wot-openscorecard-wrap'>" +
+				"<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
+			"</div>" +
+			"<div id='wot-ratings'>";
+
+		wot.components.forEach(function(item) {
+
+			var c = item.name,
+				S_COMPNAME = "RATINGDESC" + c,
+				S_RATING = "RATING" + c,
+				S_RATING_EXPL = "RATINGEXPL" + c;
+
+			if(wot.warning.settings["show_application_" + c]) {
+				wot_warning += "" +
+					"<div class='wot-component'>" +
+						"<div class='wot-comp-name'>{" + S_COMPNAME + "}</div>" +
+						"<div class='wot-comp-level' r='{" + S_RATING + "}'>{" + S_RATING_EXPL + "}</div>" +
+						"<div class='wot-comp-icon' r='{" + S_RATING + "}'></div>" +
+					"</div>";
+			}
+
+		});
+
+		wot_warning +=
+			"</div>" +
+				"<div class='wot-rateit-wrap'>" +
+					"<span>{RATETEXT}</span>" +
+				"</div>" +
+				"<div class='wot-buttons'>" +
+					"<div id='wot-btn-hide' class='wot-button'>{GOTOSITE}</div>" +
+					"<div id='wot-btn-leave' class='wot-button'>{LEAVESITE}</div>" +
+				"</div>" +
+			"</div>";
+
+		return wot_warning;
+	},
 
 	getheight: function()
 	{
@@ -189,6 +146,15 @@ wot.warning = {
 		}
 	},
 
+	set_exitmode: function()
+	{
+		if(window.history.length > 1) {
+			wot.warning.exit_mode = "back"; // note: don't change this string, there are code dependent on it
+		} else {
+			wot.warning.exit_mode = "leave";
+		}
+	},
+
 	add: function(data, reason)
 	{
 		/* Obviously, this isn't exactly foolproof. A site might have
@@ -200,10 +166,18 @@ wot.warning = {
 				return;
 			}
 
+			wot.warning.set_exitmode();
+
 			var accessible = this.settings.accessible ? "accessible" : "";
+
+			// preprocess link "Rate the site"
+			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
 
 			var replaces = [
 				{
+				from: "WARNING",
+				to: wot.i18n("warnings", "warning")
+			},			{
 					from: "TITLE",
 					to: (data.decodedtarget || "").replace(/[<>&="']/g, "")
 				}, {
@@ -214,11 +188,14 @@ wot.warning = {
 					to: wot.i18n("warnings", "information")
 				}, {
 					from: "RATETEXT",
-					to: wot.i18n("warnings", "ratesite")
+				to: rate_site
 				}, {
-					from: "GOTOTEXT",
-					to: wot.i18n("warnings", "gotosite")
+				from: "GOTOSITE",
+				to: wot.i18n("warnings", "goto")
 				}, {
+				from: "LEAVESITE",
+				to: wot.i18n("warnings", wot.warning.exit_mode)
+			}, {
 					from: "ACCESSIBLE",
 					to: accessible
 				}
@@ -253,31 +230,21 @@ wot.warning = {
 
 			if (reason == wot.warningreasons.reputation) {
 				replaces.push({ from: "CLASS", to: warnclass });
-				replaces.push({ from: "DESCCLASS", to: "wotlongdescription" });
 				replaces.push({
 					from: "DESC",
 					to: wot.i18n("warnings", "reputation")
 				});
 			} else if (reason == wot.warningreasons.rating) {
 				replaces.push({ from: "CLASS", to: "wotnoratings" });
-				replaces.push({ from: "DESCCLASS", to: "wotlongdescription" });
 				replaces.push({
 					from: "DESC",
 					to: wot.i18n("warnings", "rating")
 				});
 			} else {
 				replaces.push({ from: "CLASS", to: warnclass });
-				replaces.push({ from: "DESCCLASS", to: "" });
 				replaces.push({
 					from: "DESC",
 					to: wot.i18n("warnings", "unknown")
-				});
-			}
-
-			if (reason != wot.warningreasons.unknown) {
-				replaces.push({
-					from: "HEADLINE",
-					to: chrome.extension.getURL(wot.getlocalepath("warning.png"))
 				});
 			}
 
@@ -331,7 +298,7 @@ wot.warning = {
 			warning = body[0].appendChild(warning);
 			wrapper = body[0].appendChild(wrapper);
 
-			wrapper.innerHTML = this.processhtml(WOT_WARNING_HTML, replaces);
+			wrapper.innerHTML = this.processhtml(this.make_warning(), replaces);
 			this.hideobjects(true);
 
 			document.getElementById("wotinfobutton").addEventListener("click",
@@ -340,14 +307,31 @@ wot.warning = {
 					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
 				}, false);
 
-			document.getElementById("wotratebutton").addEventListener("click",
-				function() {
-					var url = wot.urls.scorecard +
-						encodeURIComponent(data.target) + "/rate";
-					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
-				}, false);
+			document.getElementById("wot-btn-leave").addEventListener("click",function(e){
+				if(wot.warning.exit_mode == "leave") {
+					// close tab
+					wot.post("tab","close", {});
+				} else {
+					var e_beforeunload = window.onbeforeunload;
+					var back_timer = null;
+					window.onbeforeunload = function() {
+						if(back_timer) {
+							window.clearTimeout(back_timer);
+						}
+						if(e_beforeunload) e_beforeunload(window);
+					};
+					window.history.back();
 
-			document.getElementById("wotgotobutton").addEventListener("click",
+					back_timer = window.setTimeout(function() {
+						// this is a trick: we don't know if there is a back-step possible if history.length>1,
+						// so we simply wait for a short time, and if we are still on a page, then "back" is impossible and
+						// we should go to blank page
+						wot.post("tab","close", {});
+					}, 100);
+				}
+			});
+
+			document.getElementById("wot-btn-hide").addEventListener("click",
 				function() {
 					wot.warning.hide();
 					wot.warning.hideobjects(false);
@@ -356,6 +340,14 @@ wot.warning = {
 						flags: { warned: true, warned_expire: null }
 					});
 				}, false);
+
+		document.getElementById("wotrate-link").addEventListener("click",
+			function() {
+				var url = wot.urls.scorecard +
+					encodeURIComponent(data.target) + "/rate";
+				window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
+			}, false);
+
 		} catch (e) {
 			console.log("warning.add: failed with " + e);
 		}

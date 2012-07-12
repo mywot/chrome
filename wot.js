@@ -123,6 +123,14 @@ var wot = {
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
+	// trusted extensions IDs
+	allowed_senders: {
+		"ihcnfeknmfflffeebijjfbhkmeehcihn": true,   // dev version
+		"bhmmomiinigofkjcapegjjndpbikblnp": true,   // WOT via WebStore
+		"goinjpofmboaejkhflohjoloaoebfopj": true,   // WOT (m2) distributed via mywot.com
+		"hghiafbmcdglhlkgpfafjjoigpghhilc": true    // Manifest-1 version of WOT addon
+	},
+
 	/* logging */
 
 	log: function(s)
@@ -253,6 +261,10 @@ var wot = {
 		}
 	},
 
+	is_allowed_sender: function(sender_id) {
+		return wot.allowed_senders[sender_id] || wot.debug; // allow known senders or any in
+	},
+
 	/* i18n */
 
 	i18n: function(category, id, shorter)
@@ -272,6 +284,22 @@ var wot = {
 		if (result == null) {
 			result = this.debug ? "!?" : "";
 		}
+
+		// Workaround for the Chrome's issue 53628
+		// http://code.google.com/p/chromium/issues/detail?id=53628
+		var temp_workaround = {
+			"warnings_warning": "Warning!",
+			"warnings_goto": "Go to the site",
+			"warnings_leave": "Leave the site",
+			"warnings_back": "Go back"
+		};
+
+		if (result == "") {
+			var res_2 = temp_workaround[msg];
+			if (res_2 != "") return res_2;
+		}
+
+		// END of workaround / remove it when the bug will be fixed
 
 		return result;
 	},

@@ -99,7 +99,7 @@
 		"message": "View rating details and comments"
 	},
 	"warnings_ratesite": {
-		"message": "This site is safe - I want to rate it"
+		"message": "This site is safe - I want to <a>rate it</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Ignore warning and go to the site"
@@ -112,6 +112,18 @@
 	},
 	"warnings_unknown": {
 		"message": "This site has an unknown rating"
+	},
+	"warnings_warning": {
+		"message": "Warning!"
+	},
+	"warnings_goto": {
+		"message": "Go to the site"
+	},
+	"warnings_leave": {
+		"message": "Leave the site"
+	},
+	"warnings_back": {
+		"message": "Go back"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"

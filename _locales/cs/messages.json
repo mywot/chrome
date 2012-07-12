@@ -75,10 +75,10 @@
 		"message": "Moje hodnocení"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Zobrazit výsledky s detaily hodnocení."
+		"message": "Zobrazit výsledky s detaily hodnocení"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Přidat komentář."
+		"message": "Přidat komentář"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "Ve spolupráci s"
@@ -93,10 +93,10 @@
 		"message": "Zanechat komentář?"
 	},
 	"warnings_information": {
-		"message": "Zobrazit podrobnosti hodnocení a komentáře"
+		"message": "Zobrazit hodnocení a komentáře"
 	},
 	"warnings_ratesite": {
-		"message": "Tato stránka je bezpečná - Chci ji ohodnotit"
+		"message": "Tato stránka je bezpečná - Chci <a>ji ohodnotit</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Ignorovat varování a vstoupit na stránku"
@@ -105,10 +105,22 @@
 		"message": "Reputace této stránky je špatná"
 	},
 	"warnings_rating": {
-		"message": "Dali jste této stránce špatné hodnocení,<br/>což spustilo varování"
+		"message": "Dali jste této stránce špatné hodnocení, což spustilo varování"
 	},
 	"warnings_unknown": {
 		"message": "Hodnocení této stránky není známo"
+	},
+	"warnings_warning": {
+		"message": "Varování!"
+	},
+	"warnings_goto": {
+		"message": "Open the site"
+	},
+	"warnings_leave": {
+		"message": "Leave the site"
+	},
+	"warnings_back": {
+		"message": "Go back"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"
