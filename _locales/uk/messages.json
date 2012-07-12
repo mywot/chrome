@@ -96,10 +96,10 @@
 		"message": "Добавить комментарий?"
 	},
 	"warnings_information": {
-		"message": "Посмотреть сведения о рейтинге и комментарии"
+		"message": "Посмотреть рейтинг и комментарии"
 	},
 	"warnings_ratesite": {
-		"message": "Этот сайт безопасен. Я хочу оценить его"
+		"message": "Этот сайт безопасен - я хочу <a>оценить его</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Открыть сайт, несмотря на предупреждение"
@@ -112,6 +112,18 @@
 	},
 	"warnings_unknown": {
 		"message": "Pейтинг этого сайта неизвестен"
+	},
+	"warnings_warning": {
+		"message": "Внимание!"
+	},
+	"warnings_goto": {
+		"message": "Открыть сайт"
+	},
+	"warnings_leave": {
+		"message": "Покинуть сайт"
+	},
+	"warnings_back": {
+		"message": "Назад"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Открыть оценочную карту WOT"

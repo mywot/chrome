@@ -75,10 +75,10 @@
 		"message": "Moja ocena"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Szczegółowe oceny są na karcie wyników."
+		"message": "Szczegółowe oceny są na karcie wyników"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Dodaj komentarz."
+		"message": "Dodaj komentarz"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "We współpracy z"
@@ -96,19 +96,31 @@
 		"message": "Pokaż szczegóły ocen i komentarze"
 	},
 	"warnings_ratesite": {
-		"message": "Ta witryna jest bezpieczna - chcę ją ocenić"
+		"message": "Ta witryna jest bezpieczna - chcę <a>ją ocenić</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Zignoruj ostrzeżenie i przejdź do witryny"
 	},
 	"warnings_reputation": {
-		"message": "Ta witryna ma złą reputację."
+		"message": "Ta witryna ma złą reputację"
 	},
 	"warnings_rating": {
-		"message": "Ostrzeżenie zostało wyświetlone, ponieważ<br/>ta witryna dostała od Ciebie złą ocenę."
+		"message": "Ostrzeżenie zostało wyświetlone, ponieważ<br/>ta witryna dostała od Ciebie złą ocenę"
 	},
 	"warnings_unknown": {
-		"message": "Ocena tej witryny jest nieznana."
+		"message": "Ocena tej witryny jest nieznana"
+	},
+	"warnings_warning": {
+		"message": "Ostrzeżenie!"
+	},
+	"warnings_goto": {
+		"message": "Idź do strony"
+	},
+	"warnings_leave": {
+		"message": "Porzuć stronę"
+	},
+	"warnings_back": {
+		"message": "Powrót"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"

@@ -96,19 +96,31 @@
 		"message": "Bewertungsdetails und Kommentare anzeigen"
 	},
 	"warnings_ratesite": {
-		"message": "Site ist sicher. Ich möchte sie bewerten"
+		"message": "Site ist sicher. Ich möchte <a>sie bewerten</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Warnung ignorieren und Website aufrufen"
 	},
 	"warnings_reputation": {
-		"message": "Diese Seite hat einen schlechten Ruf basierend<br/>auf Benutzerbewertungen"
+		"message": "Diese Seite hat einen schlechten Ruf basierend auf Benutzerbewertungen"
 	},
 	"warnings_rating": {
-		"message": "Sie haben dieser Website eine schlechte Bewertung<br/>gegeben, die eine Warnung ausgelöst hat"
+		"message": "Sie haben dieser Website eine schlechte Bewertung gegeben, die eine Warnung ausgelöst hat"
 	},
 	"warnings_unknown": {
 		"message": "Diese Website besitzt eine unbekannte Bewertung"
+	},
+	"warnings_warning": {
+		"message": "Warnung!"
+	},
+	"warnings_goto": {
+		"message": "Gehe zur Seite"
+	},
+	"warnings_leave": {
+		"message": "Verlasse die Seite"
+	},
+	"warnings_back": {
+		"message": "Gehe zurück"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"

@@ -75,10 +75,10 @@
 		"message": "Min klassificering"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Visa scorekort för klassificeringsdetaljer."
+		"message": "Visa scorekort för klassificeringsdetaljer"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Lägg till en kommentar."
+		"message": "Lägg till en kommentar"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "I partnerskap med"
@@ -96,21 +96,33 @@
 		"message": "Visa klassificeringsdetaljer och kommentarer"
 	},
 	"warnings_ratesite": {
-		"message": "Webbplatsen är säker - jag vill klassificera den"
+		"message": "Webbplatsen är säker - jag vill <a>klassificera den</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Ignorera varningen och gå till webbplatsen"
 	},
 	"warnings_reputation": {
-		"message": "Den här webbplatsen har dåligt rykte."
+		"message": "Den här webbplatsen har dåligt rykte"
 	},
 	"warnings_rating": {
-		"message": "Du har gett webbplatsen klassificeringen Dålig,<br/>vilket gav upphov till en varning."
+		"message": "Du har gett webbplatsen klassificeringen Dålig,<br/>vilket gav upphov till en varning"
 	},
 	"warnings_unknown": {
-		"message": "Webbplatsen har en okänd klassificering."
+		"message": "Webbplatsen har en okänd klassificering"
+	},
+	"warnings_warning": {
+		"message": "Varning!"
+	},
+	"warnings_goto": {
+		"message": "Gå till webbsidan"
+	},
+	"warnings_leave": {
+		"message": "Lämna webbsidan"
+	},
+	"warnings_back": {
+		"message": "Gå tillbaka"
 	},
 	"contextmenu_open_scorecard": {
-		"message": "Open WOT scorecard"
+		"message": "Öppna WOT Score-kort"
 	}
 }

@@ -75,10 +75,10 @@
 		"message": "Mi valoración"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Ver puntuación para detalles de valoración."
+		"message": "Ver puntuación para detalles de valoración"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Añadir comentario."
+		"message": "Añadir comentario"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "En asociación con"
@@ -96,7 +96,7 @@
 		"message": "Ver detalles de valoración y comentarios"
 	},
 	"warnings_ratesite": {
-		"message": "Este sitio es seguro y deseo valorarlo"
+		"message": "Este sitio es seguro y deseo <a>valorarlo</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Omitir la advertencia e ir al sitio"
@@ -109,6 +109,18 @@
 	},
 	"warnings_unknown": {
 		"message": "Este sitio tiene una valoración desconocida"
+	},
+	"warnings_warning": {
+		"message": "¡Advertencia!"
+	},
+	"warnings_goto": {
+		"message": "Vaya al sitio"
+	},
+	"warnings_leave": {
+		"message": "Abandone el sitio"
+	},
+	"warnings_back": {
+		"message": "Regrese"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"

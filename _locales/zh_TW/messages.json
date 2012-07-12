@@ -75,10 +75,10 @@
 		"message": "我的評等"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "檢視評等詳細內容計分表。"
+		"message": "檢視評等詳細內容計分表"
 	},
 	"ratingwindow_addcomment": {
-		"message": "加入您的評語。"
+		"message": "加入您的評語"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "In partnership with"
@@ -96,19 +96,31 @@
 		"message": "檢視評等詳細內容與評語"
 	},
 	"warnings_ratesite": {
-		"message": "這個網站是安全的 - 我要評等"
+		"message": "這個網站是安全的 - <a>我要評等</a>"
 	},
 	"warnings_gotosite": {
 		"message": "忽略警告，前往網站"
 	},
 	"warnings_reputation": {
-		"message": "這個網站聲譽不佳。"
+		"message": "這個網站聲譽不佳"
 	},
 	"warnings_rating": {
-		"message": "您給了這個網站會觸動警告的不佳評等。"
+		"message": "您給了這個網站會觸動警告的不佳評等"
 	},
 	"warnings_unknown": {
-		"message": "這個網站的評等不詳。"
+		"message": "這個網站的評等不詳"
+	},
+	"warnings_warning": {
+		"message": "警告!"
+	},
+	"warnings_goto": {
+		"message": "Open the site"
+	},
+	"warnings_leave": {
+		"message": "Leave the site"
+	},
+	"warnings_back": {
+		"message": "Go back"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"

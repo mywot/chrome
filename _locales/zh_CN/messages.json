@@ -75,10 +75,10 @@
 		"message": "我的评级"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "查看登记卡上的评级详情。"
+		"message": "查看登记卡上的评级详情"
 	},
 	"ratingwindow_addcomment": {
-		"message": "添加评论。"
+		"message": "添加评论"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "In partnership with"
@@ -96,19 +96,31 @@
 		"message": "查看评级详情和评论"
 	},
 	"warnings_ratesite": {
-		"message": "此网站是安全的 - 我想对其进行评级"
+		"message": "此网站是安全的 - <a>我想对其进行评级</a>"
 	},
 	"warnings_gotosite": {
 		"message": "忽略警告并进入该网站"
 	},
 	"warnings_reputation": {
-		"message": "此网站的声誉较差。"
+		"message": "此网站的声誉较差"
 	},
 	"warnings_rating": {
-		"message": "您已将此网站评为较差等级，<br/>该评级触发了警告。"
+		"message": "您已将此网站评为较差等级，<br/>该评级触发了警告"
 	},
 	"warnings_unknown": {
-		"message": "此网站的评级未知。"
+		"message": "此网站的评级未知"
+	},
+	"warnings_warning": {
+		"message": "警告!"
+	},
+	"warnings_goto": {
+		"message": "Open the site"
+	},
+	"warnings_leave": {
+		"message": "Leave the site"
+	},
+	"warnings_back": {
+		"message": "Go back"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"
