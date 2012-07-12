@@ -482,14 +482,7 @@ $.extend(wot, { core: {
 
 			wot.bind("message:tab:close", function(port, data) {
 				// close the tab that sent this message
-				// make sure we get commands only from known WOT addons
-
-				if(wot.is_allowed_sender(port.port.sender.id)) {
-					chrome.tabs.remove(port.port.sender.tab.id);
-				} else {
-					console.log("close message was sent from untrusted sender. Skipped.");
-				}
-
+				chrome.tabs.remove(port.port.sender.tab.id);
 			});
 
 			wot.bind("message:search:openscorecard", function(port, data) {
