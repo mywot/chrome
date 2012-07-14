@@ -114,13 +114,13 @@
 		"message": "警告!"
 	},
 	"warnings_goto": {
-		"message": "Open the site"
+		"message": "进入该网站"
 	},
 	"warnings_leave": {
-		"message": "Leave the site"
+		"message": "离开工地"
 	},
 	"warnings_back": {
-		"message": "Go back"
+		"message": "回去"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"
