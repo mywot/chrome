@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "zh-CN"
 	},
+	"ext_description": {
+		"message": "WOT 根据世界各地数百万用户的经验向您显示您可以信任的网站。WOT 使用快速方便，而且完全免费。"
+	},
 	"components_0": {
 		"message": "可信程度"
 	},
