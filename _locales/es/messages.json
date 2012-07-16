@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "es-ES"
 	},
+	"ext_description": {
+		"message": "WOT muestra cuáles son los sitios web en los que puede confiar basándose en las experiencias de millones de usuarios de todo el mundo. WOT es rápido, fácil de usar y totalmente gratis."
+	},
 	"components_0": {
 		"message": "Confiabilidad"
 	},

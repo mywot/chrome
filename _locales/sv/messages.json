@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "sv-SE"
 	},
+	"ext_description": {
+		"message": "WOT visar vilka webbsidor som är säkra baserat på miljontals användares erfarenhet från hela världen. WOT är snabbt, enkelt och helt gratis."
+	},
 	"components_0": {
 		"message": "Pålitlighet"
 	},

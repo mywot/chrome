@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "pl-PL"
 	},
+	"ext_description": {
+		"message": "Dodatek WOT wskazuje użytkownikowi, którym witrynom może zaufać, na podstawie doświadczeń milionów osób z całego świata. WOT jest szybki, łatwy w obsłudze i całkowicie bezpłatny."
+	},
 	"components_0": {
 		"message": "Zaufanie"
 	},

@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "ja-JP"
 	},
+	"ext_description": {
+		"message": "WOTは、世界中の数百万人ものユーザーの体験に基づいて信頼できるWebサイトを示します。WOTは、高速で使いやすく、完全に無料です。"
+	},
 	"components_0": {
 		"message": "信頼性"
 	},

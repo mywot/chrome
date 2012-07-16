@@ -5,6 +5,9 @@
 	"lang": {
 		"message": "zh-TW"
 	},
+	"ext_description": {
+		"message": "WOT 會根據全世界數百萬用戶的經驗，告訴您哪些是可以信任的網站。WOT 快速又容易上手，而且完全免費。"
+	},
 	"components_0": {
 		"message": "可靠性"
 	},
