@@ -117,13 +117,13 @@
 		"message": "Varování!"
 	},
 	"warnings_goto": {
-		"message": "Open the site"
+		"message": "Pokračovat"
 	},
 	"warnings_leave": {
-		"message": "Leave the site"
+		"message": "Opustit stránku"
 	},
 	"warnings_back": {
-		"message": "Go back"
+		"message": "Vrátit se zpět"
 	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"
