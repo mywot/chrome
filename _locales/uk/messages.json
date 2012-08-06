@@ -1,131 +1,131 @@
 {
 	"locale": {
-		"message": "ru"
+		"message": "uk"
 	},
 	"lang": {
-		"message": "ru-RU"
+		"message": "uk-UA"
 	},
 	"ext_description": {
-		"message": "Web Of Trust показывает, каким сайтам люди доверяют в интернете."
+		"message": "WOT допомагає знайти надійні сайти на основі досвіду мільйонів користувачів і є одним з найпопулярніших розширень в Chrome."
 	},
 	"components_0": {
-		"message": "Заслуживает доверие"
+		"message": "Заслуговує довіри"
 	},
 	"components_1": {
-		"message": "Надежность продавца"
+		"message": "Надійність продавця"
 	},
 	"components_2": {
-		"message": "Конфиденциальность"
+		"message": "Конфіденційність"
 	},
 	"components_4": {
-		"message": "Безопасность для детей"
+		"message": "Безпека для дітей"
 	},
 	"components__short_0": {
-		"message": "Заслуж. доверия"
+		"message": "Заслуговує довіри"
 	},
 	"components__short_1": {
-		"message": "Надежн. продавца"
+		"message": "Надійність продавця"
 	},
 	"components__short_2": {
-		"message": "Конфиденц-ть"
+		"message": "Приватність"
 	},
 	"components__short_4": {
-		"message": "Безоп-ть детей"
+		"message": "Безпека для дітей"
 	},
 	"reputationlevels_r0": {
 		"message": ""
 	},
 	"reputationlevels_r1": {
-		"message": "Очень плохо"
+		"message": "Дуже погано"
 	},
 	"reputationlevels_r2": {
-		"message": "Плохо"
+		"message": "Погано"
 	},
 	"reputationlevels_r3": {
-		"message": "Неудовлетворительно"
+		"message": "Незадовільно"
 	},
 	"reputationlevels_r4": {
-		"message": "Хорошо"
+		"message": "Добре"
 	},
 	"reputationlevels_r5": {
-		"message": "Превосходно"
+		"message": "Відмінно"
 	},
 	"messages_initializing": {
-		"message": "Инициализация WOT…"
+		"message": "Ініціалізація WOT…"
 	},
 	"messages_notready": {
-		"message": "Активация WOT…"
+		"message": "Активація WOT…"
 	},
 	"messages_failed": {
-		"message": "Не удалось загрузить рейтинги."
+		"message": "Не вдалося завантажити рейтинги; повторна спроба незабаром."
 	},
 	"messages_notavailable": {
-		"message": "Рейтинги не доступны."
+		"message": "Рейтинги недоступні."
 	},
 	"messages_loading": {
-		"message": "Загрузка рейтингов…"
+		"message": "Завантаження рейтингів…"
 	},
 	"ratingwindow_settings": {
-		"message": "Настройки"
+		"message": "Налаштування"
 	},
 	"ratingwindow_guide": {
-		"message": "Руководство"
+		"message": "Керівництво"
 	},
 	"ratingwindow_wotrating": {
 		"message": "Рейтинг WOT"
 	},
 	"ratingwindow_myrating": {
-		"message": "Мой рейтинг"
+		"message": "Мій рейтинг"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Посмотреть подробности о рейтинге"
+		"message": "Переглянути детальніше про рейтинг"
 	},
 	"ratingwindow_addcomment": {
-		"message": "(или добавить свой комментарий)"
+		"message": "Додайте свій коментар"
 	},
 	"ratingwindow_inpartnership": {
-		"message": "Сотрудничает с"
+		"message": "У партнерстві з"
 	},
 	"ratingwindow_newversion": {
-		"message": "Доступна новая версия, нажмите для обновления"
+		"message": "Доступна нова версія - натисніть для оновлення"
 	},
 	"ratingwindow_helptext": {
-		"message": ""
+		"message": "Ваш рейтинг відрізняється."
 	},
 	"ratingwindow_helplink": {
-		"message": "Добавить комментарий?"
+		"message": "Залишіть коментар?"
 	},
 	"warnings_information": {
-		"message": "Посмотреть рейтинг и комментарии"
+		"message": "Переглянути рейтинг і коментарі"
 	},
 	"warnings_ratesite": {
-		"message": "Этот сайт безопасен - я хочу <a>оценить его</a>"
+		"message": "Цей сайт є безпечним - Я хочу <a>оцінити його</a>"
 	},
 	"warnings_gotosite": {
-		"message": "Открыть сайт, несмотря на предупреждение"
+		"message": "Ігнорувати попередження і зайти на сайт"
 	},
 	"warnings_reputation": {
-		"message": "У этого сайта плохая репутация"
+		"message": "Цей сайт має погану репутацію<br/>на основі рейтингів користувачів"
 	},
 	"warnings_rating": {
-		"message": "Вы выставили этому сайту низкий рейтинг"
+		"message": "Ви дали цьому сайту низький рейтинг"
 	},
 	"warnings_unknown": {
-		"message": "Pейтинг этого сайта неизвестен"
+		"message": "Цей сайт має невідомий рейтинг"
 	},
 	"warnings_warning": {
-		"message": "Внимание!"
+		"message": "Попередження!"
 	},
 	"warnings_goto": {
-		"message": "Открыть сайт"
+		"message": "Перейти на сайт"
 	},
 	"warnings_leave": {
-		"message": "Покинуть сайт"
+		"message": "Залишити сайт"
 	},
 	"warnings_back": {
-		"message": "Назад"
+		"message": "Повернутися назад"
 	},
 	"contextmenu_open_scorecard": {
-		"message": "Открыть оценочную карту WOT"
+		"message": "Відкрити оціночну карту WOT"
 	}
 }
