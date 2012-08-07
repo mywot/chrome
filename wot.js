@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20120801,
+	version: 20120808,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
@@ -475,15 +475,6 @@ var wot = {
 		if(wot.env.is_mailru) {
 			// set param to label requests
 			wot.partner = "mailru";
-
-			// temporary override child_safety warning settings
-			// see https://github.com/mywot/chrome/issues/40
-			// TODO: this should be set in the WelcomePage
-			if(!readonly) {
-				wot.prefs.set("warning_level_4", 39);
-				wot.prefs.set("warning_type_4", wot.warningtypes.overlay);
-				wot.prefs.set("show_application_2", false);
-			}
 		}
 
 		if(!readonly) wot.prefs.set("partner", wot.partner);
