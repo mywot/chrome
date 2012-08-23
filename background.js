@@ -346,7 +346,7 @@ $.extend(wot, { core: {
 
 					// put a badge on the add-on's button
 					if(!core.badge_status) {
-						core.set_badge(badge_types.notice);
+						core.set_badge(wot.badge_types.notice);
 					}
 
 				}
