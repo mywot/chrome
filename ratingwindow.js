@@ -362,9 +362,11 @@ $.extend(wot, { ratingwindow: {
 	onload: function()
 	{
 		var bg = chrome.extension.getBackgroundPage();
+		var first_opening = false;
 
 		// show welcome page if we haven't done it before (embedded add-on case)
 		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
+			first_opening = true;
 			chrome.tabs.create({ url: wot.urls.welcome }, function(tab) {
 
 				// workaround for https://github.com/mywot/chrome/issues/38 (hide rating window in Chrome 17)
@@ -524,14 +526,16 @@ $.extend(wot, { ratingwindow: {
 
 		bg.wot.core.update();
 
-		// increment "RatingWindow shown" counter
-		var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
-		counter = counter + 1;
-		bg.wot.prefs.set(wot.engage_settings.invite_to_rw.pref_name, counter);
+		if(!first_opening) {
+			// increment "RatingWindow shown" counter
+			var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
+			counter = counter + 1;
+			bg.wot.prefs.set(wot.engage_settings.invite_to_rw.pref_name, counter);
 
-		// shown RatingWindow means that we shown a message => remove notice badge from the button
-		if(bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
-			bg.wot.core.set_badge(false);   // hide badge
+			// shown RatingWindow means that we shown a message => remove notice badge from the button
+			if(bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
+				bg.wot.core.set_badge(false);   // hide badge
+			}
 		}
 	}
 }});
