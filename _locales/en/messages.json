@@ -95,6 +95,9 @@
 	"ratingwindow_helplink": {
 		"message": "Leave a comment?"
 	},
+	"ratingwindow_invite_rw": {
+		"message": "You can rate websites using this tool. Click on the colored bars to express how much you trust a website."
+	},
 	"warnings_information": {
 		"message": "View rating details and comments"
 	},

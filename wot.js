@@ -113,11 +113,13 @@ var wot = {
 	badge_types: {
 		notice: {   // for system notifications
 			color: [240,0,0,255],
-			text: "1"
+			text: "1",
+			type: "notice"  // important to compare with current status type
 		},
 		message: { // for messages from another users
 			color: [160,160,160,255],
-			text: ""
+			text: "",
+			type: "message"
 		}
 	},
 
@@ -129,6 +131,16 @@ var wot = {
 		"bhmmomiinigofkjcapegjjndpbikblnp": true,   // WOT via WebStore
 		"goinjpofmboaejkhflohjoloaoebfopj": true,   // WOT (m2) distributed via mywot.com
 		"hghiafbmcdglhlkgpfafjjoigpghhilc": true    // Manifest-1 version of WOT addon
+	},
+
+	// engagement schedule
+
+	engage_settings: {
+		invite_to_rw: {
+			delay: 12 * 3600,    // 12 hours after first launch
+			pref_name: "ratingwindow_shown",
+			enabled: true   // this is a cache value to avoid comprehensive logic work often (in case of = false)
+		}
 	},
 
 	/* logging */
@@ -478,5 +490,18 @@ var wot = {
 		}
 
 		if(!readonly) wot.prefs.set("partner", wot.partner);
+	},
+
+	time_sincefirstrun: function()
+	{
+		// gives time (in seconds) spent from very first run of the addon.
+		var starttime_str = wot.prefs.get("firstrun:time");
+		if (starttime_str) {
+			var starttime = new Date(starttime_str);
+			return (new Date() - starttime) / 1000;    // in seconds;
+
+		} else {
+			return undefined;
+		}
 	}
 };

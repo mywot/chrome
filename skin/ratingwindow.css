@@ -612,6 +612,10 @@ body {
     background-color: white;
     border-radius: 4px;
     border: 1px solid silver;
+    /*-webkit-transition-property: border-color;*/
+    /*-webkit-transition-duration: 3s;*/
+    /*-webkit-transition-timing-function: ease-in-out;*/
+    /*-webkit-transition-delay: 6s;*/
 }
 #wot-message-text {
 	color: #707070;
