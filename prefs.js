@@ -55,7 +55,8 @@ $.extend(wot, { prefs: {
 		warning_unknown_0:		false,
 		warning_unknown_1:		false,
 		warning_unknown_2:		false,
-		warning_unknown_4:		false
+		warning_unknown_4:		false,
+		ratingwindow_shown:     0   // how many times RatingWindow was opened
 	},
 
 	set: function(name, value)
