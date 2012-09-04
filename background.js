@@ -497,13 +497,14 @@ $.extend(wot, { core: {
 			// now we have only mail.ru case which requires to postpone opening welcome page
 			var postpone_welcome = wot.env.is_mailru;
 
-			if(!postpone_welcome) {
+			if(postpone_welcome) {
+				// experiment: don't show welcome page at all
+//				wot.core.set_badge(wot.badge_types.notice); // set icon's badge to "notice"
+			} else {
 				/* use the welcome page to set the cookies on the first run */
 				chrome.tabs.create({ url: wot.urls.welcome });
-				wot.prefs.set("firstrun:welcome", true);
-			} else {
-				wot.core.set_badge(wot.badge_types.notice); // set icon's badge to "notice"
 			}
+			wot.prefs.set("firstrun:welcome", true);
 
 		} else {
 			wot.core.show_updatepage();

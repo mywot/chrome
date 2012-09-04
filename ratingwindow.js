@@ -364,18 +364,18 @@ $.extend(wot, { ratingwindow: {
 		var bg = chrome.extension.getBackgroundPage();
 		var first_opening = false;
 
-		// show welcome page if we haven't done it before (embedded add-on case)
-		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
-			first_opening = true;
-			chrome.tabs.create({ url: wot.urls.welcome }, function(tab) {
-
-				// workaround for https://github.com/mywot/chrome/issues/38 (hide rating window in Chrome 17)
-				chrome.tabs.update(tab.id, { selected: true });
-
-				bg.wot.prefs.set("firstrun:welcome", true);
-				bg.wot.core.set_badge(false); // reset badge
-			});
-		}
+//		// show welcome page if we haven't done it before (embedded add-on case)
+//		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
+//			first_opening = true;
+//			chrome.tabs.create({ url: wot.urls.welcome }, function(tab) {
+//
+//				// workaround for https://github.com/mywot/chrome/issues/38 (hide rating window in Chrome 17)
+//				chrome.tabs.update(tab.id, { selected: true });
+//
+//				bg.wot.prefs.set("firstrun:welcome", true);
+//				bg.wot.core.set_badge(false); // reset badge
+//			});
+//		}
 
 		/* accessibility */
 		$("#wot-header-logo, " +
