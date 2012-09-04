@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20120823,
+	version: 20120904,
 	platform: "chrome",
 	debug: false,
 	default_component: 0,
