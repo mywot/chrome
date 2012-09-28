@@ -5,6 +5,9 @@
     "lang": {
         "message": "tr-TR"
     },
+	"ext_description": {
+		"message": "WOT oylamaları, global anlamda milyonlarca kullanıcının deneyimleri ile milyonlarca web sayfasının oylanması ile geliştirilmiştir."
+	},
     "components_0": {
         "message": "Dürüstlük"
     },
@@ -92,6 +95,9 @@
     "ratingwindow_helplink": {
         "message": "Yorum bırakın?"
     },
+	"ratingwindow_invite_rw": {
+		"message": "You can rate websites using this tool. Click on the colored bars to express how much you trust a website."
+	},
     "warnings_information": {
         "message": "Oylama detaylarına ve yorumlara bakın"
     },
