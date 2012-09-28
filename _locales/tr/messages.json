@@ -1,0 +1,128 @@
+{
+    "locale": {
+        "message": "tr"
+    },
+    "lang": {
+        "message": "tr-TR"
+    },
+    "components_0": {
+        "message": "Dürüstlük"
+    },
+    "components_1": {
+        "message": "Sağlayıcı güvenliği"
+    },
+    "components_2": {
+        "message": "Gizlilik"
+    },
+    "components_4": {
+        "message": "Çocuk güvenliği"
+    },
+    "components__short_0": {
+        "message": "Dürüstlük"
+    },
+    "components__short_1": {
+        "message": "Sağlayıcı güvenliği"
+    },
+    "components__short_2": {
+        "message": "Gizlilik"
+    },
+    "components__short_4": {
+        "message": "Çocuk güvenliği"
+    },
+    "reputationlevels_r0": {
+        "message": ""
+    },
+    "reputationlevels_r1": {
+        "message": "Çok kötü"
+    },
+    "reputationlevels_r2": {
+        "message": "Düşük"
+    },
+    "reputationlevels_r3": {
+        "message": "Tatmin edici değil"
+    },
+    "reputationlevels_r4": {
+        "message": "İyi"
+    },
+    "reputationlevels_r5": {
+        "message": "Mükemmel"
+    },
+    "messages_initializing": {
+        "message": "WOT başlatılıyor…"
+    },
+    "messages_notready": {
+        "message": "WOT… etkinleştiriliyor"
+    },
+    "messages_failed": {
+        "message": "Oyları yüklemek başarısız oldu; hemen tekrar deneniyor."
+    },
+    "messages_notavailable": {
+        "message": "Oylar erişilebilir değil."
+    },
+    "messages_loading": {
+        "message": "Oylar yükleniyor..."
+    },
+    "ratingwindow_settings": {
+        "message": "Ayarlar"
+    },
+    "ratingwindow_guide": {
+        "message": "Rehber"
+    },
+    "ratingwindow_wotrating": {
+        "message": "WOT oyu"
+    },
+    "ratingwindow_myrating": {
+        "message": "Oyum"
+    },
+    "ratingwindow_viewscorecard": {
+        "message": "Oy detayları için puan kartını göster"
+    },
+    "ratingwindow_addcomment": {
+        "message": "Yorumunuzu ekleyin"
+    },
+    "ratingwindow_inpartnership": {
+        "message": "Ortak olduğu yer"
+    },
+    "ratingwindow_newversion": {
+        "message": "Yeni sürüm mevcut - güncellemek için buraya tıklayın"
+    },
+    "ratingwindow_helptext": {
+        "message": "Oyunuz benzeşmiyor."
+    },
+    "ratingwindow_helplink": {
+        "message": "Yorum bırakın?"
+    },
+    "warnings_information": {
+        "message": "Oylama detaylarına ve yorumlara bakın"
+    },
+    "warnings_ratesite": {
+        "message": "Bu site güvenli - Onu oylamak istiyorum"
+    },
+    "warnings_gotosite": {
+        "message": "Uyarıyı yoksay ve siteye git"
+    },
+    "warnings_reputation": {
+        "message": "Bu site kullanıcı oylarına göre<br/> kötü bir üne sahip"
+    },
+    "warnings_rating": {
+        "message": "Bu siteye uyarıya sebep olan <br />düşük bir oy verdiniz"
+    },
+    "warnings_unknown": {
+        "message": "Bu site bilinmeyen bir oylamaya sahip"
+    },
+	"warnings_warning": {
+		"message": "Uyarı!"
+	},
+	"warnings_goto": {
+		"message": "Siteye gite"
+	},
+	"warnings_leave": {
+		"message": "Siteden ayrıl"
+	},
+	"warnings_back": {
+		"message": "Geri git"
+	},
+	"contextmenu_open_scorecard": {
+		"message": "WOT skor kartını aç"
+	}
+}
