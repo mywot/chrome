@@ -21,8 +21,10 @@
 var wot = {
 	version: 20121015,
 	platform: "chrome",
-	debug: false,
+	debug: false,   // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
+
+	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {

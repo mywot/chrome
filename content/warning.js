@@ -301,6 +301,8 @@ wot.warning = {
 			wrapper.innerHTML = this.processhtml(this.make_warning(), replaces);
 			this.hideobjects(true);
 
+			wot.post("warnings", "shown", { type: "overlay" });   // for counting in stats
+
 			document.getElementById("wotinfobutton").addEventListener("click",
 				function() {
 					var url = wot.urls.scorecard + encodeURIComponent(data.target);
@@ -308,6 +310,7 @@ wot.warning = {
 				}, false);
 
 			document.getElementById("wot-btn-leave").addEventListener("click",function(e){
+				wot.post("warnings", "leave_button", {label: wot.warning.exit_mode});
 				if(wot.warning.exit_mode == "leave") {
 					// close tab
 					wot.post("tab","close", {});
@@ -333,6 +336,7 @@ wot.warning = {
 
 			document.getElementById("wot-btn-hide").addEventListener("click",
 				function() {
+					wot.post("warnings", "enter_button", {});
 					wot.warning.hide();
 					wot.warning.hideobjects(false);
 					wot.post("cache", "setflags", {

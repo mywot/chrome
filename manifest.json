@@ -21,7 +21,7 @@
 		"http://api.mywot.com/*",
 		"https://api.mywot.com/*"
 	],
-	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'self'; img-src *",
+	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
 		"skin/include/popup.css",
 		"skin/include/warning.css",

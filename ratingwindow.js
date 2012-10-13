@@ -96,7 +96,8 @@ $.extend(wot, { ratingwindow: {
 				});
 
 				bgwot.api.submit(this.state.target, params);
-
+				// count testimony event
+				bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY);
 			}
 
 			/* update all views */
@@ -445,6 +446,7 @@ $.extend(wot, { ratingwindow: {
 		});
 
 		$("#wot-header-button").bind("click", function() {
+			bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_BTN_CLOSE);
 			wot.ratingwindow.hide();
 		});
 
@@ -490,6 +492,7 @@ $.extend(wot, { ratingwindow: {
 		$("#wot-message").bind("click", function() {
 			var url = $("#wot-message-text").attr("url");
 			if (url) {
+				bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_MSG_CLICKED);
 				wot.ratingwindow.navigate(url, wurls.contexts.rwmsg);
 			}
 		});
