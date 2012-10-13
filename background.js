@@ -494,6 +494,8 @@ $.extend(wot, { core: {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 			wot.prefs.set("firstrun:time", new Date()); // remember first time when addon was run
 
+			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, wot.partner);
+
 			// now we have only mail.ru case which requires to postpone opening welcome page
 			var postpone_welcome = wot.env.is_mailru;
 
@@ -558,6 +560,25 @@ $.extend(wot, { core: {
 				chrome.tabs.remove(port.port.sender.tab.id);
 			});
 
+			/* counting events by GA.
+			 * Important: message name we listen for here has to be different than we send from this page
+			  * (warnings vs warning) to avoid dead messaging from content script */
+			wot.bind("message:warnings:leave_button", function(port, data) {
+				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_CLOSE, data.label);
+			});
+
+			wot.bind("message:warnings:enter_button", function(port, data) {
+				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER);
+			});
+
+			wot.bind("message:warnings:shown", function(port, data) {
+				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.type);
+			});
+
+			wot.bind("message:search:popup_shown", function(port, data) {
+				wot.ga.fire_event(wot.ga.categories.INJ, wot.ga.actions.D_POPUP_SHOWN, data.label);
+			});
+
 			wot.bind("message:search:openscorecard", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx);
 			});
@@ -568,7 +589,7 @@ $.extend(wot, { core: {
 				});
 			});
 
-			wot.listen([ "search", "my", "tab" ]);
+			wot.listen([ "search", "my", "tab", "warnings" ]);
 
 			/* event handlers */
 
