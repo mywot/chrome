@@ -38,7 +38,7 @@
 				"content/search.js"
 			],
 			"run_at": "document_start",
-			"all_frames": true 
+			"all_frames": true
 		}, {
 			"matches": [
 				"http://www.mywot.com/*",
@@ -51,7 +51,7 @@
 				"content/settings.js"
 			],
 			"run_at": "document_start",
-			"all_frames": true 
+			"all_frames": true
 		}
 	],
 	"update_url": "http://api.mywot.com/chromeupdates.xml",

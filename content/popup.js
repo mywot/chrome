@@ -57,8 +57,9 @@ wot.popup = {
 	postfix:		"-" + Date.now(),
 	id:				"wot-popup-layer",
 	onpopup:		false,
+	rule_name:      null,
 
-	add: function(parentelem)
+	add: function(parentelem, rule_name)
 	{
 		try {
 			if (!wot.search.settings.show_search_popup) {
@@ -91,6 +92,8 @@ wot.popup = {
 			} else {
 				return;
 			}
+
+			this.rule_name = rule_name;
 
 			var layer = document.createElement("div");
 
@@ -228,8 +231,10 @@ wot.popup = {
 				layer.style.left = posx + "px";
 				layer.style.display = "block";
 
+				wot.post("search", "popup_shown", { label: wot.popup.rule_name });
+
 				wot.log("popup.delayedshow: x = " + posx + ", y = " +
-					posy + ", version = " + version + "\n");
+					posy + ", version = " + version);
 			}
 		}, wot.search.settings.popup_show_delay || 200);
 	},
@@ -284,9 +289,11 @@ wot.popup = {
 			if (layer.style.display != "none") {
 				layer.style.top  = posy + "px";
 				layer.style.left = posx + "px";
+				wot.post("search", "popup_shown", { label: wot.popup.rule_name });
 			} else {
 				this.delayedshow(layer, posy, posx);
 			}
+
 		} catch (e) {
 			console.log("popup.show: failed with " + e);
 		}

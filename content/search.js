@@ -515,10 +515,10 @@ wot.search = {
 									rule.popup.match[0], window);
 
 					if (elem) {
-						wot.popup.add(elem);
+						wot.popup.add(elem, data.rule.name);
 					}
 				} else {
-					wot.popup.add();
+					wot.popup.add(null, data.rule.name);
 				}
 
 				/* TODO: content scripts? */
