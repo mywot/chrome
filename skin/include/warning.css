@@ -45,6 +45,7 @@
 }
 
 #wotcontainer {
+    position: static !important;
     width: 420px ! important; /* fixed width */
     margin: 0 auto 0 !important;
     outline: 0 !important;
@@ -63,6 +64,7 @@
 }
 
 .wotcontainer * {
+    position: static !important;
     line-height: normal !important;
     font-family: "Verdana", sans-serif !important;
     font-weight: normal !important;
@@ -95,7 +97,9 @@
     background-image: url("../b/accessible/logo.png") !important;
 }
 
-.wot-warning {
+/* doubling rule for 'font' is a workaround to fix issue when a page is translated by google (it brakes styles) */
+.wot-warning,
+.wot-warning font {
     margin-top: 0.2em !important;
     width: 100% !important;
     text-align: center !important;
@@ -105,7 +109,8 @@
     text-shadow: 1px 1px 1px #fff !important;
 }
 
-.wot-title {
+.wot-title,
+.wot-title font  {
     margin-top: 17px !important;
     width: 400px !important;
     font-size: 10pt !important;
@@ -117,7 +122,8 @@
     padding: 0 0.5em 0.5em 0.5em !important
 }
 
-.wot-desc {
+.wot-desc,
+.wot-desc font {
     margin-top: 11px !important;
     width: 100% !important;
     font-size: 11pt !important;
@@ -138,7 +144,8 @@
     text-shadow: 2px 2px 2px #fff !important;
 }
 
-.wot-link {
+.wot-link,
+.wot-link font {
     cursor: pointer !important;
     color: #2353ce !important;
     text-decoration: none !important;
@@ -158,7 +165,8 @@
     display: none !important;
 }
 
-.wot-component {
+.wot-component,
+.wot-component font {
     position: relative !important;
     margin-top: 1.2em !important;
     text-align: left !important;
@@ -168,6 +176,11 @@
     padding: 0 0 0.5em 1em !important;
     color: #4f4f4e !important;
     text-shadow: 2px 2px 2px #fff !important;
+    text-align: left !important;
+    font-size: 10pt !important;
+}
+.wot-comp-name font {
+    color: #4f4f4e !important;
     text-align: left !important;
     font-size: 10pt !important;
 }
@@ -181,6 +194,12 @@
     box-shadow: 2px 2px 6px #b6b6b6 !important;
     text-align: left !important;
     font-size: 10pt !important;
+}
+
+.wot-comp-level font {
+    color: #ffffff !important;
+    font-size: 10pt !important;
+    text-align: left !important;
 }
 
 /* Colors for reputation's levels */
@@ -293,7 +312,8 @@
     background-image: url("../b/accessible/r5.png") !important;
 }
 
-.wot-rateit-wrap {
+.wot-rateit-wrap,
+.wot-rateit-wrap font {
     margin-top: 2em !important;
     font-size: 10pt !important;
     text-shadow: 1px 1px 1px #fff !important;
@@ -301,7 +321,8 @@
 }
 
 /* bottom buttons row */
-.wot-buttons {
+.wot-buttons,
+.wot-buttons font {
     margin-top: 1.3em !important;
     margin-bottom: 1.2em !important;
     position: relative !important;
@@ -323,6 +344,12 @@
     font-weight: bold !important;
 
     -webkit-transition: box-shadow 0.1s !important;
+}
+
+.wot-button font {
+    color: #5a5a5a !important;
+    font-size: 10pt !important;
+    font-weight: bold !important;
 }
 
 .wot-button:hover {
