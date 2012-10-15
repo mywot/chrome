@@ -22,6 +22,7 @@
 // for analytics
 (function() {
 	if(!wot.ga.disable) {
+		try {
 		var ga = document.createElement('script');
 		ga.type = 'text/javascript';
 		ga.async = true;
@@ -29,5 +30,8 @@
 
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(ga, s);
+		} catch (e) {
+			// silence, please
+		}
 	}
 })();
