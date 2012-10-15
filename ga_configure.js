@@ -79,7 +79,8 @@ $.extend(wot, { ga: {
 				_gaq.push(['_trackEvent', category, action, label]);
 			}
 		} catch (e){
-			console.log("Error in wot.ga.fire_event(). Msg: ", e);
+			// silence...
+			//console.log("Error in wot.ga.fire_event(). Msg: ", e);
 		}
 	}
 
