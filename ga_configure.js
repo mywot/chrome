@@ -26,6 +26,9 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', wot.ga_id]);
 _gaq.push(['_trackPageview']);
 
+// provide version number to GA
+_gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2 (session level)
+
 
 /* This adds logic for counting events to wot object */
 
