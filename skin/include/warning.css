@@ -156,12 +156,12 @@
 }
 
 /* Section of ratings */
-#wot-ratings {
+#wot-warn-ratings {
     width: 63% !important;
     margin: 0.5em auto !important;
 }
 
-#wotcontainer.wotnoratings #wot-ratings {
+#wotcontainer.wotnoratings #wot-warn-ratings {
     display: none !important;
 }
 
@@ -388,4 +388,92 @@
 
 #wot-btn-leave:active {
     right: 49px !important;
+}
+
+#wot-wt-warning-wrapper {
+    width: 0;
+    float: left;
+    position: relative !important;
+    left: 390px;
+    top: -40px;
+}
+
+.wot-wt-warning-content {
+    position: relative !important;
+    width: 200px;
+    padding: 1em 1.5em 5.5em !important;
+    border-color: white;
+    border-radius: 8px !important;
+    color: #757575 !important;
+    background-color: white !important;
+    box-shadow: 0 0 7px 3px #888;
+}
+
+.wot-wt-warning-content:before {
+    content: "";
+    background-image: url(../b/welcometips/wt_left_corner.png);
+    width: 10px;
+    height: 19px;
+    position: relative !important;
+    top: 50px;
+    left: -220px;
+    float: right;
+}
+
+.wot-wt-warning-content p {
+    text-align: left !important;
+    padding-bottom: 0.4em !important;
+}
+
+.wot-wt-warning-content > div:not([class="wot-wt-warn-footer"]) {
+    padding-top: 1em !important;
+}
+
+/* BEGIN: Copy&Paste from welcometips.css */
+.wot-wt-button {
+    -webkit-transition: box-shadow 0.1s !important;
+    width: 12em;
+    height: 24px !important;
+    margin: 1.3em auto 0.5em auto !important;
+    padding: 0.7em 0.5em 0 0.5em !important;
+
+    border: #eff0f0 solid 1px !important;
+    border-radius: 1px !important;
+    box-shadow: 2px 2px 2px #d0cdcd;
+    text-shadow: 1px 1px 1px #fff !important;
+    background-image: -webkit-linear-gradient(top, #f9f9f9 60%, #eaeaea) !important;
+
+    color: #838282;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+
+.wot-wt-button:hover {
+    box-shadow: 0px 0px 20px rgba(121, 180, 42, 0.8);
+    /*border-color: #8ad92f !important;*/
+}
+
+.wot-wt-button:active {
+    top: 1px;
+    border-color: #babbbb;
+    box-shadow: none;
+    background-image: -webkit-linear-gradient(top, #e2e1e1 71%, #f0efef) !important;
+}
+/* END */
+
+
+.wot-wt-warn-button {
+
+}
+
+.wot-wt-warn-footer {
+    position: absolute !important;
+    bottom: 1em !important;
+    width: 200px !important;
+}
+
+.wot-checkbox {
+
 }

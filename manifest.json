@@ -25,6 +25,7 @@
 	"web_accessible_resources" : [
 		"skin/include/popup.css",
 		"skin/include/warning.css",
+		"skin/include/welcometips.css",
 		"skin/fusion/popup-logo.png",
 		"skin/fusion/accessible/popup-logo.png",
 		"skin/fusion/popup.png",
@@ -56,6 +57,9 @@
 		"skin/b/accessible/r3.png",
 		"skin/b/accessible/r4.png",
 		"skin/b/accessible/r5.png",
+		"skin/b/welcometips/wt_intro_0.png",
+		"skin/b/welcometips/wt_intro_top.png",
+		"skin/b/welcometips/wt_left_corner.png",
 		"skin/fusion/accessible/16_16/plain/r0.png",
 		"skin/fusion/accessible/16_16/plain/r1.png",
 		"skin/fusion/accessible/16_16/plain/r2.png",
@@ -93,7 +97,8 @@
 				"content/warning.js",
 				"content/url.js",
 				"content/popup.js",
-				"content/search.js"
+				"content/search.js",
+				"content/welcome_tips.js"
 			],
 			"run_at": "document_start",
 			"all_frames": true 

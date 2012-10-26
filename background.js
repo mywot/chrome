@@ -22,24 +22,26 @@ $.extend(wot, { core: {
 	usermessage: {},
 	usercontent: [],
 	badge_status: null,
+	first_run: false,       // sesion variable, to know if this launch is the first after installation
+	launch_time: null,      // time when current session was started
 
-	loadratings: function(hosts, onupdate)
+	loadratings: function (hosts, onupdate)
 	{
-		if (typeof(hosts) == "string") {
+		if (typeof (hosts) == "string") {
 			var target = wot.url.gethostname(hosts);
 
 			if (target) {
 				return wot.api.query(target, onupdate);
 			}
-		} else if (typeof(hosts) == "object" && hosts.length > 0) {
+		} else if (typeof (hosts) == "object" && hosts.length > 0) {
 			return wot.api.link(hosts, onupdate);
 		}
 
-		(onupdate || function() {})([]);
+		(onupdate || function () {})([]);
 		return false;
 	},
 
-	update: function()
+	update: function ()
 	{
 		try {
 			chrome.windows.getAll({}, function(windows) {
@@ -135,7 +137,7 @@ $.extend(wot, { core: {
 				chrome.browserAction.setIcon({
 					tabId: tab.id,
 					imageData: context.getImageData(0, 0, canvas.width,
-								   canvas.height)
+								canvas.height)
 				});
 			};
 
@@ -211,7 +213,15 @@ $.extend(wot, { core: {
 
 			var type = wot.getwarningtype(cached.value, settings);
 
-			if (type && type.type == wot.warningtypes.overlay) {
+//			// TODO: remove it before release!!!
+//			type = {
+//				type: wot.warningtypes.overlay,
+//				reason: wot.warningreasons.reputation
+//			};  // OVERRIDING FOR DEBUG ONLY
+
+			var show_wtip = wot.wt.warning.tts();
+
+			if (type && type.type === wot.warningtypes.overlay) {
 				var port = chrome.tabs.connect(tab.id, { name: "warning" });
 
 				if (port) {
@@ -219,7 +229,8 @@ $.extend(wot, { core: {
 						message: "warning:show",
 						data: data,
 						type: type,
-						settings: settings
+						settings: settings,
+						show_wtip: show_wtip
 					});
 				}
 			}
@@ -323,7 +334,7 @@ $.extend(wot, { core: {
 			var lang = wot.i18n("locale");
 
 			// Only for: Mail.ru & RW was never shown & lang is EN or RU
-			if(rw_shown < 1 && wot.env.is_mailru && (lang == "ru" || lang == "en")) {
+			if(rw_shown < 1 && wot.env.is_mailru && (lang === "ru" || lang === "en")) {
 
 				// if time since firstrun more than predefined delay
 				var timesince = wot.time_sincefirstrun();
@@ -485,16 +496,27 @@ $.extend(wot, { core: {
 		}
 	},
 
+	increase_ws_shown: function () {
+		try {
+			var pref_name = "warnings_shown";
+			var count = wot.prefs.get(pref_name) || 0;
+			wot.prefs.set(pref_name, count + 1);
+		} catch (e) {
+			console.log("wot.core.increase_ws_shown() failed with ", e);
+		}
+	},
+
 	welcome_user: function()
 	{
 		// this function runs only once per add-on's launch
 
 		// check if add-on runs not for a first time
 		if (!wot.prefs.get("firstrun:welcome")) {
+			wot.core.first_run = true;
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 			wot.prefs.set("firstrun:time", new Date()); // remember first time when addon was run
 
-			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, wot.partner);
+			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, String(wot.partner));
 
 			// now we have only mail.ru case which requires to postpone opening welcome page
 			var postpone_welcome = wot.env.is_mailru;
@@ -526,8 +548,10 @@ $.extend(wot, { core: {
 	{
 		try {
 			/* load the manifest for reference */
-
 			this.loadmanifest();
+
+			wot.core.launch_time = new Date();
+
 			wot.detect_environment();
 
 			/* messages */
@@ -572,6 +596,8 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {
+
+				wot.core.increase_ws_shown();
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.type);
 			});
 
@@ -589,7 +615,7 @@ $.extend(wot, { core: {
 				});
 			});
 
-			wot.listen([ "search", "my", "tab", "warnings" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "wtb" ]);
 
 			/* event handlers */
 
@@ -607,13 +633,11 @@ $.extend(wot, { core: {
 				wot.prefs.clear("update:state");
 
 				wot.bind("cache:set", function(name, value) {
-					console.log("cache.set: " + name + " = " +
-						JSON.stringify(value));
+					console.log("cache.set: " + name, {name: name, value: value});
 				});
 
 				wot.bind("prefs:set", function(name, value) {
-					console.log("prefs.set: " + name + " = " +
-						JSON.stringify(value));
+					console.log("prefs.set: " + name,{name: name, value: value});
 				});
 			}
 
@@ -626,14 +650,17 @@ $.extend(wot, { core: {
 					wot.core.welcome_user();
 					wot.api.update();
 					wot.api.processpending();
+					wot.wt.init();  // initialize welcome tips engine
 				}
 			});
 
 			wot.cache.purge();
+
 		} catch (e) {
-			console.log("core.onload: failed with " + e);
+			console.log("core.onload: failed with ", e);
 		}
-	}
+	},
+
 }});
 
 wot.core.onload();

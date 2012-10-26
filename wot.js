@@ -24,7 +24,7 @@ var wot = {
 	debug: false,   // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 
-	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
@@ -99,7 +99,7 @@ var wot = {
 			warnrate:   "warn-rate",
 			popupviewsc: "popup",
 			popupdonuts: "popup-donuts"
-	    }
+		}
 	},
 
 	firstrunupdate: 1, /* increase to show a page after an update */
@@ -114,12 +114,12 @@ var wot = {
 
 	badge_types: {
 		notice: {   // for system notifications
-			color: [240,0,0,255],
+			color: [240, 0, 0, 255],
 			text: "1",
 			type: "notice"  // important to compare with current status type
 		},
 		message: { // for messages from another users
-			color: [160,160,160,255],
+			color: [160, 160, 160, 255],
 			text: "",
 			type: "message"
 		}
@@ -136,7 +136,6 @@ var wot = {
 	},
 
 	// engagement schedule
-
 	engage_settings: {
 		invite_to_rw: {
 			delay: 12 * 3600,    // 12 hours after first launch
@@ -145,9 +144,18 @@ var wot = {
 		}
 	},
 
+	// Constants for playing with date & time (in seconds)
+	DT: {
+		MINUTE: 60,
+		HOUR: 3600,
+		DAY: 24 * 3600,
+		WEEK: 7 * 24 * 3600,
+		MONTH: 30 * 24 * 3600
+	},
+
 	/* logging */
 
-	log: function(s)
+	log: function (s)
 	{
 		if (wot.debug) {
 			console.log(s);
@@ -158,15 +166,14 @@ var wot = {
 
 	events: {},
 
-	trigger: function(name, params, once)
+	trigger: function (name, params, once)
 	{
 		if (this.events[name]) {
 			if (wot.debug) {
-				console.log("trigger: event " + name + ", once = " + once +
-					"\n");
+				console.log("trigger: event " + name + ", once = " + once);
 			}
 
-			this.events[name].forEach(function(obj) {
+			this.events[name].forEach(function (obj) {
 				try {
 					obj.func.apply(null, [].concat(params).concat(obj.params));
 				} catch (e) {
@@ -176,27 +183,27 @@ var wot = {
 			});
 
 			if (once) { /* these events happen only once per bind */
-				delete(this.events[name]);
+				delete (this.events[name]);
 			}
 		}
 	},
 
-	bind: function(name, func, params)
+	bind: function (name, func, params)
 	{
-		if (typeof(func) == "function") {
+		if (typeof (func) == "function") {
 			this.events[name] = this.events[name] || [];
 			this.events[name].push({ func: func, params: params || [] });
 
 			if (wot.debug) {
-				console.log("bind: event " + name + "\n");
+				console.log("bind: event " + name);
 			}
 			this.trigger("bind:" + name);
 		}
 	},
 
-	addready: function(name, obj, func)
+	addready: function (name, obj, func)
 	{
-		obj.ready = function(setready)
+		obj.ready = function (setready)
 		{
 			if (typeof(func) == "function") {
 				this.isready = setready || func.apply(this);
@@ -484,7 +491,7 @@ var wot = {
 		var readonly = readonly || false;
 		// try to understand in which environment we are run
 		var user_agent = window.navigator.userAgent || "";
-		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
+		wot.env.is_mailru = true; //user_agent.indexOf("MRCHROME") >= 0;
 
 		if(wot.env.is_mailru) {
 			// set param to label requests
@@ -505,5 +512,123 @@ var wot = {
 		} else {
 			return undefined;
 		}
+	},
+
+	time_since: function(a, b) {
+
+		if (typeof a === "string") {
+			a = new Date(a);
+		}
+
+		b = b || new Date();
+
+		if (typeof b === "string") {
+			b = new Date(b);
+		}
+
+		return (b - a) / 1000;  // in seconds
 	}
+};
+
+
+wot.utils = {
+
+	get_document: function (frame) {
+		frame = frame || window;
+		var framed_document = frame.document || frame.contentDocument;
+		return framed_document;
+	},
+
+	get_or_create_element: function (id, tag, frame) {
+		tag = tag || "div";
+		var framed_document = wot.utils.get_document(frame);
+
+		var elem = framed_document.getElementById(id);
+
+		if(!elem) {
+			elem = framed_document.createElement(tag);
+			elem.setAttribute("id", id);
+		}
+
+		return elem;
+	},
+
+	attach_element: function (element, frame) {
+		var framed_document = wot.utils.get_document(frame);
+
+		if(framed_document) {
+			var body = framed_document.getElementsByTagName("body");
+
+			if (!element || !body || !body.length) {
+				return false;
+			}
+
+			return body[0].appendChild(element);
+		} else {
+			wot.log("Can't get document of frame");
+			return false;
+		}
+
+	},
+
+	attach_style: function (style_file, uniq_id, frame) {
+		try {
+			uniq_id = uniq_id || null;
+
+			var framed_document = wot.utils.get_document(frame);
+
+			if(!framed_document) {
+				return false;
+			}
+
+			if(uniq_id) {
+				var el = framed_document.getElementById(uniq_id);
+				if(el) return 0;    // no need to attach again
+			}
+
+			var head = framed_document.getElementsByTagName("head");
+
+			if (!head || !head.length) {
+				return false;
+			}
+
+			var style = framed_document.createElement("style");
+
+			if (!style) {
+				return false;
+			}
+
+			style.setAttribute("type", "text/css");
+			style.innerText = "@import \"" +
+				chrome.extension.getURL(wot.getincludepath(style_file)) +
+				"\";";
+
+			if(uniq_id) {
+				style.setAttribute("id", uniq_id);
+			}
+
+			head[0].appendChild(style);
+
+			return true;
+		} catch (e) {
+			console.log("wot.utils.attach_style() failed with", e, "Arguments:", arguments);
+			return false;
+		}
+	},
+
+	processhtml: function (html, replaces) {
+		try {
+			replaces.forEach(function(item) {
+				html = html.replace(RegExp("{" + item.from + "}", "g"),
+					item.to);
+			});
+
+			return html;
+		} catch (e) {
+			console.log("warning.processhtml: failed with " + e);
+		}
+
+		return "";
+	}
+
 };

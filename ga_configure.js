@@ -38,23 +38,36 @@ $.extend(wot, { ga: {
 		WS: "WarningScreen",
 		RW: "RatingWindow",
 		GEN: "General",
-		INJ: "Injections"
+		INJ: "Injections",
+		WT: "WelcomeTips"
 	},
 
 	actions: {
 		RW_TESTIMONY:   "RW_testimony",
 		RW_BTN_CLOSE:   "RW_btn_close",
 		RW_MSG_CLICKED: "RW_msg_clicked",
+
 		WS_SHOW:        "WS_shown",
 		WS_BTN_ENTER:   "WS_btn_enter",
 		WS_BTN_CLOSE:   "WS_btn_close",
+
 		D_POPUP_SHOWN:  "D_popup_shown",
-		GEN_INSTALLED:  "WOT_installed"
+		GEN_INSTALLED:  "WOT_installed",
+
+		WT_INTRO_0_SHOWN: "WT_Intro0_shown",
+		WT_INTRO_0_OK:  "WT_Intro0_ok",
+		WT_WS_SHOWN:    "WT_WS_shown",
+		WT_WS_OK:       "WT_WS_ok",
+		WT_WS_OPTEDOUT: "WT_WS_optedout",
+		WT_RW_SHOWN:    "WT_RW_shown",
+		WT_RW_OK:       "WT_RW_ok",
+		WT_DONUTS_SHOWN:"WT_Donuts_shown",
+		WT_DONUTS_OK:   "WT_Donuts_ok"
 	},
 
-	init_tracker: function() {
-		if(!wot.ga._tracker) {
-			if(_gat) {
+	init_tracker: function () {
+		if (!wot.ga._tracker) {
+			if (_gat) {
 				try {
 					wot.ga._tracker = _gat.getTrackerByName();
 					wot.ga._tracker._setAccount(wot.ga_id);
@@ -67,18 +80,18 @@ $.extend(wot, { ga: {
 		return !!wot.ga._tracker;
 	},
 
-	fire_event: function(category, action, label) {
+	fire_event: function (category, action, label, value) {
 
-		if(wot.ga.disable) return;
+		if (wot.ga.disable) return;
 
 		try {
-			if( wot.ga.init_tracker() ) {
-				wot.ga._tracker._trackEvent(category, action, label);
+			if (wot.ga.init_tracker()) {
+				wot.ga._tracker._trackEvent(category, action, label, value);
 			} else {
 				// backup option, if AsyncTracker still isn't inited
-				_gaq.push(['_trackEvent', category, action, label]);
+				_gaq.push(['_trackEvent', category, action, label, value]);
 			}
-		} catch (e){
+		} catch (e) {
 			// silence...
 			//console.log("Error in wot.ga.fire_event(). Msg: ", e);
 		}

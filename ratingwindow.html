@@ -31,11 +31,22 @@
 
 		<style type="text/css">
 			@import "skin/ratingwindow.css";
+            @import "skin/include/welcometips.css";
 		</style>
 	</head>
 	<body>
 		<div id="wot-ratingwindow">
-			<div id="wot-elements">
+            <div id="wot-welcome-tips" style="display: none;">
+                <div id="wot-wt-image"></div>
+                <p>Share your experiences!</p>
+                <p>WOT shows website reputations based on experiences from millions of users.</p>
+                <p>Leave your own rating by moving the rating symbol to indicate what you think of the site. Your rating helps other users surf safer.</p>
+                <p>Safe surfing!</p><br/>
+                <div class="wot-wt-footer">
+                    <div id="wt-rw-btn-ok" class="wot-wt-button wot-wt-rw-button">Show me rating window</div>
+                </div>
+            </div>
+			<div id="wot-elements" style="display: none;">
 				<!-- header -->
 				<div id="wot-header">
 					<div id="wot-header-logo"></div>
