@@ -509,7 +509,7 @@ $.extend(wot, { core: {
 	welcome_user: function()
 	{
 		// this function runs only once per add-on's launch
-
+		var time_sincefirstrun = 1;
 		// check if add-on runs not for a first time
 		if (!wot.prefs.get("firstrun:welcome")) {
 			wot.core.first_run = true;
@@ -534,13 +534,17 @@ $.extend(wot, { core: {
 			wot.core.show_updatepage();
 			wot.api.setcookies();
 
-			var time_sincefirstrun = wot.time_sincefirstrun();
+			time_sincefirstrun = wot.time_sincefirstrun();
 
 			// if we didn't save firsttime before we should do it now
 			if (!time_sincefirstrun) {
 				wot.prefs.set("firstrun:time", new Date());
 			}
 		}
+
+		// adapt min_confidence_level: 12 for newcomers, 8 - for users who use the addon more than 2 weeks
+		var min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
+		wot.prefs.set("min_confidence_level", min_level);
 
 	},
 
@@ -596,9 +600,8 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {
-
 				wot.core.increase_ws_shown();
-				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.type);
+				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.hostname);
 			});
 
 			wot.bind("message:search:popup_shown", function(port, data) {
@@ -659,7 +662,7 @@ $.extend(wot, { core: {
 		} catch (e) {
 			console.log("core.onload: failed with ", e);
 		}
-	},
+	}
 
 }});
 
