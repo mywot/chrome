@@ -21,6 +21,8 @@
 $.extend(wot, { ratingwindow: {
 	sliderwidth: 194,
 
+	opened_time: null,
+
 	/* rating state */
 
 	state: {},
@@ -103,7 +105,7 @@ $.extend(wot, { ratingwindow: {
 			/* update all views */
 			bgwot.core.update();
 		} catch (e) {
-			console.log("ratingwindow.finishstate: failed with " + e);
+			console.log("ratingwindow.finishstate: failed with ", e);
 		}
 	},
 
@@ -116,7 +118,7 @@ $.extend(wot, { ratingwindow: {
 			chrome.tabs.create({ url: contextedurl });
 			this.hide();
 		} catch (e) {
-			console.log("ratingwindow.navigate: failed with " + e);
+			console.log("ratingwindow.navigate: failed with ", e);
 		}
 	},
 
@@ -152,7 +154,7 @@ $.extend(wot, { ratingwindow: {
 				return position;
 			}
 		} catch (e) {
-			console.log("ratingwindow.getrating: failed with " + e);
+			console.log("ratingwindow.getrating: failed with ", e);
 		}
 
 		return -1;
@@ -349,7 +351,7 @@ $.extend(wot, { ratingwindow: {
 						wot.ratingwindow.updatecontents();
 					}
 				} catch (e) {
-					console.log("ratingwindow.update: failed with " + e);
+					console.log("ratingwindow.update: failed with ", e);
 				}
 			});
 		});
@@ -360,10 +362,46 @@ $.extend(wot, { ratingwindow: {
 		window.close();
 	},
 
+	count_window_opened: function () {
+		// increase amount of times RW was shown (store to preferences)
+
+		wot.log("RW: count_window_opened");
+
+		var bg = chrome.extension.getBackgroundPage();
+		var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
+		counter = counter + 1;
+		bg.wot.prefs.set(wot.engage_settings.invite_to_rw.pref_name, counter);
+	},
+
+	reveal_ratingwindow: function (no_animation) {
+		$("#wot-welcome-tips").hide();
+
+		var $ratingwindow = $("#wot-elements");
+		if (no_animation) {
+			$ratingwindow.show();
+		} else {
+			$ratingwindow.animate({"margin-left": 0}, 300);
+		}
+	},
+
+	show_welcome_tip: function () {
+		$("#wot-elements").css({"margin-left": "450px"}).show();
+		$("#wot-welcome-tips").show();
+
+		// use small delay to allow GA script to initialize itself
+		window.setTimeout(function(){
+			// fire the event to GA, providing amount of minutes from installation to opening rating window
+			var bg = chrome.extension.getBackgroundPage();
+			var timesincefirstrun = Math.round((bg.wot.time_sincefirstrun() + 0.5) / wot.DT.MINUTE);
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_RW_SHOWN, String(timesincefirstrun));
+		}, 500);
+	},
+
 	onload: function()
 	{
+		wot.ratingwindow.opened_time = new Date(); // remember time when RW was opened
 		var bg = chrome.extension.getBackgroundPage();
-		var first_opening = false;
+		var first_opening = !bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
 
 //		// show welcome page if we haven't done it before (embedded add-on case)
 //		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
@@ -421,9 +459,20 @@ $.extend(wot, { ratingwindow: {
 			}, {
 				selector: "#wot-partner-text",
 				text: wot.i18n("ratingwindow", "inpartnership")
+			}, {
+				selector: "#wot-welcome-tips-text",
+				html: wot.i18n("wt", "rw_text")
+			}, {
+				selector: "#wt-rw-btn-ok",
+				text: wot.i18n("wt", "rw_ok")
 			}
 		].forEach(function(item) {
-			$(item.selector).text(item.text);
+				var $elem = $(item.selector);
+				if (item.text) {
+					$elem.text(item.text);
+				} else if (item.html) {
+					$elem.html(item.html);
+				}
 		});
 
 		if (wot.partner) {
@@ -529,11 +578,38 @@ $.extend(wot, { ratingwindow: {
 
 		bg.wot.core.update();
 
-		if(!first_opening) {
+		// Welcome Tip button "OK"
+		$("#wt-rw-btn-ok").click(function (e){
+			wot.ratingwindow.reveal_ratingwindow();
+			wot.ratingwindow.count_window_opened();
+
+			var wt = bg.wot.wt;
+			wt.settings.rw_ok = true;
+			wt.save_setting("rw_ok");
+
+			var time_before_click = Math.round(wot.time_since(wot.ratingwindow.opened_time));
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_RW_OK, String(time_before_click));
+		});
+
+		var wt =     bg.wot.wt,
+			locale = bg.wot.i18n("locale");
+
+		// Decide what to show: normal rating window or welcome tip?
+		if(bg.wot.env.is_mailru && (locale === "ru" || locale === "en") &&
+			first_opening && !(wt.settings.rw_ok || wt.settings.rw_shown > 1)) {
+			// RW is opened first time - show welcome tip
+			wot.ratingwindow.show_welcome_tip();
+
+			// set all welcome tip's preferences (== wt was shown)
+			wt.settings.rw_shown = wt.settings.rw_shown + 1;
+			wt.settings.rw_shown_dt = new Date();
+			wt.save_setting("rw_shown");
+			wt.save_setting("rw_shown_dt");
+
+		} else {
+			wot.ratingwindow.reveal_ratingwindow(true); // reveal rating window without animation
 			// increment "RatingWindow shown" counter
-			var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
-			counter = counter + 1;
-			bg.wot.prefs.set(wot.engage_settings.invite_to_rw.pref_name, counter);
+			wot.ratingwindow.count_window_opened();
 
 			// shown RatingWindow means that we shown a message => remove notice badge from the button
 			if(bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {

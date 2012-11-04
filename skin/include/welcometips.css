@@ -1,0 +1,152 @@
+/*
+	welcometips.css
+	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+
+	This file is part of WOT.
+
+	WOT is free software: you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	WOT is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+	License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with WOT. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* ! important in an attempt to override conflicting styles on websites where this is included */
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.wot-wt-introtip {
+    border: 1px solid #cccccc;
+    border-top: none;
+    border-radius: 2px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    box-shadow: 0px 0px 7px #888888;
+    padding: 1em 1em 0.8em 1em;
+    margin-top: 11px;
+    font-family: arial;
+    background-color: white;
+}
+
+.wot-wt-introtip:before {
+    background-image: url(chrome-extension://__MSG_@@extension_id__/skin/b/welcometips/wt_intro_top.png);
+    background-repeat: no-repeat;
+    height: 11px;
+    width: 218px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 8px;
+    content: " ";
+}
+
+#introtip {
+    margin: 0 auto;
+    width: 218px;
+}
+
+.wot-wt-intro-body {
+    font-size: 10pt;
+    color: #656565;
+}
+
+.wot-wt-footer {
+    /* used in Intro Tip and R-Tip */
+    text-align: center;
+}
+
+.wot-wt-button {
+    -webkit-transition: box-shadow 0.1s !important;
+    width: 12em;
+    height: 24px !important;
+    margin: 1.3em auto 0.5em auto !important;
+    padding: 0.7em 0.5em 0.2em 0.5em !important;
+
+    border: #eff0f0 solid 1px !important;
+    border-radius: 1px !important;
+    box-shadow: 0px 0px 7px #888;
+    text-shadow: 0px 0px 4px #fff !important;
+    background-image: -webkit-linear-gradient(top, #f9f9f9 60%, #eaeaea) !important;
+
+    color: #838282;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+
+.wot-wt-button:hover {
+    box-shadow: 0px 0px 20px rgba(121, 180, 42, 0.8);
+    color: #79B42A;
+    /*border-color: #8ad92f !important;*/
+}
+
+.wot-wt-button:active {
+    top: 1px;
+    border-color: #babbbb;
+    box-shadow: none;
+    background-image: -webkit-linear-gradient(top, #e2e1e1 71%, #f0efef) !important;
+}
+
+.wot-wt-intro-button {
+
+}
+
+/* Rating Window tip's style */
+#wot-welcome-tips {
+    font-family: arial;
+    font-size: 11pt;
+    padding: 1em 2em;
+    min-width: 260px;
+    /*max-width: 350px;*/
+    float: left;
+    overflow: hidden;
+    color: #7b7b7b;
+}
+
+/* Used in R-Tips and Intro Tips */
+#wot-welcome-tips .wot-cb,
+.wot-wt-intro-body .wot-cb {
+    text-align: center;
+    font-weight: bold;
+}
+
+#wot-welcome-tips .wot-wt-footer {
+    margin-top: 2em;
+}
+
+#wot-wt-image {
+    width: 221px;
+    height: 227px;
+    background-image: url(chrome-extension://__MSG_@@extension_id__/_locales/__MSG_locale__/wt_ratingwindow_1.png);
+    background-repeat: no-repeat;
+    margin: 0px auto;
+}
+
+.wot-wt-rw-button {
+    width: auto;
+    font-size: 12pt;
+    font-weight: normal;
+}
+
+.wot-wt-rw-button:after {
+    content: "";
+    background: url(/skin/b/welcometips/wt_rw_arrow_right.png) 0 no-repeat;
+    padding-right: 16px;
+    margin-left: 0.4em;
+}
+
+.wot-wt-rw-button:hover:after {
+    background: url(/skin/b/welcometips/wt_rw_arrow_right_hover.png) 0 no-repeat;
+}

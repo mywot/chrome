@@ -22,10 +22,12 @@ body {
 	overflow: hidden;
 	cursor: default;
 	-webkit-user-select: none;
+    max-width: 350px;
 }
 
 #wot-ratingwindow {
 	display: block;
+    padding: 0.7em;
 }
 
 #wot-elements {
@@ -677,3 +679,4 @@ body {
 	padding-top: 7px;
 	width: 148px;
 }
+

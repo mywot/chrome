@@ -121,7 +121,7 @@ wot.popup = {
 
 			layer = parentelem.appendChild(layer);
 
-			layer.innerHTML = wot.warning.processhtml(WOT_POPUP_HTML, replaces);
+			layer.innerHTML = wot.utils.processhtml(WOT_POPUP_HTML, replaces);
 			layer.addEventListener("click", this.onclick, false);
 
 			document.addEventListener("mousemove", function(event) {

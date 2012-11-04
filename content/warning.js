@@ -21,27 +21,37 @@
 wot.warning = {
 	minheight: 600,
 	exit_mode: "back",
+	wtip_shown_dt: null,    // time when welcome tip was shown (to measure time spent to read it)
+	target: "",
 
-	make_warning: function()
-	{
+	make_warning: function () {
 		var wot_warning = "<div id='wotcontainer' class='wotcontainer {CLASS} {ACCESSIBLE}'>" +
 			"<div class='wot-logo'></div>" +
 			"<div class='wot-warning'>{WARNING}</div>" +
 			"<div class='wot-title'>{TITLE}</div>" +
+			"<div id='wot-wt-warning-wrapper' style='display: none;'>" +
+				"<div class='wot-wt-warning-content'>" +
+					"<div>{WT_CONTENT}</div>" +
+					"<div><label><input id='wt-warn-turnoff' type='checkbox' class='wot-checkbox' /> {WT_WARN_TURNOFF}</label></div>" +
+					"<div class='wot-wt-warn-footer'>" +
+						"<div id='wt-warn-ok' class='wot-wt-button wot-wt-warn-button'>{WT_BUTTON}</div>" +
+					"</div>" +
+				"</div>" +
+			"</div>" +
 			"<div class='wot-desc'>{DESC}</div>" +
 			"<div class='wot-openscorecard-wrap'>" +
 				"<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
 			"</div>" +
-			"<div id='wot-ratings'>";
+			"<div id='wot-warn-ratings'>";
 
-		wot.components.forEach(function(item) {
+		wot.components.forEach(function (item) {
 
 			var c = item.name,
 				S_COMPNAME = "RATINGDESC" + c,
 				S_RATING = "RATING" + c,
 				S_RATING_EXPL = "RATINGEXPL" + c;
 
-			if(wot.warning.settings["show_application_" + c]) {
+			if (wot.warning.settings["show_application_" + c]) {
 				wot_warning += "" +
 					"<div class='wot-component'>" +
 						"<div class='wot-comp-name'>{" + S_COMPNAME + "}</div>" +
@@ -66,8 +76,7 @@ wot.warning = {
 		return wot_warning;
 	},
 
-	getheight: function()
-	{
+	getheight: function () {
 		try {
 			if (window.innerHeight) {
 				return window.innerHeight;
@@ -87,8 +96,7 @@ wot.warning = {
 		return -1;
 	},
 
-	hideobjects: function(hide)
-	{
+	hideobjects: function(hide) {
 		try {
 			var elems = [ "embed", "object", "iframe", "applet" ];
 
@@ -114,27 +122,11 @@ wot.warning = {
 		}
 	},
 
-	processhtml: function(html, replaces)
-	{
-		try {
-			replaces.forEach(function(item) {
-				html = html.replace(RegExp("{" + item.from + "}", "g"),
-							item.to);
-			});
-
-			return html;
-		} catch (e) {
-			console.log("warning.processhtml: failed with " + e);
-		}
-
-		return "";
-	},
-
 	hide: function()
 	{
 		try {
 			var elems = [ document.getElementById("wotwarning"),
-						  document.getElementById("wotwrapper") ];
+						document.getElementById("wotwrapper") ];
 
 			for (var i = 0; i < elems.length; ++i) {
 				if (elems[i] && elems[i].parentNode) {
@@ -146,17 +138,25 @@ wot.warning = {
 		}
 	},
 
-	set_exitmode: function()
-	{
-		if(window.history.length > 1) {
+	set_exitmode: function() {
+		if (window.history.length > 1) {
 			wot.warning.exit_mode = "back"; // note: don't change this string, there are code dependent on it
 		} else {
 			wot.warning.exit_mode = "leave";
 		}
 	},
 
-	add: function(data, reason)
-	{
+	enter_to_site: function (target) {
+		wot.warning.hide();
+		wot.warning.hideobjects(false);
+		wot.post("warnings", "enter_button", { target: target });
+		wot.post("cache", "setflags", {
+				target: target,
+				flags: { warned: true, warned_expire: null }
+		});
+	},
+
+	add: function(data, reason, show_wtip) {
 		/* Obviously, this isn't exactly foolproof. A site might have
 			elements with a higher z-index, or it might try to remove
 			our layer... */
@@ -169,6 +169,9 @@ wot.warning = {
 			wot.warning.set_exitmode();
 
 			var accessible = this.settings.accessible ? "accessible" : "";
+			show_wtip = show_wtip || false;
+
+			this.target = data.target;
 
 			// preprocess link "Rate the site"
 			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
@@ -188,16 +191,25 @@ wot.warning = {
 					to: wot.i18n("warnings", "information")
 				}, {
 					from: "RATETEXT",
-				to: rate_site
+					to: rate_site
 				}, {
-				from: "GOTOSITE",
-				to: wot.i18n("warnings", "goto")
+					from: "GOTOSITE",
+					to: wot.i18n("warnings", "goto")
 				}, {
-				from: "LEAVESITE",
-				to: wot.i18n("warnings", wot.warning.exit_mode)
-			}, {
+					from: "LEAVESITE",
+					to: wot.i18n("warnings", wot.warning.exit_mode)
+				}, {
 					from: "ACCESSIBLE",
 					to: accessible
+				}, {
+					from: "WT_CONTENT",
+					to: wot.i18n("wt", "warning_text")
+				}, {
+					from: "WT_WARN_TURNOFF",
+					to: wot.i18n("wt", "warning_turnoff")
+				}, {
+					from: "WT_BUTTON",
+					to: wot.i18n("wt", "warning_ok")
 				}
 			];
 
@@ -248,25 +260,16 @@ wot.warning = {
 				});
 			}
 
-			var head = document.getElementsByTagName("head");
 			var body = document.getElementsByTagName("body");
 
-			if (!head || !head.length || !body || !body.length) {
+			if (!body || !body.length) {
 				return;
 			}
 
-			var style = document.createElement("style");
-
-			if (!style) {
+			// do nothing if style can't be attached
+			if(wot.utils.attach_style("warning.css", "wot_warning_style") === false) {
 				return;
 			}
-
-			style.setAttribute("type", "text/css");
-			style.innerText = "@import \"" +
-				chrome.extension.getURL(wot.getincludepath("warning.css")) +
-					"\";";
-
-			head[0].appendChild(style);
 
 			var warning = document.createElement("div");
 			var wrapper = document.createElement("div");
@@ -298,10 +301,10 @@ wot.warning = {
 			warning = body[0].appendChild(warning);
 			wrapper = body[0].appendChild(wrapper);
 
-			wrapper.innerHTML = this.processhtml(this.make_warning(), replaces);
+			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(), replaces);
 			this.hideobjects(true);
 
-			wot.post("warnings", "shown", { type: "overlay", hostname: data.decodedtarget });   // for counting in stats
+			wot.post("warnings", "shown", { type: "overlay", target: data.decodedtarget });   // for counting in stats
 
 			document.getElementById("wotinfobutton").addEventListener("click",
 				function() {
@@ -336,40 +339,80 @@ wot.warning = {
 
 			document.getElementById("wot-btn-hide").addEventListener("click",
 				function() {
-					wot.post("warnings", "enter_button", {});
-					wot.warning.hide();
-					wot.warning.hideobjects(false);
-					wot.post("cache", "setflags", {
-						target: data.target,
-						flags: { warned: true, warned_expire: null }
-					});
+					wot.warning.enter_to_site(data.target);
+				} , false);
+
+			document.getElementById("wotrate-link").addEventListener("click",
+				function() {
+					var url = wot.urls.scorecard +
+						encodeURIComponent(data.target) + "/rate";
+					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
 				}, false);
 
-		document.getElementById("wotrate-link").addEventListener("click",
-			function() {
-				var url = wot.urls.scorecard +
-					encodeURIComponent(data.target) + "/rate";
-				window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
-			}, false);
+			if (show_wtip) {
+				window.setTimeout(wot.warning.show_welcometip, 500);
+			}
 
 		} catch (e) {
 			console.log("warning.add: failed with " + e);
 		}
 	},
 
+	show_welcometip: function () {
+		var wt = document.getElementById("wot-wt-warning-wrapper");
+		if (wt) {
+
+			var btn_ok = document.getElementById("wt-warn-ok");
+			if (btn_ok) {
+				btn_ok.addEventListener("click", wot.warning.wt_ok_clicked);
+			}
+
+			wot.post("wtb", "wtip_shown", { target: wot.warning.target });
+			wot.warning.wtip_shown_dt = new Date();
+
+			wt.setAttribute("style", "display: block;");
+		}
+	},
+
+	hide_welcometip: function () {
+		var wt = document.getElementById("wot-wt-warning-wrapper");
+		if (wt) {
+			wt.setAttribute("style", "display: none;");
+		}
+	},
+
+	wt_ok_clicked: function (elem) {
+		wot.warning.hide_welcometip();
+		var read_time = Math.round(wot.time_since(wot.warning.wtip_shown_dt)),
+			optout = false,
+			target = wot.warning.target;
+
+		var chk = document.getElementById("wt-warn-turnoff");
+		if (chk) {
+			optout = chk.checked || false;
+
+			if (optout) {
+				wot.warning.enter_to_site(target);
+			}
+		}
+
+		// report that OK was clicked and provide status of "opt-out" control
+		wot.post("wtb", "wtip_ok", { read_time: read_time, optout: optout, target: target });
+	},
+
 	onload: function()
 	{
-		if (window != window.top) {
+		if (window !== window.top) {
 			return;
 		}
 
 		/* wait for status updates and warn if necessary */
 		wot.bind("message:warning:show", function(port, data) {
 			wot.warning.settings = data.settings;
-			wot.warning.add(data.data, data.type.reason);
+			wot.warning.add(data.data, data.type.reason, data.show_wtip);
 		});
 
-		wot.listen("warning");
+		wot.listen(["warning", "wt"]);
 	}
 };
 

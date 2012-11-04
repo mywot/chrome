@@ -162,7 +162,7 @@ $.extend(wot, { api: {
 
 	error: function(message)
 	{
-		console.log(message + "\n");
+		console.log(message);
 
 		var nonce = wot.crypto.getnonce("error");
 
