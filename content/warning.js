@@ -304,7 +304,7 @@ wot.warning = {
 			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(), replaces);
 			this.hideobjects(true);
 
-			wot.post("warnings", "shown", { type: "overlay", hostname: data.decodedtarget });   // for counting in stats
+			wot.post("warnings", "shown", { type: "overlay", target: data.decodedtarget });   // for counting in stats
 
 			document.getElementById("wotinfobutton").addEventListener("click",
 				function() {

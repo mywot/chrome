@@ -590,12 +590,12 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
-				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER);
+				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER, data.target);
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {
 				wot.core.increase_ws_shown();
-				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.hostname);
+				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.target);
 			});
 
 			wot.bind("message:search:popup_shown", function(port, data) {
