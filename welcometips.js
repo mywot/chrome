@@ -126,7 +126,6 @@ $.extend(wot, { wt: {
 			wot.log("wot.wt.init_intro0()");
 
 			wot.bind("message:wtb:ready", function (port, data){
-				console.log("message:wtb:ready was received", port, data);
 
 				window.setTimeout(function (port){
 					// react only if all conditions are stil met
