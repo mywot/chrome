@@ -19,12 +19,12 @@
 */
 
 var wot = {
-	version: 20121102,
+	version: 20121105,
 	platform: "chrome",
 	debug: false,   // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 
-	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
@@ -491,7 +491,7 @@ var wot = {
 		var readonly = readonly || false;
 		// try to understand in which environment we are run
 		var user_agent = window.navigator.userAgent || "";
-		wot.env.is_mailru = true; //user_agent.indexOf("MRCHROME") >= 0;
+		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
 
 		if(wot.env.is_mailru) {
 			// set param to label requests

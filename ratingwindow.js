@@ -459,9 +459,20 @@ $.extend(wot, { ratingwindow: {
 			}, {
 				selector: "#wot-partner-text",
 				text: wot.i18n("ratingwindow", "inpartnership")
+			}, {
+				selector: "#wot-welcome-tips-text",
+				html: wot.i18n("wt", "rw_text")
+			}, {
+				selector: "#wt-rw-btn-ok",
+				text: wot.i18n("wt", "rw_ok")
 			}
 		].forEach(function(item) {
-			$(item.selector).text(item.text);
+				var $elem = $(item.selector);
+				if (item.text) {
+					$elem.text(item.text);
+				} else if (item.html) {
+					$elem.html(item.html);
+				}
 		});
 
 		if (wot.partner) {

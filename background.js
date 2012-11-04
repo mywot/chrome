@@ -213,12 +213,6 @@ $.extend(wot, { core: {
 
 			var type = wot.getwarningtype(cached.value, settings);
 
-//			// TODO: remove it before release!!!
-//			type = {
-//				type: wot.warningtypes.overlay,
-//				reason: wot.warningreasons.reputation
-//			};  // OVERRIDING FOR DEBUG ONLY
-
 			var show_wtip = wot.wt.warning.tts();
 
 			if (type && type.type === wot.warningtypes.overlay) {

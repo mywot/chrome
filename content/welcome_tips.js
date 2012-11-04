@@ -61,7 +61,7 @@ wot.wt = {
 			wt_wrapper.setAttribute("style",
 					"position: fixed; " +
 					"top: 10px; " +
-					"width: 216px; " +
+					"width: 232px; " +
 					"height: 415px; " +
 					"z-index: 2147483647; " +
 					"right: 40px;" +

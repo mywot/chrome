@@ -403,10 +403,10 @@
     width: 200px;
     padding: 1em 1.5em 5.5em !important;
     border-color: white;
-    border-radius: 8px !important;
+    border-radius: 2px !important;
     color: #757575 !important;
     background-color: white !important;
-    box-shadow: 0 0 7px 3px #888;
+    box-shadow: 0 0 7px 3px #aaa;
 }
 
 .wot-wt-warning-content:before {
@@ -422,7 +422,15 @@
 
 .wot-wt-warning-content p {
     text-align: left !important;
-    padding-bottom: 0.4em !important;
+    padding-bottom: 0.8em !important;
+    color: #7B7B7B !important;
+    font-family: Arial !important;
+}
+
+/* Used in W-Tips */
+.wot-wt-warning-content .wot-cb {
+    text-align: center !important;
+    font-weight: bold !important;
 }
 
 .wot-wt-warning-content > div:not([class="wot-wt-warn-footer"]) {
@@ -437,10 +445,10 @@
     margin: 1.3em auto 0.5em auto !important;
     padding: 0.7em 0.5em 0 0.5em !important;
 
-    border: #eff0f0 solid 1px !important;
+    border: #ccc solid 1px !important;
     border-radius: 1px !important;
-    box-shadow: 2px 2px 2px #d0cdcd;
-    text-shadow: 1px 1px 1px #fff !important;
+    box-shadow: 0px 0px 7px #999;
+    text-shadow: 0px 0px 4px #fff !important;
     background-image: -webkit-linear-gradient(top, #f9f9f9 60%, #eaeaea) !important;
 
     color: #838282;
@@ -452,7 +460,7 @@
 
 .wot-wt-button:hover {
     box-shadow: 0px 0px 20px rgba(121, 180, 42, 0.8);
-    /*border-color: #8ad92f !important;*/
+    color: #79B42A !important;
 }
 
 .wot-wt-button:active {
@@ -465,7 +473,8 @@
 
 
 .wot-wt-warn-button {
-
+    font-weight: bold !important;
+    color: #838282 !important;
 }
 
 .wot-wt-warn-footer {

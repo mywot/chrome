@@ -74,7 +74,7 @@ $.extend(wot, { wt: {
 
 			// Check additional conditions for Mail.ru users
 			var locale = wot.i18n("locale");
-//			if (!wot.env.is_mailru && (locale == "en" || locale == "ru")) return; // TODO: uncomment before release!
+			if (!wot.env.is_mailru && (locale == "en" || locale == "ru")) return;
 
 			this.load_settings();
 
