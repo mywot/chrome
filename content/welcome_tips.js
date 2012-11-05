@@ -81,11 +81,14 @@ wot.wt = {
 					{
 						from: "WT_INTRO_BUTTON",
 						to: wot.i18n("wt", "intro_0_btn")
+					},
+					{
+						from: "ICO1",
+						to: "<i id='wot-wt-intro-image1'>&nbsp;</i>"
 					}
 				];
 				break;
 			}
-
 
 			success = success && wot.utils.attach_element(wt_wrapper); // attach iframe wrapper
 

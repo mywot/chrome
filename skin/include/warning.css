@@ -423,7 +423,7 @@
 .wot-wt-warning-content p {
     text-align: left !important;
     padding-bottom: 0.8em !important;
-    color: #7B7B7B !important;
+    color: #656565 !important;
     font-family: Arial !important;
 }
 
@@ -431,6 +431,10 @@
 .wot-wt-warning-content .wot-cb {
     text-align: center !important;
     font-weight: bold !important;
+}
+
+.wot-wt-warning-content .wot-cb.latest {
+    padding-bottom: 0 !important;
 }
 
 .wot-wt-warning-content > div:not([class="wot-wt-warn-footer"]) {
@@ -451,7 +455,7 @@
     text-shadow: 0px 0px 4px #fff !important;
     background-image: -webkit-linear-gradient(top, #f9f9f9 60%, #eaeaea) !important;
 
-    color: #838282;
+    color: #5a5a5a;
     font-size: 10pt;
     font-weight: bold;
     text-align: center;
@@ -474,7 +478,7 @@
 
 .wot-wt-warn-button {
     font-weight: bold !important;
-    color: #838282 !important;
+    color: #5a5a5a !important;
 }
 
 .wot-wt-warn-footer {

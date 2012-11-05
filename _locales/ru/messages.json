@@ -132,7 +132,7 @@
 		"message": "Открыть оценочную карту WOT"
 	},
 	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>Значок WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Кликните по кнопке WOT вверху, чтобы узнать больше.</p>",
+		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Кликните по кнопке {ICO1}вверху, чтобы узнать больше.</p>",
 		"description": "This message appears on introduction welcome tip right after the add-on was installed"
 	},
 	"wt_intro_0_btn": {
@@ -142,11 +142,15 @@
 		"message": "<p class='wot-cb'>Берегитесь ненадежных сайтов!</p><p>WOT показывает предупреждение, если вы оказались на сайте с плохой репутацией по мнению пользователей WOT.</p><p>Если вы не хотите видеть предупреждения, их можно отключить.</p>",
 		"description": "this is a WelcomeTip which is shown when a user sees Warning first time"
 	},
+	"wt_warning_text_2": {
+		"message": "",
+		"description": "For Russian lang this should be empty since we didn't find a good translation for 'Safe Surfing!' text"
+	},
 	"wt_warning_turnoff": {
 		"message": "Отключить предупреждения"
 	},
 	"wt_warning_ok": {
-		"message": "OK"
+		"message": "OK, спасибо"
 	},
 	"wt_rw_text": {
 		"message": "<p class='wot-cb'>Поделитесь своим опытом!</p><p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Чтобы поставить оценку, кликните по цветным полоскам в соответствии с вашим мнением о сайте. Ваше участие сделает Интернет безопаснее для всех.</p>"
