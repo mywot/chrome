@@ -132,7 +132,7 @@
 		"message": "Open WOT scorecard"
 	},
 	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>You are protected!</p><p>Safe surfing tool Web of Trust (WOT) shows which websites you can trust based on millions of users' experiences.</p><p>Click the icon {ICO1}on your browser toolbar to learn more.</p><p class='wot-cb'>Safe surfing!</p>",
+		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>You are protected!</p><p>Safe surfing tool Web of Trust (WOT) shows which websites you can trust based on millions of users' experiences.</p><p>Click the icon {ICO1} on your browser toolbar to learn more.</p><p class='wot-cb'>Safe surfing!</p>",
 		"description": "This message appears on introduction welcome tip right after the add-on was installed"
 	},
 	"wt_intro_0_btn": {

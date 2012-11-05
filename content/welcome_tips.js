@@ -84,7 +84,7 @@ wot.wt = {
 					},
 					{
 						from: "ICO1",
-						to: "<i id='wot-wt-intro-image1'>&nbsp;</i>"
+						to: "<i id='wot-wt-intro-image1'>&#8202;</i>"
 					}
 				];
 				break;

@@ -132,7 +132,7 @@
 		"message": "Открыть оценочную карту WOT"
 	},
 	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Кликните по кнопке {ICO1}вверху, чтобы узнать больше.</p>",
+		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Кликните по кнопке {ICO1} вверху, чтобы узнать больше.</p>",
 		"description": "This message appears on introduction welcome tip right after the add-on was installed"
 	},
 	"wt_intro_0_btn": {
