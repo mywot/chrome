@@ -176,6 +176,7 @@ wot.warning = {
 
 			// preprocess link "Rate the site"
 			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
+			var wt_text_2 = wot.i18n("wt", "warning_text_2") || "";
 
 			var replaces = [
 				{
@@ -207,7 +208,7 @@ wot.warning = {
 					to: wot.i18n("wt", "warning_text")
 				}, {
 					from: "WT_CONTENT_2",
-					to: wot.i18n("wt", "warning_text_2")
+					to: wt_text_2
 				}, {
 					from: "WT_WARN_TURNOFF",
 					to: wot.i18n("wt", "warning_turnoff")

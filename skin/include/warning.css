@@ -400,7 +400,7 @@
 
 .wot-wt-warning-content {
     position: relative !important;
-    width: 200px;
+    width: 215px;
     padding: 1em 1.5em 5.5em !important;
     border-color: white;
     border-radius: 2px !important;
@@ -416,13 +416,18 @@
     height: 19px;
     position: relative !important;
     top: 50px;
-    left: -220px;
+    left: -235px;
     float: right;
 }
 
 .wot-wt-warning-content p {
     text-align: left !important;
     padding-bottom: 0.8em !important;
+    color: #656565 !important;
+    font-family: Arial !important;
+}
+
+.wot-wt-warning-content label {
     color: #656565 !important;
     font-family: Arial !important;
 }
@@ -484,7 +489,7 @@
 .wot-wt-warn-footer {
     position: absolute !important;
     bottom: 1em !important;
-    width: 200px !important;
+    width: 215px !important;
 }
 
 .wot-checkbox {
