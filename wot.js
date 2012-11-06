@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20121105,
+	version: 20121106,
 	platform: "chrome",
 	debug: false,   // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
