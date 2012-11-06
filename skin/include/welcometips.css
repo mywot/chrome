@@ -79,7 +79,7 @@ body {
     text-shadow: 0px 0px 4px #fff !important;
     background-image: -webkit-linear-gradient(top, #f9f9f9 60%, #eaeaea) !important;
 
-    color: #838282;
+    color: #5a5a5a;
     font-size: 10pt;
     font-weight: bold;
     text-align: center;
@@ -112,7 +112,7 @@ body {
     /*max-width: 350px;*/
     float: left;
     overflow: hidden;
-    color: #7b7b7b;
+    color: #5a5a5a;
 }
 
 /* Used in R-Tips and Intro Tips */
@@ -132,6 +132,12 @@ body {
     background-image: url(chrome-extension://__MSG_@@extension_id__/_locales/__MSG_locale__/wt_ratingwindow_1.png);
     background-repeat: no-repeat;
     margin: 0px auto;
+}
+
+#wot-wt-intro-image1 {
+    background-image: url(chrome-extension://__MSG_@@extension_id__/skin/fusion/16_16/plain/r4.png);
+    background-repeat: no-repeat;
+    padding: 0 0 0 16px;
 }
 
 .wot-wt-rw-button {

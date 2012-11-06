@@ -96,7 +96,12 @@ $.extend(wot, { wt: {
 		intro_0_showdelay: 2000,    // milliseconds before Intro 0 tip will be shown
 
 		tts_intro0: function () {
-			wot.log("wot.wt.tts_intro0()");
+
+			var locale = wot.i18n("locale");
+			// Mailru only. RU and EN only.
+			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
+				return false;
+			}
 
 			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings;
