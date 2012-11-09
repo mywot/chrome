@@ -56,6 +56,7 @@ $.extend(wot, { ga: {
 
 		D_POPUP_SHOWN:  "D_popup_shown",
 		GEN_INSTALLED:  "WOT_installed",
+		GEN_LAUNCHED:   "WOT_launched",
 
 		WT_INTRO_0_SHOWN: "WT_Intro0_shown",
 		WT_INTRO_0_OK:  "WT_Intro0_ok",

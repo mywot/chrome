@@ -31,16 +31,16 @@ $.extend(wot, { wt: {
 	enabled: true,  // see also content/welcome_tips.js "enabled: true," line at the beginning
 
 	settings: {
-		intro_0_shown: null,        // how many times intro0 was shown
-		intro_0_ok: null,           // OK was clicked on intro0 tip
+		intro_0_shown: 0,           // how many times intro0 was shown
+		intro_0_ok: false,           // OK was clicked on intro0 tip
 		intro_0_shown_dt: null,      // the last time Intro0 was shown
 
 		rw_shown: 0,
-		rw_ok: null,
+		rw_ok: false,
 		rw_shown_dt: null,
 
 		warning_shown: 0,
-		warning_ok: null,
+		warning_ok: false,
 		warning_optedout: false,
 		warning_shown_dt: null
 	},
@@ -106,10 +106,10 @@ $.extend(wot, { wt: {
 			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings;
 
-			if ((   wt_settings.intro_0_shown < 2 || !wt_settings.intro_0_shown) &&
-					!wt_settings.intro_0_ok &&
-					wot.time_since(wot.core.launch_time) <= 10 * wot.DT.MINUTE &&
-					timesincefirstrun <= 15 * wot.DT.DAY ) {
+			if (wt_settings.intro_0_shown < 2 &&
+				!wt_settings.intro_0_ok &&
+				wot.time_since(wot.core.launch_time) <= 10 * wot.DT.MINUTE &&
+				timesincefirstrun <= 15 * wot.DT.DAY ) {
 
 				// don't show intro tip first time if user already has experience with WOT longer than 2 days
 				if (!wt_settings.intro_0_shown && timesincefirstrun > 2 * wot.DT.DAY ) {
@@ -142,28 +142,33 @@ $.extend(wot, { wt: {
 
 		},
 
-		show_intro0: function (tab) {
-
-			wot.bind("message:wtb:tip_shown", function (port, data){
-				if (data && data.mode === "intro_0") {
-					wot.wt.settings.intro_0_shown = wot.wt.settings.intro_0_shown ? wot.wt.settings.intro_0_shown + 1 : 1;
+		on_show: function (port, data) {
+			if (data && data.mode === "intro_0") {
+				if (wot.wt.settings.intro_0_shown <= 2) { // filter out wrong occurances of messages (see #60 on Github)
+					wot.wt.settings.intro_0_shown++;
 					wot.wt.save_setting("intro_0_shown");
 					wot.wt.settings.intro_0_shown_dt = new Date();
 					wot.wt.save_setting("intro_0_shown_dt");
 
 					wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_SHOWN, String(wot.wt.settings.intro_0_shown));
 				}
-			});
+			}
+		},
 
-			wot.bind("message:wtb:clicked", function (port, data){
-				// data is { mode: "intro_0", elem: "ok" }
-				if(data && data.mode === "intro_0" && data.elem === "ok") {
-					var seconds_since_shown = Math.round(wot.time_since(wot.wt.settings.intro_0_shown_dt));
-					wot.wt.settings.intro_0_ok = true;
-					wot.wt.save_setting("intro_0_ok");
-					wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_OK, String(seconds_since_shown));
-				}
-			});
+		on_ok: function (port, data) {
+			// data is { mode: "intro_0", elem: "ok" }
+			if(data && data.mode === "intro_0" && data.elem === "ok") {
+				var seconds_since_shown = Math.round(wot.time_since(wot.wt.settings.intro_0_shown_dt));
+				wot.wt.settings.intro_0_ok = true;
+				wot.wt.save_setting("intro_0_ok");
+				wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_OK, String(seconds_since_shown));
+			}
+		},
+
+		show_intro0: function (tab) {
+
+			wot.bind("message:wtb:tip_shown", wot.wt.intro.on_show);
+			wot.bind("message:wtb:clicked", wot.wt.intro.on_ok);
 
 			var port = chrome.tabs.connect(tab.id, {name: "wt"});
 			port.postMessage({ message: "wt:show_intro_0" });
@@ -210,12 +215,13 @@ $.extend(wot, { wt: {
 		},
 
 		on_show: function (port, data) {
-
-			wot.wt.settings.warning_shown++;
-			wot.wt.save_setting("warning_shown");
-			wot.wt.settings.warning_shown_dt = new Date();
-			wot.wt.save_setting("warning_shown_dt");
-			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_WS_SHOWN, data.target);
+			if (wot.wt.settings.warning_shown < 2) {
+				wot.wt.settings.warning_shown++;
+				wot.wt.save_setting("warning_shown");
+				wot.wt.settings.warning_shown_dt = new Date();
+				wot.wt.save_setting("warning_shown_dt");
+				wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_WS_SHOWN, data.target);
+			}
 		},
 
 		on_ok: function (port, data) {

@@ -540,6 +540,13 @@ $.extend(wot, { core: {
 		var min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
 		wot.prefs.set("min_confidence_level", min_level);
 
+		try {
+			// report how long in days this add-on is staying installed
+			var days_with_WOT = String(Math.floor(time_sincefirstrun / wot.DT.DAY));
+			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED, days_with_WOT);
+		} catch (e) {
+			// do nothing
+		}
 	},
 
 	onload: function()
