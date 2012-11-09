@@ -74,7 +74,7 @@ $.extend(wot, { wt: {
 
 			// Check additional conditions for Mail.ru users
 			var locale = wot.i18n("locale");
-			if (!wot.env.is_mailru && (locale == "en" || locale == "ru")) return;
+			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) return;
 
 			this.load_settings();
 
@@ -91,14 +91,14 @@ $.extend(wot, { wt: {
 	},
 
 	intro: {
-		// is now "Time To Show" Intro0 tip?
 
 		intro_0_showdelay: 2000,    // milliseconds before Intro 0 tip will be shown
 
+		// is now "Time To Show" Intro0 tip?
 		tts_intro0: function () {
 
 			var locale = wot.i18n("locale");
-			// Mailru only. RU and EN only.
+			// Mailru only. RU or EN only.
 			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
 				return false;
 			}
@@ -111,13 +111,15 @@ $.extend(wot, { wt: {
 				wot.time_since(wot.core.launch_time) <= 10 * wot.DT.MINUTE &&
 				timesincefirstrun <= 15 * wot.DT.DAY ) {
 
-				// don't show intro tip first time if user already has experience with WOT longer than 2 days
+				// don't show intro tip first time if the user already has experience with WOT longer than 2 days
 				if (!wt_settings.intro_0_shown && timesincefirstrun > 2 * wot.DT.DAY ) {
 					return false;
 				}
 
 				// don't show intro tip second time before 10 days after installation
-				if (wt_settings.intro_0_shown === 1 && wot.wt.settings.intro_0_shown_dt && wot.time_since(wot.wt.settings.intro_0_shown_dt) < 7 * wot.DT.DAY ) {
+				if (wt_settings.intro_0_shown === 1 &&
+					wot.wt.settings.intro_0_shown_dt &&
+					wot.time_since(wot.wt.settings.intro_0_shown_dt) < 7 * wot.DT.DAY ) {
 					return false;
 				}
 
@@ -130,7 +132,7 @@ $.extend(wot, { wt: {
 		init_intro0: function () {
 			wot.log("wot.wt.init_intro0()");
 
-			wot.bind("message:wtb:ready", function (port, data){
+			wot.bind("message:wtb:ready", function (port, data) {
 
 				window.setTimeout(function (port){
 					// react only if all conditions are stil met
@@ -144,14 +146,12 @@ $.extend(wot, { wt: {
 
 		on_show: function (port, data) {
 			if (data && data.mode === "intro_0") {
-				if (wot.wt.settings.intro_0_shown <= 2) { // filter out wrong occurances of messages (see #60 on Github)
-					wot.wt.settings.intro_0_shown++;
-					wot.wt.save_setting("intro_0_shown");
-					wot.wt.settings.intro_0_shown_dt = new Date();
-					wot.wt.save_setting("intro_0_shown_dt");
+				wot.wt.settings.intro_0_shown++;
+				wot.wt.save_setting("intro_0_shown");
+				wot.wt.settings.intro_0_shown_dt = new Date();
+				wot.wt.save_setting("intro_0_shown_dt");
 
-					wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_SHOWN, String(wot.wt.settings.intro_0_shown));
-				}
+				wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_SHOWN, String(wot.wt.settings.intro_0_shown));
 			}
 		},
 

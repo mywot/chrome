@@ -137,14 +137,17 @@ wot.wt = {
 
 	report_ready: function () {
 		// report only from top-level windows (avoid reacting on iframes)
-		if (!window.frameElement) {
-			wot.wt.report("ready");
-		}
+		wot.wt.report("ready");
 	},
 
 	init: function () {
 		// Reminder! Keep this function as much lightweight as possible, since it is executed on every page and frame
 		// avoid any long-running code here. Use messages to do something later.
+
+		if (window !== window.top) {
+			return; // skip frames
+		}
+
 		wot.bind("message:wt:show_intro_0", function(port, data) {
 			wot.wt.intro.show("intro_0", data);
 		});
