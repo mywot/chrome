@@ -532,7 +532,8 @@ $.extend(wot, { core: {
 
 			// if we didn't save firsttime before we should do it now
 			if (!time_sincefirstrun) {
-				wot.prefs.set("firstrun:time", new Date());
+				time_sincefirstrun = new Date();
+				wot.prefs.set("firstrun:time", time_sincefirstrun);
 			}
 		}
 
@@ -541,11 +542,16 @@ $.extend(wot, { core: {
 		wot.prefs.set("min_confidence_level", min_level);
 
 		try {
-			// report how long in days this add-on is staying installed
-			var days_with_WOT = String(Math.floor(time_sincefirstrun / wot.DT.DAY));
-			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED, days_with_WOT);
+			// Use timeout before reporting launch event to GA, to give GA a chance to be inited
+			window.setTimeout(function () {
+				// report how long in days this add-on is staying installed
+				var time_sincefirstrun = wot.time_sincefirstrun();
+				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED,
+					String(Math.floor(time_sincefirstrun / wot.DT.DAY)));
+
+			}, 5000);
 		} catch (e) {
-			// do nothing
+			// do nothing here
 		}
 	},
 

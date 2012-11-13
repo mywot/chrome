@@ -135,11 +135,6 @@ wot.wt = {
 		wot.post("wtb", message, data);
 	},
 
-	report_ready: function () {
-		// report only from top-level windows (avoid reacting on iframes)
-		wot.wt.report("ready");
-	},
-
 	init: function () {
 		// Reminder! Keep this function as much lightweight as possible, since it is executed on every page and frame
 		// avoid any long-running code here. Use messages to do something later.
@@ -154,10 +149,10 @@ wot.wt = {
 
 		// send signal to core only after page is fully loaded
 		if (document.readyState === "complete") {
-			wot.wt.report_ready();
+			wot.wt.report("ready");
 		} else {
 			document.addEventListener("DOMContentLoaded", function (e) {
-				wot.wt.report_ready();
+				wot.wt.report("ready");
 			}, false);
 		}
 	}

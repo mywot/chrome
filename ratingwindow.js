@@ -596,7 +596,7 @@ $.extend(wot, { ratingwindow: {
 
 		// Decide what to show: normal rating window or welcome tip?
 		if(bg.wot.env.is_mailru && (locale === "ru" || locale === "en") &&
-			first_opening && !(wt.settings.rw_ok || wt.settings.rw_shown > 1)) {
+			first_opening && !(wt.settings.rw_ok || wt.settings.rw_shown > 0)) {
 			// RW is opened first time - show welcome tip
 			wot.ratingwindow.show_welcome_tip();
 

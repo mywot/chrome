@@ -31,6 +31,7 @@ wot.warning = {
 			"<div class='wot-title'>{TITLE}</div>" +
 			"<div id='wot-wt-warning-wrapper' style='display: none;'>" +
 				"<div class='wot-wt-warning-content'>" +
+					"<div class='wot-wt-logo'>&nbsp;</div>" +
 					"<div>{WT_CONTENT}</div>" +
 					"<div><label><input id='wt-warn-turnoff' type='checkbox' class='wot-checkbox' /> {WT_WARN_TURNOFF}</label></div>" +
 					"<div>{WT_CONTENT_2}</div>" +

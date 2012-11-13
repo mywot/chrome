@@ -73,13 +73,13 @@ body {
     margin: 1.3em auto 0.5em auto !important;
     padding: 0.7em 0.5em 0.2em 0.5em !important;
 
-    border: #eff0f0 solid 1px !important;
-    border-radius: 1px !important;
-    box-shadow: 0px 0px 7px #888;
-    text-shadow: 0px 0px 4px #fff !important;
-    background-image: -webkit-linear-gradient(top, #f9f9f9 60%, #eaeaea) !important;
+    border: #71A939 solid 1px !important;;
+    border-radius: 3px !important;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.47);;
+    text-shadow: 0px 0px 8px #fff !important;
+    background-image: -webkit-linear-gradient(top, #CCEFAC 0%, #9AD265 39%, #6FA736 83%, #83BC4A) !important;
 
-    color: #5a5a5a;
+    color: #375914 !important;
     font-size: 10pt;
     font-weight: bold;
     text-align: center;
@@ -87,16 +87,14 @@ body {
 }
 
 .wot-wt-button:hover {
-    box-shadow: 0px 0px 20px rgba(121, 180, 42, 0.8);
-    color: #79B42A;
-    /*border-color: #8ad92f !important;*/
+    background-image: -webkit-linear-gradient(top, #e5fad1 0%, #b2e186 39%, #83bc4a 83%, #83BC4A) !important;
 }
 
 .wot-wt-button:active {
     top: 1px;
     border-color: #babbbb;
     box-shadow: none;
-    background-image: -webkit-linear-gradient(top, #e2e1e1 71%, #f0efef) !important;
+    background-image: -webkit-linear-gradient(top, #a9d185 0%, #8abf58 39%, #6fa736 83%, #83bc4a) !important;
 }
 
 .wot-wt-intro-button {
@@ -156,3 +154,6 @@ body {
 .wot-wt-rw-button:hover:after {
     background: url(/skin/b/welcometips/wt_rw_arrow_right_hover.png) 0 no-repeat;
 }
+
+
+
