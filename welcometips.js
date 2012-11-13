@@ -28,12 +28,13 @@
 
 $.extend(wot, { wt: {
 
-	enabled: true,  // see also content/welcome_tips.js "enabled: true," line at the beginning
+	enabled: true,              // see also content/welcome_tips.js "enabled: true," line at the beginning
+	intro_shown_sent: null,     // flag to remember that we have sent already message to show the tip
 
 	settings: {
 		intro_0_shown: 0,           // how many times intro0 was shown
-		intro_0_ok: false,           // OK was clicked on intro0 tip
-		intro_0_shown_dt: null,      // the last time Intro0 was shown
+		intro_0_ok: false,          // OK was clicked on intro0 tip
+		intro_0_shown_dt: null,     // the last time Intro0 was shown
 
 		rw_shown: 0,
 		rw_ok: false,
@@ -92,7 +93,7 @@ $.extend(wot, { wt: {
 
 	intro: {
 
-		intro_0_showdelay: 2000,    // milliseconds before Intro 0 tip will be shown
+		intro_0_showdelay: 800,    // milliseconds before Intro 0 tip will be shown
 
 		// is now "Time To Show" Intro0 tip?
 		tts_intro0: function () {
@@ -167,11 +168,21 @@ $.extend(wot, { wt: {
 
 		show_intro0: function (tab) {
 
-			wot.bind("message:wtb:tip_shown", wot.wt.intro.on_show);
-			wot.bind("message:wtb:clicked", wot.wt.intro.on_ok);
+			try {
+				// prevent trying to show Intro tip more than 1 time in a minute
+				if (wot.wt.intro_shown_sent && wot.time_since(wot.wt.intro_shown_sent) <= 60) {
+					return;
+				}
+				wot.wt.intro_shown_sent = new Date();
 
-			var port = chrome.tabs.connect(tab.id, {name: "wt"});
-			port.postMessage({ message: "wt:show_intro_0" });
+				wot.bind("message:wtb:tip_shown", wot.wt.intro.on_show);
+				wot.bind("message:wtb:clicked", wot.wt.intro.on_ok);
+
+				var port = chrome.tabs.connect(tab.id, {name: "wt"});
+				port.postMessage({ message: "wt:show_intro_0" });
+			} catch (e) {
+				console.log("wot.wt.intro.show_intro0() failed", e);
+			}
 		}
 	},
 
