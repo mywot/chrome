@@ -510,8 +510,6 @@ $.extend(wot, { core: {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 			wot.prefs.set("firstrun:time", new Date()); // remember first time when addon was run
 
-			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, String(wot.partner));
-
 			// now we have only mail.ru case which requires to postpone opening welcome page
 			var postpone_welcome = wot.env.is_mailru;
 
@@ -523,6 +521,11 @@ $.extend(wot, { core: {
 				chrome.tabs.create({ url: wot.urls.welcome });
 			}
 			wot.prefs.set("firstrun:welcome", true);
+
+			window.setTimeout(function () {
+				// report "installating" event
+				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, String(wot.partner));
+			}, 2000);
 
 		} else {
 			wot.core.show_updatepage();
