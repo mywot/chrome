@@ -157,5 +157,15 @@
 	},
 	"wt_rw_ok": {
 		"message": "Показать окно оценивания"
+	},
+	"wt_donut_msg": {
+		"message": "<p class='wot-cb'>Следите за цветными индикаторами!</p></p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Цветные индикаторы рядом с ссылками показывают, каким сайтам можно доверять: зеленый - хорошая репутация, красный - плохая, желтый советует быть осторожным.</p>"
+	},
+	"wt_donut_msg_2": {
+		"message": "",
+		"description": "For Russian lang this should be empty since we didn't find a good translation for 'Safe Surfing!' text"
+	},
+	"wt_donut_btn": {
+		"message": "ОК, спасибо"
 	}
 }

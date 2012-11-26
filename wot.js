@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20121120,
+	version: 20121127,
 	platform: "chrome",
 	debug: false,   // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
@@ -571,9 +571,10 @@ wot.utils = {
 
 	},
 
-	attach_style: function (style_file, uniq_id, frame) {
+	attach_style: function (style_file_or_object, uniq_id, frame) {
 		try {
 			uniq_id = uniq_id || null;
+			var reuse_style = false;
 
 			var framed_document = wot.utils.get_document(frame);
 
@@ -583,7 +584,10 @@ wot.utils = {
 
 			if(uniq_id) {
 				var el = framed_document.getElementById(uniq_id);
-				if(el) return 0;    // no need to attach again
+				if(el) {
+					// if the element exists already - remove it to update styles
+					reuse_style = true;
+				}
 			}
 
 			var head = framed_document.getElementsByTagName("head");
@@ -592,22 +596,29 @@ wot.utils = {
 				return false;
 			}
 
-			var style = framed_document.createElement("style");
+			var style = reuse_style ? el : framed_document.createElement("style");
 
 			if (!style) {
 				return false;
 			}
 
-			style.setAttribute("type", "text/css");
-			style.innerText = "@import \"" +
-				chrome.extension.getURL(wot.getincludepath(style_file)) +
-				"\";";
-
 			if(uniq_id) {
 				style.setAttribute("id", uniq_id);
 			}
 
-			head[0].appendChild(style);
+			style.setAttribute("type", "text/css");
+
+			if (typeof style_file_or_object === "object") {
+				style.innerText = style_file_or_object.style;
+			} else {
+				style.innerText = "@import \"" +
+					chrome.extension.getURL(wot.getincludepath(style_file_or_object)) +
+					"\";";
+			}
+
+			if (!reuse_style) {
+				head[0].appendChild(style);
+			}
 
 			return true;
 		} catch (e) {
@@ -630,5 +641,4 @@ wot.utils = {
 
 		return "";
 	}
-
 };

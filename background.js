@@ -589,7 +589,11 @@ $.extend(wot, { core: {
 						}
 					});
 
-					port.post("update", { rule: data.rule, ratings: ratings });
+					var wt_enable_donut_tip = false;
+					if (wot.wt && wot.wt.enabled) {
+						wt_enable_donut_tip = wot.wt.donuts.tts();
+					}
+					port.post("update", { rule: data.rule, ratings: ratings, wt_enabled: wt_enable_donut_tip });
 				});
 			});
 
