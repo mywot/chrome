@@ -159,16 +159,26 @@ $.extend(wot, { core: {
 				var views = chrome.extension.getViews({});
 
 				for (var i in views) {
-					if (views[i].wot.ratingwindow) {
+					if (views[i].wot && views[i].wot.ratingwindow) {
 						views[i].wot.ratingwindow.update(tab, data);
 					}
 				}
 			}
 
 			/* update content scripts */
-			this.updatetabwarning(tab, data);
+			var warning_type = this.updatetabwarning(tab, data);
+
+			// show surveys only if there is no warning
+			if (tab.selected &&
+				warning_type && warning_type.type == wot.warningtypes.none) {
+
+				if (wot.enable_surveys) {
+					wot.surveys.update(tab, data);
+				}
+			}
+
 		} catch (e) {
-			console.log("core.updatetabstate: failed with " + e);
+			console.error("core.updatetabstate: failed with ", e);
 		}
 	},
 
@@ -228,8 +238,11 @@ $.extend(wot, { core: {
 					});
 				}
 			}
+
+			return type;
+
 		} catch (e) {
-			wot.log("core.updatetabwarning: failed with " + e);
+			wot.log("core.updatetabwarning: failed with ", e);
 		}
 	},
 
@@ -632,7 +645,7 @@ $.extend(wot, { core: {
 				});
 			});
 
-			wot.listen([ "search", "my", "tab", "warnings", "wtb" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 
 			/* event handlers */
 
@@ -668,6 +681,7 @@ $.extend(wot, { core: {
 					wot.api.update();
 					wot.api.processpending();
 					wot.wt.init();  // initialize welcome tips engine
+					wot.surveys.init(); // init surveys engine
 				}
 			});
 

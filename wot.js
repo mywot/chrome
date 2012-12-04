@@ -21,10 +21,11 @@
 var wot = {
 	version: 20121127,
 	platform: "chrome",
-	debug: false,   // when changing this, don't forget to switch ga_id value also!
+	debug: true,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
+	enable_surveys: true,   // Feedback loop engine
 
-	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
@@ -640,5 +641,16 @@ wot.utils = {
 		}
 
 		return "";
+	},
+
+	htmlescape: function(str) {
+		var tagsToReplace = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;'
+		};
+		return str.replace(/[&<>]/g, function(symb) {
+			return tagsToReplace[symb] || symb;
+		});
 	}
 };

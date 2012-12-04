@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WOT Surveys</title>
+        <script src="/jquery.js"></script>
+        <script src="/jquery-ui-1.9.2.custom.js"></script>
+        <script src="/wot.js"></script>
+        <script src="/content/common.js"></script>
+        <link rel="stylesheet" href="/skin/b/surveys/surveys.widgets.css" type="text/css"/>
+    </head>
+    <body>
+        <div class="surveys-window">
+
+            <div id="tab-question" class="tabs">
+                <div class="wot-logo"></div>
+                <div class="close-button"></div>
+                <div class="surveys-question"></div>
+                <div class="surveys-answer">
+                    <div class="surveys-slider">
+                        <div class="surveys-slider-bounds">
+                            <div class="surveys-slider-left-bound"></div>
+                            <div class="surveys-slider-right-bound"></div>
+                        </div>
+                        <div class="ticks-container">
+                            <div class="zero-tick">
+                                <div class="zero-tick-mark"></div>
+                            </div>
+                        </div>
+                        <div id="slider"></div>
+                    </div>
+                    <div class="surveys-slider-label-wrapper">
+                        <div class="surveys-slider-label"></div>
+                    </div>
+                </div>
+                <div class="surveys-submit">Submit</div>
+                <div class="surveys-optout">
+                    <span class="pseudo-link">Hide forever</span>
+                </div>
+                <div class="surveys-whatsthis">
+                    <span class="pseudo-link">What's this?</span>
+                </div>
+            </div>
+
+            <div id="tab-optout" class="tabs">
+                <div class="wot-logo"></div>
+                <div class="close-button"></div>
+                <div class="text-optout-confirm"><p>Your opinion about websites is important for us.</p>
+                    <p>We respect your time so you could opt-out from such questions.</p></div>
+                <div class="centered-row">
+                    <div class="button-yes">Never ask again</div>
+                    <div class="button-no">Ask me sometimes</div>
+                </div>
+            </div>
+
+            <div id="tab-final" class="tabs">
+                <div class="wot-logo"></div>
+                <div class="thank-you-text">Thank you!</div>
+            </div>
+        </div>
+
+        <script src="/widgets/surveys.widgets.js"></script>
+    </body>
+</html>
