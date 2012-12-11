@@ -10,51 +10,63 @@
     </head>
     <body>
         <div class="surveys-window">
+            <div class="top-section">
 
-            <div id="tab-question" class="tabs">
-                <div class="wot-logo"></div>
-                <div class="close-button"></div>
-                <div class="surveys-question"></div>
-                <div class="surveys-answer">
-                    <div class="surveys-slider">
-                        <div class="surveys-slider-bounds">
-                            <div class="surveys-slider-left-bound"></div>
-                            <div class="surveys-slider-right-bound"></div>
-                        </div>
-                        <div class="ticks-container">
-                            <div class="zero-tick">
-                                <div class="zero-tick-mark"></div>
+                <div id="tab-question" class="tabs">
+                    <div class="wot-logo"></div>
+                    <div class="close-button"></div>
+                    <div class="surveys-question"></div>
+                    <div class="surveys-answer">
+                        <div class="surveys-slider">
+                            <div class="surveys-slider-bounds">
+                                <div class="surveys-slider-left-bound"></div>
+                                <div class="surveys-slider-right-bound"></div>
                             </div>
+                            <div class="ticks-container">
+                                <div class="zero-tick">
+                                    <div class="zero-tick-mark"></div>
+                                </div>
+                            </div>
+                            <div id="slider"></div>
                         </div>
-                        <div id="slider"></div>
+                        <div class="surveys-slider-label-wrapper">
+                            <div class="surveys-slider-label"></div>
+                        </div>
                     </div>
-                    <div class="surveys-slider-label-wrapper">
-                        <div class="surveys-slider-label"></div>
+                    <div class="surveys-submit">Submit</div>
+                    <div class="surveys-optout">
+                        <span class="pseudo-link">Hide forever</span>
+                    </div>
+                    <div class="surveys-whatsthis">
+                        <span class="pseudo-link">What's this?</span>
                     </div>
                 </div>
-                <div class="surveys-submit">Submit</div>
-                <div class="surveys-optout">
-                    <span class="pseudo-link">Hide forever</span>
-                </div>
-                <div class="surveys-whatsthis">
-                    <span class="pseudo-link">What's this?</span>
-                </div>
-            </div>
-
-            <div id="tab-optout" class="tabs">
-                <div class="wot-logo"></div>
-                <div class="close-button"></div>
-                <div class="text-optout-confirm"><p>Your opinion about websites is important for us.</p>
-                    <p>We respect your time so you could opt-out from such questions.</p></div>
-                <div class="centered-row">
-                    <div class="button-yes">Never ask again</div>
-                    <div class="button-no">Ask me sometimes</div>
-                </div>
-            </div>
 
             <div id="tab-final" class="tabs">
                 <div class="wot-logo"></div>
                 <div class="thank-you-text">Thank you!</div>
+            </div>
+
+        </div>
+
+            <div class="bottom-section">
+                <div class="close-button-secondary"></div>
+
+                <div id="btab-optout">
+                    <div class="text-optout-confirm">
+                        Are you sure you want to be never asked again?
+                    </div>
+                    <div class="optout-buttons">
+                        <div class="button-yes">yes</div>
+                        <div class="button-no">No</div>
+                    </div>
+                </div>
+
+                <div id="btab-whatsthis">
+                    <a href="http://www.mywot.com?utm_source=addon&utm_content=whatisthis" target="_blank">WOT</a> is working to promote safety and quality across the web for millions of users.
+                        You can help by submitting your opinions whenever you see this prompt.
+                </div>
+
             </div>
         </div>
 

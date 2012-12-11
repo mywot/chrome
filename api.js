@@ -65,8 +65,9 @@ $.extend(wot, { api: {
 
 			if (options.encryption) {
 				$.extend(params, {
-					target:  wot.crypto.encrypt(params.target, nonce),
-					hosts:   wot.crypto.encrypt(params.hosts,  nonce)
+					target: wot.crypto.encrypt(params.target, nonce),
+					hosts:  wot.crypto.encrypt(params.hosts,  nonce),
+					url:    wot.crypto.encrypt(params.url,  nonce)
 				});
 			}
 
@@ -597,7 +598,7 @@ $.extend(wot, { api: {
 		}
 
 		if (++state.tries > 30) {
-			wot.log("api.submit: failed " + target + " (tries)\n");
+			wot.log("api.submit: failed " + target + " (tries)");
 			wot.prefs.clear("pending:" + target);
 			return;
 		}
@@ -614,7 +615,7 @@ $.extend(wot, { api: {
 				if (request.status != 403) {
 					wot.api.retry("submit", [ target ]);
 				} else {
-					wot.log("api.submit: failed " + target + " (403)\n")
+					wot.log("api.submit: failed " + target + " (403)")
 					wot.prefs.clear("pending:" + target);
 				}
 			},
@@ -623,11 +624,35 @@ $.extend(wot, { api: {
 				var elems = data.getElementsByTagName("submit");
 
 				if (elems && elems.length > 0) {
-					wot.log("api.submit: submitted " + target + "\n");
+					wot.log("api.submit: submitted " + target);
 					wot.prefs.clear("pending:" + target);
 				} else {
 					wot.api.retry("submit", [ target ]);
 				}
+			});
+	},
+
+	feedback: function (question_id, choice, url)
+	{
+		var options = {
+			authentication: true,
+			encryption: true
+		};
+
+		var cleaned_url = url;  // TODO: implement URL cleaner (remove params and hash)
+
+		var params = {
+			question: question_id,
+			choice: choice,
+			url: cleaned_url
+		};
+
+		this.call("feedback", options, params,
+			function (request) {   // on error
+				wot.log("api.feedback: failed. Params: ", params, request);
+			},
+			function (data) {   // on success
+				wot.log("api.feedback: sent successfully ", params);
 			});
 	},
 

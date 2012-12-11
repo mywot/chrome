@@ -23,8 +23,8 @@ wot.surveys = {
 	wrapper_id: "wot_surveys_wrapper",
 	is_shown: false,
 	wrapper: null,
-	pheight: 300,
-	pwidth: 390,
+	pheight: 350,
+	pwidth: 392,
 	px: 10,
 	py: 10,
 
@@ -51,9 +51,6 @@ wot.surveys = {
 		var _this = wot.surveys;
 		if (_this.is_shown) return;
 
-		// TODO: check if DOM is ready, and if not - add event handler
-		console.log("msg SURVEYS:SHOW", data);
-
 		_this.inject_iframe(data);
 
 		_this.is_shown = true;
@@ -75,10 +72,13 @@ wot.surveys = {
 	inject_iframe: function (data) {
 		var _this = wot.surveys;
 
-		if (!(data && data.question && data.question.encoded)) {
+		if (!(data && data.question)) {
 			wot.log("No question has been provided to ask");
 			return;
 		}
+
+		data.question.url = window.location.origin + window.location.pathname;   // skip params and hash in the URL
+		var encoded_data = btoa(JSON.stringify(data.question));
 
 		var wrapper = wot.utils.get_or_create_element(_this.wrapper_id, "iframe");
 
@@ -93,16 +93,16 @@ wot.surveys = {
 
 		wrapper.setAttribute("style",
 			"position: fixed; " +
-				"top: " + _this.py + "px; " +
-				"left: "+ _this.px +"px;" +
-				"width: "+ _this.pwidth +"px; " +
-				"height: "+ _this.pheight +"px; " +
-				"z-index: 2147483647; " +
-				"border: none;");
+			"top: " + _this.py + "px; " +
+			"left: "+ _this.px +"px;" +
+			"width: "+ _this.pwidth +"px; " +
+			"height: "+ _this.pheight +"px; " +
+			"z-index: 2147483647; " +
+			"border: none;");
 
 		wrapper.setAttribute("src", chrome.extension.getURL("/widgets/surveys.html"));
 
-		wrapper.setAttribute("name", data.question.encoded);  // We transfer question's data via "name" property of iframe
+		wrapper.setAttribute("name", encoded_data);  // We transfer question's data via "name" property of iframe
 
 		wot.utils.attach_element(wrapper); // attach iframe wrapper
 	}

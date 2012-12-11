@@ -4,6 +4,7 @@ var surveys = {
 	question: {},
 	target: "",
 	decodedtarget: "",
+	url: "",
 	answer_value: null,
 	current_idx: 0,
 	submit_enabled: false,
@@ -209,6 +210,25 @@ var surveys = {
 
 	ui: {
 
+		is_optout_shown: false,
+		is_whatisthis_shown: false,
+
+		show_bottom_section: function () {
+			$(".bottom-section").show();
+		},
+
+		hide_bottom_section: function () {
+			var _this = surveys.ui;
+			$(".bottom-section").hide();
+			_this.is_optout_shown = false;
+			_this.is_whatisthis_shown = false;
+		},
+
+		hide_optout: function () {
+			surveys.ui.is_optout_shown = false;
+			$("#btab-optout").hide();
+		},
+
 		switch_tab: function (tab_name) {
 
 			$(".tabs").hide();
@@ -224,21 +244,51 @@ var surveys = {
 		},
 
 		on_optout: function (e) {
+			var _this = surveys.ui,
+				$tab = $("#btab-optout");
 
-			surveys.ui.switch_tab("optout");
-			var $tab = $("#tab-optout");
+			$("#btab-whatsthis").hide(); // explicitly hide another bottom tabs
+			_this.is_whatisthis_shown = false;
 
-			$(".button-yes", $tab).click(function(){
-				surveys.report("optout", { target: surveys.target });
-			});
+			if(_this.is_optout_shown) {
+				surveys.ui.hide_bottom_section();
+				_this.hide_optout();
 
-			$(".button-no", $tab).click(function(){
-				surveys.ui.switch_tab("question");
-			});
+			} else {
+
+				surveys.ui.show_bottom_section();
+				$tab.show();
+
+				$(".button-yes", $tab).click(function(){
+					surveys.report("optout", { target: surveys.target });
+				});
+
+				$(".button-no", $tab).click(function(){
+					_this.hide_optout();
+					_this.hide_bottom_section();
+				});
+
+				_this.is_optout_shown = true;
+			}
+
+
 		},
 
 		on_whatisthis: function (e) {
 
+			var _this = surveys.ui,
+				$btab = $("#btab-whatsthis");
+
+			_this.hide_optout();
+
+			if (_this.is_whatisthis_shown) {
+				surveys.ui.hide_bottom_section();
+				$btab.hide();
+			} else {
+				surveys.ui.show_bottom_section();
+				$btab.show();
+				_this.is_whatisthis_shown = true;
+			}
 		},
 
 		on_submit: function (e) {
@@ -247,11 +297,12 @@ var surveys = {
 
 				_this.report("submit", {
 					target: _this.target,
+					url: _this.url,
 					question: _this.question.id,
 					answer: _this.answer_value
 				});
-
-				surveys.ui.switch_tab("final");
+				_this.ui.hide_bottom_section();
+				_this.ui.switch_tab("final");
 			}
 		},
 
@@ -280,6 +331,7 @@ var surveys = {
 			_this.decodedtarget = data.decodedtarget || "";
 			_this.target = data.target || "";
 			_this.question = data.question ? data.question : {};
+			_this.url = data.url;
 
 			_this.ui.update_texts();
 			_this.slider.prepare_values(_this.question.choices);
@@ -293,6 +345,8 @@ var surveys = {
 			$(".close-button").click(_this.ui.on_close);
 			$(".surveys-whatsthis").click(_this.ui.on_whatisthis);
 			$(".wot-logo").click(_this.ui.on_logo);
+
+			$(".close-button-secondary").click(_this.ui.hide_bottom_section);
 
 		}
 

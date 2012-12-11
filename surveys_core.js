@@ -59,7 +59,7 @@ $.extend(wot, { surveys: {
 	update: function (tab, data) {
 		try {
 
-			var target = data.target,   // or we should use data.decodedtarget
+			var target = data.target,
 				cached = data.cached,
 				question = (cached && cached.value && cached.value.question) ? cached.value.question : {};
 
@@ -71,9 +71,6 @@ $.extend(wot, { surveys: {
 				question: question
 			};
 
-			var encoded_data = window.btoa(JSON.stringify(senddata));
-			senddata.encoded = encoded_data;
-
 			if (is_tts) {
 				wot.surveys.send_show(tab, senddata);
 			}
@@ -84,9 +81,6 @@ $.extend(wot, { surveys: {
 
 	is_tts: function (target, cache, url) {
 		var _this = wot.surveys;
-
-		// THE NEXT LINE IS FOR DEBUG ONLY:
-		// return true;
 
 		// on special domains we should always show the survey if there is a special password given (for testing purposes)
 		// e.g. try this url http://api.mywot.com/test.html#surveymewot
@@ -155,7 +149,7 @@ $.extend(wot, { surveys: {
 	on_submit: function (port, data) {
 		var _this = wot.surveys;
 		_this.save_asked_status(data, _this.FLAGS.submited);
-		_this.report(data.target, data.question, data.answer);
+		_this.report(data.url, data.question, data.answer);
 
 		// wait for a moment to show there final screen (thank you!)
 		window.setTimeout(function(){
@@ -225,9 +219,9 @@ $.extend(wot, { surveys: {
 		_this.send_close(port.port.sender.tab);
 	},
 
-	report: function (target, question_id, answer) {
+	report: function (url, question_id, answer) {
 		// this func reports to wot server about the option user has chosen: answer id, or optout or close action
-		console.log("Reporting the answer:", target, question_id, answer);
+		wot.api.feedback(question_id, answer, url);
 	}
 
 }});

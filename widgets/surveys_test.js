@@ -23,7 +23,7 @@ var iframe = document.createElement("iframe");
 
 iframe.setAttribute("id", "wot_surveys_wrapper");
 iframe.setAttribute("scrolling", "no");
-iframe.setAttribute("style", "position: fixed; top: 10px; left: 10px;width: 390px; height: 300px; z-index: 2147483647; border: none;");
+iframe.setAttribute("style", "position: fixed; top: 10px; left: 10px;width: 392px; height: 350px; z-index: 2147483647; border: none;");
 
 iframe.setAttribute("name", encoded);
 
