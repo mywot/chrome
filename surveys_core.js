@@ -33,7 +33,8 @@ $.extend(wot, { surveys: {
 		optedout:   3   // a user has clicked "Hide forever"
 	},
 
-	calm_period:        3 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
+	// TODO: for public use set calm period to at least 3 days!
+	calm_period:        1 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
 	always_ask:         ['api.mywot.com', 'fb.mywot.com'],
 	always_ask_passwd:  "#surveymewot", // this string must be present to show survey by force
 	optedout:           null,
@@ -63,7 +64,7 @@ $.extend(wot, { surveys: {
 				cached = data.cached,
 				question = (cached && cached.value && cached.value.question) ? cached.value.question : {};
 
-			var is_tts = wot.surveys.is_tts(target, cached, tab.url);
+			var is_tts = wot.surveys.is_tts(target, cached, tab.url, question);
 
 			var senddata = {
 				target: target,
@@ -79,34 +80,46 @@ $.extend(wot, { surveys: {
 		}
 	},
 
-	is_tts: function (target, cache, url) {
+	is_tts: function (target, cache, url, question) {
 		var _this = wot.surveys;
 
-		// on special domains we should always show the survey if there is a special password given (for testing purposes)
-		// e.g. try this url http://api.mywot.com/test.html#surveymewot
-		if (_this.always_ask.indexOf(target) >= 0 && url && url.indexOf(_this.always_ask_passwd) >= 0) {
-			return true;
-		}
+		try {
+			// on special domains we should always show the survey if there is a special password given (for testing purposes)
+			// e.g. try this url http://api.mywot.com/test.html#surveymewot
+			if (_this.always_ask.indexOf(target) >= 0 && url && url.indexOf(_this.always_ask_passwd) >= 0) {
+				return true;
+			}
 
-		if (_this.optedout || !wot.enable_surveys) {
-			// TODO: here we could want to send a GA signal about missed survey because of OptedOut
-			return false;
-		}
+			if(!(question && question.id !== undefined && question.text && question.choices)) {
+				// no question was given for the current website - do nothing
+				return false;
+			}
 
-		// check if have asked the user more than X days ago or never before
-		if (_this.last_time_asked && wot.time_since(_this.last_time_asked) < _this.calm_period) {
-			// TODO: here we could want to send a GA signal about missed survey because of calm_time
-			return false;
-		}
+			if (_this.optedout || !wot.enable_surveys) {
+				// TODO: here we could want to send a GA signal about missed survey because of OptedOut
+				return false;
+			}
 
-		// check whether we already have asked the user about current website
-		if (_this.asked[target]) {
-			// here we could test also if user just closed the survey last time without providing any info
-			// (in case if we want to be more annoying)
-			return false;
-		}
+			// check if have asked the user more than X days ago or never before
+			if (_this.last_time_asked && wot.time_since(_this.last_time_asked) < _this.calm_period) {
+				// TODO: here we could want to send a GA signal about missed survey because of calm_time
+				return false;
+			}
+
+			// check whether we already have asked the user about current website
+			if (_this.asked[target]) {
+				// here we could test also if user just closed the survey last time without providing any info
+				// (in case if we want to be more annoying)
+				return false;
+			}
 
 		return true;
+
+		} catch (e) {
+			console.error("Survey's is_tts() failed", e);
+			return false;
+		}
+
 	},
 
 	connect_and_send: function (tab, message, data) {

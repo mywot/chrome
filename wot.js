@@ -19,9 +19,9 @@
 */
 
 var wot = {
-	version: 20121127,
+	version: 20121212,
 	platform: "chrome",
-	debug: true,           // when changing this, don't forget to switch ga_id value also!
+	debug: false,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 

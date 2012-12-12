@@ -39,12 +39,10 @@ wot.surveys = {
 				wot.surveys.init();
 			}, false);
 		}
-
 	},
 
 	init: function () {
 		wot.bind("message:surveys:show", wot.surveys.on_show);
-		console.info("Surveys inited");
 	},
 
 	on_show: function(port, data) {
@@ -77,6 +75,7 @@ wot.surveys = {
 			return;
 		}
 
+		// prepare data for transferring to injected frame via window.name
 		data.question.url = window.location.origin + window.location.pathname;   // skip params and hash in the URL
 		var encoded_data = btoa(JSON.stringify(data.question));
 
@@ -101,10 +100,9 @@ wot.surveys = {
 			"border: none;");
 
 		wrapper.setAttribute("src", chrome.extension.getURL("/widgets/surveys.html"));
+		wrapper.setAttribute("name", encoded_data);  // transfer question's data via "name" property of iframe
 
-		wrapper.setAttribute("name", encoded_data);  // We transfer question's data via "name" property of iframe
-
-		wot.utils.attach_element(wrapper); // attach iframe wrapper
+		wot.utils.attach_element(wrapper); // attach iframe wrapper to DOM
 	}
 };
 

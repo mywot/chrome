@@ -485,8 +485,7 @@ $.extend(wot, { api: {
 			{
 
 				// tweak data here to debug Survey's functionality
-
-				data = wot.api.debug_tweak(data);   // TODO: remove after debug!
+//				data = wot.api.debug_tweak(data);   // TODO: remove after debug!
 
 				if (wot.cache.cacheresponse([ target ], data) != 1) {
 					wot.cache.set(target, wot.cachestatus.error);
