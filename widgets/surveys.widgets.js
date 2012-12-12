@@ -108,6 +108,11 @@ var surveys = {
 			_this.update_slider_state(ui.value);
 		},
 
+		on_slide_stop: function(event, ui) {
+			var _this = surveys;
+			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_slidered, _this.target);
+		},
+
 		update_hover_status: function(idx, is_hovered) {
 			var _this = surveys.slider,
 				value_to_show = is_hovered ? idx : surveys.current_idx,
@@ -139,6 +144,7 @@ var surveys = {
 		on_click: function (event) {
 			var _this = surveys.slider;
 			_this.$slider.slider("value", _this.get_idx(event.currentTarget));
+			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_directclick, _this.target);
 		},
 
 		build_slider: function() {
@@ -203,6 +209,7 @@ var surveys = {
 				animate: "fast",
 				change: _this.on_slider_change,
 				slide: _this.on_slide,
+				stop: _this.on_slide_stop,
 				create: surveys.slider.build_slider // build the rest after slider is created
 			});
 		}
@@ -240,7 +247,9 @@ var surveys = {
 		},
 
 		on_close: function (e) {
-			surveys.report("close", { target: surveys.target });
+			var _this = surveys;
+			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_closed, _this.target);
+			surveys.report("close", { target: _this.target });
 		},
 
 		on_optout: function (e) {
@@ -259,16 +268,19 @@ var surveys = {
 				surveys.ui.show_bottom_section();
 				$tab.show();
 
-				$(".button-yes", $tab).click(function(){
+				$(".button-yes", $tab).click(function () {
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_optout_yes, _this.target);
 					surveys.report("optout", { target: surveys.target });
 				});
 
-				$(".button-no", $tab).click(function(){
+				$(".button-no", $tab).click(function () {
 					_this.hide_optout();
 					_this.hide_bottom_section();
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_optout_no, _this.target);
 				});
 
 				_this.is_optout_shown = true;
+				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_optout_shown, _this.target);
 			}
 
 
@@ -288,6 +300,7 @@ var surveys = {
 				surveys.ui.show_bottom_section();
 				$btab.show();
 				_this.is_whatisthis_shown = true;
+				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_whatisthis, _this.target);
 			}
 		},
 
@@ -301,6 +314,9 @@ var surveys = {
 					question: _this.question.id,
 					answer: _this.answer_value
 				});
+
+				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_submit, _this.target);
+
 				_this.ui.hide_bottom_section();
 				_this.ui.switch_tab("final");
 			}
@@ -346,13 +362,22 @@ var surveys = {
 			$(".surveys-whatsthis").click(_this.ui.on_whatisthis);
 			$(".wot-logo").click(_this.ui.on_logo);
 
-			$(".close-button-secondary").click(_this.ui.hide_bottom_section);
+			$(".close-button-secondary").click(function (event) {
+				_this.ui.hide_bottom_section();
+				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_bottom_close);
+			});
 
+			// report after short delay to make sure GA code is inited
+			setTimeout(function(){
+				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_shown, _this.target);
+			}, 500);
+
+
+		} else {
+			surveys.report("close", { target: surveys.target });
 		}
 
 	}
-
-
 };
 
 $(document).ready(function () {

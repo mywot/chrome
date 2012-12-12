@@ -35,9 +35,11 @@ $.extend(wot, { surveys: {
 
 	// TODO: for public use set calm period to at least 3 days!
 	calm_period:        1 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
+	calm_period_notified: false,    // to avoid multiple GA events during visits of websites
 	always_ask:         ['api.mywot.com', 'fb.mywot.com'],
 	always_ask_passwd:  "#surveymewot", // this string must be present to show survey by force
 	optedout:           null,
+	optedout_notified:  false,
 	last_time_asked:    null,
 	asked:              {}, // the list of asked questions per domain. Is kept in preferences
 
@@ -84,25 +86,34 @@ $.extend(wot, { surveys: {
 		var _this = wot.surveys;
 
 		try {
-			// on special domains we should always show the survey if there is a special password given (for testing purposes)
-			// e.g. try this url http://api.mywot.com/test.html#surveymewot
-			if (_this.always_ask.indexOf(target) >= 0 && url && url.indexOf(_this.always_ask_passwd) >= 0) {
-				return true;
-			}
 
 			if(!(question && question.id !== undefined && question.text && question.choices)) {
 				// no question was given for the current website - do nothing
 				return false;
 			}
 
+			// on special domains we should always show the survey if there is a special password given (for testing purposes)
+			// e.g. try this url http://api.mywot.com/test.html#surveymewot
+			if (_this.always_ask.indexOf(target) >= 0 && url && url.indexOf(_this.always_ask_passwd) >= 0) {
+				return true;
+			}
+
 			if (_this.optedout || !wot.enable_surveys) {
-				// TODO: here we could want to send a GA signal about missed survey because of OptedOut
+				// send a GA signal about missed survey because of OptedOut
+				if (!_this.optedout_notified) {
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "optedout");
+					_this.optedout_notified = true;
+				}
 				return false;
 			}
 
 			// check if have asked the user more than X days ago or never before
 			if (_this.last_time_asked && wot.time_since(_this.last_time_asked) < _this.calm_period) {
-				// TODO: here we could want to send a GA signal about missed survey because of calm_time
+				// send a GA signal about missed survey because of calm_time
+				if (!_this.calm_period_notified) {
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "calm_period");
+					_this.calm_period_notified = true;
+				}
 				return false;
 			}
 
