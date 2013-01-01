@@ -1,3 +1,22 @@
+/*
+ surveys.widgets.js
+ Copyright © 2012 - 2013  WOT Services Oy <info@mywot.com>
+
+ This file is part of WOT.
+
+ WOT is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ WOT is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with WOT. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 var surveys = {
 
@@ -10,6 +29,12 @@ var surveys = {
 	submit_enabled: false,
 
 	report: function (msg, data) {
+		var _this = surveys;
+		if (typeof(data) === "object") {
+			data.question_id = _this.question.id;
+			data.url = _this.url;
+			data.target = _this.target;
+		}
 		wot.post("surveyswidget", msg, data);
 	},
 
@@ -249,7 +274,7 @@ var surveys = {
 		on_close: function (e) {
 			var _this = surveys;
 			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_closed, _this.target);
-			surveys.report("close", { target: _this.target });
+			surveys.report("close", {});
 		},
 
 		on_optout: function (e) {
@@ -270,7 +295,7 @@ var surveys = {
 
 				$(".button-yes", $tab).click(function () {
 					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_optout_yes, _this.target);
-					surveys.report("optout", { target: surveys.target });
+					surveys.report("optout", {});
 				});
 
 				$(".button-no", $tab).click(function () {
@@ -282,8 +307,6 @@ var surveys = {
 				_this.is_optout_shown = true;
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_optout_shown, _this.target);
 			}
-
-
 		},
 
 		on_whatisthis: function (e) {
@@ -308,12 +331,7 @@ var surveys = {
 			var _this = surveys;
 			if (_this.answer_value !== null) {
 
-				_this.report("submit", {
-					target: _this.target,
-					url: _this.url,
-					question: _this.question.id,
-					answer: _this.answer_value
-				});
+				_this.report("submit", { answer: _this.answer_value });
 
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_submit, _this.target);
 
@@ -353,30 +371,28 @@ var surveys = {
 			_this.slider.prepare_values(_this.question.choices);
 
 			_this.slider.init_slider();
-			_this.report("shown", data);
-
-			// setup events' handlers
-			$(".surveys-submit").click(_this.ui.on_submit);
-			$(".surveys-optout").click(_this.ui.on_optout);
-			$(".close-button").click(_this.ui.on_close);
-			$(".surveys-whatsthis").click(_this.ui.on_whatisthis);
-			$(".wot-logo").click(_this.ui.on_logo);
-
-			$(".close-button-secondary").click(function (event) {
-				_this.ui.hide_bottom_section();
-				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_bottom_close);
-			});
+			_this.report("shown", {});
 
 			// report after short delay to make sure GA code is inited
-			setTimeout(function(){
+			setTimeout(function () {
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_shown, _this.target);
 			}, 500);
 
-
 		} else {
-			surveys.report("close", { target: surveys.target });
+			surveys.report("close", {});
 		}
 
+		// setup events' handlers
+		$(".surveys-submit").click(_this.ui.on_submit);
+		$(".surveys-optout").click(_this.ui.on_optout);
+		$(".close-button").click(_this.ui.on_close);
+		$(".surveys-whatsthis").click(_this.ui.on_whatisthis);
+		$(".wot-logo").click(_this.ui.on_logo);
+
+		$(".close-button-secondary").click(function (event) {
+			_this.ui.hide_bottom_section();
+			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_bottom_close);
+		});
 	}
 };
 

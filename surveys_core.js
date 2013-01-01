@@ -1,6 +1,6 @@
 /*
  surveys_core.js
- Copyright © 2012  WOT Services Oy <info@mywot.com>
+ Copyright © 2012 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -33,11 +33,15 @@ $.extend(wot, { surveys: {
 		optedout:   3   // a user has clicked "Hide forever"
 	},
 
-	// TODO: for public use set calm period to at least 3 days!
-	calm_period:        1 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
-	calm_period_notified: false,    // to avoid multiple GA events during visits of websites
+	global_calm_period:   1 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
+	calm_period_notified: false,    // to avoid multiple GA events during visits of websites: global calm period
+	site_max_reask_tries: 3, // how many times we could ask about 1 website
+	site_calm_period:     10 * wot.DT.DAY, // delay between asking for the particular website
+	site_calm_period_notified: false,    // to avoid multiple GA events during visits of websites: calm period for the particular website
+
 	always_ask:         ['api.mywot.com', 'fb.mywot.com'],
 	always_ask_passwd:  "#surveymewot", // this string must be present to show survey by force
+	reset_passwd:       "#wotresetsurveysettings", // this string must be present to reset timers and optout
 	optedout:           null,
 	optedout_notified:  false,
 	last_time_asked:    null,
@@ -62,9 +66,16 @@ $.extend(wot, { surveys: {
 	update: function (tab, data) {
 		try {
 
-			var target = data.target,
+			var _this = wot.surveys,
+				target = data.target,
 				cached = data.cached,
 				question = (cached && cached.value && cached.value.question) ? cached.value.question : {};
+
+			// test for magic "reset" URL and clear state if magic URL is found
+			if (_this.always_ask.indexOf(target) >= 0 && tab.url && tab.url.indexOf(_this.reset_passwd) >= 0) {
+				_this.reset_settings();
+				return;
+			}
 
 			var is_tts = wot.surveys.is_tts(target, cached, tab.url, question);
 
@@ -78,7 +89,7 @@ $.extend(wot, { surveys: {
 				wot.surveys.send_show(tab, senddata);
 			}
 		} catch (e) {
-			console.error("wot.survey.update() failed in BG.", e);
+			console.error("wot.surveys.update() failed in BG.", e);
 		}
 	},
 
@@ -108,29 +119,42 @@ $.extend(wot, { surveys: {
 			}
 
 			// check if have asked the user more than X days ago or never before
-			if (_this.last_time_asked && wot.time_since(_this.last_time_asked) < _this.calm_period) {
+			if (_this.last_time_asked && wot.time_since(_this.last_time_asked) < _this.global_calm_period) {
 				// send a GA signal about missed survey because of calm_time
 				if (!_this.calm_period_notified) {
-					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "calm_period");
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "global_calm_period");
 					_this.calm_period_notified = true;
 				}
 				return false;
 			}
 
 			// check whether we already have asked the user about current website
-			if (_this.asked[target]) {
+			if (_this.asked[target] && _this.asked[target][question.id]) {
 				// here we could test also if user just closed the survey last time without providing any info
 				// (in case if we want to be more annoying)
-				return false;
-			}
+				var asked_data = _this.asked[target][question.id];
+				var asked_time = wot.time_since(asked_data.time),
+					status = asked_data.status,
+					count = asked_data.count;
 
+				if (status !== _this.FLAGS.submited &&
+					count < _this.site_max_reask_tries &&
+					asked_time > _this.site_calm_period) {
+					return true;
+				} else {
+					if (!_this.site_calm_period_notified) {
+						wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "site_calm_period");
+						_this.site_calm_period_notified = true;
+					}
+					return false;
+				}
+			}
 		return true;
 
 		} catch (e) {
 			console.error("Survey's is_tts() failed", e);
 			return false;
 		}
-
 	},
 
 	connect_and_send: function (tab, message, data) {
@@ -173,7 +197,7 @@ $.extend(wot, { surveys: {
 	on_submit: function (port, data) {
 		var _this = wot.surveys;
 		_this.save_asked_status(data, _this.FLAGS.submited);
-		_this.report(data.url, data.question, data.answer);
+		_this.report(data.url, data.question_id, data.answer);
 
 		// wait for a moment to show there final screen (thank you!)
 		window.setTimeout(function(){
@@ -185,24 +209,30 @@ $.extend(wot, { surveys: {
 		wot.surveys.asked = wot.prefs.get(wot.surveys.PREFNAMES.asked) || {};
 	},
 
-	remember_asked: function(target, status) {
+	remember_asked: function(target, question_id, status) {
 		var _this = wot.surveys;
 
 		try {
 
 			status = status === undefined ? _this.FLAGS.none : status;
 
-			var asked_data = {
-				time: new Date(),   // time of first show the survey
-				status: status
-			};
+			var count = 0;
 
 			if (_this.asked[target]) {
-				asked_data = _this.asked[target];
-				asked_data.status = status;    // just update the status
+				if (_this.asked[target][question_id]) {
+					count = _this.asked[target][question_id]['count'] || 0;
+				}
+			} else {
+				_this.asked[target] = {};
 			}
 
-			_this.asked[target] = asked_data;    // keep in runtime variable
+			var asked_data = {
+				time: new Date(),   // time of first show the survey
+				status: status,
+				count: count + ((status === _this.FLAGS.none) ? 1 : 0)  //count only "shown" events
+			};
+
+			_this.asked[target][question_id] = asked_data;    // keep in runtime variable
 
 		} catch (e) {
 			console.error("remember_asked() failed with", e);
@@ -212,8 +242,8 @@ $.extend(wot, { surveys: {
 	save_asked_status: function (data, status) {
 		var _this = wot.surveys;
 		try {
-			if (data && data.target) {
-				_this.remember_asked(data.target, status);
+			if (data && data.target && data.question_id) {
+				_this.remember_asked(data.target, data.question_id, status);
 
 				wot.prefs.set(_this.PREFNAMES.asked, _this.asked);
 				_this.last_time_asked = new Date();
@@ -230,10 +260,11 @@ $.extend(wot, { surveys: {
 		return (_this.optedout === null) ? !!wot.prefs.get(_this.PREFNAMES.optedout) : _this.optedout;
 	},
 
-	optout: function () {
+	optout: function (flag) {
 		var _this = wot.surveys;
-		_this.optedout = true;
-		wot.prefs.set(_this.PREFNAMES.optedout, true);
+		flag = (flag !== undefined ? flag : true);
+		_this.optedout = flag;
+		wot.prefs.set(_this.PREFNAMES.optedout, flag);
 	},
 
 	on_optout: function (port, data) {
@@ -245,7 +276,20 @@ $.extend(wot, { surveys: {
 
 	report: function (url, question_id, answer) {
 		// this func reports to wot server about the option user has chosen: answer id, or optout or close action
+		console.log(arguments);
 		wot.api.feedback(question_id, answer, url);
+	},
+
+	reset_settings: function () {
+		var _this = wot.surveys;
+		_this.optout(false);  // reset opt-out
+		_this.asked = {}; // reset the list of websites asked about
+		_this.last_time_asked = null; // reset time of last asked event
+		wot.prefs.set(_this.PREFNAMES.asked, _this.asked);
+		wot.prefs.set(_this.PREFNAMES.lasttime, _this.last_time_asked);
+		_this.site_calm_period_notified = false;
+		_this.calm_period_notified = false;
+		_this.optedout_notified = false;
 	}
 
 }});
