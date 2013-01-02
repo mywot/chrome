@@ -39,6 +39,9 @@ $.extend(wot, { surveys: {
 	site_calm_period:     10 * wot.DT.DAY, // delay between asking for the particular website
 	site_calm_period_notified: false,    // to avoid multiple GA events during visits of websites: calm period for the particular website
 
+	newuser_period:     2 * wot.DT.WEEK,    // don't ask a user during this period after installation
+	newuser_period_notified: false,         // to avoid sending many events of this type
+
 	always_ask:         ['api.mywot.com', 'fb.mywot.com'],
 	always_ask_passwd:  "#surveymewot", // this string must be present to show survey by force
 	reset_passwd:       "#wotresetsurveysettings", // this string must be present to reset timers and optout
@@ -114,6 +117,14 @@ $.extend(wot, { surveys: {
 				if (!_this.optedout_notified) {
 					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "optedout");
 					_this.optedout_notified = true;
+				}
+				return false;
+			}
+
+			if (wot.time_sincefirstrun() < _this.newuser_period) {
+				if (!_this.newuser_period_notified) {
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "newuser");
+					_this.newuser_period_notified = true;
 				}
 				return false;
 			}
