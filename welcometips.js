@@ -82,6 +82,14 @@ $.extend(wot, { wt: {
 			var locale = wot.i18n("locale");
 			if (!(locale === "ru" || locale === "en")) return;
 
+			// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
+			var strings = ["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn", "warning_text", "warning_ok"];
+			for(var i in strings) {
+				if (wot.i18n("wt", strings[i]) === undefined) {
+					return; // avoid showing "undefined" strings in Tips. Postpone to browser's restart (it fixes usually)
+				}
+			}
+
 			this.load_settings();
 
 			// Initialize Intro Tip
