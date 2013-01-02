@@ -23,7 +23,6 @@ $.extend(wot, { api: {
 		maxhosts: 100,
 		maxparamlength: 4096,
 		server: "api.mywot.com",
-//		server: "builder.dev.mywot.com",
 		secure: true,
 		updateformat: 4,
 		updateinterval: 3 * 3600 * 1000,
@@ -414,40 +413,6 @@ $.extend(wot, { api: {
 			});
 	},
 
-	debug_tweak: function (doc) {
-		// This func adds to the server's response information about Survey. Just for debug
-
-		var target = doc.getElementsByTagName("target")[0];
-		var question = doc.createElement("question");
-
-		var questionId = doc.createElement("questionId");
-		questionId.textContent = "9999";
-		question.appendChild(questionId);
-
-		var question_text = doc.createElement("questionText");
-		question_text.textContent = "Overall, how satisfied are you with %site%?";
-		question.appendChild(question_text);
-
-		[
-			{ value: 0, text: "Extremely dissatisfied" },
-			{ value: 1, text: "Moderately dissatisfied" },
-			{ value: 2, text: "Slightly dissatisfied" },
-			{ value: 3, text: "Neither satisfied nor dissatisfied" },
-			{ value: 4, text: "Slightly satisfied" },
-			{ value: 5, text: "Moderately satisfied" },
-			{ value: 6, text: "Extremely satisfied" }
-		].forEach(function(item){
-				var node = doc.createElement("choiceText");
-				node.textContent = item.text;
-				node.setAttribute("value", item.value);
-				question.appendChild(node);
-		});
-
-		target.appendChild(question);
-
-		return doc;
-	},
-
 	query: function(target, onupdate)
 	{
 		onupdate = onupdate || function() {};
@@ -483,10 +448,6 @@ $.extend(wot, { api: {
 			},
 			function(data)
 			{
-
-				// tweak data here to debug Survey's functionality
-//				data = wot.api.debug_tweak(data);   // TODO: remove after debug!
-
 				if (wot.cache.cacheresponse([ target ], data) != 1) {
 					wot.cache.set(target, wot.cachestatus.error);
 				}
@@ -638,12 +599,10 @@ $.extend(wot, { api: {
 			encryption: true
 		};
 
-		var cleaned_url = url;  // TODO: implement URL cleaner (remove params and hash)
-
 		var params = {
 			question: question_id,
 			choice: choice,
-			url: cleaned_url
+			url: url
 		};
 
 		this.call("feedback", options, params,

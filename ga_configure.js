@@ -98,16 +98,16 @@ $.extend(wot, { ga: {
 		return !!wot.ga._tracker;
 	},
 
-	fire_event: function (category, action, label, value) {
+	fire_event: function (category, action, label) {
 
 		if (wot.ga.disable) return;
 
 		try {
 			if (wot.ga.init_tracker()) {
-				wot.ga._tracker._trackEvent(category, action, label, value);
+				wot.ga._tracker._trackEvent(category, action, label);
 			} else {
 				// backup option, if AsyncTracker still isn't inited
-				_gaq.push(['_trackEvent', category, action, label, value]);
+				_gaq.push(['_trackEvent', category, action, label]);
 			}
 		} catch (e) {
 			// silence...
