@@ -211,19 +211,6 @@ $.extend(wot, { cache: {
 					}
 				});
 
-/*
-	<question>
-		<questionId>1000</questionId>
-        <questionText>Overall, how satisfied are you with %site%?</questionText>
-        <choiceText value="0">Extremely dissatisfied</choiceText>
-		<choiceText value="1">Moderately dissatisfied</choiceText>
-		<choiceText value="2">Slightly dissatisfied</choiceText>
-		<choiceText value="3">Neither satisfied nor dissatisfied</choiceText>
-		<choiceText value="4">Slightly satisfied</choiceText>
-		<choiceText value="5">Moderately satisfied</choiceText>
-		<choiceText value="6">Extremely satisfied</choiceText>
-	</question>
-  * */
 				// parse survey's question whether it exists
 				$("question", this).each(function() {
 					// "this" here contains <question> tag's content

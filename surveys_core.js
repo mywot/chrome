@@ -33,7 +33,7 @@ $.extend(wot, { surveys: {
 		optedout:   3   // a user has clicked "Hide forever"
 	},
 
-	global_calm_period:   1 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
+	global_calm_period:   3 * wot.DT.DAY, // Time in seconds after asking a question before we can ask next question
 	calm_period_notified: false,    // to avoid multiple GA events during visits of websites: global calm period
 	site_max_reask_tries: 3, // how many times we could ask about 1 website
 	site_calm_period:     10 * wot.DT.DAY, // delay between asking for the particular website
@@ -42,7 +42,7 @@ $.extend(wot, { surveys: {
 	newuser_period:     2 * wot.DT.WEEK,    // don't ask a user during this period after installation
 	newuser_period_notified: false,         // to avoid sending many events of this type
 
-	always_ask:         ['api.mywot.com', 'fb.mywot.com'],
+	always_ask:         ['fb.mywot.com'],
 	always_ask_passwd:  "#surveymewot", // this string must be present to show survey by force
 	reset_passwd:       "#wotresetsurveysettings", // this string must be present to reset timers and optout
 	optedout:           null,
@@ -287,7 +287,6 @@ $.extend(wot, { surveys: {
 
 	report: function (url, question_id, answer) {
 		// this func reports to wot server about the option user has chosen: answer id, or optout or close action
-		console.log(arguments);
 		wot.api.feedback(question_id, answer, url);
 	},
 

@@ -1,6 +1,6 @@
 /*
 	wot.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -19,13 +19,13 @@
 */
 
 var wot = {
-	version: 20130102,
+	version: 20130103,
 	platform: "chrome",
 	debug: false,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
-	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
