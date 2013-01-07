@@ -94,6 +94,10 @@
 				"http://*/*",
 				"https://*/*"
 			],
+			"exclude_matches":  [
+				"http://www.mywot.com/*",
+				"https://www.mywot.com/*"
+			],
 			"js": [
 				"wot.js",
 				"content/common.js",
