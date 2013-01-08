@@ -97,7 +97,9 @@ $.extend(wot, { surveys: {
 	},
 
 	is_tts: function (target, cache, url, question) {
-		var _this = wot.surveys;
+		var _this = wot.surveys,
+			result = true,
+			global_calm = false;
 
 		try {
 
@@ -108,8 +110,9 @@ $.extend(wot, { surveys: {
 
 			// on special domains we should always show the survey if there is a special password given (for testing purposes)
 			// e.g. try this url http://api.mywot.com/test.html#surveymewot
-			if (_this.always_ask.indexOf(target) >= 0 && url && url.indexOf(_this.always_ask_passwd) >= 0) {
-				return true;
+			if (_this.always_ask.indexOf(target) >= 0 && url) {
+				// don't show the form on magic host without the magic password
+				return url.indexOf(_this.always_ask_passwd) >= 0;
 			}
 
 			if (_this.optedout || !wot.enable_surveys) {
@@ -131,12 +134,8 @@ $.extend(wot, { surveys: {
 
 			// check if have asked the user more than X days ago or never before
 			if (_this.last_time_asked && wot.time_since(_this.last_time_asked) < _this.global_calm_period) {
-				// send a GA signal about missed survey because of calm_time
-				if (!_this.calm_period_notified) {
-					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "global_calm_period");
-					_this.calm_period_notified = true;
-				}
-				return false;
+				result = false;
+				global_calm = true;
 			}
 
 			// check whether we already have asked the user about current website
@@ -148,19 +147,34 @@ $.extend(wot, { surveys: {
 					status = asked_data.status,
 					count = asked_data.count;
 
-				if (status !== _this.FLAGS.submited &&
-					count < _this.site_max_reask_tries &&
+				if (status !== _this.FLAGS.submited && 	count < _this.site_max_reask_tries &&
 					asked_time > _this.site_calm_period) {
-					return true;
+
+					result = result && true;    // redundant line
+
 				} else {
-					if (!_this.site_calm_period_notified) {
+					// send GA event "FBL_opportunity:site_calm_period" only if global_calm_period doesn't matter
+					if (!_this.site_calm_period_notified && !global_calm) {
 						wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "site_calm_period");
 						_this.site_calm_period_notified = true;
 					}
-					return false;
+					result = false;
+				}
+
+				if (status === _this.FLAGS.submited) {
+					global_calm = false;    // mute sending GA event about global_calm_period if the user provided the feedback
 				}
 			}
-		return true;
+
+			if (global_calm) {
+				// send a GA signal about missed survey because of calm_time
+				if (!_this.calm_period_notified) {
+					wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_opportunity, "global_calm_period");
+					_this.calm_period_notified = true;
+				}
+			}
+
+			return result;
 
 		} catch (e) {
 			console.error("Survey's is_tts() failed", e);
