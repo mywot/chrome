@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "1.4.4",
+	"version": "1.4.5",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
