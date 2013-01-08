@@ -1,6 +1,6 @@
 /*
  content/welcome_tips.js
- Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -299,11 +299,7 @@ wot.wt = {
 			wot.wt.report("ready");
 		} else {
 			document.addEventListener("DOMContentLoaded", function (e) {
-				// workaround for the bug http://code.google.com/p/chromium/issues/detail?id=107505
-				// need to check whether wot.wt still available since another content script can erase it
-				// because of the bug. This workaround might be removed after mail.ru started to use newer build than 17
-
-				if (wot.wt) wot.wt.report("ready"); // normally here shouldn't be the condition, but read the comment above
+				wot.wt.report("ready");
 			}, false);
 		}
 
