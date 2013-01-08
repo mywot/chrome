@@ -42,8 +42,13 @@ $.extend(wot, { wt: {
 
 		warning_shown: 0,
 		warning_ok: false,
-		warning_optedout: false,
-		warning_shown_dt: null
+		warning_optedout: false,    // was warning disabled by the user via warning tip?
+		warning_shown_dt: null,
+
+		donuts_shown: 0,
+		donuts_shown_dt: null,
+		donuts_ok: false
+
 	},
 
 	load_settings: function () {
@@ -75,7 +80,15 @@ $.extend(wot, { wt: {
 
 			// Check additional conditions for Mail.ru users
 			var locale = wot.i18n("locale");
-			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) return;
+			if (!(locale === "ru" || locale === "en")) return;
+
+			// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
+			var strings = ["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn", "warning_text", "warning_ok"];
+			for(var i in strings) {
+				if (wot.i18n("wt", strings[i]) === undefined) {
+					return; // avoid showing "undefined" strings in Tips. Postpone to browser's restart (it fixes usually)
+				}
+			}
 
 			this.load_settings();
 
@@ -87,6 +100,11 @@ $.extend(wot, { wt: {
 			// Initialize Tip for Warning screen
 			if (wot.wt.warning.tts()) {
 				wot.wt.warning.init();
+			}
+
+			// Init Donuts Tip
+			if (wot.wt.donuts.tts()) {
+				wot.wt.donuts.init();
 			}
 		}
 	},
@@ -203,8 +221,8 @@ $.extend(wot, { wt: {
 			  * */
 
 			var locale = wot.i18n("locale");
-			// Mailru only. RU and EN only.
-			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
+			// RU and EN only.
+			if (!(locale === "ru" || locale === "en")) {
 				return false;
 			}
 
@@ -262,6 +280,68 @@ $.extend(wot, { wt: {
 				wot.prefs.set("warning_type_" + app.name, 0);
 				wot.prefs.set("warning_unknown_" + app.name, false);
 			});
+		}
+	},
+
+	donuts: {
+
+		was_triggered: false,
+
+		init: function () {
+			wot.bind("message:wtb:dtip_shown", wot.wt.donuts.on_show);
+			wot.bind("message:wtb:dtip_ok", wot.wt.donuts.on_ok);
+		},
+
+		on_show: function (port, data) {
+			if (data.times === 0) {
+				wot.wt.settings.donuts_shown++;
+				wot.wt.settings.donuts_shown_dt = new Date();
+				wot.wt.save_setting("donuts_shown");
+				wot.wt.save_setting("donuts_shown_dt");
+			}
+
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_DONUTS_SHOWN, String(data.rule_name));
+		},
+
+		on_ok: function (port, data) {
+			var wt_settings = wot.wt.settings;
+			wt_settings.donuts_ok = true;
+			wot.wt.save_setting("donuts_ok");
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_DONUTS_OK, String(wt_settings.donuts_shown));
+		},
+
+		tts: function () {
+
+			var locale = wot.i18n("locale");
+			// RU or EN only.
+			if (!(locale === "ru" || locale === "en")) {
+				return false;
+			}
+
+			var timesincefirstrun = wot.time_sincefirstrun() || 0,
+				wt_settings = wot.wt.settings;
+
+			if (wt_settings.donuts_shown < 4 &&
+				!wt_settings.donuts_ok &&
+				timesincefirstrun <= 15 * wot.DT.DAY ) {
+
+				// don't show donut tip first time if the user already has experience with WOT longer than 5 days
+				if (wt_settings.donuts_shown < 3 && timesincefirstrun > 5 * wot.DT.DAY ) {
+					return false;
+				}
+
+				// don't show donut tip third time before 7 days after installation
+				if (wt_settings.donuts_shown == 2 &&
+					wot.wt.settings.donuts_shown_dt &&
+					wot.time_since(wot.wt.settings.donuts_shown_dt) < 7 * wot.DT.DAY ) {
+					return false;
+				}
+
+				return true;
+			}
+
+			return false;
+
 		}
 	}
 }});

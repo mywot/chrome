@@ -283,7 +283,7 @@ $.extend(wot, { url: {
 			}
 
 			return null;
-		},
+		}
 	},
 
 	/* eTLDs */

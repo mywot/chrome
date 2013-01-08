@@ -26,17 +26,21 @@ body {
     overflow: hidden;
 }
 
-.wot-wt-introtip {
+.wot-wt-introtip,
+.wot-wt-dtip {
     border: 1px solid #cccccc;
-    border-top: none;
     border-radius: 2px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
     box-shadow: 0px 0px 7px #888888;
     padding: 1em 1em 0.8em 1em;
-    margin-top: 11px;
     font-family: arial;
     background-color: white;
+}
+
+.wot-wt-introtip {
+    margin-top: 11px;
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .wot-wt-introtip:before {
@@ -56,7 +60,12 @@ body {
     width: 218px;
 }
 
-.wot-wt-intro-body {
+#donut_tip {
+    margin: 0.5em 0.5em 0.5em 14px;  /* to allow shadow around the box */
+}
+
+.wot-wt-intro-body,
+.wot-wt-d-body {
     font-size: 10pt;
     color: #656565;
 }
@@ -75,7 +84,7 @@ body {
 
     border: #71A939 solid 1px !important;;
     border-radius: 3px !important;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.47);;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.47);
     text-shadow: 0px 0px 8px #fff !important;
     background-image: -webkit-linear-gradient(top, #CCEFAC 0%, #9AD265 39%, #6FA736 83%, #83BC4A) !important;
 
@@ -113,9 +122,10 @@ body {
     color: #5a5a5a;
 }
 
-/* Used in R-Tips and Intro Tips */
+/* Used in R-Tips, Intro and Donut's Tips */
 #wot-welcome-tips .wot-cb,
-.wot-wt-intro-body .wot-cb {
+.wot-wt-intro-body .wot-cb,
+.wot-wt-d-body .wot-cb {
     text-align: center;
     font-weight: bold;
 }
@@ -155,5 +165,22 @@ body {
     background: url(/skin/b/welcometips/wt_rw_arrow_right_hover.png) 0 no-repeat;
 }
 
+.wot-wt-d-button {}
 
+.wot-wt-dtip:before {
+    content: "";
+    background-image: url(../b/welcometips/wt_left_corner_2.png);
+    width: 17px;
+    height: 26px;
+    position: relative !important;
+    top: 22px;
+    left: -218px;
+    float: right;
+}
 
+.wot-wt-logo {
+    background-image: url(../fusion/logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 18px !important;
+}

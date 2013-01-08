@@ -20,6 +20,8 @@
 
 wot.search = {
 	added: {},
+	base_element: "div",
+	on_update_callback: null,       // will be set from wot.wt.donuts code
 
 	getattrname: function(name)
 	{
@@ -243,7 +245,7 @@ wot.search = {
 		try {
 			// ninja - is experimental feature to make donuts on the SERP hidden
 			var is_ninja = wot.search.is_ninja(rule);
-			var elem = frame.document.createElement("div");
+			var elem = frame.document.createElement(wot.search.base_element);
 
 			if (elem) {
 
@@ -559,6 +561,10 @@ wot.search = {
 
 		if (style.length) {
 			this.addstyle(style, window);
+		}
+
+		if (data.wt_enabled) {
+			wot.popup.show_wtip = true;
 		}
 	},
 

@@ -42,7 +42,8 @@ $.extend(wot, { ga: {
 		RW: "RatingWindow",
 		GEN: "General",
 		INJ: "Injections",
-		WT: "WelcomeTips"
+		WT: "WelcomeTips",
+		FBL: "FeedbackLoop"
 	},
 
 	actions: {
@@ -66,7 +67,20 @@ $.extend(wot, { ga: {
 		WT_RW_SHOWN:    "WT_RW_shown",
 		WT_RW_OK:       "WT_RW_ok",
 		WT_DONUTS_SHOWN:"WT_Donuts_shown",
-		WT_DONUTS_OK:   "WT_Donuts_ok"
+		WT_DONUTS_OK:   "WT_Donuts_ok",
+
+		FBL_shown:       "FBL_shown",
+		FBL_submit:      "FBL_submit",
+		FBL_closed:      "FBL_closed",
+		FBL_optout_shown:"FBL_optout_shown",
+		FBL_optout_yes:  "FBL_optout_yes",
+		FBL_optout_no:   "FBL_optout_no",
+		FBL_whatisthis:  "FBL_whatisthis",
+		FBL_bottom_close:"FBL_bottom_close",
+		FBL_slidered:    "FBL_slidered",
+		FBL_directclick: "FBL_directclick",
+		FBL_logo:        "FBL_logo",
+		FBL_opportunity: "FBL_opportunity"  // we could show the survey, but conditions are not met
 	},
 
 	init_tracker: function () {
@@ -84,16 +98,16 @@ $.extend(wot, { ga: {
 		return !!wot.ga._tracker;
 	},
 
-	fire_event: function (category, action, label, value) {
+	fire_event: function (category, action, label) {
 
 		if (wot.ga.disable) return;
 
 		try {
 			if (wot.ga.init_tracker()) {
-				wot.ga._tracker._trackEvent(category, action, label, value);
+				wot.ga._tracker._trackEvent(category, action, label);
 			} else {
 				// backup option, if AsyncTracker still isn't inited
-				_gaq.push(['_trackEvent', category, action, label, value]);
+				_gaq.push(['_trackEvent', category, action, label]);
 			}
 		} catch (e) {
 			// silence...

@@ -46,7 +46,7 @@ const WOT_POPUP_HTML =
 wot.popup = {
 	cache:			{},
 	version:		0,
-	offsety:		15,
+	offsety:		-15,
 	offsetx:		0,
 	height:			235,
 	width:			137,
@@ -58,6 +58,8 @@ wot.popup = {
 	id:				"wot-popup-layer",
 	onpopup:		false,
 	rule_name:      null,
+	show_wtip:      false,
+	layer:          null,
 
 	add: function(parentelem, rule_name)
 	{
@@ -239,60 +241,111 @@ wot.popup = {
 		}, wot.search.settings.popup_show_delay || 200);
 	},
 
+	elem_position: function (elem, win_width, win_height, popupwidth, popupheight, offset_x, offset_y) {
+		// more accurate way to calc position
+		// got from http://javascript.ru/ui/offset
+		if (elem == null) {
+			return {};
+		}
+		var box = elem.getBoundingClientRect();
+		var body = document.body;
+		var docElem = document.documentElement;
+
+		var vscroll = window.pageYOffset;
+		var hscroll = window.pageXOffset;
+
+		var y_offset = 0;
+
+		var scrollTop = vscroll || docElem.scrollTop || body.scrollTop;
+		var scrollLeft = hscroll || docElem.scrollLeft || body.scrollLeft;
+		var clientTop = docElem.clientTop || body.clientTop || 0;
+		var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+		var y  = box.top +  scrollTop - clientTop;
+		var x = box.left + scrollLeft - clientLeft;
+
+		offset_x = (offset_x === undefined) ? this.offsetx : offset_x;
+		offset_y = (offset_y === undefined) ? this.offsety : offset_y;
+
+		var posy = offset_y + y;//  + this.target.offsetHeight;
+		var posx = offset_x + x + elem.offsetWidth;
+
+		if (posy < vscroll) {
+			// if placeholder's top doesn't fit into view, align it to the view
+			posy = vscroll;
+		}
+
+		// If the bottom of the popup doesn't fit to current view
+		if (posy + popupheight + offset_y > win_height + vscroll) {
+			// If the donut at least is in the viewframe
+			if (posy < win_height + vscroll) {
+				y_offset = win_height + vscroll - y;
+			}
+			posy = y - popupheight + y_offset;
+		}
+
+		if (posx - hscroll < 0) {
+			posx = hscroll;
+		} else if ((posx + popupwidth) > (win_width + hscroll)) {
+			posx = win_width - popupwidth + hscroll;
+		}
+
+		return { posx: posx, posy: posy, y_offset: y - posy }
+	},
+
 	show: function(layer)
 	{
 		try {
-			var popupheight = this.height + this.offsetheight;
+			var popupheight = this.height + this.offsetheight,
+				popupwidth = this.width;
 
 			layer.style.height = popupheight + "px";
-			layer.style.width  = this.width  + "px";
+			layer.style.width  = popupwidth  + "px";
 
-			var height = window.innerHeight - this.barsize;
-			var width  = window.innerWidth  - this.barsize;
+			var win_height = window.innerHeight - this.barsize;
+			var win_width  = window.innerWidth  - this.barsize;
 
-			if (height < popupheight ||	width < this.width) {
+			if (win_height < popupheight ||	win_width < popupwidth) {
 				this.hide();
 				return;
 			}
 
-			var vscroll = window.pageYOffset;
-			var hscroll = window.pageXOffset;
+			var elem = this.target,
+				pos = null,
+				wt_params = wot.wt.donuts;
 
-			// more accurate way to calc position
-			// got from http://javascript.ru/ui/offset
-			var elem = this.target;
-			var box = elem.getBoundingClientRect();
-			var body = document.body;
-			var docElem = document.documentElement;
-			var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-			var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-			var clientTop = docElem.clientTop || body.clientTop || 0;
-			var clientLeft = docElem.clientLeft || body.clientLeft || 0;
-			var y  = box.top +  scrollTop - clientTop;
-			var x = box.left + scrollLeft - clientLeft;
+			if (this.show_wtip) {
+				// Have to show welcome tip instead of normal popup here
+				if (wot.search.on_update_callback) {
+					pos = this.elem_position(elem, win_width, win_height, wt_params.tip_width, wt_params.tip_height,
+						wt_params.offset_x, wt_params.offset_y);
 
-			var posy = this.offsety + y;//  + this.target.offsetHeight;
-			var posx = this.offsetx + x + this.target.offsetWidth;
+					if(!pos) {
+						return;
+					}
 
-			if (posy + popupheight > height + vscroll) {
-				posy = y - popupheight - this.offsety;
-			}
+					this.layer = layer;     // keep it to be able to show popup after "OK" button is clicked
 
-			if (posx - hscroll < 0) {
-				posx = hscroll;
-			} else if ((posx + this.width) > (width + hscroll)) {
-				posx = width - this.width + hscroll;
-			}
+					wot.search.on_update_callback(pos.posx, pos.posy, pos.y_offset, wot.popup.rule_name);
+				}
 
-			var version = ++this.version;
-
-			if (layer.style.display != "none") {
-				layer.style.top  = posy + "px";
-				layer.style.left = posx + "px";
-				wot.post("search", "popup_shown", { label: wot.popup.rule_name });
 			} else {
-				this.delayedshow(layer, posy, posx);
+				// Show normal popup
+				pos = this.elem_position(elem, win_width, win_height, popupwidth, popupheight);
+
+				if (!pos) {
+					return;
+				}
+//	    		var version = ++this.version;
+
+				if (layer.style.display != "none") {
+					layer.style.top  = pos.posy + "px";
+					layer.style.left = pos.posx + "px";
+					wot.post("search", "popup_shown", { label: wot.popup.rule_name });
+				} else {
+					this.delayedshow(layer, pos.posy, pos.posx);
+				}
 			}
+
 
 		} catch (e) {
 			console.log("popup.show: failed with " + e);
@@ -301,6 +354,12 @@ wot.popup = {
 
 	delayedhide: function(layer)
 	{
+
+		if (this.show_wtip) {
+			wot.wt.donuts.delayed_hide();
+			return;
+		}
+
 		if (layer.style.display != "none" && !this.waitingforhide) {
 			this.waitingforhide = true;
 			var version = this.version;

@@ -156,5 +156,14 @@
 	},
 	"wt_rw_ok": {
 		"message": "Show me rating window"
+	},
+	"wt_donut_msg": {
+		"message": "<p class='wot-cb'>Follow the traffic lights!</p></p>Safe surfing tool WOT shows website reputations based on experiences from millions of users.</p><p>Traffic lights after web links guide you to find sites that you can trust: green for good, red for bad, yellow as a warning to be cautious.</p>"
+	},
+	"wt_donut_msg_2": {
+		"message": "<p class='wot-cb'>Safe surfing!</p>"
+	},
+	"wt_donut_btn": {
+		"message": "OK, thanks"
 	}
 }

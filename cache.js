@@ -1,6 +1,6 @@
 /*
 	cache.js
-	Copyright © 2009  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -40,7 +40,7 @@ $.extend(wot, { cache: {
 			this.flags[name] = this.flags[name] || {};
 			$.extend(this.flags[name], flags || {});
 		} catch (e) {
-			console.log("cache.setflags: failed with " + e + "\n");
+			console.log("cache.setflags: failed with ", e);
 		}
 	},
 
@@ -56,7 +56,7 @@ $.extend(wot, { cache: {
 			wot.trigger("cache:set", [ name, this.cache[name ] ]);
 			return true;
 		} catch (e) {
-			console.log("cache.set: failed with " + e + "\n");
+			console.log("cache.set: failed with ", e);
 		}
 
 		return false;
@@ -77,7 +77,7 @@ $.extend(wot, { cache: {
 				}
 			}
 		} catch (e) {
-			console.log("cache.get: failed with " + e + "\n");
+			console.log("cache.get: failed with ", e);
 		}
 
 		return null;
@@ -92,7 +92,7 @@ $.extend(wot, { cache: {
 				return true;
 			}
 		} catch (e) {
-			console.log("cache.clear: failed with " + e + "\n");
+			console.log("cache.clear: failed with ", e);
 		}
 
 		return false;
@@ -161,7 +161,7 @@ $.extend(wot, { cache: {
 				return changed;
 			}
 		} catch (e) {
-			console.log("cache.cacheratingstate: failed with " + e + "\n");
+			console.log("cache.cacheratingstate: failed with ", e);
 		}
 
 		return false;
@@ -211,11 +211,37 @@ $.extend(wot, { cache: {
 					}
 				});
 
+				// parse survey's question whether it exists
+				$("question", this).each(function() {
+					// "this" here contains <question> tag's content
+					var question_id = parseInt($("questionId", this).text(), 10);
+					var question_text = $("questionText", this).text().trim();
+
+					var choices = [];
+
+					$("choiceText", this).each(function() {
+						// "this" here contains <choiceText> tag's content
+						var choice_value = parseInt($(this).attr("value"), 10);
+						var choice_text = $(this).text().trim();
+
+						choices.push({ value: choice_value, text: choice_text });
+					});
+
+					if (question_id !== undefined && question_text && choices.length > 0) {
+						obj.question = {
+							id: question_id,
+							text: question_text,
+							choices: choices
+						}
+					}
+					return false;   // process only first element whether there are several
+				});
+
 				wot.cache.set(obj.target, status, obj);
 				++processed;
 			});
 		} catch (e) {
-			console.log("cache.cacheresponse: failed with " + e + "\n");
+			console.log("cache.cacheresponse: failed with ", e);
 		}
 
 		return processed;

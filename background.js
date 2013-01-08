@@ -159,16 +159,26 @@ $.extend(wot, { core: {
 				var views = chrome.extension.getViews({});
 
 				for (var i in views) {
-					if (views[i].wot.ratingwindow) {
+					if (views[i].wot && views[i].wot.ratingwindow) {
 						views[i].wot.ratingwindow.update(tab, data);
 					}
 				}
 			}
 
 			/* update content scripts */
-			this.updatetabwarning(tab, data);
+			var warning_type = this.updatetabwarning(tab, data);
+
+			// show surveys only if there is no warning
+			if (tab.selected &&
+				warning_type && warning_type.type == wot.warningtypes.none) {
+
+				if (wot.enable_surveys) {
+					wot.surveys.update(tab, data);
+				}
+			}
+
 		} catch (e) {
-			console.log("core.updatetabstate: failed with " + e);
+			console.error("core.updatetabstate: failed with ", e);
 		}
 	},
 
@@ -228,8 +238,11 @@ $.extend(wot, { core: {
 					});
 				}
 			}
+
+			return type;
+
 		} catch (e) {
-			wot.log("core.updatetabwarning: failed with " + e);
+			wot.log("core.updatetabwarning: failed with ", e);
 		}
 	},
 
@@ -510,8 +523,6 @@ $.extend(wot, { core: {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 			wot.prefs.set("firstrun:time", new Date()); // remember first time when addon was run
 
-			wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, String(wot.partner));
-
 			// now we have only mail.ru case which requires to postpone opening welcome page
 			var postpone_welcome = wot.env.is_mailru;
 
@@ -523,6 +534,11 @@ $.extend(wot, { core: {
 				chrome.tabs.create({ url: wot.urls.welcome });
 			}
 			wot.prefs.set("firstrun:welcome", true);
+
+			window.setTimeout(function () {
+				// report "installating" event
+				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_INSTALLED, String(wot.partner));
+			}, 2000);
 
 		} else {
 			wot.core.show_updatepage();
@@ -586,7 +602,11 @@ $.extend(wot, { core: {
 						}
 					});
 
-					port.post("update", { rule: data.rule, ratings: ratings });
+					var wt_enable_donut_tip = false;
+					if (wot.wt && wot.wt.enabled) {
+						wt_enable_donut_tip = wot.wt.donuts.tts();
+					}
+					port.post("update", { rule: data.rule, ratings: ratings, wt_enabled: wt_enable_donut_tip });
 				});
 			});
 
@@ -625,7 +645,7 @@ $.extend(wot, { core: {
 				});
 			});
 
-			wot.listen([ "search", "my", "tab", "warnings", "wtb" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 
 			/* event handlers */
 
@@ -661,6 +681,7 @@ $.extend(wot, { core: {
 					wot.api.update();
 					wot.api.processpending();
 					wot.wt.init();  // initialize welcome tips engine
+					wot.surveys.init(); // init surveys engine
 				}
 			});
 

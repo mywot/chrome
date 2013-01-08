@@ -1,6 +1,6 @@
 /*
  content/welcome_tips.js
- Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -123,11 +123,158 @@ wot.wt = {
 		}
 	},
 
-	warning: {
-
-	},
-
 	donuts: {
+
+		inited:         false,
+		is_shown:       false,
+		times:          0,
+		hide_timer:     null,
+		tip_width:      260,
+		tip_height:     350,
+		offset_y:       -66,
+		offset_x:       0,
+		pointer_height: 30, // take this number from welcometips.css rule ".wot-wt-dtip:before" height property.
+
+		init: function () {
+			if (!wot.wt.donuts.inited && wot.search) {
+				wot.search.on_update_callback = wot.wt.donuts.show;
+				wot.wt.donuts.inited = true;
+			}
+		},
+
+		build: function (replaces) {
+			var html = '<div class="wot-wt-dtip">' +
+				'<div class="wot-wt-logo">&nbsp;</div>' +
+				'<div class="wot-wt-d-body">{WT_D_TEXT}</div>' +
+				'<div class="wot-wt-d-body">{WT_D_TEXT2}</div>' +
+				'<div class="wot-wt-footer">' +
+				'<div id="btn_ok" class="wot-wt-button wot-wt-d-button">{WT_D_BUTTON}</div>' +
+				'</div>' +
+				'</div>';
+
+			return wot.utils.processhtml(html, replaces);
+		},
+
+		inject_placeholder: function (x, y, pwidth, pheight, y_offset_pointer) {
+
+			var y_offset = Math.floor(y_offset_pointer) - wot.wt.donuts.pointer_height,
+				style_override = null;
+
+			var wrapper = wot.utils.get_or_create_element("wot_wtd_wrapper", "iframe");
+
+			if (!wrapper) {
+				wot.log("can't add element to DOM / wot.wt.donuts.show()");
+				return null;
+			}
+
+			wrapper.setAttribute("scrolling", "no");
+
+			wrapper.setAttribute("style",
+				"position: absolute; " +
+					"top: " + y + "px; " +
+					"left: "+ x +"px;" +
+					"width: "+ pwidth +"px; " +
+					"height: "+ pheight +"px; " +
+					"z-index: 2147483647; " +
+					"border: none;");
+
+			wot.utils.attach_element(wrapper); // attach iframe wrapper
+
+			// attach styles inside iframe
+			wot.utils.attach_style("welcometips.css", "wot_wt_styles", wrapper);
+
+			var pointer_height = wot.wt.donuts.pointer_height;
+
+			// show tip's sidepointer only if it is able to point to the donut
+			if (y_offset <= (wot.wt.donuts.tip_height - pointer_height * 2) &&
+				y_offset >= pointer_height / 2) {
+				style_override = ".wot-wt-dtip:before {top:" + String(y_offset) + "px;}";
+			} else {
+				style_override = ".wot-wt-dtip:before { visibility: hidden; }";
+			}
+
+			wot.utils.attach_style({ style: style_override }, "wot_wt_styles_2", wrapper);
+
+			return wrapper;
+		},
+
+		show: function (x, y, y_offset, rule_name) {
+
+			if (wot.wt.donuts.hide_timer) {
+				window.clearTimeout(wot.wt.donuts.hide_timer);
+			}
+
+			var wrapper = wot.wt.donuts.inject_placeholder(x, y, wot.wt.donuts.tip_width, wot.wt.donuts.tip_height, y_offset);
+
+			if (!wrapper) return false;
+
+			if (!wot.wt.donuts.is_shown) {
+				// report only once until the tip is hidden again
+				wot.wt.donuts.is_shown = true;
+				wot.wt.report("dtip_shown", { rule_name: rule_name, times: wot.wt.donuts.times });
+			}
+
+			wot.wt.donuts.times++;
+
+			var container = wot.utils.get_or_create_element("donut_tip", "div", wrapper);
+
+			var replaces = [
+				{
+					from: "WT_D_TEXT",
+					to: wot.i18n("wt", "donut_msg")
+				},
+				{
+					from: "WT_D_TEXT2",
+					to: wot.i18n("wt", "donut_msg_2") || ""
+				},
+				{
+					from: "WT_D_BUTTON",
+					to: wot.i18n("wt", "donut_btn")
+				}
+			];
+
+			container.innerHTML = wot.wt.donuts.build(replaces);
+			wot.utils.attach_element(container, wrapper);
+			wrapper.contentDocument.getElementById("btn_ok").addEventListener("click", wot.wt.donuts.on_ok, false);
+
+			return true;
+		},
+
+		on_ok: function () {
+			wot.search.on_update_callback = null;    // disable Tip for appearing again
+			wot.popup.show_wtip = false;
+			wot.wt.report("dtip_ok", {});
+			wot.wt.donuts.hide();
+
+			if (wot.popup.layer) {
+				wot.popup.show(wot.popup.layer);
+			}
+		},
+
+		delayed_hide: function() {
+			try {
+				if (wot.wt.donuts.is_shown) {
+					if(wot.wt.donuts.hide_timer) {
+						window.clearTimeout(wot.wt.donuts.hide_timer);
+					}
+					wot.wt.donuts.hide_timer = window.setTimeout(wot.wt.donuts.hide, 1000);
+				}
+			} catch (e) {
+				console.log("wot.wt.donuts.delayed_hide() failed.", e);
+			}
+		},
+
+		hide: function () {
+			try {
+				var wt_wrapper = document.getElementById("wot_wtd_wrapper");
+				if (wt_wrapper && wt_wrapper.parentNode) {
+					wt_wrapper.parentNode.removeChild(wt_wrapper);
+					wot.wt.donuts.is_shown = false;
+				}
+			} catch (e) {
+				console.log("wot.wt.donuts.hide() failed.", e);
+			}
+		}
 
 	},
 
@@ -152,9 +299,15 @@ wot.wt = {
 			wot.wt.report("ready");
 		} else {
 			document.addEventListener("DOMContentLoaded", function (e) {
-				wot.wt.report("ready");
+				// workaround for the bug http://code.google.com/p/chromium/issues/detail?id=107505
+				// need to check whether wot.wt still available since another content script can erase it
+				// because of the bug. This workaround might be removed after mail.ru started to use newer build than 17
+
+				if (wot.wt) wot.wt.report("ready"); // normally here shouldn't be the condition, but read the comment above
 			}, false);
 		}
+
+		this.donuts.init();
 	}
 };
 

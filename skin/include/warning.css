@@ -413,10 +413,10 @@
     content: "";
     background-image: url(../b/welcometips/wt_left_corner_2.png);
     width: 20px;
-    height: 30px;
+    height: 26px;
     position: relative !important;
     top: 50px;
-    left: -235px;
+    left: -230px;
     float: right;
 }
 

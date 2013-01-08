@@ -292,7 +292,7 @@ $.extend(wot, { ratingwindow: {
 		/* message */
 
 		var msg = bg.wot.core.usermessage; // usual case: show a message from WOT server
-
+		var $wot_message = $("#wot-message");
 		// if we have something to tell a user
 		if (msg.text) {
 			var status = msg.type || "";
@@ -301,11 +301,9 @@ $.extend(wot, { ratingwindow: {
 				.attr("status", status)
 				.text(msg.text);
 
-			$("#wot-message")
-				.attr("status", status)
-				.show();
+			$wot_message.attr("status", status).attr("msg_id", msg.id).show();
 		} else {
-			$("#wot-message").hide();
+			$wot_message.hide();
 		}
 
 		/* user content */
@@ -541,7 +539,8 @@ $.extend(wot, { ratingwindow: {
 		$("#wot-message").bind("click", function() {
 			var url = $("#wot-message-text").attr("url");
 			if (url) {
-				bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_MSG_CLICKED);
+				var label = wot.i18n("locale") + "__" + $(this).attr("msg_id");
+				bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_MSG_CLICKED, label);
 				wot.ratingwindow.navigate(url, wurls.contexts.rwmsg);
 			}
 		});
@@ -595,7 +594,7 @@ $.extend(wot, { ratingwindow: {
 			locale = bg.wot.i18n("locale");
 
 		// Decide what to show: normal rating window or welcome tip?
-		if(bg.wot.env.is_mailru && (locale === "ru" || locale === "en") &&
+		if((locale === "ru" || locale === "en") &&
 			first_opening && !(wt.settings.rw_ok || wt.settings.rw_shown > 0)) {
 			// RW is opened first time - show welcome tip
 			wot.ratingwindow.show_welcome_tip();
