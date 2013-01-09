@@ -1,6 +1,6 @@
 /*
  wot.js
- Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -24,6 +24,7 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', wot.ga_id]);
+_gaq.push(['_setReferrerOverride', '']);    // clear the referrer in GA cookie. Issue #75 on GH.
 _gaq.push(['_trackPageview']);
 
 // provide version number to GA
