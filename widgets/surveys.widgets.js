@@ -259,6 +259,29 @@ var surveys = {
 		is_optout_shown: false,
 		is_whatisthis_shown: false,
 
+		// localization map
+		l18n_map: {
+			".surveys-submit": wot.i18n("fbl", "submit"),
+			".surveys-optout > .pseudo-link": wot.i18n("fbl", "hideforever"),
+			".surveys-whatsthis > .pseudo-link": wot.i18n("fbl", "whatisthis"),
+			".text-optout-confirm": wot.i18n("fbl", "optout_text"),
+			".optout-buttons > .button-yes": wot.i18n("fbl", "optout_yes"),
+			".optout-buttons > .button-no": wot.i18n("fbl", "optout_no"),
+			"#btab-whatsthis": wot.i18n("fbl", "whatisthis_text"),
+			".thank-you-text": wot.i18n("fbl", "final")
+		},
+
+		localize: function () {
+			// replaces strings in UI elements by localized ones
+			var _this = surveys.ui;
+
+			for (var sel in _this.l18n_map) {
+				if (sel && _this.l18n_map[sel]) {
+					$(sel).html(_this.l18n_map[sel]); // isn't potentially unsafe method?
+				}
+			}
+		},
+
 		show_bottom_section: function () {
 			$(".bottom-section").show();
 		},
@@ -386,6 +409,7 @@ var surveys = {
 			_this.url = data.url;
 			_this.stats.cache = data.stats || {};
 
+			_this.ui.localize();
 			_this.ui.update_texts();
 			_this.slider.prepare_values(_this.question.choices);
 

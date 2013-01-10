@@ -165,5 +165,29 @@
 	},
 	"wt_donut_btn": {
 		"message": "OK, thanks"
+	},
+	"fbl_hideforever": {
+		"message": "Hide forever"
+	},
+	"fbl_submit": {
+		"message": "Submit"
+	},
+	"fbl_whatisthis": {
+		"message": "What's this?"
+	},
+	"fbl_optout_text": {
+		"message": "If you prefer not to be asked questions, click \"yes\""
+	},
+	"fbl_optout_yes": {
+		"message": "yes"
+	},
+	"fbl_optout_no": {
+		"message": "No"
+	},
+	"fbl_whatisthis_text": {
+		"message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> is working to promote safety and quality across the web for millions of users. You can help by submitting your opinions whenever you see this prompt."
+	},
+	"fbl_final": {
+		"message": "Thank you!"
 	}
 }
