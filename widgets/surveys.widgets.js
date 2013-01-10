@@ -282,7 +282,8 @@ var surveys = {
 		},
 
 		on_logo: function (e) {
-
+			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_logo);
+			surveys.report("logo", {});
 		},
 
 		on_close: function (e) {

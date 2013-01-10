@@ -64,6 +64,7 @@ $.extend(wot, { surveys: {
 		wot.bind("message:surveyswidget:optout", wot.surveys.on_optout);
 		wot.bind("message:surveyswidget:close", wot.surveys.on_close);
 		wot.bind("message:surveyswidget:submit", wot.surveys.on_submit);
+		wot.bind("message:surveyswidget:logo", wot.surveys.on_logo);
 	},
 
 	update: function (tab, data) {
@@ -269,6 +270,11 @@ $.extend(wot, { surveys: {
 		window.setTimeout(function(){
 			_this.send_close(port.port.sender.tab);
 		}, 1500);
+	},
+
+	on_logo: function (port, data) {
+		var url = wot.contextedurl(wot.urls.base, wot.urls.contexts.fbl_logo);
+		chrome.tabs.create({ url: url });
 	},
 
 	load_asked: function () {

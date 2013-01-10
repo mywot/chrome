@@ -99,7 +99,8 @@ var wot = {
 			warnviewsc: "warn-viewsc",
 			warnrate:   "warn-rate",
 			popupviewsc: "popup",
-			popupdonuts: "popup-donuts"
+			popupdonuts: "popup-donuts",
+			fbl_logo:   "fbl-logo"
 		}
 	},
 

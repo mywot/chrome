@@ -49,6 +49,7 @@ body {
     height: 17px;
     background-image: url(/skin/fusion/logo.png);
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .close-button {
@@ -326,6 +327,7 @@ body {
     top: 10px;
     background-image: url(/skin/b/surveys/close-button-secondary.png);
     background-position: 0 0;
+    cursor: pointer;
 }
 
 .close-button-secondary:hover {

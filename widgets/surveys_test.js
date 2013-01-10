@@ -14,7 +14,12 @@ var question = {
 			{"value":5, "text":"Moderately satisfied"},
 			{"value":6, "text":"Extremely satisfied"}
 		]
-	}
+	},
+	stats: {
+		impressions: 10,
+		submissions: 4
+	},
+	url: "http://test.me.mywot.com/dummy/url/for/test"
 };
 
 var encoded = btoa(JSON.stringify(question));
@@ -27,7 +32,7 @@ iframe.setAttribute("style", "position: fixed; top: 10px; left: 10px;width: 392p
 
 iframe.setAttribute("name", encoded);
 
-iframe.setAttribute("src", "chrome-extension://ihcnfeknmfflffeebijjfbhkmeehcihn/widgets/surveys.html");
+iframe.setAttribute("src", "/widgets/surveys.html");
 
 var body = document.getElementsByTagName("body")[0];
 
