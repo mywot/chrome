@@ -31,7 +31,9 @@ var wot = {
 	env: {
 		is_mailru: false,
 		is_yandex: false,
-		is_rambler: false
+		is_rambler: false,
+
+		is_accessible: false
 	},
 
 	components: [
@@ -511,6 +513,9 @@ var wot = {
 		}
 
 		if(!readonly) wot.prefs.set("partner", wot.partner);
+
+		// Is the mode "accessible" set on?
+		wot.env.is_accessible = wot.prefs.get("accessible");
 	},
 
 	time_sincefirstrun: function()

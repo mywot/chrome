@@ -582,9 +582,7 @@ $.extend(wot, { core: {
 		try {
 			/* load the manifest for reference */
 			this.loadmanifest();
-
 			wot.core.launch_time = new Date();
-
 			wot.detect_environment();
 
 			/* messages */
@@ -691,6 +689,7 @@ $.extend(wot, { core: {
 				}
 			});
 
+			wot.ga.post_init(); // finilize setting up GA engine
 			wot.cache.purge();
 
 		} catch (e) {

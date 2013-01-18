@@ -24,11 +24,11 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', wot.ga_id]);
+// provide version number to GA
+_gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2 (session level)
 _gaq.push(['_setReferrerOverride', '']);    // clear the referrer in GA cookie. Issue #75 on GH.
 _gaq.push(['_trackPageview']);
 
-// provide version number to GA
-_gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2 (session level)
 
 
 /* This adds logic for counting events to wot object */
@@ -120,6 +120,25 @@ $.extend(wot, { ga: {
 			// silence...
 			//console.log("Error in wot.ga.fire_event(). Msg: ", e);
 		}
+	},
+
+	post_init: function() {
+		// Finalize setting up GA environment after wot.core is initialized fully
+
+		/* CustomVars slots:
+		 *  1. version
+		 *  2. partner = (wot) | mailru
+		 *  3.
+		 *  4.
+		 *  5. accessible = acc | normal
+   	     * */
+
+		// let's measure how many "accessible" users do we have on Chrome
+		var accessible = wot.env.is_accessible ? "acc" : "normal",
+			partner = wot.prefs.get("partner") || "";  // set partner
+
+		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
+		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)
 	}
 
 }});
