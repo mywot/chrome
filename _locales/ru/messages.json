@@ -57,13 +57,13 @@
 		"message": "Активация WOT…"
 	},
 	"messages_failed": {
-		"message": "Не удалось загрузить рейтинги."
+		"message": "Не удалось загрузить оценки."
 	},
 	"messages_notavailable": {
-		"message": "Рейтинги не доступны."
+		"message": "Оценки не доступны."
 	},
 	"messages_loading": {
-		"message": "Загрузка рейтингов…"
+		"message": "Загрузка оценок…"
 	},
 	"ratingwindow_settings": {
 		"message": "Настройки"
@@ -72,16 +72,16 @@
 		"message": "Руководство"
 	},
 	"ratingwindow_wotrating": {
-		"message": "Рейтинг WOT"
+		"message": "Оценка от WOT"
 	},
 	"ratingwindow_myrating": {
-		"message": "Мой рейтинг"
+		"message": "Моя оценка"
 	},
 	"ratingwindow_viewscorecard": {
-		"message": "Посмотреть подробности о рейтинге"
+		"message": "Посмотреть подробности оценок"
 	},
 	"ratingwindow_addcomment": {
-		"message": "(или добавить свой комментарий)"
+		"message": "добавить свой комментарий"
 	},
 	"ratingwindow_inpartnership": {
 		"message": "Сотрудничает с"
@@ -96,13 +96,13 @@
 		"message": "Добавить комментарий?"
 	},
 	"ratingwindow_invite_rw": {
-		"message": "С помощью этого инструмента вы можете давать оценку сайтам. Кликайте по цветным полоскам, чтобы показать, насколько вы доверяете сайту."
+		"message": "С помощью этого инструмента вы можете давать оценки сайтам. Кликайте по цветным полоскам, чтобы показать, насколько вы доверяете сайту."
 	},
 	"warnings_information": {
-		"message": "Посмотреть рейтинг и комментарии"
+		"message": "Посмотреть оценки и комментарии"
 	},
 	"warnings_ratesite": {
-		"message": "Этот сайт безопасен - я хочу <a>оценить его</a>"
+		"message": "Доверяете этому сайту? <a>Оцените его</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Открыть сайт, несмотря на предупреждение"
@@ -111,10 +111,10 @@
 		"message": "У этого сайта плохая репутация"
 	},
 	"warnings_rating": {
-		"message": "Вы выставили этому сайту низкий рейтинг"
+		"message": "Вы дали этому сайту низкую оценку"
 	},
 	"warnings_unknown": {
-		"message": "Pейтинг этого сайта неизвестен"
+		"message": "Репутация этого сайта неизвестна"
 	},
 	"warnings_warning": {
 		"message": "Внимание!"
