@@ -61,14 +61,18 @@ $.extend(wot, { ga: {
 		GEN_LAUNCHED:   "WOT_launched",
 
 		WT_INTRO_0_SHOWN: "WT_Intro0_shown",
+		WT_INTRO_0_LEARN: "WT_Intro0_learnmore",
 		WT_INTRO_0_OK:  "WT_Intro0_ok",
 		WT_WS_SHOWN:    "WT_WS_shown",
 		WT_WS_OK:       "WT_WS_ok",
 		WT_WS_OPTEDOUT: "WT_WS_optedout",
+		WT_WS_LEARN:    "WT_WS_learnmore",
 		WT_RW_SHOWN:    "WT_RW_shown",
 		WT_RW_OK:       "WT_RW_ok",
+		WT_RW_LEARN:    "WT_RW_learnmore",
 		WT_DONUTS_SHOWN:"WT_Donuts_shown",
 		WT_DONUTS_OK:   "WT_Donuts_ok",
+		WT_DONUTS_LEARN:"WT_Donuts_learnmore",
 
 		FBL_shown:              "FBL_shown",
 		FBL_submit:             "FBL_submit",

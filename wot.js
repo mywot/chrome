@@ -88,6 +88,10 @@ var wot = {
 		welcome:	"http://www.mywot.com/settings/welcome",
 		setcookies:	"http://www.mywot.com/setcookies.php",
 		update:		"http://www.mywot.com/update",
+		tour_warning:"http://www.mywot.com/support/tour/warningscreen",
+		tour:       "http://www.mywot.com/support/tour/",
+		tour_rw:    "http://www.mywot.com/support/tour/ratingwindow",
+		tour_scorecard: "http://www.mywot.com/support/tour/scorecard",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -100,7 +104,13 @@ var wot = {
 			warnrate:   "warn-rate",
 			popupviewsc: "popup",
 			popupdonuts: "popup-donuts",
-			fbl_logo:   "fbl-logo"
+			fbl_logo:   "fbl-logo",
+			wt_intro:   "wt-intro",
+			wt_rw_lm:   "wt-rw-lm",
+			wt_warn_lm: "wt-warn-lm",
+			wt_warn_logo: "wt-warn-logo",
+			wt_donuts_lm: "wt-donuts-lm",
+			wt_donuts_logo: "wt-donuts-logo"
 		}
 	},
 

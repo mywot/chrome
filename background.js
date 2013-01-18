@@ -437,6 +437,12 @@ $.extend(wot, { core: {
 		xhr.send();
 	},
 
+	open_mywot: function(url, context)
+	{
+		var c_url = wot.contextedurl(url, context);
+		chrome.tabs.create({ url: c_url });
+	},
+
 	open_scorecard: function(target, context)
 	{
 		if(!target) return;

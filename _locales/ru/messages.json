@@ -131,42 +131,37 @@
 	"contextmenu_open_scorecard": {
 		"message": "Открыть оценочную карту WOT"
 	},
+	"wt_learnmore_link": {
+		"message": "Узнать, <a id='wt-learnmore-link'>что такое WOT</a>?"
+	},
 	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Кликните по кнопке {ICO1} вверху, чтобы узнать больше.</p>",
+		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Нажмите кнопку {ICO1} вверху, чтобы начать пользоваться.</p><p>{WT_LEARNMORE}</p>",
 		"description": "This message appears on introduction welcome tip right after the add-on was installed"
 	},
 	"wt_intro_0_btn": {
-		"message": "OK, спасибо"
+		"message": "OK, понятно"
 	},
 	"wt_warning_text": {
-		"message": "<p class='wot-cb'>Берегитесь ненадежных сайтов!</p><p>WOT показывает предупреждение, если вы оказались на сайте с плохой репутацией по мнению пользователей WOT.</p><p>Если вы не хотите видеть предупреждения, их можно отключить.</p>",
+		"message": "<p class='wot-cb'>Берегитесь ненадежных сайтов!</p><p>WOT показывает предупреждение, если вы оказались на сайте с плохой репутацией по мнению пользователей WOT.</p><p>{WT_LEARNMORE}</p><p>Если вы не хотите видеть такие предупреждения, их можно отключить.</p>",
 		"description": "this is a WelcomeTip which is shown when a user sees Warning first time"
-	},
-	"wt_warning_text_2": {
-		"message": "",
-		"description": "For Russian lang this should be empty since we didn't find a good translation for 'Safe Surfing!' text"
 	},
 	"wt_warning_turnoff": {
 		"message": "Отключить предупреждения"
 	},
 	"wt_warning_ok": {
-		"message": "OK, спасибо"
+		"message": "OK, понятно"
 	},
 	"wt_rw_text": {
 		"message": "<p class='wot-cb'>Поделитесь своим опытом!</p><p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Чтобы поставить оценку, кликните по цветным полоскам в соответствии с вашим мнением о сайте. Ваше участие сделает Интернет безопаснее для всех.</p>"
 	},
 	"wt_rw_ok": {
-		"message": "Показать окно оценивания"
+		"message": "Показать окно с оценками"
 	},
 	"wt_donut_msg": {
-		"message": "<p class='wot-cb'>Следите за цветными индикаторами!</p></p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Цветные индикаторы рядом с ссылками показывают, каким сайтам можно доверять: зеленый - хорошая репутация, красный - плохая, желтый советует быть осторожным.</p>"
-	},
-	"wt_donut_msg_2": {
-		"message": "",
-		"description": "For Russian lang this should be empty since we didn't find a good translation for 'Safe Surfing!' text"
+		"message": "<p class='wot-cb'>Следите за цветными индикаторами!</p></p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Цветные индикаторы рядом с ссылками показывают, каким сайтам можно доверять: зеленый - хорошая репутация, красный - плохая.</p>"
 	},
 	"wt_donut_btn": {
-		"message": "ОК, спасибо"
+		"message": "ОК, понятно"
 	},
 	"fbl_hideforever": {
 		"message": "Больше не спрашивать"

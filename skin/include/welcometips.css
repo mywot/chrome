@@ -106,8 +106,11 @@ body {
     background-image: -webkit-linear-gradient(top, #a9d185 0%, #8abf58 39%, #6fa736 83%, #83bc4a) !important;
 }
 
-.wot-wt-intro-button {
-
+.wot-wt-intro-body #wt-learnmore-link,
+.wot-wt-d-body #wt-learnmore-link {
+    color: #1F7BD6;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* Rating Window tip's style */
@@ -143,7 +146,7 @@ body {
 }
 
 #wot-wt-intro-image1 {
-    background-image: url(chrome-extension://__MSG_@@extension_id__/skin/fusion/16_16/plain/r4.png);
+    background-image: url(chrome-extension://__MSG_@@extension_id__/skin/fusion/16_16/plain/r5.png);
     background-repeat: no-repeat;
     padding: 0 0 0 16px;
 }
@@ -183,4 +186,5 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     height: 18px !important;
+    cursor: pointer;
 }

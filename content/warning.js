@@ -31,10 +31,9 @@ wot.warning = {
 			"<div class='wot-title'>{TITLE}</div>" +
 			"<div id='wot-wt-warning-wrapper' style='display: none;'>" +
 				"<div class='wot-wt-warning-content'>" +
-					"<div class='wot-wt-logo'>&nbsp;</div>" +
+					"<div id='wt-logo' class='wot-wt-logo'>&nbsp;</div>" +
 					"<div>{WT_CONTENT}</div>" +
 					"<div><label><input id='wt-warn-turnoff' type='checkbox' class='wot-checkbox' /> {WT_WARN_TURNOFF}</label></div>" +
-					"<div>{WT_CONTENT_2}</div>" +
 					"<div class='wot-wt-warn-footer'>" +
 						"<div id='wt-warn-ok' class='wot-wt-button wot-wt-warn-button'>{WT_BUTTON}</div>" +
 					"</div>" +
@@ -178,6 +177,7 @@ wot.warning = {
 			// preprocess link "Rate the site"
 			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
 			var wt_text_2 = wot.i18n("wt", "warning_text_2") || "";
+			var wt_text = wot.i18n("wt", "warning_text") || "";
 
 			var replaces = [
 				{
@@ -206,11 +206,8 @@ wot.warning = {
 					to: accessible
 				}, {
 					from: "WT_CONTENT",
-					to: wot.i18n("wt", "warning_text")
-				}, {
-					from: "WT_CONTENT_2",
-					to: wt_text_2
-				}, {
+					to: wot.utils.processhtml(wt_text, [{ from: "WT_LEARNMORE", to: wot.i18n("wt", "learnmore_link") }])
+				},{
 					from: "WT_WARN_TURNOFF",
 					to: wot.i18n("wt", "warning_turnoff")
 				}, {
@@ -368,9 +365,20 @@ wot.warning = {
 		var wt = document.getElementById("wot-wt-warning-wrapper");
 		if (wt) {
 
+			// TODO: next lines (3 blocks of similar code) need to be refactored
 			var btn_ok = document.getElementById("wt-warn-ok");
 			if (btn_ok) {
-				btn_ok.addEventListener("click", wot.warning.wt_ok_clicked);
+				btn_ok.addEventListener("click", wot.warning.on_click);
+			}
+
+			var learnmore_link = document.getElementById("wt-learnmore-link");
+			if (learnmore_link) {
+				learnmore_link.addEventListener("click", wot.warning.on_learnmore);
+			}
+
+			var logo = document.getElementById("wt-logo");
+			if (logo) {
+				logo.addEventListener("click", wot.warning.on_logo);
 			}
 
 			wot.post("wtb", "wtip_shown", { target: wot.warning.target });
@@ -387,7 +395,7 @@ wot.warning = {
 		}
 	},
 
-	wt_ok_clicked: function (elem) {
+	on_click: function (elem) {
 		wot.warning.hide_welcometip();
 		var read_time = Math.round(wot.time_since(wot.warning.wtip_shown_dt)),
 			optout = false,
@@ -404,6 +412,18 @@ wot.warning = {
 
 		// report that OK was clicked and provide status of "opt-out" control
 		wot.post("wtb", "wtip_ok", { read_time: read_time, optout: optout, target: target });
+	},
+
+	on_learnmore: function (elem) {
+		wot.warning.hide_welcometip();
+		// report that the link was clicked
+		wot.post("wtb", "wtip_info", { "elem": "learn_more" });
+	},
+
+	on_logo: function (elem) {
+		wot.warning.hide_welcometip();
+		// report that the link was clicked
+		wot.post("wtb", "wtip_info", { "elem": "logo" });
 	},
 
 	onload: function()

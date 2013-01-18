@@ -451,6 +451,7 @@
     background-repeat: no-repeat;
     background-position: center;
     height: 15px !important;
+    cursor: pointer !important;
 }
 
 /* BEGIN: Copy&Paste from welcometips.css */
@@ -496,6 +497,12 @@
     position: absolute !important;
     bottom: 1em !important;
     width: 215px !important;
+}
+
+.wot-wt-warning-content #wt-learnmore-link {
+    color: #1F7BD6 !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
 }
 
 .wot-checkbox {

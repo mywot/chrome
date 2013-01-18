@@ -131,28 +131,28 @@
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"
 	},
+	"wt_learnmore_link": {
+		"message": "<a id='wt-learnmore-link'>Learn more</a> about WOT."
+	},
 	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>You are protected!</p><p>Safe surfing tool Web of Trust (WOT) shows which websites you can trust based on millions of users' experiences.</p><p>Click the icon {ICO1} on your browser toolbar to learn more.</p><p class='wot-cb'>Safe surfing!</p>",
+		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>You are protected!</p><p>Safe surfing tool Web of Trust (WOT) shows which websites you can trust based on millions of users' experiences.</p><p>Click the icon {ICO1} on your browser toolbar to start using WOT.</p><p>{WT_LEARNMORE}</p>",
 		"description": "This message appears on introduction welcome tip right after the add-on was installed"
 	},
 	"wt_intro_0_btn": {
-		"message": "OK, thanks"
+		"message": "OK, got it"
 	},
 	"wt_warning_text": {
-		"message": "<p class='wot-cb'>Be aware of untrustworthy sites!</p><p>Safe surfing tool WOT shows you a warning if you land on a site that has a bad reputation based on user ratings.</p><p>If you don't want to see warnings, you can turn them off.</p>",
+		"message": "<p class='wot-cb'>Be aware of untrustworthy sites!</p><p>Safe surfing tool WOT shows you a warning if you land on a site that has a bad reputation based on user ratings.</p><p>{WT_LEARNMORE}</p><p>If you don't want to see warnings, you can turn them off.</p>",
 		"description": "this is a WelcomeTip which is shown when a user sees Warning first time"
-	},
-	"wt_warning_text_2": {
-		"message": "<p class='wot-cb latest'>Safe surfing!</p>"
 	},
 	"wt_warning_turnoff": {
 		"message": "Turn warnings off"
 	},
 	"wt_warning_ok": {
-		"message": "OK, thanks"
+		"message": "OK, got it"
 	},
 	"wt_rw_text": {
-		"message": "<p class='wot-cb'>Share your experiences!</p><p>WOT shows website reputations based on experiences from millions of users.</p><p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p><p class='wot-cb'>Safe surfing!</p>"
+		"message": "<p class='wot-cb'>Share your experiences!</p><p>WOT shows website reputations based on experiences from millions of users.</p><p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p>"
 	},
 	"wt_rw_ok": {
 		"message": "Show me rating window"
@@ -160,11 +160,8 @@
 	"wt_donut_msg": {
 		"message": "<p class='wot-cb'>Follow the traffic lights!</p></p>Safe surfing tool WOT shows website reputations based on experiences from millions of users.</p><p>Traffic lights after web links guide you to find sites that you can trust: green for good, red for bad, yellow as a warning to be cautious.</p>"
 	},
-	"wt_donut_msg_2": {
-		"message": "<p class='wot-cb'>Safe surfing!</p>"
-	},
 	"wt_donut_btn": {
-		"message": "OK, thanks"
+		"message": "OK, got it"
 	},
 	"fbl_hideforever": {
 		"message": "Hide forever"
