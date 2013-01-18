@@ -61,6 +61,7 @@
     background-image: -webkit-linear-gradient(left, #bdbdbd 0%, #e0e0e0 15%, #f1f1f1 50%, #e0e0e0 85%, #bdbdbd 100%);
     cursor: default !important;
     color: #504f4f !important;
+    direction: ltr; /* fixes issue #64 */
 }
 
 .wotcontainer * {
@@ -82,6 +83,8 @@
     text-align: center !important;
     margin: 0 !important;
     color: #504f4f !important;
+    width: auto; /* fixes issue #64 */
+    float: none; /* fixes issue #64 */
 }
 
 .wot-logo {
