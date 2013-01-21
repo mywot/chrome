@@ -422,19 +422,25 @@ wot.search = {
 			var targets = [];
 
 			for (var i = 0; i < frame.document.links.length; ++i) {
-				var link = frame.document.links[i];
 
-				if (!link.parentNode || !link.href ||
+				try {
+					var link = frame.document.links[i];
+
+					if (link.isContentEditable || !link.parentNode || !link.href ||
 						link.getAttribute(this.getattrname("processed"))) {
-					continue;
+						continue;
+					}
+
+					link.setAttribute(this.getattrname("processed"), true);
+
+					this.processrule(rule, link, function(elem, target) {
+						wot.search.addrating(target, elem, frame, rule);
+						targets.push(target);
+					});
+
+				} catch (e) {
+					console.error("Process frame raised exception", e);
 				}
-
-				link.setAttribute(this.getattrname("processed"), true);
-
-				this.processrule(rule, link, function(elem, target) {
-					wot.search.addrating(target, elem, frame, rule);
-					targets.push(target);
-				});
 
 			}
 
@@ -446,7 +452,7 @@ wot.search = {
 				}
 			});
 		} catch (e) {
-			console.log("search.processframe: failed with " + e);
+			console.error("search.processframe: failed with ", e);
 		}
 	},
 
