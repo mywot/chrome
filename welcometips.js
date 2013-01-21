@@ -83,7 +83,7 @@ $.extend(wot, { wt: {
 			if (!(locale === "ru" || locale === "en")) return;
 
 			// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
-			var strings = ["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn", "warning_text", "warning_ok"];
+			var strings = ["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn", "warning_text", "warning_ok", "learnmore_link"];
 			for(var i in strings) {
 				if (wot.i18n("wt", strings[i]) === undefined) {
 					return; // avoid showing "undefined" strings in Tips. Postpone to browser's restart (it fixes usually)
@@ -174,13 +174,21 @@ $.extend(wot, { wt: {
 			}
 		},
 
-		on_ok: function (port, data) {
+		on_click: function (port, data) {
 			// data is { mode: "intro_0", elem: "ok" }
 			if(data && data.mode === "intro_0" && data.elem === "ok") {
 				var seconds_since_shown = Math.round(wot.time_since(wot.wt.settings.intro_0_shown_dt));
 				wot.wt.settings.intro_0_ok = true;
 				wot.wt.save_setting("intro_0_ok");
 				wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_OK, String(seconds_since_shown));
+				return;
+			}
+			if(data && data.mode === "intro_0" && data.elem === "learnmore") {
+				wot.wt.settings.intro_0_ok = true;
+				wot.wt.save_setting("intro_0_ok");
+				wot.core.open_mywot(wot.urls.tour, wot.urls.contexts.wt_intro);
+				wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_INTRO_0_LEARN);
+				return;
 			}
 		},
 
@@ -194,7 +202,7 @@ $.extend(wot, { wt: {
 				wot.wt.intro_shown_sent = new Date();
 
 				wot.bind("message:wtb:tip_shown", wot.wt.intro.on_show);
-				wot.bind("message:wtb:clicked", wot.wt.intro.on_ok);
+				wot.bind("message:wtb:clicked", wot.wt.intro.on_click);
 
 				var port = chrome.tabs.connect(tab.id, {name: "wt"});
 				port.postMessage({ message: "wt:show_intro_0" });
@@ -208,6 +216,7 @@ $.extend(wot, { wt: {
 		init: function () {
 			wot.bind("message:wtb:wtip_shown", wot.wt.warning.on_show);
 			wot.bind("message:wtb:wtip_ok", wot.wt.warning.on_ok);
+			wot.bind("message:wtb:wtip_info", wot.wt.warning.on_learnmore);
 		},
 
 		tts: function () {
@@ -274,6 +283,13 @@ $.extend(wot, { wt: {
 			}
 		},
 
+		on_learnmore: function (port, data) {
+			var elem = data.elem || "logo";
+			var context = elem == "logo" ? wot.urls.contexts.wt_warn_logo : wot.urls.contexts.wt_warn_lm;
+			wot.core.open_mywot(wot.urls.tour_warning, context);
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_WS_LEARN, elem);
+		},
+
 		disable_warning: function () {
 			wot.components.forEach(function(app) {
 				wot.prefs.set("warning_level_" + app.name, 0);
@@ -290,6 +306,7 @@ $.extend(wot, { wt: {
 		init: function () {
 			wot.bind("message:wtb:dtip_shown", wot.wt.donuts.on_show);
 			wot.bind("message:wtb:dtip_ok", wot.wt.donuts.on_ok);
+			wot.bind("message:wtb:dtip_info", wot.wt.donuts.on_learnmore);
 		},
 
 		on_show: function (port, data) {
@@ -308,6 +325,17 @@ $.extend(wot, { wt: {
 			wt_settings.donuts_ok = true;
 			wot.wt.save_setting("donuts_ok");
 			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_DONUTS_OK, String(wt_settings.donuts_shown));
+		},
+
+		on_learnmore: function (port, data) {
+			var elem = data.elem || "logo";
+			var context = elem == "logo" ? wot.urls.contexts.wt_donuts_logo : wot.urls.contexts.wt_donuts_lm;
+			wot.core.open_mywot(wot.urls.tour, context); // open tour page
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_DONUTS_LEARN, elem);
+
+			// since user has interaction with the Tip - don't show it anymore
+			wot.wt.settings.donuts_ok = true;
+			wot.wt.save_setting("donuts_ok");
 		},
 
 		tts: function () {

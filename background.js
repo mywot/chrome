@@ -437,6 +437,12 @@ $.extend(wot, { core: {
 		xhr.send();
 	},
 
+	open_mywot: function(url, context)
+	{
+		var c_url = wot.contextedurl(url, context);
+		chrome.tabs.create({ url: c_url });
+	},
+
 	open_scorecard: function(target, context)
 	{
 		if(!target) return;
@@ -576,9 +582,7 @@ $.extend(wot, { core: {
 		try {
 			/* load the manifest for reference */
 			this.loadmanifest();
-
 			wot.core.launch_time = new Date();
-
 			wot.detect_environment();
 
 			/* messages */
@@ -685,6 +689,7 @@ $.extend(wot, { core: {
 				}
 			});
 
+			wot.ga.post_init(); // finilize setting up GA engine
 			wot.cache.purge();
 
 		} catch (e) {

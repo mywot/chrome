@@ -64,6 +64,7 @@ $.extend(wot, { surveys: {
 		wot.bind("message:surveyswidget:optout", wot.surveys.on_optout);
 		wot.bind("message:surveyswidget:close", wot.surveys.on_close);
 		wot.bind("message:surveyswidget:submit", wot.surveys.on_submit);
+		wot.bind("message:surveyswidget:logo", wot.surveys.on_logo);
 	},
 
 	update: function (tab, data) {
@@ -85,10 +86,12 @@ $.extend(wot, { surveys: {
 			var senddata = {
 				target: target,
 				decodedtarget: data.decodedtarget,
-				question: question
+				question: question,
+				stats: null
 			};
 
 			if (is_tts) {
+				senddata.stats = _this.count_stats();
 				wot.surveys.send_show(tab, senddata);
 			}
 		} catch (e) {
@@ -182,6 +185,45 @@ $.extend(wot, { surveys: {
 		}
 	},
 
+	count_stats: function () {
+		var _this = wot.surveys,
+			arr = _this.asked,
+			impressions = 0,
+			submissions = 0;
+
+		try {
+			for(var h in arr) {
+				if (h && arr[h]) {
+					var questions = arr[h];
+					for(var q_id in questions) {
+						if (q_id !== undefined && questions[q_id]) {
+							var q_stat = questions[q_id];
+							if (q_stat) {
+								var count = q_stat.count,
+									status = q_stat.status;
+
+								impressions = impressions + count;
+
+								if (status === _this.FLAGS.submited) {
+									++submissions;
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (e) {
+			console.error(e);
+		}
+
+
+		return {
+			impressions: impressions,
+			submissions: submissions
+		}
+
+	},
+
 	connect_and_send: function (tab, message, data) {
 		var port = chrome.tabs.connect(tab.id, { name: "surveys" });
 		if (port) {
@@ -197,8 +239,8 @@ $.extend(wot, { surveys: {
 		return null;
 	},
 
-	send_show: function (tab, question) {
-		wot.surveys.connect_and_send(tab, "surveys:show", { question: question });
+	send_show: function (tab, senddata) {
+		wot.surveys.connect_and_send(tab, "surveys:show", { question: senddata });
 	},
 
 	send_close: function (tab) {
@@ -228,6 +270,11 @@ $.extend(wot, { surveys: {
 		window.setTimeout(function(){
 			_this.send_close(port.port.sender.tab);
 		}, 1500);
+	},
+
+	on_logo: function (port, data) {
+		var url = wot.contextedurl(wot.urls.base, wot.urls.contexts.fbl_logo);
+		chrome.tabs.create({ url: url });
 	},
 
 	load_asked: function () {

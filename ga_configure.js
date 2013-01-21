@@ -1,6 +1,6 @@
 /*
  wot.js
- Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -24,10 +24,11 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', wot.ga_id]);
-_gaq.push(['_trackPageview']);
-
 // provide version number to GA
 _gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2 (session level)
+_gaq.push(['_setReferrerOverride', '']);    // clear the referrer in GA cookie. Issue #75 on GH.
+_gaq.push(['_trackPageview']);
+
 
 
 /* This adds logic for counting events to wot object */
@@ -60,27 +61,33 @@ $.extend(wot, { ga: {
 		GEN_LAUNCHED:   "WOT_launched",
 
 		WT_INTRO_0_SHOWN: "WT_Intro0_shown",
+		WT_INTRO_0_LEARN: "WT_Intro0_learnmore",
 		WT_INTRO_0_OK:  "WT_Intro0_ok",
 		WT_WS_SHOWN:    "WT_WS_shown",
 		WT_WS_OK:       "WT_WS_ok",
 		WT_WS_OPTEDOUT: "WT_WS_optedout",
+		WT_WS_LEARN:    "WT_WS_learnmore",
 		WT_RW_SHOWN:    "WT_RW_shown",
 		WT_RW_OK:       "WT_RW_ok",
+		WT_RW_LEARN:    "WT_RW_learnmore",
 		WT_DONUTS_SHOWN:"WT_Donuts_shown",
 		WT_DONUTS_OK:   "WT_Donuts_ok",
+		WT_DONUTS_LEARN:"WT_Donuts_learnmore",
 
-		FBL_shown:       "FBL_shown",
-		FBL_submit:      "FBL_submit",
-		FBL_closed:      "FBL_closed",
-		FBL_optout_shown:"FBL_optout_shown",
-		FBL_optout_yes:  "FBL_optout_yes",
-		FBL_optout_no:   "FBL_optout_no",
-		FBL_whatisthis:  "FBL_whatisthis",
-		FBL_bottom_close:"FBL_bottom_close",
-		FBL_slidered:    "FBL_slidered",
-		FBL_directclick: "FBL_directclick",
-		FBL_logo:        "FBL_logo",
-		FBL_opportunity: "FBL_opportunity"  // we could show the survey, but conditions are not met
+		FBL_shown:              "FBL_shown",
+		FBL_submit:             "FBL_submit",
+		FBL_closed:             "FBL_closed",
+		FBL_optout_shown:       "FBL_optout_shown",
+		FBL_optout_shown_smb:   "FBL_optout_shown:smb", // used for additional stats purposes: tells submittions number
+		FBL_optout_yes:         "FBL_optout_yes",
+		FBL_optout_yes_smb:     "FBL_optout_yes:smb",  // used for additional stats purposes: tells submittions number
+		FBL_optout_no:          "FBL_optout_no",
+		FBL_whatisthis:         "FBL_whatisthis",
+		FBL_bottom_close:       "FBL_bottom_close",
+		FBL_slidered:           "FBL_slidered",
+		FBL_directclick:        "FBL_directclick",
+		FBL_logo:               "FBL_logo",
+		FBL_opportunity:        "FBL_opportunity"  // we could show the survey, but conditions are not met
 	},
 
 	init_tracker: function () {
@@ -113,6 +120,25 @@ $.extend(wot, { ga: {
 			// silence...
 			//console.log("Error in wot.ga.fire_event(). Msg: ", e);
 		}
+	},
+
+	post_init: function() {
+		// Finalize setting up GA environment after wot.core is initialized fully
+
+		/* CustomVars slots:
+		 *  1. version
+		 *  2. partner = (wot) | mailru
+		 *  3.
+		 *  4.
+		 *  5. accessible = acc | normal
+   	     * */
+
+		// let's measure how many "accessible" users do we have on Chrome
+		var accessible = wot.env.is_accessible ? "acc" : "normal",
+			partner = wot.prefs.get("partner") || "";  // set partner
+
+		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
+		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)
 	}
 
 }});

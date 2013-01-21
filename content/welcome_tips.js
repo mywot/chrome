@@ -99,7 +99,8 @@ wot.wt = {
 
 			// apply final replacements
 			var post_replaces = [
-				{ from: "ADDON_BASEURI", to: chrome.extension.getURL("/") }
+				{ from: "ADDON_BASEURI", to: chrome.extension.getURL("/") },
+				{ from: "WT_LEARNMORE",  to: wot.i18n("wt", "learnmore_link") }
 			];
 			container.innerHTML = wot.utils.processhtml(wot.wt.intro.build(replaces), post_replaces);
 			wot.utils.attach_element(container, wt_wrapper);
@@ -108,6 +109,11 @@ wot.wt = {
 
 			wt_wrapper.contentDocument.getElementById("btn_ok").addEventListener("click", function (e) {
 				wot.wt.report("clicked", {mode: mode, elem: "ok"});
+				wot.wt.intro.hide();
+			});
+
+			wt_wrapper.contentDocument.getElementById("wt-learnmore-link").addEventListener("click", function (e) {
+				wot.wt.report("clicked", {mode: mode, elem: "learnmore"});
 				wot.wt.intro.hide();
 			});
 
@@ -144,9 +150,9 @@ wot.wt = {
 
 		build: function (replaces) {
 			var html = '<div class="wot-wt-dtip">' +
-				'<div class="wot-wt-logo">&nbsp;</div>' +
+				'<div id="wot_wt_logo" class="wot-wt-logo">&nbsp;</div>' +
 				'<div class="wot-wt-d-body">{WT_D_TEXT}</div>' +
-				'<div class="wot-wt-d-body">{WT_D_TEXT2}</div>' +
+				'<div class="wot-wt-d-body"><p>{WT_D_TEXT2}</p></div>' +
 				'<div class="wot-wt-footer">' +
 				'<div id="btn_ok" class="wot-wt-button wot-wt-d-button">{WT_D_BUTTON}</div>' +
 				'</div>' +
@@ -225,7 +231,7 @@ wot.wt = {
 				},
 				{
 					from: "WT_D_TEXT2",
-					to: wot.i18n("wt", "donut_msg_2") || ""
+					to: wot.i18n("wt", "learnmore_link") || ""
 				},
 				{
 					from: "WT_D_BUTTON",
@@ -235,12 +241,16 @@ wot.wt = {
 
 			container.innerHTML = wot.wt.donuts.build(replaces);
 			wot.utils.attach_element(container, wrapper);
-			wrapper.contentDocument.getElementById("btn_ok").addEventListener("click", wot.wt.donuts.on_ok, false);
+
+			// TODO: next lines need refactoring
+			wrapper.contentDocument.getElementById("btn_ok").addEventListener("click", wot.wt.donuts.on_click, false);
+			wrapper.contentDocument.getElementById("wt-learnmore-link").addEventListener("click", wot.wt.donuts.on_learnmore, false);
+			wrapper.contentDocument.getElementById("wot_wt_logo").addEventListener("click", wot.wt.donuts.on_logo, false);
 
 			return true;
 		},
 
-		on_ok: function () {
+		on_click: function () {
 			wot.search.on_update_callback = null;    // disable Tip for appearing again
 			wot.popup.show_wtip = false;
 			wot.wt.report("dtip_ok", {});
@@ -249,6 +259,20 @@ wot.wt = {
 			if (wot.popup.layer) {
 				wot.popup.show(wot.popup.layer);
 			}
+		},
+
+		on_logo: function () {
+			wot.search.on_update_callback = null;
+			wot.popup.show_wtip = false;
+			wot.wt.report("dtip_info", { "elem": "logo" });
+			wot.wt.donuts.hide();
+		},
+
+		on_learnmore: function () {
+			wot.search.on_update_callback = null;
+			wot.popup.show_wtip = false;
+			wot.wt.report("dtip_info", { "elem": "learn_more" });
+			wot.wt.donuts.hide();
 		},
 
 		delayed_hide: function() {
