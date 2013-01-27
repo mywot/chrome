@@ -129,7 +129,7 @@ $.extend(wot, { ga: {
 		 *  1. version
 		 *  2. partner = (wot) | mailru
 		 *  3.
-		 *  4.
+		 *  4. experiments
 		 *  5. accessible = acc | normal
    	     * */
 
@@ -139,6 +139,20 @@ $.extend(wot, { ga: {
 
 		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
 		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)
+
+		wot.ga.set_experiments();
+
+	},
+
+	set_experiments: function () {
+		// sets up custom variable with Experiments
+		if (wot.exp) {
+			var exps = wot.exp.exps_running_ga();
+			if (exps && exps.length) {
+				_gaq.push(['_setCustomVar', 4, 'Experiments', exps, 1]); // scope = 1 (visitor level)
+			}
+		}
+
 	}
 
 }});
