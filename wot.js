@@ -544,6 +544,17 @@ var wot = {
 		}
 
 		return (b - a) / 1000;  // in seconds
+	},
+
+	is_defined: function (list, prefix) {
+		// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
+		if (list instanceof Array != true) return false;
+		for(var i in list) {
+			if (wot.i18n(prefix, list[i]) === undefined) {
+				return false; // avoid showing "undefined" strings in Tips. Postpone to browser's restart (it fixes usually)
+			}
+		}
+		return true;
 	}
 };
 

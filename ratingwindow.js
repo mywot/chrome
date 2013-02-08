@@ -372,22 +372,25 @@ $.extend(wot, { ratingwindow: {
 	},
 
 	reveal_ratingwindow: function (no_animation) {
-		$("#wot-welcome-tips").hide();
-
-		var $ratingwindow = $("#wot-elements");
+		var $wtip = $("#wot-welcometip");
 		if (no_animation) {
-			$ratingwindow.show();
+			$wtip.hide();
 		} else {
-			$ratingwindow.animate({"margin-left": 0}, 300);
+			$wtip.animate({"height": 0, "opacity": 0.2}, {
+				duration: 100,
+				complete: function(){
+					$wtip.hide();
+				}
+			});
 		}
 	},
 
-	show_welcome_tip: function () {
-		$("#wot-elements").css({"margin-left": "450px"}).show();
-		$("#wot-welcome-tips").show();
-
+	show_welcome_tip: function (type) {
 		// use small delay to allow GA script to initialize itself
 		window.setTimeout(function(){
+
+			$("#wot-welcometip").addClass(type).fadeIn();
+
 			// fire the event to GA, providing amount of minutes from installation to opening rating window
 			var bg = chrome.extension.getBackgroundPage();
 			var timesincefirstrun = Math.round((bg.wot.time_sincefirstrun() + 0.5) / wot.DT.MINUTE);
@@ -400,19 +403,6 @@ $.extend(wot, { ratingwindow: {
 		wot.ratingwindow.opened_time = new Date(); // remember time when RW was opened
 		var bg = chrome.extension.getBackgroundPage();
 		var first_opening = !bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
-
-//		// show welcome page if we haven't done it before (embedded add-on case)
-//		if(!bg.wot.prefs.get("firstrun:welcome") && bg.wot.env.is_mailru) {
-//			first_opening = true;
-//			chrome.tabs.create({ url: wot.urls.welcome }, function(tab) {
-//
-//				// workaround for https://github.com/mywot/chrome/issues/38 (hide rating window in Chrome 17)
-//				chrome.tabs.update(tab.id, { selected: true });
-//
-//				bg.wot.prefs.set("firstrun:welcome", true);
-//				bg.wot.core.set_badge(false); // reset badge
-//			});
-//		}
 
 		/* accessibility */
 		$("#wot-header-logo, " +
@@ -458,7 +448,10 @@ $.extend(wot, { ratingwindow: {
 				selector: "#wot-partner-text",
 				text: wot.i18n("ratingwindow", "inpartnership")
 			}, {
-				selector: "#wot-welcome-tips-text",
+				selector: ".wt-rw-header-text",
+				html: wot.i18n("wt", "rw_text_hdr")
+			}, {
+				selector: ".wt-rw-body",
 				html: wot.i18n("wt", "rw_text")
 			}, {
 				selector: "#wt-rw-btn-ok",
@@ -577,12 +570,14 @@ $.extend(wot, { ratingwindow: {
 
 		bg.wot.core.update();
 
-		// Welcome Tip button "OK"
-		$("#wt-rw-btn-ok").click(function (e){
+		var wt =     bg.wot.wt,
+			locale = bg.wot.i18n("locale");
+
+		// Welcome Tip button "close"
+		$(".wt-rw-close").click(function (e){
 			wot.ratingwindow.reveal_ratingwindow();
 			wot.ratingwindow.count_window_opened();
 
-			var wt = bg.wot.wt;
 			wt.settings.rw_ok = true;
 			wt.save_setting("rw_ok");
 
@@ -590,30 +585,47 @@ $.extend(wot, { ratingwindow: {
 			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_RW_OK, String(time_before_click));
 		});
 
-		var wt =     bg.wot.wt,
-			locale = bg.wot.i18n("locale");
+		// Welcome Tip "learn more" link handler
+		$("#wt-learnmore-link").click(function (){
+			var time_before_click = Math.round(wot.time_since(wot.ratingwindow.opened_time));
+			wot.ga.fire_event(wot.ga.categories.WT, wot.ga.actions.WT_RW_LEARN, String(time_before_click));
+			bg.wot.core.open_mywot(wot.urls.tour_rw, wot.urls.contexts.wt_rw_lm);
+		});
 
-		// Decide what to show: normal rating window or welcome tip?
-		if((locale === "ru" || locale === "en") &&
-			first_opening && !(wt.settings.rw_ok || wt.settings.rw_shown > 0)) {
+		var is_rtip_neutral = false; // default style for welcome tip = sticker
+
+		var tts_wtip = (locale === "ru" || locale === "en") &&
+						first_opening &&
+						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
+						wot.is_defined(["rw_text", "rw_text_hdr", "rw_ok"], "wt");
+
+//		tts_wtip = true; // TODO: remove before release!
+
+		if (tts_wtip) {
+			var tip_type = "rtip-neutral"; // default style
+
+			// Decide what to show: normal rating window or welcome tip?
+			if (bg.wot.exp) {
+				is_rtip_neutral = bg.wot.exp.is_running("rtip-neu");
+				tip_type = is_rtip_neutral ? "rtip-neutral" : "rtip-sticker"; // reference to CSS style
+			}
+
 			// RW is opened first time - show welcome tip
-			wot.ratingwindow.show_welcome_tip();
+			wot.ratingwindow.show_welcome_tip(tip_type);
 
 			// set all welcome tip's preferences (== wt was shown)
 			wt.settings.rw_shown = wt.settings.rw_shown + 1;
 			wt.settings.rw_shown_dt = new Date();
 			wt.save_setting("rw_shown");
 			wt.save_setting("rw_shown_dt");
+		}
 
-		} else {
-			wot.ratingwindow.reveal_ratingwindow(true); // reveal rating window without animation
-			// increment "RatingWindow shown" counter
-			wot.ratingwindow.count_window_opened();
+		// increment "RatingWindow shown" counter
+		wot.ratingwindow.count_window_opened();
 
-			// shown RatingWindow means that we shown a message => remove notice badge from the button
-			if(bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
-				bg.wot.core.set_badge(false);   // hide badge
-			}
+		// shown RatingWindow means that we shown a message => remove notice badge from the button
+		if(bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
+			bg.wot.core.set_badge(false);   // hide badge
 		}
 	}
 }});

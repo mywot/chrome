@@ -30,7 +30,7 @@ $.extend(wot, { exp: {
 //		},
 		rtip: {
 			options: ['neu', 'stk'],    // Neutral | Sticker
-			default: "neu",
+			default: "stk",
 			expires: null
 		}
 	},

@@ -151,8 +151,11 @@
 	"wt_warning_ok": {
 		"message": "OK, got it"
 	},
+	"wt_rw_text_hdr": {
+		"message": "Share your experiences!"
+	},
 	"wt_rw_text": {
-		"message": "<p class='wot-cb'>Share your experiences!</p><p>WOT shows website reputations based on experiences from millions of users.</p><p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p>"
+		"message": "<p>WOT shows website reputations based on experiences from millions of users.</p><p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
 	},
 	"wt_rw_ok": {
 		"message": "Show me rating window"
