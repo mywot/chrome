@@ -81,7 +81,14 @@
 		"skin/fusion/16_16/plain/r3.png",
 		"skin/fusion/16_16/plain/r4.png",
 		"skin/fusion/16_16/plain/r5.png",
-		"skin/fusion/16_16/plain/rx.png"
+		"skin/fusion/16_16/plain/rx.png",
+		"skin/fusion/16_16/mini/r0.png",
+		"skin/fusion/16_16/mini/r1.png",
+		"skin/fusion/16_16/mini/r2.png",
+		"skin/fusion/16_16/mini/r3.png",
+		"skin/fusion/16_16/mini/r4.png",
+		"skin/fusion/16_16/mini/r5.png",
+		"skin/fusion/16_16/mini/rx.png"
 	],
 	"browser_action": {
 		"default_title": "WOT",

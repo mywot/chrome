@@ -1,6 +1,6 @@
 /*
 	content/search.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -308,35 +308,6 @@ wot.search = {
 		}
 	},
 
-	addstyle: function(css, frame, id)
-	{
-		try {
-			if (id && frame.document.getElementById(id)) {
-				return;
-			}
-
-			var style = frame.document.createElement("style");
-
-			style.setAttribute("type", "text/css");
-
-			if (id) {
-				style.setAttribute("id", id);
-			}
-
-			style.innerText = css;
-
-			var insertpoint =
-				frame.document.getElementsByTagName("head") ||
-				frame.document.getElementsByTagName("body");
-
-			if (insertpoint && insertpoint.length) {
-				insertpoint[0].appendChild(style);
-			}
-		} catch (e) {
-			console.log("search.addstyle: failed with " + e);
-		}
-	},
-
 	formatcss: function(css)
 	{
 		return css.replace(/ATTR/g, this.getattrname("target"));
@@ -406,11 +377,15 @@ wot.search = {
 				return css;
 			}
 
+			var options = {
+				subtype: this.settings.accessible ? "plain": "mini" // we don't have mini icons-16 for accesible mode yet
+			};
+
 			css = this.formatcss(rule.style)
 					.replace(/NAME/g, obj.target)
 					.replace(/IMAGE/g,
 						chrome.extension.getURL(wot.geticon(r, 16,
-								this.settings.accessible, true)));
+								this.settings.accessible, options)));
 		}
 
 		return css;
@@ -508,13 +483,11 @@ wot.search = {
 						"div[wotsearchtarget].invisible {" +
 							"opacity: 0.0;" +
 						"}";
-					wot.search.addstyle(ninja_style, window, "wotninja");
+					wot.utils.attach_style({style: ninja_style}, "wotninja", window);
 				}
 
 				if (data.rule.prestyle) {
-					wot.search.addstyle(
-						wot.search.formatcss(data.rule.prestyle), window,
-						wot.search.getname("prestyle"));
+					wot.utils.attach_style({style: wot.search.formatcss(data.rule.prestyle)}, wot.search.getname("prestyle"), window);
 				}
 
 				if (data.rule.popup && data.rule.popup.match &&
@@ -566,7 +539,7 @@ wot.search = {
 		}
 
 		if (style.length) {
-			this.addstyle(style, window);
+			wot.utils.attach_style({style: style}, null, window);
 		}
 
 		if (data.wt_enabled) {
