@@ -61,7 +61,19 @@ wot.surveys = {
 
 	on_close: function(port, data) {
 		if(wot.surveys.wrapper) {
-			wot.surveys.wrapper.parentNode.removeChild(wot.surveys.wrapper);
+
+			var wr = wot.surveys.wrapper;
+			var style = wr.getAttribute("style");
+			wr.setAttribute("style", style + "visibility: hidden;");
+
+			// wait a bit to allow GA script to send event to the servers
+			setTimeout(function(){
+				if(wot.surveys.wrapper) {
+					wot.surveys.wrapper.parentNode.removeChild(wot.surveys.wrapper);
+				}
+			}, 2000);
+
+
 		}
 	},
 
