@@ -1,6 +1,6 @@
 /*
 	warning.css
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -58,7 +58,7 @@
     border: #babbbb solid 1px;
     box-shadow: 5px 5px 20px #111;
     background-color: #e9e9e9 !important;
-    background-image: -webkit-linear-gradient(left, #bdbdbd 0%, #e0e0e0 15%, #f1f1f1 50%, #e0e0e0 85%, #bdbdbd 100%);
+    background-image: -webkit-linear-gradient(left, #DBDADA 0%, #F0F0F0 15%, #F4F4F4 50%, #F0F0F0 85%, #DBDADA 100%);
     cursor: default !important;
     color: #504f4f !important;
     direction: ltr; /* fixes issue #64 */

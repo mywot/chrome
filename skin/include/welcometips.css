@@ -107,42 +107,18 @@ body {
 }
 
 .wot-wt-intro-body #wt-learnmore-link,
-.wot-wt-d-body #wt-learnmore-link {
+.wot-wt-d-body #wt-learnmore-link,
+#wot-welcometip #wt-learnmore-link {
     color: #1F7BD6;
     text-decoration: underline;
     cursor: pointer;
 }
 
-/* Rating Window tip's style */
-#wot-welcome-tips {
-    font-family: arial;
-    font-size: 11pt;
-    padding: 1em 2em;
-    min-width: 260px;
-    /*max-width: 350px;*/
-    float: left;
-    overflow: hidden;
-    color: #5a5a5a;
-}
-
-/* Used in R-Tips, Intro and Donut's Tips */
-#wot-welcome-tips .wot-cb,
+/* Used in Intro and Donut's Tips */
 .wot-wt-intro-body .wot-cb,
 .wot-wt-d-body .wot-cb {
     text-align: center;
     font-weight: bold;
-}
-
-#wot-welcome-tips .wot-wt-footer {
-    margin-top: 2em;
-}
-
-#wot-wt-image {
-    width: 221px;
-    height: 227px;
-    background-image: url(chrome-extension://__MSG_@@extension_id__/_locales/__MSG_locale__/wt_ratingwindow_1.png);
-    background-repeat: no-repeat;
-    margin: 0px auto;
 }
 
 #wot-wt-intro-image1 {
@@ -151,21 +127,85 @@ body {
     padding: 0 0 0 16px;
 }
 
-.wot-wt-rw-button {
-    width: auto;
-    font-size: 12pt;
-    font-weight: normal;
+/* WelcomeTip v2 */
+
+#wot-welcometip {
+    font-size: 9pt;
+    position: absolute;
+    display: none;
 }
 
-.wot-wt-rw-button:after {
+#wot-welcometip:before {
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    width: 45px;
+    height: 44px;
     content: "";
-    background: url(/skin/b/welcometips/wt_rw_arrow_right.png) 0 no-repeat;
-    padding-right: 16px;
-    margin-left: 0.4em;
+    background-image: url(/skin/b/welcometips/orange_badge.png);
+    background-repeat: no-repeat;
 }
 
-.wot-wt-rw-button:hover:after {
-    background: url(/skin/b/welcometips/wt_rw_arrow_right_hover.png) 0 no-repeat;
+/* RW WelcomeTip: Sticker mode */
+.rtip-sticker {
+    width: 300px;
+    margin: 5px 0px 0px 10px;
+    background-image: -webkit-linear-gradient(left top, #eef9e4 0%, #dff0d0 28%, #eef9e4 59%, #f6fbf2 89%, #eef9e4 100%);
+    box-shadow: 3px 3px 3px #aaa;
+    margin-bottom: 10px;
+}
+
+.rtip-sticker .wt-rw-header {
+    padding: 0.7em 0 0.4em;
+    background-color: rgba(129,148,114, 0.05);
+    text-align: center;
+    font-weight: bold;
+}
+
+.rtip-sticker .wt-rw-body {
+    padding: 0 1em;
+}
+
+/* RW WelcomeTip: "Neutral" mode */
+.rtip-neutral {
+    width: 100%;
+    margin: 10px 0px 0px -11px;
+    background-color: #edf0f5;
+    color: #404040;
+    box-shadow: 0 -1px 20px #aaa;
+}
+
+.rtip-neutral .wt-rw-header {
+    position: relative;
+    padding: 0.7em 0 0.4em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.rtip-neutral .wt-rw-body {
+    padding: 0 2.5em;
+}
+
+/* RW WelcomeTip: common styles */
+.wt-rw-close {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    background-image: url(/skin/b/welcometips/close_icon.png);
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+.wt-rw-close:hover {
+    /* reserved once we'll have icon for hovered state */
+    background-position: 0 0;
+}
+
+.wt-rw-body .wot-c {
+    text-align: center;
 }
 
 .wot-wt-d-button {}

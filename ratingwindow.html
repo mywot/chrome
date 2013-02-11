@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
 <!--
 	ratingwindow.html
@@ -22,7 +21,7 @@
 	along with WOT. If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="wot.js"></script>
@@ -36,14 +35,7 @@
 	</head>
 	<body>
 		<div id="wot-ratingwindow">
-            <div id="wot-welcome-tips" style="display: none;">
-                <div id="wot-wt-image"></div>
-                <div id="wot-welcome-tips-text"></div>
-                <div class="wot-wt-footer">
-                    <div id="wt-rw-btn-ok" class="wot-wt-button wot-wt-rw-button"></div>
-                </div>
-            </div>
-			<div id="wot-elements" style="display: none;">
+			<div id="wot-elements">
 				<!-- header -->
 				<div id="wot-header">
 					<div id="wot-header-logo"></div>
@@ -139,6 +131,18 @@
 						</div>
 					</div>
 				</div>
+                <!-- Welcome Tip area -->
+                <div id="wot-welcometip">
+                    <div class="wt-rw-header">
+                        <span class="wt-rw-header-text">Share your experiences!</span>
+                        <div class="wt-rw-close"></div>
+                    </div>
+                    <div class="wt-rw-body">
+                        <p>WOT shows website reputations based on experiences from millions of users.</p>
+                        <p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p>
+                        <p class="wot-c"><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>
+                    </div>
+                </div>
 				<!-- scorecard -->
 				<div id="wot-scorecard">
 					<div id="wot-scorecard-content">

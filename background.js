@@ -584,6 +584,7 @@ $.extend(wot, { core: {
 			this.loadmanifest();
 			wot.core.launch_time = new Date();
 			wot.detect_environment();
+			wot.exp.init();
 
 			/* messages */
 

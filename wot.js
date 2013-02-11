@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20130125,
+	version: 20130211,
 	platform: "chrome",
 	debug: false,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
@@ -469,9 +469,20 @@ var wot = {
 		return "skin/include/" + file;
 	},
 
-	geticon: function(r, size, accessible, plain)
+	geticon: function(r, size, accessible, options)
 	{
-		var name = "/";
+		var name = "/",
+			has_subtype = false,
+			sub_type = "plain";
+
+		if (options instanceof Object) {
+			sub_type = options.subtype;
+			has_subtype = !!sub_type;
+			// todo: get other option here
+		} else {
+			// compatibility with old code (non-refactored: options is boolean)
+			has_subtype = options; // sub_type might only be "plain" if plain is true.
+		}
 
 		if (typeof(r) == "number") {
 			name += this.getlevel(this.reputationlevels, r).name;
@@ -479,8 +490,8 @@ var wot = {
 			name += r;
 		}
 
-		if (plain) {
-			name = "/plain" + name;
+		if (has_subtype) {
+			name = "/" + sub_type + name;
 		}
 
 		var path = "skin/fusion/";
@@ -502,10 +513,13 @@ var wot = {
 
 	detect_environment: function(readonly)
 	{
-		var readonly = readonly || false;
+		readonly = readonly || false;
 		// try to understand in which environment we are run
 		var user_agent = window.navigator.userAgent || "";
 		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
+
+		// old yandex browser is named "Yandex Internet" (chromium 18), new browser is named "YaBrowser" (chromium 22+)
+		wot.env.is_yandex = user_agent.indexOf("YaBrowser") >= 0 || user_agent.indexOf(" YI") >= 0;
 
 		if(wot.env.is_mailru) {
 			// set param to label requests
@@ -544,6 +558,17 @@ var wot = {
 		}
 
 		return (b - a) / 1000;  // in seconds
+	},
+
+	is_defined: function (list, prefix) {
+		// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
+		if (list instanceof Array != true) return false;
+		for(var i in list) {
+			if (wot.i18n(prefix, list[i]) === undefined) {
+				return false; // avoid showing "undefined" strings in Tips. Postpone to browser's restart (it fixes usually)
+			}
+		}
+		return true;
 	}
 };
 
