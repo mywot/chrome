@@ -142,7 +142,7 @@ wot.wt = {
 		pointer_height: 30, // take this number from welcometips.css rule ".wot-wt-dtip:before" height property.
 
 		init: function () {
-			if (!wot.wt.donuts.inited && wot.search) {
+			if (!wot.wt.donuts.inited && wot.search && wot.is_defined(["donut_msg", "donut_btn"], "wt")) {
 				wot.search.on_update_callback = wot.wt.donuts.show;
 				wot.wt.donuts.inited = true;
 			}

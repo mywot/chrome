@@ -313,20 +313,17 @@ wot.popup = {
 				pos = null,
 				wt_params = wot.wt.donuts;
 
-			if (this.show_wtip) {
+			if (this.show_wtip && wot.search.on_update_callback) {
 				// Have to show welcome tip instead of normal popup here
-				if (wot.search.on_update_callback) {
-					pos = this.elem_position(elem, win_width, win_height, wt_params.tip_width, wt_params.tip_height,
-						wt_params.offset_x, wt_params.offset_y);
+				pos = this.elem_position(elem, win_width, win_height, wt_params.tip_width, wt_params.tip_height,
+					wt_params.offset_x, wt_params.offset_y);
 
-					if(!pos) {
-						return;
-					}
-
-					this.layer = layer;     // keep it to be able to show popup after "OK" button is clicked
-
-					wot.search.on_update_callback(pos.posx, pos.posy, pos.y_offset, wot.popup.rule_name);
+				if(!pos) {
+					return;
 				}
+
+				this.layer = layer;     // keep it to be able to show popup after "OK" button is clicked
+				wot.search.on_update_callback(pos.posx, pos.posy, pos.y_offset, wot.popup.rule_name);
 
 			} else {
 				// Show normal popup
@@ -355,7 +352,7 @@ wot.popup = {
 	delayedhide: function(layer)
 	{
 
-		if (this.show_wtip) {
+		if (this.show_wtip && wot.search.on_update_callback) {
 			wot.wt.donuts.delayed_hide();
 			return;
 		}
