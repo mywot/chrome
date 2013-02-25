@@ -62,6 +62,7 @@
     cursor: default !important;
     color: #504f4f !important;
     direction: ltr; /* fixes issue #64 */
+    float: none; /* fixes #90 */
 }
 
 .wotcontainer * {
