@@ -1,6 +1,6 @@
 /*
 	ratingwindow.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -599,7 +599,7 @@ $.extend(wot, { ratingwindow: {
 						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
 						wot.is_defined(["rw_text", "rw_text_hdr", "rw_ok"], "wt");
 
-//		tts_wtip = true; // TODO: remove before release!
+		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
 
 		if (tts_wtip) {
 			var tip_type = "rtip-neutral"; // default style

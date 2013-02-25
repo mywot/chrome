@@ -1,6 +1,6 @@
 /*
 	background.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -21,6 +21,7 @@
 $.extend(wot, { core: {
 	usermessage: {},
 	usercontent: [],
+	activity_score: 0,
 	badge_status: null,
 	first_run: false,       // sesion variable, to know if this launch is the first after installation
 	launch_time: null,      // time when current session was started
@@ -321,8 +322,31 @@ $.extend(wot, { core: {
 					this.usercontent.push(obj);
 				}
 			}
+			this.update_activity_score();
+
 		} catch (e) {
 			console.log("core.setusercontent: failed with " + e + "\n");
+		}
+	},
+
+	update_activity_score: function ()
+	{
+		if (this.usercontent.length > 0) {
+			var uc0 = this.usercontent[0];  // we assume that ActivityScore is delivered to the addon in the first item
+			if (uc0 && uc0.label && uc0.label.length) {
+				var a_score = 0;
+				try {
+					a_score = Number(uc0.label, 10);
+				} catch (e) {
+					// Label field doesn't contain a number, assume a_score = 0
+				}
+
+				if (this.activity_score != a_score) {
+					// update local storage only when score has been changed
+					wot.prefs.set("activity_score", a_score);
+				}
+				this.activity_score = a_score;
+			}
 		}
 	},
 

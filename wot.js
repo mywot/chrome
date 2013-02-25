@@ -569,6 +569,30 @@ var wot = {
 			}
 		}
 		return true;
+	},
+
+	get_activity_score: function (onget) {
+		var pref_name = "activity_score",
+			proxy_wot = wot;
+		if (wot.core || wot.ratingwindow) {
+			// wow, we are in the background page or Rating window
+
+			if (wot.ratingwindow) {
+				// use reference to BG page
+				var bg = chrome.extension.getBackgroundPage();
+				proxy_wot = bg.wot;
+			}
+
+			if (proxy_wot.core.activity_score == 0) {
+				// lets check what we have in local storage
+				return proxy_wot.prefs.get(pref_name);
+			} else {
+				return proxy_wot.core.activity_score;
+			}
+		} else {
+			// yay, we are in a content script. Have to use functional-style
+			wot.prefs.get(pref_name, onget);
+		}
 	}
 };
 
