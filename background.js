@@ -493,6 +493,7 @@ $.extend(wot, { core: {
 
 	createmenu: function()
 	{
+		chrome.contextMenus.removeAll();    // just in case to avoid doubling
 		var menu_id = chrome.contextMenus.create({
 			title: wot.i18n("contextmenu", "open_scorecard"),
 			contexts: ["link", "selection"],
