@@ -144,6 +144,8 @@ $.extend(wot, { wt: {
 
 				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
 
+				if (wot.exp.is_running("wtip-off")) return false;
+
 				return true;
 			}
 
@@ -249,6 +251,8 @@ $.extend(wot, { wt: {
 				 }
 
 				 if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
+
+				 if (wot.exp.is_running("wtip-off")) return false;
 
 				 return true;
 			}
@@ -370,6 +374,8 @@ $.extend(wot, { wt: {
 				}
 
 				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
+
+				if (wot.exp.is_running("wtip-off")) return false;
 
 				return true;
 			}

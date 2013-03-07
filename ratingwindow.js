@@ -601,8 +601,14 @@ $.extend(wot, { ratingwindow: {
 
 		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
 
+		if (tts_wtip && bg.wot.exp) {
+			// important to run experiment only no Tips were shown before
+			tts_wtip = bg.wot.exp.is_running("wtip-on");
+		}
+
 		if (tts_wtip) {
-			var tip_type = "rtip-neutral"; // default style
+
+			var tip_type = "rtip-sticker"; // default style
 
 			// Decide what to show: normal rating window or welcome tip?
 			if (bg.wot.exp) {

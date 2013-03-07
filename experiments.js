@@ -29,8 +29,13 @@ $.extend(wot, { exp: {
 //			expires: new Date(2013, 1, 28)   // or null if never expires. Month starts from zero(!)
 //		},
 		rtip: {
-			options: ['neu', 'stk'],    // Neutral | Sticker
+			options: ["neu", "stk"],    // Neutral | Sticker
 			default: "stk",
+			expires: new Date(2013, 3, 11)
+		},
+		wtip: {
+			options: ["on", "off"],
+			default: "on",
 			expires: null
 		}
 	},
