@@ -186,6 +186,12 @@ $.extend(wot, { core: {
 	updatetabwarning: function(tab, data)
 	{
 		var cached = data.cached, warned = null;
+
+		var warning = {
+			type: wot.warningtypes.none,
+			reason: wot.warningreasons.none
+		};
+
 		try {
 
 
@@ -200,7 +206,8 @@ $.extend(wot, { core: {
 			}
 
 			if (cached.status != wot.cachestatus.ok || warned) {
-				return; /* don't change the current status */
+				if (warned) warning.reason = wot.warningreasons.skipped;
+				return warning; /* don't change the current status */
 			}
 			
 			var prefs = [
@@ -654,6 +661,7 @@ $.extend(wot, { core: {
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER, data.target);
+				wot.core.update();
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {

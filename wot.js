@@ -77,6 +77,7 @@ var wot = {
 	},
 
 	warningreasons: { /* bigger value = more important reason */
+		skipped: -1,
 		none: 0,
 		unknown: 1,
 		rating: 2,
