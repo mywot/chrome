@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WOT extra settings</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="wot.js"></script>
+    <script type="text/javascript" src="cache.js"></script>
+    <script type="text/javascript" src="prefs.js"></script>
+    <script type="text/javascript" src="experiments.js"></script>
+    <script type="text/javascript" src="surveys_core.js"></script>
+
+    <script type="text/javascript" src="settings.js"></script>
+
+    <link rel="stylesheet" href="/skin/settings.css" type="text/css"/>
+</head>
+
+<body>
+
+    <h2>Feedback Loop</h2>
+    <p id="fbl-state"></p>
+    <input type="button" value="reset" id="btn-reset-fbl">
+
+    <h2>Supers</h2>
+    <p>
+        <input id="chk-super-wtips" type="checkbox"/> <label for="chk-super-wtips">Always show Welcome Tips</label>
+    </p>
+
+    <p>
+        <input id="chk-super-fbl" type="checkbox"/> <label for="chk-super-fbl">Always show Feedback Loop if question is available (ignore any throttling)</label>
+        <br/>
+        <span class="hint">This setting only ignores throttling but not "activity score" (that one is controlled on server side). To see FBL form your activity score should be less than 10000.</span>
+    </p>
+
+</body>
+</html>

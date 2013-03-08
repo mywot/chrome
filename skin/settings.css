@@ -1,0 +1,15 @@
+body {
+    font-family: verdana;
+    font-size: 12pt;
+    margin: 2em;
+}
+
+#btn-reset-fbl {
+    background-color: #ff7979;
+}
+
+.hint {
+    font-size: 70%;
+    color: gray;
+    padding-left: 2em;
+}

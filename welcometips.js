@@ -116,7 +116,9 @@ $.extend(wot, { wt: {
 		// is now "Time To Show" Intro0 tip?
 		tts_intro0: function () {
 
-			var locale = wot.i18n("locale");
+            if (wot.prefs.get("super_wtips")) return true;
+
+            var locale = wot.i18n("locale");
 			// Mailru only. RU or EN only.
 			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
 				return false;
@@ -233,7 +235,9 @@ $.extend(wot, { wt: {
 			  *
 			  * */
 
-			var locale = wot.i18n("locale");
+            if (wot.prefs.get("super_wtips")) return true;
+
+            var locale = wot.i18n("locale");
 			// RU and EN only.
 			if (!(locale === "ru" || locale === "en")) {
 				return false;
@@ -347,6 +351,8 @@ $.extend(wot, { wt: {
 		},
 
 		tts: function () {
+
+            if (wot.prefs.get("super_wtips")) return true;
 
 			var locale = wot.i18n("locale");
 			// RU or EN only.

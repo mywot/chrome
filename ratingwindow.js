@@ -474,8 +474,19 @@ $.extend(wot, { ratingwindow: {
 
 		var wurls = wot.urls;
 
-		$("#wot-header-logo").bind("click", function() {
-			wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
+		$("#wot-header-logo").bind("click", function(event) {
+			if (event.shiftKey) {
+				event.preventDefault();
+			}
+			else {
+				wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
+			}
+		});
+
+		$("#wot-header-logo").bind("dblclick", function(event) {
+			if (event.shiftKey) {
+				wot.ratingwindow.navigate(chrome.extension.getURL("/settings.html"), wurls.contexts.rwlogo);
+			}
 		});
 
 		$("#wot-header-link-settings").bind("click", function() {
@@ -605,6 +616,8 @@ $.extend(wot, { ratingwindow: {
 			// important to run experiment only no Tips were shown before
 			tts_wtip = bg.wot.exp.is_running("wtip-on");
 		}
+
+        if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
 
 		if (tts_wtip) {
 
