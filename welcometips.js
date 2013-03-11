@@ -1,6 +1,6 @@
 /*
  content/welcome_tips.js
- Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -30,6 +30,7 @@ $.extend(wot, { wt: {
 
 	enabled: true,              // see also content/welcome_tips.js "enabled: true," line at the beginning
 	intro_shown_sent: null,     // flag to remember that we have sent already message to show the tip
+	activity_score_max: 1500,   // level of AS after which the add-on should not show Tips (see GH #83). 1500 = Bronze
 
 	settings: {
 		intro_0_shown: 0,           // how many times intro0 was shown
@@ -82,15 +83,12 @@ $.extend(wot, { wt: {
 			var locale = wot.i18n("locale");
 			if (!(locale === "ru" || locale === "en")) return;
 
+			// workaround for http://code.google.com/p/chromium/issues/detail?id=53628
 			// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
-//			var strings = ["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn", "warning_text", "warning_ok", "learnmore_link"];
-//			for(var i in strings) {
-//				if (wot.i18n("wt", strings[i]) === undefined) {
-//					return; // avoid showing "undefined" strings in Tips. Postpone to browser's restart (it fixes usually)
-//				}
-//			}
 			if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
 				"warning_text", "warning_ok", "learnmore_link"], "wt")) return;
+
+			if (wot.get_activity_score() >= wot.wt.activity_score_max) return;
 
 			this.load_settings();
 
@@ -118,7 +116,9 @@ $.extend(wot, { wt: {
 		// is now "Time To Show" Intro0 tip?
 		tts_intro0: function () {
 
-			var locale = wot.i18n("locale");
+            if (wot.prefs.get("super_wtips")) return true;
+
+            var locale = wot.i18n("locale");
 			// Mailru only. RU or EN only.
 			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
 				return false;
@@ -143,6 +143,10 @@ $.extend(wot, { wt: {
 					wot.time_since(wot.wt.settings.intro_0_shown_dt) < 7 * wot.DT.DAY ) {
 					return false;
 				}
+
+				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
+
+				if (wot.exp.is_running("wtip-off")) return false;
 
 				return true;
 			}
@@ -231,7 +235,9 @@ $.extend(wot, { wt: {
 			  *
 			  * */
 
-			var locale = wot.i18n("locale");
+            if (wot.prefs.get("super_wtips")) return true;
+
+            var locale = wot.i18n("locale");
 			// RU and EN only.
 			if (!(locale === "ru" || locale === "en")) {
 				return false;
@@ -247,6 +253,10 @@ $.extend(wot, { wt: {
 				 if (wt_settings.warning_shown === 1 && timesince_firstshow <= 7 * wot.DT.DAY) {
 					 return false;
 				 }
+
+				 if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
+
+				 if (wot.exp.is_running("wtip-off")) return false;
 
 				 return true;
 			}
@@ -342,6 +352,8 @@ $.extend(wot, { wt: {
 
 		tts: function () {
 
+            if (wot.prefs.get("super_wtips")) return true;
+
 			var locale = wot.i18n("locale");
 			// RU or EN only.
 			if (!(locale === "ru" || locale === "en")) {
@@ -366,6 +378,10 @@ $.extend(wot, { wt: {
 					wot.time_since(wot.wt.settings.donuts_shown_dt) < 7 * wot.DT.DAY ) {
 					return false;
 				}
+
+				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
+
+				if (wot.exp.is_running("wtip-off")) return false;
 
 				return true;
 			}

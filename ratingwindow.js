@@ -1,6 +1,6 @@
 /*
 	ratingwindow.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -474,8 +474,19 @@ $.extend(wot, { ratingwindow: {
 
 		var wurls = wot.urls;
 
-		$("#wot-header-logo").bind("click", function() {
-			wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
+		$("#wot-header-logo").bind("click", function(event) {
+			if (event.shiftKey) {
+				event.preventDefault();
+			}
+			else {
+				wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
+			}
+		});
+
+		$("#wot-header-logo").bind("dblclick", function(event) {
+			if (event.shiftKey) {
+				wot.ratingwindow.navigate(chrome.extension.getURL("/settings.html"), wurls.contexts.rwlogo);
+			}
 		});
 
 		$("#wot-header-link-settings").bind("click", function() {
@@ -599,10 +610,18 @@ $.extend(wot, { ratingwindow: {
 						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
 						wot.is_defined(["rw_text", "rw_text_hdr", "rw_ok"], "wt");
 
-//		tts_wtip = true; // TODO: remove before release!
+		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
+
+		if (tts_wtip && bg.wot.exp) {
+			// important to run experiment only no Tips were shown before
+			tts_wtip = bg.wot.exp.is_running("wtip-on");
+		}
+
+        if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
 
 		if (tts_wtip) {
-			var tip_type = "rtip-neutral"; // default style
+
+			var tip_type = "rtip-sticker"; // default style
 
 			// Decide what to show: normal rating window or welcome tip?
 			if (bg.wot.exp) {

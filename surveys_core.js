@@ -55,7 +55,7 @@ $.extend(wot, { surveys: {
 		if (!wot.enable_surveys) return;    // check global enabler flag
 
 		this.optedout = this.is_optedout();
-		if (this.optedout) return;         // do nothing if user has opted out of survey's feature
+		if (this.optedout && !this.is_super_fbl()) return; // do nothing if user has opted out of survey's feature
 
 		this.last_time_asked = wot.prefs.get(wot.surveys.PREFNAMES.lasttime);
 		this.load_asked();
@@ -110,6 +110,8 @@ $.extend(wot, { surveys: {
 				// no question was given for the current website - do nothing
 				return false;
 			}
+
+            if (_this.is_super_fbl()) return true; // forced to enable FBL if "super" is on and a question is available
 
 			// on special domains we should always show the survey if there is a special password given (for testing purposes)
 			// e.g. try this url http://api.mywot.com/test.html#surveymewot
@@ -361,6 +363,11 @@ $.extend(wot, { surveys: {
 		_this.site_calm_period_notified = false;
 		_this.calm_period_notified = false;
 		_this.optedout_notified = false;
-	}
+	},
+
+    is_super_fbl: function () {
+        // return "super" status which is only for debug purpose (not for users)
+        return wot.prefs.get("super_fbl");
+    }
 
 }});

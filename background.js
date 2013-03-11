@@ -1,6 +1,6 @@
 /*
 	background.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -21,6 +21,7 @@
 $.extend(wot, { core: {
 	usermessage: {},
 	usercontent: [],
+	activity_score: 0,
 	badge_status: null,
 	first_run: false,       // sesion variable, to know if this launch is the first after installation
 	launch_time: null,      // time when current session was started
@@ -185,6 +186,12 @@ $.extend(wot, { core: {
 	updatetabwarning: function(tab, data)
 	{
 		var cached = data.cached, warned = null;
+
+		var warning = {
+			type: wot.warningtypes.none,
+			reason: wot.warningreasons.none
+		};
+
 		try {
 
 
@@ -199,7 +206,8 @@ $.extend(wot, { core: {
 			}
 
 			if (cached.status != wot.cachestatus.ok || warned) {
-				return; /* don't change the current status */
+				if (warned) warning.reason = wot.warningreasons.skipped;
+				return warning; /* don't change the current status */
 			}
 			
 			var prefs = [
@@ -321,8 +329,31 @@ $.extend(wot, { core: {
 					this.usercontent.push(obj);
 				}
 			}
+			this.update_activity_score();
+
 		} catch (e) {
 			console.log("core.setusercontent: failed with " + e + "\n");
+		}
+	},
+
+	update_activity_score: function ()
+	{
+		if (this.usercontent.length > 0) {
+			var uc0 = this.usercontent[0];  // we assume that ActivityScore is delivered to the addon in the first item
+			if (uc0 && uc0.label && uc0.label.length) {
+				var a_score = 0;
+				try {
+					a_score = Number(uc0.label, 10);
+				} catch (e) {
+					// Label field doesn't contain a number, assume a_score = 0
+				}
+
+				if (this.activity_score != a_score) {
+					// update local storage only when score has been changed
+					wot.prefs.set("activity_score", a_score);
+				}
+				this.activity_score = a_score;
+			}
 		}
 	},
 
@@ -469,6 +500,7 @@ $.extend(wot, { core: {
 
 	createmenu: function()
 	{
+		chrome.contextMenus.removeAll();    // just in case to avoid doubling
 		var menu_id = chrome.contextMenus.create({
 			title: wot.i18n("contextmenu", "open_scorecard"),
 			contexts: ["link", "selection"],
@@ -629,6 +661,7 @@ $.extend(wot, { core: {
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER, data.target);
+				wot.core.update();
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {

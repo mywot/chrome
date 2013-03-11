@@ -1,6 +1,6 @@
 /*
 	prefs.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -56,7 +56,10 @@ $.extend(wot, { prefs: {
 		warning_unknown_1:		false,
 		warning_unknown_2:		false,
 		warning_unknown_4:		false,
-		ratingwindow_shown:     0   // how many times RatingWindow was opened
+		ratingwindow_shown:     0,   // how many times RatingWindow was opened
+		activity_score:         0,
+        super_wtips:            false,  // "super" settings for debug purpose: "Show welcome tips always"
+        super_fbl:              false   // "super" settings for debug purpose: "Show FBL always if question is available"
 	},
 
 	set: function(name, value)
