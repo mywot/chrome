@@ -4,7 +4,8 @@ body {
     margin: 2em;
 }
 
-#btn-reset-fbl {
+#btn-reset-fbl,
+#btn-reset-cache {
     background-color: #ff7979;
 }
 

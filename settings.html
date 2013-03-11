@@ -18,7 +18,7 @@
 
     <h2>Feedback Loop</h2>
     <p id="fbl-state"></p>
-    <input type="button" value="reset" id="btn-reset-fbl">
+    <input type="button" value="reset throttling state" id="btn-reset-fbl">
 
     <h2>Supers</h2>
     <p>
@@ -28,8 +28,13 @@
     <p>
         <input id="chk-super-fbl" type="checkbox"/> <label for="chk-super-fbl">Always show Feedback Loop if question is available (ignore any throttling)</label>
         <br/>
-        <span class="hint">This setting only ignores throttling but not "activity score" (that one is controlled on server side). To see FBL form your activity score should be less than 10000.</span>
+        <span class="hint">This setting only ignores throttling but not "activity score" (that one is controlled on server side). To see FBL form your activity score has to be less than 10000.</span>
     </p>
+
+    <h2>Common</h2>
+    <p id="cache-state"></p>
+    <input type="button" value="reset cache" id="btn-reset-cache">
+
 
 </body>
 </html>

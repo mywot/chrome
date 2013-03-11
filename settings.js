@@ -21,6 +21,12 @@
 $.extend(wot, {
     settings_ui: {
 
+        reset_cache: function () {
+            var bg = chrome.extension.getBackgroundPage();
+            bg.wot.cache.clearall();
+            $("#cache-state").text("Cache is cleared.");
+        },
+
         print_fbl: function () {
         },
 
@@ -49,6 +55,7 @@ $.extend(wot, {
                 click(wot.settings_ui.supers_fbl).
                 attr("checked", wot.prefs.get("super_fbl"));
 
+            $("#btn-reset-cache").click(wot.settings_ui.reset_cache);
         }
     }
 });
