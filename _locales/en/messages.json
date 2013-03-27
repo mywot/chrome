@@ -189,5 +189,11 @@
 	},
 	"fbl_final": {
 		"message": "Thank you!"
-	}
+	},
+	"fbl_this_website": {
+		"message": "this website"
+	},
+    "fbl_dismiss": {
+        "message": "dismiss"
+    }
 }

@@ -77,6 +77,7 @@ $.extend(wot, { ga: {
 		FBL_shown:              "FBL_shown",
 		FBL_submit:             "FBL_submit",
 		FBL_closed:             "FBL_closed",
+		FBL_dismiss:            "FBL_dismiss",
 		FBL_optout_shown:       "FBL_optout_shown",
 		FBL_optout_shown_smb:   "FBL_optout_shown:smb", // used for additional stats purposes: tells submittions number
 		FBL_optout_yes:         "FBL_optout_yes",

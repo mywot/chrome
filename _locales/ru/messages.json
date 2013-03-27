@@ -189,5 +189,11 @@
 	},
 	"fbl_final": {
 		"message": "Спасибо!"
-	}
+	},
+    "fbl_this_website": {
+        "message": "этот сайт"
+    },
+    "fbl_dismiss": {
+        "message": "пропустить"
+    }
 }
