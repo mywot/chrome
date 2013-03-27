@@ -68,6 +68,9 @@
 	"ratingwindow_settings": {
 		"message": "Налаштування"
 	},
+    "ratingwindow_forum": {
+        "message": "Форум"
+    },
 	"ratingwindow_guide": {
 		"message": "Керівництво"
 	},

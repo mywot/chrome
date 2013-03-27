@@ -100,6 +100,7 @@ var wot = {
 			rwlogo:     "rw-logo",
 			rwsettings: "rw-settings",
 			rwguide:    "rw-guide",
+            rwforum:    "rw-forum",
 			rwviewsc:   "rw-viewsc",
 			rwprofile:  "rw-profile",
 			rwmsg:      "rw-msg",

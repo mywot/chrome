@@ -72,7 +72,7 @@ body {
 	width: 242px;
 }
 .wot-header-link,
-#wot-header-link-separator {
+.header-link-separator {
 	color: #8f8f8f;
 	display: table-cell;
 	float: right;
@@ -84,7 +84,7 @@ body {
 	margin-left: 0px;
 	margin-right: 0px;
 }
-#wot-header-link-separator {
+.header-link-separator {
 	border-right: 1px solid #8f8f8f;
 	height: 11px;
 	margin-bottom: 9px;

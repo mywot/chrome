@@ -71,6 +71,9 @@
 	"ratingwindow_guide": {
 		"message": "Opas"
 	},
+    "ratingwindow_forum": {
+        "message": "Foorumi"
+    },
 	"ratingwindow_wotrating": {
 		"message": "WOT-luokitus"
 	},
