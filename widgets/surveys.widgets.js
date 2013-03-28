@@ -313,7 +313,7 @@ var surveys = {
 		on_close: function (e) {
 			var _this = surveys;
 			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_closed, _this.stats.get_impressions());
-			surveys.report("close", {});
+            _this.report("close", {});
 		},
 
 		on_optout: function (e) {
@@ -434,6 +434,7 @@ var surveys = {
 
 			// report after short delay to make sure GA code is inited
 			setTimeout(function () {
+                wot.ga.set_fbl_question(surveys.question.id);
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_shown, _this.target);
 			}, 500);
 

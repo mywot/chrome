@@ -131,15 +131,15 @@ $.extend(wot, { ga: {
 		 *  2. partner = (wot) | mailru
 		 *  3.
 		 *  4. experiments
-		 *  5. accessible = acc | normal
+		 *  5. FBL_QID (page level). Was accessible = acc | normal until 28.03.2013
    	     * */
 
 		// let's measure how many "accessible" users do we have on Chrome
-		var accessible = wot.env.is_accessible ? "acc" : "normal",
-			partner = wot.prefs.get("partner") || "undefined";  // set partner
+//		var accessible = wot.env.is_accessible ? "acc" : "normal",
+		var partner = wot.prefs.get("partner") || "undefined";  // set partner
 
 		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
-		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)
+//		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)  // disabled from 28.03.2013 to to be substituted by FBL_QID
 
 		wot.ga.set_experiments();
 
@@ -153,8 +153,11 @@ $.extend(wot, { ga: {
 				_gaq.push(['_setCustomVar', 4, 'Experiments', exps, 1]); // scope = 1 (visitor level)
 			}
 		}
+	},
 
-	}
+    set_fbl_question: function (question_id) {
+        _gaq.push(['_setCustomVar', 5, 'FBL_QID', String(question_id), 3]); // scope = 3 (page level)
+    }
 
 }});
 

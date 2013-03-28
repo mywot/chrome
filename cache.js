@@ -217,7 +217,6 @@ $.extend(wot, { cache: {
 					var question_id = parseInt($("questionId", this).text(), 10);
 					var question_text = $("questionText", this).text().trim();
                     var dismiss_flag = !!$("dismiss", this).text();
-
 					var choices = [];
 
 					$("choiceText", this).each(function() {
