@@ -136,7 +136,7 @@ $.extend(wot, { ga: {
 
 		// let's measure how many "accessible" users do we have on Chrome
 		var accessible = wot.env.is_accessible ? "acc" : "normal",
-			partner = wot.prefs.get("partner") || "";  // set partner
+			partner = wot.prefs.get("partner") || "undefined";  // set partner
 
 		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
 		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)
