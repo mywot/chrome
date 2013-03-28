@@ -242,9 +242,14 @@ body {
 }
 
 .surveys-action {
-    position: absolute;
-    right: 1em;
+    position: relative;
+    right: 0;
     margin-top: -34px;
+    max-width: 33%;
+    overflow: hidden;
+    text-align: right;
+    height: 2.5em;
+    margin-left: auto;
 }
 
 .action-dismiss {

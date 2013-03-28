@@ -216,7 +216,7 @@ $.extend(wot, { cache: {
 					// "this" here contains <question> tag's content
 					var question_id = parseInt($("questionId", this).text(), 10);
 					var question_text = $("questionText", this).text().trim();
-                    var dismiss_flag = !!$("dismiss", this).text();
+                    var dismiss_text = $("dismiss", this).text();
 					var choices = [];
 
 					$("choiceText", this).each(function() {
@@ -232,7 +232,7 @@ $.extend(wot, { cache: {
 							id: question_id,
 							text: question_text,
 							choices: choices,
-                            show_dismiss: dismiss_flag
+                            dismiss_text: dismiss_text
 						};
 					}
 					return false;   // process only first element whether there are several

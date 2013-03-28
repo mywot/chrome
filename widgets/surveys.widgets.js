@@ -268,8 +268,7 @@ var surveys = {
 			".optout-buttons > .button-yes": wot.i18n("fbl", "optout_yes"),
 			".optout-buttons > .button-no": wot.i18n("fbl", "optout_no"),
 			"#btab-whatsthis": wot.i18n("fbl", "whatisthis_text"),
-			".thank-you-text": wot.i18n("fbl", "final"),
-            ".action-dismiss": wot.i18n("fbl", "dismiss")
+			".thank-you-text": wot.i18n("fbl", "final")
 		},
 
 		localize: function () {
@@ -404,7 +403,10 @@ var surveys = {
 
             $question.html(text);  // should be safe since we sanitized the question
 
-            $(".surveys-action").toggleClass("hidden", !_this.question.show_dismiss);
+            if (_this.question.dismiss_text) {
+                $(".action-dismiss").text(_this.question.dismiss_text);
+            }
+            $(".surveys-action").toggleClass("hidden", !_this.question.dismiss_text);
 		},
 
 		update_submit_status: function () {
