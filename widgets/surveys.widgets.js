@@ -311,9 +311,8 @@ var surveys = {
 
 		on_close: function (e) {
 			var _this = surveys;
-			var stat_impressions = (_this.stats ? _this.stats.impressions + 1 : 0) || 0;
 			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_closed, _this.stats.get_impressions());
-			surveys.report("close", {});
+            _this.report("close", {});
 		},
 
 		on_optout: function (e) {
@@ -381,14 +380,33 @@ var surveys = {
 			}
 		},
 
+        on_dismiss: function (e) {
+            var _this = surveys;
+            wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_dismiss, _this.stats.get_impressions());
+            surveys.report("close", {});
+        },
+
 		update_texts: function () {
 			var _this = surveys;
 
+            var $question = $(".surveys-question");
+
+            var visible_host = _this.decodedtarget.length < 35 ? _this.decodedtarget : (wot.i18n("fbl", "this_website") || "this website");
+
 			// sanitize the questions (to avoid XSS with addon) and replace placeholder %site% with target name
 			var text = wot.utils.htmlescape(_this.question.text).replace(/%site%/,
-				"<span class='domainname'>" + _this.decodedtarget + "</span>");
+				"<span class='domainname'>" + visible_host + "</span>");
 
-			$(".surveys-question").html(text);  // should be safe since we sanitized the question
+            if (text.length > 100) {
+                $question.addClass("long");
+            }
+
+            $question.html(text);  // should be safe since we sanitized the question
+
+            if (_this.question.dismiss_text) {
+                $(".action-dismiss").text(_this.question.dismiss_text);
+            }
+            $(".surveys-action").toggleClass("hidden", !_this.question.dismiss_text);
 		},
 
 		update_submit_status: function () {
@@ -418,6 +436,7 @@ var surveys = {
 
 			// report after short delay to make sure GA code is inited
 			setTimeout(function () {
+                wot.ga.set_fbl_question(surveys.question.id);
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_shown, _this.target);
 			}, 500);
 
@@ -430,6 +449,7 @@ var surveys = {
 		$(".surveys-optout").click(_this.ui.on_optout);
 		$(".close-button").click(_this.ui.on_close);
 		$(".surveys-whatsthis").click(_this.ui.on_whatisthis);
+        $(".action-dismiss").click(_this.ui.on_dismiss);
 		$(".wot-logo").click(_this.ui.on_logo);
 
 		$(".close-button-secondary").click(function (event) {

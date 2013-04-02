@@ -71,6 +71,9 @@
 	"ratingwindow_guide": {
 		"message": "Руководство"
 	},
+    "ratingwindow_forum": {
+        "message": "Форум"
+    },
 	"ratingwindow_wotrating": {
 		"message": "Оценка от WOT"
 	},
@@ -189,5 +192,11 @@
 	},
 	"fbl_final": {
 		"message": "Спасибо!"
-	}
+	},
+    "fbl_this_website": {
+        "message": "этот сайт"
+    },
+    "fbl_dismiss": {
+        "message": "пропустить"
+    }
 }

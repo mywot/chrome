@@ -71,6 +71,9 @@
 	"ratingwindow_guide": {
 		"message": "指南"
 	},
+    "ratingwindow_forum": {
+        "message": "論壇"
+    },
 	"ratingwindow_wotrating": {
 		"message": "WOT 評等"
 	},

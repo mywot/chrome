@@ -23,7 +23,7 @@ wot.surveys = {
 	wrapper_id: "wot_surveys_wrapper",
 	is_shown: false,
 	wrapper: null,
-	pheight: 350,
+	pheight: 400,
 	pwidth: 392,
 	px: 10,
 	py: 10,
@@ -114,11 +114,16 @@ wot.surveys = {
 			"z-index: 2147483647; " +
 			"border: none;");
 
+//        wrapper.addEventListener('load', _this.on_contentload);   // use it for managing after-load life of the frame
 		wrapper.setAttribute("src", chrome.extension.getURL("/widgets/surveys.html"));
 		wrapper.setAttribute("name", encoded_data);  // transfer question's data via "name" property of iframe
 
 		wot.utils.attach_element(wrapper); // attach iframe wrapper to DOM
-	}
+	},
+
+    on_contentload: function(e) {
+//        console.log("frame content loaded", e);
+    }
 };
 
 wot.surveys.pre_init();

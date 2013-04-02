@@ -71,6 +71,9 @@
 	"ratingwindow_guide": {
 		"message": "Przewodnik"
 	},
+    "ratingwindow_forum": {
+        "message": "Forów"
+    },
 	"ratingwindow_wotrating": {
 		"message": "Ocena WOT"
 	},

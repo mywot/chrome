@@ -71,6 +71,9 @@
 	"ratingwindow_guide": {
 		"message": "Leitfaden"
 	},
+    "ratingwindow_forum": {
+        "message": "Foren"
+    },
 	"ratingwindow_wotrating": {
 		"message": "WOT-Bewertung"
 	},

@@ -427,6 +427,9 @@ $.extend(wot, { ratingwindow: {
 		[	{	selector: "#wot-header-link-guide",
 				text: wot.i18n("ratingwindow", "guide")
 			}, {
+                selector: "#wot-header-link-forum",
+                text: wot.i18n("ratingwindow", "forum")
+            }, {
 				selector: "#wot-header-link-settings",
 				text: wot.i18n("ratingwindow", "settings")
 			}, {
@@ -492,9 +495,14 @@ $.extend(wot, { ratingwindow: {
 		$("#wot-header-link-settings").bind("click", function() {
 			wot.ratingwindow.navigate(wurls.settings, wurls.contexts.rwsettings);
 		});
+
 		$("#wot-header-link-guide").bind("click", function() {
 			wot.ratingwindow.navigate(wurls.settings + "/guide", wurls.contexts.rwguide);
 		});
+
+        $("#wot-header-link-forum").bind("click", function() {
+            wot.ratingwindow.navigate(wurls.base + "forum", wurls.contexts.rwforum);
+        });
 
 		$("#wot-header-button").bind("click", function() {
 			bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_BTN_CLOSE);

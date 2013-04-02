@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20130311,
+	version: 20130328,
 	platform: "chrome",
 	debug: false,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
@@ -100,6 +100,7 @@ var wot = {
 			rwlogo:     "rw-logo",
 			rwsettings: "rw-settings",
 			rwguide:    "rw-guide",
+            rwforum:    "rw-forum",
 			rwviewsc:   "rw-viewsc",
 			rwprofile:  "rw-profile",
 			rwmsg:      "rw-msg",
