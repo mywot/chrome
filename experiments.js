@@ -36,7 +36,7 @@ $.extend(wot, { exp: {
 		wtip: {
 			options: ["on", "off"],
 			default: "on",
-			expires: new Date(2013, 3, 31)
+			expires: new Date(2013, 3, 30)
 		}
 	},
 
