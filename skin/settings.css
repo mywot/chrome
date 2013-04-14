@@ -4,6 +4,10 @@ body {
     margin: 2em;
 }
 
+h2 {
+    font-size: 110%;
+}
+
 #btn-reset-fbl,
 #btn-reset-cache {
     background-color: #ff7979;

@@ -24,6 +24,7 @@ $.extend(wot, { api: {
 		maxparamlength: 4096,
 		server: "api.mywot.com",
 		secure: true,
+        prefetch_link: false,   // if true, /link API will fetch user's testimonies
 		updateformat: 4,
 		updateinterval: 3 * 3600 * 1000,
 		cookieinterval: 86340 * 1000,
@@ -366,12 +367,18 @@ $.extend(wot, { api: {
 			return;
 		}
 
+        var params = {
+            hosts: hosts
+        };
+
+        if (wot.api.info.prefetch_link) {
+            params.mode = "prefetch";
+        }
+
 		this.call("link", {
 				authentication: true,
 				encryption: true
-			}, {
-				hosts: hosts
-			},
+			}, params,
 			function(request)
 			{
 				batch.forEach(function(h) {
@@ -651,6 +658,9 @@ $.extend(wot, { api: {
 
 	update: function()
 	{
+        // update the internal flag for prefetching testimonies
+        wot.api.info.prefetch_link = !!wot.prefs.get("super_showtestimonies");
+
 		var state = wot.prefs.get("update:state") || {
 			last: 0,
 			lastversion: wot.version
