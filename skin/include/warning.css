@@ -63,6 +63,7 @@
     color: #504f4f !important;
     direction: ltr; /* fixes issue #64 */
     float: none; /* fixes #90 */
+    height: auto; /* fixes #99 */
 }
 
 .wotcontainer * {
@@ -86,6 +87,7 @@
     color: #504f4f !important;
     width: auto; /* fixes issue #64 */
     float: none; /* fixes issue #64 */
+    height: auto; /* fixes #99 */
 }
 
 .wot-logo {
