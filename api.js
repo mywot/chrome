@@ -22,7 +22,8 @@ $.extend(wot, { api: {
 	info: {
 		maxhosts: 100,
 		maxparamlength: 4096,
-		server: "api.mywot.com",
+//		server: "api.mywot.com",
+		server: "vor.dev.mywot.com",
 		secure: true,
         prefetch_link: false,   // if true, /link API will fetch user's testimonies
 		updateformat: 4,

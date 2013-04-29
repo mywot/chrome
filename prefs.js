@@ -59,8 +59,38 @@ $.extend(wot, { prefs: {
 		ratingwindow_shown:     0,   // how many times RatingWindow was opened
 		activity_score:         0,
         super_wtips:            false,  // "super" settings for debug purpose: "Show welcome tips always"
-        super_fbl:              false   // "super" settings for debug purpose: "Show FBL always if question is available"
-	},
+        super_fbl:              false,   // "super" settings for debug purpose: "Show FBL always if question is available"
+        "update:cats": {
+            "101": { name: "Malicious content (e.g. viruses, spyware)", short: "Malicious content", g: 0 },
+            "102": { name: "Bad customer / Shopping experience", short: "Bad customer experience", g: 0 },
+            "103": { name: "Phishing", g: 0 },
+            "104": { name: "Scam", g: 0 },
+            "105": { name: "Potentially illegal", g: 0 },
+            // unsatisfactory
+            "201": { name: "Misleading marketing & information", short: "Misleading information", g: 2 },
+            "202": { name: "Privacy risk", g: 2 },
+            "203": { name: "Suspicious / potentially risky", g: 2 },
+            "204": { name: "Violence, hate, racism, discrimination", short: "Violence, hate, discrimination", g: 2 },
+            "205": { name: "Spam", g: 2 },
+            "206": { name: "Potentially unwanted programs (e.g. toolbars, types of adware)", short: "Potentially unwanted programs", g: 2 },
+            "207": { name: "Ads / pop-ups", g: 2 },
+            // neutral
+            "301": { name: "Tracking services", g: 4 },
+            "302": { name: "Alternative medicine / treatments / Controversial products", short: "Alternative medicine / Controversial", g: 4 },
+            "303": { name: "Opinions / Religion / Politics / Ideologies etc.", short: "Opinions / Religion / Politics", g: 4 },
+            "304": { name: "Other", g: 4 },
+            // good
+            "501": { name: "Good site", g: 9 },
+
+            // poor (child safety)
+            "401": { name: "Pornography & nudity", g: 10, application: 4, rmin: 0, rmax: 39 },
+            "403": { name: "Gruesome / scary / shocking content", short: "Gruesome / shocking", g: 10, application: 4, rmin: 0, rmax: 39  },
+            // unsatisfactory (child safety)
+            "402": { name: "Incidental nudity (provocative attire)", short: "Incidental nudity", g: 12, application: 4, rmin: 40, rmax: 59  },
+            // good (child safety)
+            "404": { name: "Designed for children", g: 19, application: 4, rmin: 60, rmax: 100  }
+        }
+    },
 
 	set: function(name, value)
 	{

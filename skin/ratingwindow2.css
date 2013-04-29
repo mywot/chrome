@@ -1,0 +1,1288 @@
+/*
+	ratingwindow.css
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+
+	This file is part of WOT.
+
+	WOT is free software: you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	WOT is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+	License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with WOT. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+body {
+    overflow: hidden;
+    cursor: default;
+    -webkit-user-select: none;
+    width: 580px;
+}
+
+#wot-ratingwindow {
+    display: block;
+    padding: 1em 0.7em 0;
+}
+
+#wot-elements {
+    background: #ffffff;
+    display: block;
+    font-family: Tahoma, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /*width: 316px;*/
+}
+
+/* header, always visible */
+#wot-header {
+    position: relative;
+}
+
+/* Always visible */
+#ratings-area {
+    min-height: 85px;
+    position: relative;
+}
+
+.view-mode #ratings-area:after {
+    position: absolute;
+    left: -13px;
+    width: 105%;
+    border-bottom: 1px solid #D9D9D9;
+    content: "";
+    bottom: 0;
+}
+
+/* Always visible */
+#main-area {
+    min-height: 191px;
+    padding: 4px 10px;
+    margin: 0 -11px;
+}
+
+.view-mode #main-area {
+    background-color: #F9F9F9;
+}
+
+/* Always visible */
+#bottom-area {
+    /*min-height: 3em;*/
+    padding: 0 8px;
+}
+
+.rate #bottom-area {
+    min-height: 3em;
+}
+
+#header-line-1 {
+    min-height: 1em;
+}
+
+#header-line-2 {
+    min-height: 1.4em;
+    margin-top: -4px;
+    padding-left: 4px;
+}
+
+#wot-header-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("fusion/logo.png") top left no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    /*float: left;*/
+    height: 17px;
+    width: 42px;
+}
+
+/* we should not modify logo in accessible mode */
+/*#wot-header-logo.accessible {*/
+/*background: url("fusion/accessible/logo.png") top left no-repeat;*/
+/*}*/
+
+#wot-header-links {
+    position: absolute;
+    top: 0;
+    right: 26px;
+}
+
+.wot-header-link {
+    color: #8f8f8f;
+    display: table-cell;
+    /*float: right;*/
+    font-size: 11px;
+    height: 16px;
+    /*line-height: 16px;*/
+    padding: 0 0.6em;
+}
+
+.wot-header-link:hover {
+    color: #3073c5;
+    cursor: pointer;
+}
+
+.wot-header-link.accessible:hover {
+    color: #333;
+    text-decoration: underline;
+}
+#wot-header-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 16px;
+    width: 16px;
+    background: url("fusion/close.png") top left no-repeat;
+}
+#wot-header-close:hover {
+    background: url("fusion/close-hover.png") top left no-repeat;
+    cursor: pointer;
+}
+#wot-header-close:active {
+    background: url("fusion/close-active.png") top left no-repeat;
+}
+#wot-header-close.accessible {
+    background: url("fusion/accessible/close.png") top left no-repeat;
+}
+#wot-header-close.accessible:hover {
+    background: url("fusion/accessible/close-hover.png") top left no-repeat;
+    cursor: pointer;
+}
+#wot-header-close.accessible:active {
+    background: url("fusion/accessible/close-active.png") top left no-repeat;
+}
+
+#wot-title-text {
+    position: absolute;
+    left: 53px;
+    color: #777676;
+    font-size: 12px;
+    overflow: hidden;
+    top: -3px;
+}
+
+/*#wot-title-text[status="information"] {*/
+/*color: #4e4e4e;*/
+/*}*/
+
+/* Hostname */
+#hostname-text {
+    margin-left: 50px;
+    color: #777676;
+    font-size: 11px;
+    font-weight: bold;
+    overflow: hidden;
+    vertical-align: top;
+    -webkit-user-select: text;
+}
+
+/*#hostname-text[status="information"] {*/
+/*color: #4e4e4e;*/
+/*}*/
+
+/* rating header */
+#wot-rating-header {
+    color: #878787;
+    display: none;
+    font-size: 11px;
+    height: 17px;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 0;
+    padding-top: 2px;
+    width: 312px;
+}
+
+#wot-myratings-header {
+    position: relative;
+    min-height: 1em;
+    margin-top: 0.7em;
+    left: 8px;
+}
+
+/* Headers for rating controls */
+#wot-myrating-0-header,
+#wot-myrating-4-header {
+    /*left: 1em;*/
+    font-size: 9pt;
+    position: absolute;
+    color: #5c5c5c;
+}
+
+#wot-myrating-0-header {
+    font-weight: bold;
+}
+
+/* Diff for CS rating control */
+#wot-myrating-4-header {
+    left: 268px;
+    color: rgb(92, 92, 92);
+    font-size: 9pt;
+}
+
+/* rating */
+.wot-rating-border {
+    border-top: 1px solid #f4f4f4;
+    display: block;
+    height: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 312px;
+}
+.wot-rating {
+    position: absolute;
+    height: 60px;
+    margin-left: 2px;
+    margin-right: 0;
+    width: 318px;
+    -webkit-user-select: none;
+}
+
+/* Child Safety rating control */
+#wot-rating-4 {
+    left: 269px;
+}
+
+#rated-votes {
+    margin-top: 60px;
+    font-size: 12px;
+    padding: 11px 10px 6px 45px;
+    height: 2em;
+    background-image: url(../skin/b/categories_icon.png);
+    background-repeat: no-repeat;
+    background-position: 6px 6px;
+}
+
+#voted-categories {
+    width: 425px;
+    position: absolute;
+    overflow: hidden;
+    color: #acacac;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 1px 0;
+}
+
+#rated-votes.voted #voted-categories {
+    color: #6A6A6A;
+}
+
+#change-ratings {
+    position: absolute;
+    right: 20px;
+    border-bottom: 1px dotted #3163B9;
+    color: #3163B9;
+    cursor: pointer;
+}
+
+.wot-rating-header {
+    color: #5C5C5C;
+    display: block;
+    font-size: 11px;
+    margin-bottom: 0.7em;
+    margin-top: 0.8em;
+    width: 312px;
+    font-weight: bold;
+}
+
+.wot-rating-data {
+    display: block;
+}
+
+.rating-values {
+    position: relative;
+    min-height: 30px;
+}
+
+.rep-tr-block {
+    min-height: 62px;
+}
+
+.rep-cs-block {
+    min-height: 40px;
+}
+
+.wot-rating-reputation {
+    position: absolute;
+    background: url("fusion/28_28/default.png") top left no-repeat;
+    height: 28px;
+    width: 28px;
+}
+
+.wot-rating-reputation[reputation="rx"] {
+    background: url("fusion/28_28/rx.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r0"] {
+    background: url("fusion/28_28/r0.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r1"] {
+    background: url("fusion/28_28/r1.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r2"] {
+    background: url("fusion/28_28/r2.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r3"] {
+    background: url("fusion/28_28/r3.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r4"] {
+    background: url("fusion/28_28/r4.png") top left no-repeat;
+}
+.wot-rating-reputation[reputation="r5"] {
+    background: url("fusion/28_28/r5.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible {
+    background: url("fusion/accessible/28_28/default.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r0"] {
+    background: url("fusion/accessible/28_28/r0.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="rx"] {
+    background: url("fusion/28_28/rx.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r1"] {
+    background: url("fusion/accessible/28_28/r1.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r2"] {
+    background: url("fusion/accessible/28_28/r2.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r3"] {
+    background: url("fusion/accessible/28_28/r3.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r4"] {
+    background: url("fusion/accessible/28_28/r4.png") top left no-repeat;
+}
+.wot-rating-reputation.accessible[reputation="r5"] {
+    background: url("fusion/accessible/28_28/r5.png") top left no-repeat;
+}
+
+/* Important to put this rule after rules with background changes */
+/*.rep-cs-block .wot-rating-reputation {*/
+/*background-size: 89%;*/
+/*background-position: 2px 4px;*/
+/*}*/
+
+.wot-rating-confidence {
+    position: absolute;
+    height: 18px;
+    margin-left: 144px;
+    margin-top: 9px;
+    width: 51px;
+    background: url("fusion/confidence-0.png") top left no-repeat;
+}
+
+.wot-rating-confidence[confidence="c1"] {
+    background: url("fusion/confidence-1.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c2"] {
+    background: url("fusion/confidence-2.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c3"] {
+    background: url("fusion/confidence-3.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c4"] {
+    background: url("fusion/confidence-4.png") top left no-repeat;
+}
+.wot-rating-confidence[confidence="c5"] {
+    background: url("fusion/confidence-5.png") top left no-repeat;
+}
+
+.rating-legend-wrapper {
+    position: absolute;
+    margin: 2px 0 auto 43px;
+    width: 85px;
+}
+
+.rating-legend {
+    position: relative;
+    height: 1.3em;
+    margin: -2px 0 0em;
+    padding: 5px 2px;
+    border: 1px solid #CBCBCB;
+    background-image: -webkit-linear-gradient(top, #FEFEFE, #E4E4E4);
+    color: #555;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 4px;
+    display: block;
+    font-size: 8pt;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.rating-legend:after {
+    position: absolute;
+    top: 6px;
+    right: -9px;
+    width: 9px;
+    height: 13px;
+    content: "";
+    background-image: url("b/rep-explanation.png");
+    background-repeat: no-repeat;
+}
+
+.rating-legend[r=r0] {
+}
+
+.rating-legend[r=r1],
+.rating-legend[r=r2] {
+    border-color: #f76d66;
+    background-image: -webkit-linear-gradient(top, rgba(252, 162, 162, 0.28), rgba(236, 29, 28, 0.28));
+}
+
+.rating-legend[r=r1]:after,
+.rating-legend[r=r2]:after {
+    background-position: 0 -54px;
+}
+
+.rating-legend[r=r3] {
+    border-color: #fecd35;
+    background-image: -webkit-linear-gradient(top, rgba(253, 234, 167, 0.28), rgba(246, 189, 83, 0.28));
+}
+
+.rating-legend[r=r3]:after {
+    background-position: 0 -36px;
+}
+
+.rating-legend[r=r4],
+.rating-legend[r=r5] {
+    border-color: #84ca4a;
+    background-image: -webkit-linear-gradient(top, rgba(215, 240, 179, 0.28), rgba(96, 178, 24, 0.28));
+}
+
+.rating-legend[r=r4]:after,
+.rating-legend[r=r5]:after {
+    background-position: 0 -18px;
+}
+
+.wot-rating-testimony {
+    display: block;
+    float: left;
+    height: 16px;
+    margin-left: 0;
+    margin-top: 2px;
+    position: relative;
+}
+
+.wot-rating-bounds {
+    position: relative;
+    font-size: 10px;
+    height: 1.3em;
+    margin: 0 8px 0 8px;
+    color: #919191;
+    opacity: 0;
+    -webkit-transition: opacity 0.5s;
+}
+
+.wot-rating:hover .wot-rating-bounds {
+    opacity: 1;
+}
+
+.rating-bound-left,
+.rating-bound-right {
+    position: absolute;
+}
+
+.rating-bound-left {
+    left: 0;
+}
+
+.rating-bound-right {
+    right: 0;
+}
+
+.wot-rating-stack {
+    display: block;
+    height: 17px;
+    padding-left: 6px;
+    width: 201px;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.wot-rating-slider {
+    background: url("fusion/slider.png") top left no-repeat;
+    display: block;
+    height: 16px;
+    margin-top: 3px;
+    width: 194px;
+    cursor: pointer;
+}
+
+.wot-rating-stack.testimony .wot-rating-slider {
+    background: url("fusion/slider-active.png") top left no-repeat;
+}
+
+.wot-rating-stack:hover .wot-rating-slider
+.wot-rating-stack .wot-rating-slider:hover,
+.wot-rating-stack.hover:hover .wot-rating-slider,
+.wot-rating-stack.hover .wot-rating-slider:hover {
+    background: url("fusion/slider-hover.png") top left no-repeat;
+    cursor: pointer;
+}
+
+.wot-rating-slider.accessible {
+    background: url("fusion/accessible/slider.png") top left no-repeat;
+}
+
+.wot-rating-stack.testimony .wot-rating-slider.accessible {
+    background: url("fusion/accessible/slider-active.png") top left no-repeat;
+    cursor: pointer;
+}
+
+.wot-rating-stack:hover .wot-rating-slider.accessible
+.wot-rating-stack .wot-rating-slider.accessible:hover,
+.wot-rating-stack.hover:hover .wot-rating-slider.accessible,
+.wot-rating-stack.hover .wot-rating-slider.accessible:hover {
+    background: url("fusion/accessible/slider-hover.png") top left no-repeat;
+}
+
+.wot-rating-indicator {
+    display: block;
+    height: 16px;
+    margin-left: -10px;
+    margin-top: -16px;
+    width: 21px;
+    float: left;
+    position: relative;
+}
+
+.wot-rating-stack.testimony .wot-rating-indicator {
+    background: url("fusion/indicator.png") top left no-repeat;
+}
+.wot-rating-stack.testimony:hover .wot-rating-indicator,
+.wot-rating-stack.testimony .wot-rating-slider:hover + .wot-rating-indicator,
+.wot-rating-stack.testimony .wot-rating-indicator:hover,
+.wot-rating-stack.hover:hover .wot-rating-indicator,
+.wot-rating-stack.hover .wot-rating-slider:hover + .wot-rating-indicator,
+.wot-rating-stack.hover .wot-rating-indicator:hover {
+    background: url("fusion/indicator-hover.png") top left no-repeat;
+}
+
+.wot-rating-help {
+    display: block;
+    margin-bottom: 0;
+    margin-left: 8px;
+    margin-right: 0;
+    margin-top: -2px;
+    width: 175px;
+}
+
+.wot-rating-helptext,
+.wot-rating-helplink {
+    color: #878787;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.wot-rating-helptext[r=r1] {
+    color: #fd0000;
+}
+
+.wot-rating-helptext[r=r2] {
+    color: #ff5933;
+}
+
+.wot-rating-helptext[r=r3] {
+    color: #de7c1b;
+}
+
+.wot-rating-helptext[r=r4] {
+    color: #5bab28;
+}
+
+.wot-rating-helptext[r=r5] {
+    color: #3b9013;
+}
+
+.wot-rating-helplink {
+    display: none;
+}
+.wot-rating-helplink.comment {
+    color: #3073c5;
+    cursor: pointer;
+    display: block;
+}
+.wot-rating-helplink.comment.accessible {
+    color: #333;
+    text-decoration: underline;
+}
+
+.rating-delete {
+    margin-left: 205px;
+    margin-top: 17px;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.unrated .rating-delete:not(.delete) .rating-delete-icon:before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    z-index: 10;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    margin-top: -4px;
+    background: #AFAEAE;
+    border-radius: 50%;
+    border: 1px solid #B9B9B9;
+}
+
+.rating-delete-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    background-color: #f3f2f2;
+    margin: 0 0 0 8px;
+    border-radius: 50%;
+    border: 1px solid #A5A5A5;
+}
+
+/* Cross inside the "delete" icon */
+.delete .rating-delete-icon:after,
+.delete .rating-delete-icon:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    left: 5px;
+    width: 2px;
+    height: 10px;
+    margin-top: -5px;
+    background: #7E7E7E;
+}
+
+.delete .rating-delete-icon:before {
+    -webkit-transform: rotate(45deg);
+}
+
+.delete .rating-delete-icon:after {
+    -webkit-transform: rotate(135deg);
+}
+
+.rating-delete.delete .rating-delete-icon,
+.rating-delete.delete .rating-deletelabel {
+    cursor: pointer;
+}
+
+.rating-deletelabel {
+    font-size: 10px;
+    color: #808080;
+    margin: 4px auto 0;
+    text-align: center;
+    height: 1.4em;
+    white-space: nowrap;
+    /*cursor: pointer;*/
+}
+
+.rating-delete.delete:hover .rating-deletelabel {
+    color: red;
+}
+
+/* Reputation Info area */
+
+#reputation-info {
+    padding: 0 9px;
+}
+
+.rep-info-sections {
+    position: relative;
+    padding-top: 9px;
+}
+
+#wot-rating-header-wot {
+    display: block;
+    /*margin-left: 9px;*/
+    font-size: 12px;
+    color: #878787;
+    text-align: left;
+    margin-top: 4px;
+}
+
+#rep-block {
+    width: 200px;
+}
+
+/* scorecard */
+#wot-scorecard {
+    margin-top: 15px;
+}
+
+#wot-scorecard-content {
+}
+
+.wot-scorecard-text {
+    color: #3073c5;
+    font-size: 9pt;
+    cursor: pointer;
+}
+
+#wot-scorecard-visit {
+    margin-bottom: 0px;
+    margin-top: 9px;
+}
+#wot-scorecard-comment-container {
+    display: block;
+    margin: 0;
+    width: 310px;
+}
+#wot-scorecard-comment {
+    display: block;
+    margin-bottom: 0px;
+    margin-top: 2px;
+    padding-left: 1px;
+}
+
+.categories-area {
+    position: absolute;
+    top: 15px;
+    left: 220px;
+    width: 320px;   /* window.width - repblock.width */
+}
+
+/* Categories view list */
+
+#tr-categories-list {
+    margin: 0 0 0 2em;
+    min-height: 70px;
+}
+
+#cs-categories-list {
+    margin: 0 0 0 2em;
+}
+
+.cat-item {
+    font-size: 9pt;
+    color: silver;
+    list-style: none;
+    padding: 0.25em 0;
+}
+
+.cat-item:before {
+    width: 1em;
+    height: 1em;
+    border: 1px solid #C0C0C0;
+    background-color: #C0C0C0;
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    margin-left: -1.65em;
+    margin-top: 1px;
+}
+
+.c-neutral.cat-item:before {
+    background-color: #707070;
+    background: -webkit-radial-gradient(center, ellipse cover, #9e9c9c 0%,#707070 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #7d7d7d;
+}
+
+.c-deficient.cat-item:before {
+    background-color: #ffd100;
+    background: -webkit-radial-gradient(center, ellipse cover, #f8df68 0%,#f6cd0e 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #f6cd0e;
+}
+
+.c-negative.cat-item:before {
+    background-color: #f66d3f;
+    background: -webkit-radial-gradient(center, ellipse cover, #fca080 0%,#f77448 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #f66d3f;
+}
+
+.c-positive.cat-item:before {
+    background-color: #68c800;
+    background: -webkit-radial-gradient(center, ellipse cover, #83d561 0%,#6dc14a 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #6dc14a;
+}
+
+.c1 {
+    font-size: 12px;
+    color: #a7a7a7;
+}
+
+.c1.cat-item:before {
+    width: 6px;
+    height: 6px;
+    margin-left: -20px;
+    margin-top: 4px;
+}
+
+.c2,
+.c3 {
+    font-size: 12px;
+    color: #646464;
+}
+
+.c2.cat-item:before,
+.c3.cat-item:before {
+    width: 8px;
+    height: 8px;
+    margin-left: -21px;
+    margin-top: 3px;
+}
+
+.c4,
+.c5 {
+    font-size: 12px;
+    color: #5c5c5c;
+    font-weight: bold;
+}
+
+.c4.cat-item:before,
+.c5.cat-item:before {
+    width: 10px;
+    height: 10px;
+    margin-left: -22px;
+}
+
+.cat-cs-separator {
+    padding: 2px;
+    font-size: 0px;
+    list-style: none;
+    margin-top: 6px;
+}
+
+.cat-cs {
+    -webkit-transform: scale(0.9);
+    margin-left: -1.4em;
+}
+
+/* fix for scaled CS categories */
+.cat-cs.c1 {
+    margin-left: -1.65em;
+}
+
+/* Bottom area */
+
+/* user */
+.wot-user {
+    display: none;
+    width: 316px;
+}
+
+/* hidden by default, shown in some modes only */
+#user-communication {
+    display: none;
+}
+
+.user-comm-activity {
+    background-color: #F9F9F9;
+    margin: 0 -20px -3px;
+    padding: 0 20px 3px;
+}
+
+.rated .user-comm-activity {
+    padding: 2px 20px 5px;
+}
+
+.wot-user-header {
+    /* "your activity score" */
+    color: #8f8f8f;
+    display: inline;
+    font-size: 11px;
+    height: 14px;
+    line-height: 11px;
+    margin-right: 0px;
+}
+
+#user-activityscore {
+    display: inline;
+    color: #8f8f8f;
+    display: inline;
+    font-size: 11px;
+    margin-left: 1px;
+}
+
+.wot-user-notice {
+    position: absolute;
+    right: 1.5em;
+    margin-top: -1.35em;
+    padding-left: 6px;
+    color: #797979;
+    font-size: 8pt;
+    text-align: right;
+}
+
+.wot-user-text {
+    /* Link to the user's profile */
+    color: #8f8f8f;
+    display: none;
+    font-size: 11px;
+    height: 23px;
+    line-height: 11px;
+}
+
+.wot-user-text[url^="http"]:hover {
+    color: #3073c5;
+    cursor: pointer;
+}
+.wot-user-text.accessible[url^="http"]:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+/* message */
+#wot-message {
+    display: none;
+    height: auto;
+    /*margin-bottom: 0.2em;*/
+    margin-top: 0.2em;
+    background-color: white;
+}
+
+#wot-message:before {
+    position: absolute;
+    height: 0px;
+    border-top: 1px solid #D9D9D9;
+    content: "";
+    width: 100%;
+    margin-top: 0px;
+    margin-left: -19px;
+}
+
+#wot-message-text {
+    color: #989898;
+    display: block;
+    font-size: 11px;
+    height: auto;
+    line-height: 13px;
+    overflow: hidden;
+    padding: 5px 20px 8px;
+    text-align: center;
+    white-space: normal;
+}
+#wot-message-text[url^="http"]:hover,
+#wot-message[status="important"] #wot-message-text[url^="http"]:hover,
+#wot-message[status="critical"] #wot-message-text[url^="http"]:hover {
+    color: #3073c5;
+    cursor: pointer;
+}
+#wot-message-text.accessible[url^="http"]:hover,
+#wot-message[status="important"] #wot-message-text.accessible[url^="http"]:hover,
+#wot-message[status="critical"] #wot-message-text.accessible[url^="http"]:hover {
+    color: #333;
+}
+#wot-message[status="important"] {
+    border-color: #ea8b2b;
+}
+#wot-message[status="critical"] {
+    border-color: #d81f27;
+}
+#wot-message[status="important"] #wot-message-text {
+    color: #ea8b2b;
+}
+#wot-message[status="critical"] #wot-message-text {
+    color: #d81f27;
+}
+/* partner */
+#wot-partner {
+    display: none;
+    height: 32px;
+    margin-bottom: 3px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-top: 4px;
+    padding: 0;
+    text-align: left;
+    width: 298px;
+}
+/*#wot-partner[partner="name"] {
+	display: block;
+	background: url("partner/name.png") center right no-repeat;
+}*/
+#wot-partner-text {
+    color: #333;
+    display: block;
+    font-size: 11px;
+    height: 32px;
+    margin: 0;
+    padding-top: 7px;
+    width: 148px;
+}
+
+/* Hidden by default */
+#rate-buttons {
+    display: none;
+    position: absolute;
+    bottom: 0.5em;
+    width: 93%;
+    height: 30px;
+}
+
+.rw-button {
+    display: inline;
+    float: left;
+    border: 1px solid #C0C0C0;
+    padding: 0.2em 1.5em;
+    margin: 0.4em 1em;
+    border-radius: 2px;
+    font-size: 10pt;
+    color: #3D3D3D;
+
+    background: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#EBEBEB));
+    /*border-bottom: 1px solid #888;*/
+    /*border-right: 1px solid #CCC;*/
+    /*border-top: 1px solid #EEE;*/
+    /*border-left: 1px solid #D6D6D6;*/
+    box-shadow: 1px 1px 5px #d2d2d2;
+    text-shadow: 1px 1px #DDD;
+
+    cursor: pointer;
+}
+
+.rw-button:not(.disabled):active {
+    /*border-bottom: 1px solid #EBEBEB;*/
+    /*border-right: 1px solid #EBEBEB;*/
+    /*border-top: 1px solid #f6f6f6;*/
+    /*border-left: 1px solid #EBEBEB;*/
+    box-shadow: 1px 1px 1px #d2d2d2 inset;
+    text-shadow: 0px 0px #DDD;
+}
+
+.rw-button:not(.disabled):hover {
+    color: #0b5a1b;
+}
+
+.rw-button.disabled {
+    color: #A5A5A5;
+    text-shadow: none;
+    cursor: default;
+}
+
+.btn-submit {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.rw-buttons-expander {
+    display: inline;
+    float: left;
+    width: 32%;
+}
+
+
+/* Categorues selector style */
+
+#categories-selection-area {
+    display: none;
+    padding: 0 9px;
+    position: relative;
+}
+
+.group-title {
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.category-title {
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: -7px;
+}
+
+.category-selector {
+}
+
+.category-selector .dropdown-menu {
+    min-height: 120px;
+    display: block;
+    float: left;
+    padding: 0;
+    list-style: none;
+    margin-top: 9px;
+}
+
+.category-selector li {
+    display: block;
+    margin: 1px 0;
+    padding: 11px 0 11px 16px;
+    width: 150px;
+    z-index: 1000;
+    list-style: none;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #ebebeb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #ebebeb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #ebebeb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #ebebeb 100%); /* Opera 11.10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #ebebeb 100%); /* W3C */
+}
+
+.category-selector li .group-title {
+    display: block;
+    clear: both;
+    line-height: 10px;
+    color: #333333;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.category-selector .popover {
+    position: absolute;
+    z-index: 990;
+    display: none;
+    min-height: 165px;
+    max-height: 190px;
+    width: 373px;
+    padding: 3px 0;
+    text-align: left;
+    white-space: normal;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+}
+
+.category-selector .category {
+    line-height: 14px;
+    font-weight: normal;
+    font-size: 12px;
+    padding: 3px 8px;
+    position: relative;
+    margin: 1px 4px;
+}
+
+.category-selector .category:hover {
+    background: #ebebeb;
+    cursor: pointer;
+}
+
+.category-selector .cat-name {
+}
+
+/* If category is identified by WOT */
+.category-selector .identified .cat-name {
+    font-weight: bold;
+    color: #747474;
+}
+
+.category-selector .cat-vote {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.category-selector .cat-vote-left,
+.category-selector .cat-vote-right {
+    display: inline;
+    float: left;
+    margin: 1px 0px 0 0;
+    padding: 1px 5px;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+}
+
+.category-selector .cat-vote-left:after {
+    padding-left: 3px;
+    position: absolute;
+    color: silver;
+    content: "|";
+}
+
+/* when yes/no is hovered, hide the vertical pipe-separator */
+.category-selector .cat-vote:hover .cat-vote-left:after,
+.category-selector .category[voted] .cat-vote-left:after {
+    content: "";
+}
+
+.category-selector .cat-vote-left:hover,
+.category-selector .cat-vote-right:hover {
+    /*width: 23px;*/
+    /*height: 18px;*/
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #319de7;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 4px;
+}
+
+.category-selector .category[voted="1"] .cat-vote-left,
+.category-selector .category[voted="-1"] .cat-vote-right {
+    border: 1px solid #c7ddef;
+    background: #eaf2fa;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 4px;
+}
+
+.category-selector .cat-vote-del {
+    display: inline;
+    float: left;
+    visibility: hidden;
+    height: 20px;
+}
+
+.category-selector .category[voted] .cat-vote-del {
+    visibility: visible;
+}
+
+.category-selector .delete-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    background-color: #f0efef;
+    margin: 3px 3px 0 3px;
+    cursor: pointer;
+    border: 1px solid #dadada;
+    border-radius: 50%;
+}
+
+/* Cross inside the "delete" icon */
+.category-selector .delete-icon:after,
+.category-selector .delete-icon:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    left: 5px;
+    width: 2px;
+    height: 10px;
+    margin-top: -5px;
+    background: #a5a5a5;
+}
+
+.category-selector .delete-icon:before {
+    -webkit-transform: rotate(45deg);
+}
+
+.category-selector .delete-icon:after {
+    -webkit-transform: rotate(135deg);
+}
+
+
+.category-selector .category-breakline {
+    height: 1px;
+    width: 100%;
+    background: #E1E0E0;
+    margin: 1px auto;
+}
+
+.category-selector li:first-child {
+    -webkit-border-radius: 6px 0 0 0;
+    -moz-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.category-selector li:last-child {
+    -webkit-border-radius: 0 0 0 6px;
+    -moz-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.category-selector .maintainHover {
+    color: #525252;
+    font-weight: bold;
+    background: #ffffff;
+}

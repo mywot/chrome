@@ -133,9 +133,13 @@ $.extend(wot, { cache: {
 			}, this.maxage);
 	},
 
-	cacheratingstate: function(name, state)
+	cacheratingstate: function(name, state, votes_changed)
+    // Detects changes in user's ratings and stores them in local cache. Returns the flag whether the testimonies have been changed.
 	{
-		try {
+        var bg = chrome.extension.getBackgroundPage();
+        bg.console.log("cacheratingstate(name, state, votes_changed)", arguments);
+
+//		try {
 			state = state || {};
 
 			var obj = this.get(name);
@@ -154,15 +158,32 @@ $.extend(wot, { cache: {
 					}
 				});
 
+                bg.console.log("testimonies, changed?", changed);
+
+                if (!wot.utils.isEmptyObject(votes_changed)) {
+                    for (var cid in votes_changed) {
+                        if (!obj.value.cats[cid]) {
+                            obj.value.cats[cid] = {
+                                id: cid,
+                                c: 0    // since it wasn't in the cache, then it is not identified (?)
+                            }
+                        }
+                        obj.value.cats[cid].v = votes_changed[cid];
+                    }
+                    changed = true;
+                }
+
+                bg.console.log("categories, changed?", changed);
+
 				if (changed) {
 					this.set(name, obj.status, obj.value);
 				}
 
 				return changed;
 			}
-		} catch (e) {
-			console.log("cache.cacheratingstate: failed with ", e);
-		}
+//		} catch (e) {
+//			console.log("cache.cacheratingstate: failed with ", e);
+//		}
 
 		return false;
 	},
@@ -170,6 +191,7 @@ $.extend(wot, { cache: {
 	cacheresponse: function(hosts, data, status)
 	{
 		var processed = 0;
+        console.log("data", data);
 
 		try {
 			status = status || wot.cachestatus.ok;
@@ -178,7 +200,8 @@ $.extend(wot, { cache: {
 
 			$(targets).each(function() {
 				var obj = {
-					target: hosts[$(this).attr("index") || 0]
+					target: hosts[$(this).attr("index") || 0],
+                    cats: {}
 				};
 
 				if (!obj.target) {
@@ -210,6 +233,22 @@ $.extend(wot, { cache: {
 						obj[name] = data;
 					}
 				});
+
+                // parse site's categories and user's votes
+                $("category", this).each(function() {
+                    var name = $(this).attr("name"),
+                        c = $(this).attr("c"),
+                        vote = $(this).attr("vote"),
+                        inherited = $(this).attr("inherited");  // we don't use this right now
+
+                    if (name) {
+                        obj.cats[name] = {
+                            id: parseInt(name),
+                            c: $.isNumeric(c) ? parseInt(c) : 0,
+                            v: $.isNumeric(vote) ? parseInt(vote) : undefined
+                        };
+                    }
+                });
 
 				// parse survey's question whether it exists
 				$("question", this).each(function() {

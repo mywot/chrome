@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "1.4.11",
+	"version": "2.0.1",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -19,7 +19,9 @@
 		"contextMenus",
 		"http://www.mywot.com/*",
 		"http://api.mywot.com/*",
-		"https://api.mywot.com/*"
+		"https://api.mywot.com/*",
+		"http://vor.dev.mywot.com/*",
+		"https://vor.dev.mywot.com/*"
 	],
 	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
@@ -93,7 +95,7 @@
 	"browser_action": {
 		"default_title": "WOT",
 		"default_icon": "skin/fusion/19_19/default.png",
-		"default_popup": "ratingwindow.html"
+		"default_popup": "ratingwindow2.html"
 	},
 	"content_scripts": [
 		{
