@@ -678,7 +678,7 @@ var wot = {
 
     // copies and validates categories from saved preferences
     init_categories: function (_prefs) {
-        var update_cats = _prefs.get("update:cats");
+        var update_cats = (typeof _prefs.get == "function") ? _prefs.get("update:cats") : _prefs["update:cats"];
 
         if (update_cats) {
             for (var cid in update_cats) {

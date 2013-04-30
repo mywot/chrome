@@ -213,7 +213,8 @@ $.extend(wot, { core: {
 			var prefs = [
 				"accessible",
 				"min_confidence_level",
-				"warning_opacity"
+				"warning_opacity",
+                "update:cats"
 			];
 
 			wot.components.forEach(function(item) {

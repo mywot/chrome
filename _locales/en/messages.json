@@ -131,6 +131,12 @@
 	"warnings_back": {
 		"message": "Go back"
 	},
+	"warnings_reasontitle": {
+		"message": "Users have identified this site as"
+	},
+	"warnings_noreasontitle": {
+		"message": "Users have not identified this site yet and only have rated it"
+	},
 	"contextmenu_open_scorecard": {
 		"message": "Open WOT scorecard"
 	},
@@ -203,7 +209,7 @@
         "message": "How much do you trust this site?"
     },
     "ratingwindow_categories": {
-        "message": "Pick at least one category you believe supports the best your ratings"
+        "message": "Choose at least one category that supports your rating"
     },
     "ratingwindow_novoted": {
         "message": "no reason for ratings has been provided yet"
