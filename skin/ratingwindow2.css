@@ -28,12 +28,13 @@ body {
 #wot-ratingwindow {
     display: block;
     padding: 1em 0.7em 0;
+    min-height: 390px;
 }
 
 #wot-elements {
     background: #ffffff;
     display: block;
-    font-family: Tahoma, Arial, sans-serif;
+	font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     /*width: 316px;*/
@@ -117,7 +118,7 @@ body {
     color: #8f8f8f;
     display: table-cell;
     /*float: right;*/
-    font-size: 11px;
+    font-size: 12px;
     height: 16px;
     /*line-height: 16px;*/
     padding: 0 0.6em;
@@ -284,9 +285,9 @@ body {
 .wot-rating-header {
     color: #5C5C5C;
     display: block;
-    font-size: 11px;
+    font-size: 12px;
     margin-bottom: 0.7em;
-    margin-top: 0.8em;
+    margin-top: 0.6em;
     width: 312px;
     font-weight: bold;
 }
@@ -402,7 +403,7 @@ body {
     position: relative;
     height: 1.3em;
     margin: -2px 0 0em;
-    padding: 5px 2px;
+    padding: 6px 2px 2px;
     border: 1px solid #CBCBCB;
     background-image: -webkit-linear-gradient(top, #FEFEFE, #E4E4E4);
     color: #555;
@@ -410,7 +411,7 @@ body {
     -moz-border-radius: 10px;
     border-radius: 4px;
     display: block;
-    font-size: 8pt;
+    font-size: 9pt;
     text-align: center;
     white-space: nowrap;
 }
@@ -471,7 +472,7 @@ body {
 
 .wot-rating-bounds {
     position: relative;
-    font-size: 10px;
+    font-size: 11px;
     height: 1.3em;
     margin: 0 8px 0 8px;
     color: #919191;
@@ -810,7 +811,7 @@ body {
     width: 6px;
     height: 6px;
     margin-left: -20px;
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 .c2,
@@ -824,7 +825,7 @@ body {
     width: 8px;
     height: 8px;
     margin-left: -21px;
-    margin-top: 3px;
+    margin-top: 1px;
 }
 
 .c4,
@@ -878,7 +879,7 @@ body {
 }
 
 .rated .user-comm-activity {
-    padding: 2px 20px 5px;
+    padding: 24px 20px 5px;
 }
 
 .wot-user-header {
@@ -1008,10 +1009,9 @@ body {
 
 /* Hidden by default */
 #rate-buttons {
-    display: none;
     position: absolute;
     bottom: 0.5em;
-    width: 93%;
+    width: 100%;
     height: 30px;
 }
 
@@ -1019,28 +1019,18 @@ body {
     display: inline;
     float: left;
     border: 1px solid #C0C0C0;
-    padding: 0.2em 1.5em;
-    margin: 0.4em 1em;
+    padding: 0.3em 1.5em;
+    margin: 0.2em 0.5em;
     border-radius: 2px;
     font-size: 10pt;
     color: #3D3D3D;
-
     background: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#EBEBEB));
-    /*border-bottom: 1px solid #888;*/
-    /*border-right: 1px solid #CCC;*/
-    /*border-top: 1px solid #EEE;*/
-    /*border-left: 1px solid #D6D6D6;*/
-    box-shadow: 1px 1px 5px #d2d2d2;
+    box-shadow: 1px 1px 5px #D2D2D2;
     text-shadow: 1px 1px #DDD;
-
     cursor: pointer;
 }
 
 .rw-button:not(.disabled):active {
-    /*border-bottom: 1px solid #EBEBEB;*/
-    /*border-right: 1px solid #EBEBEB;*/
-    /*border-top: 1px solid #f6f6f6;*/
-    /*border-left: 1px solid #EBEBEB;*/
     box-shadow: 1px 1px 1px #d2d2d2 inset;
     text-shadow: 0px 0px #DDD;
 }
@@ -1055,6 +1045,10 @@ body {
     cursor: default;
 }
 
+#btn-delete {
+    margin-left: 0;
+}
+
 .btn-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -1063,7 +1057,7 @@ body {
 .rw-buttons-expander {
     display: inline;
     float: left;
-    width: 32%;
+    width: 38%;
 }
 
 
@@ -1076,14 +1070,14 @@ body {
 }
 
 .group-title {
-    font-size: 11px;
+    font-size: 12px;
     cursor: pointer;
 }
 
 .category-title {
     font-size: 12px;
     font-weight: normal;
-    margin-top: -7px;
+    margin-top: -9px;
 }
 
 .category-selector {
@@ -1102,7 +1096,7 @@ body {
     display: block;
     margin: 1px 0;
     padding: 11px 0 11px 16px;
-    width: 150px;
+    width: 162px;
     z-index: 1000;
     list-style: none;
     cursor: pointer;
@@ -1130,7 +1124,7 @@ body {
     display: none;
     min-height: 165px;
     max-height: 190px;
-    width: 373px;
+    width: 360px;
     padding: 3px 0;
     text-align: left;
     white-space: normal;
@@ -1171,10 +1165,11 @@ body {
 .category-selector .cat-vote-right {
     display: inline;
     float: left;
-    margin: 1px 0px 0 0;
-    padding: 1px 5px;
+    margin: 2px 0px 0 0;
+    padding: 1px 5px 0;
     border: 1px solid transparent;
     text-transform: uppercase;
+    font-size: 10px;
 }
 
 .category-selector .cat-vote-left:after {

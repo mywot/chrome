@@ -160,7 +160,7 @@ $.extend(wot, { ratingwindow: {
 
     finishstate: function(unload)
     {
-//        try {
+        try {
             var _rw = wot.ratingwindow;
             var bg = chrome.extension.getBackgroundPage();
             var bgwot = bg.wot, // shortage for perfomance and readability
@@ -221,9 +221,9 @@ $.extend(wot, { ratingwindow: {
 
             /* update all views */
             bgwot.core.update();
-//        } catch (e) {
-//            console.log("ratingwindow.finishstate: failed with ", e);
-//        }
+        } catch (e) {
+            console.log("ratingwindow.finishstate: failed with ", e);
+        }
     },
 
     /* helpers */
@@ -244,12 +244,8 @@ $.extend(wot, { ratingwindow: {
         var _rw = wot.ratingwindow;
         if (_rw.current.target && _rw.current.cached &&
             _rw.current.cached.status == wot.cachestatus.ok) {
-            console.log("getcached:", _rw.current.cached);
             return _rw.current.cached;
         }
-
-        console.log("getcached: Oops");
-        console.trace();
         return { value: {} };
     },
 
@@ -321,7 +317,7 @@ $.extend(wot, { ratingwindow: {
             var cachedv = cached.value[item.name];
             var rep_level = (cached.status == wot.cachestatus.ok) ?
                 wot.getlevel(wot.reputationlevels,
-                    (cachedv && cachedv.r != null) ? cachedv.r : -1).name : "";
+                    (cachedv && cachedv.r != null) ? cachedv.r : -1).name : "r0";
 
             // WOT2.0: no need to show/hide components any more. All 2 are visible
 //			if (bg.wot.prefs.get("show_application_" + item.name)) {
@@ -337,7 +333,7 @@ $.extend(wot, { ratingwindow: {
             $("#wot-rating-" + item.name + "-confidence").attr("confidence",
                 (cached.status == wot.cachestatus.ok) ?
                     wot.getlevel(wot.confidencelevels,
-                        (cachedv && cachedv.c != null)? cachedv.c : -1).name : "");
+                        (cachedv && cachedv.c != null)? cachedv.c : -1).name : "c0");
 
             var $_rep_legend = $("#rep-" + item.name + " .rating-legend");
             $_rep_legend.attr("r", rep_level);
@@ -853,9 +849,6 @@ $.extend(wot, { ratingwindow: {
         console.log("on_cancel()");
         var _rw = wot.ratingwindow,
             cached = _rw.getcached();
-
-//        console.log("state", _rw.state);
-//        console.log("cached", cached);
 
         // restore previous testimonies
         wot.components.forEach(function(item){

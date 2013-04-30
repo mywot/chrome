@@ -110,6 +110,8 @@ var wot = {
 
     categories: {}, // is loaded from preferences during launch and updated from server regularly
 
+    category_threshold: 6,
+
 	reputationlevels: [
 		{ name: "rx", min: -2 },
 		{ name: "r0", min: -1 },
@@ -803,7 +805,7 @@ var wot = {
         var res = {};
         for (var i in cat_list) {
             var cat = cat_list[i];
-            if (cat.c > 0) res[i] = cat;
+            if (cat.c >= wot.category_threshold) res[i] = cat;
         }
         return res;
     },
