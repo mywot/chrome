@@ -105,7 +105,7 @@
 		"message": "View details and comments"
 	},
 	"warnings_ratesite": {
-		"message": "This site is safe - I want to <a>rate it</a>"
+		"message": "This site is trustworthy - I want to <a>rate it</a>"
 	},
 	"warnings_gotosite": {
 		"message": "Ignore warning and go to the site"
