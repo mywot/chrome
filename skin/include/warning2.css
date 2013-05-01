@@ -620,7 +620,7 @@
 }
 
 .wot-wt-warning-content {
-    position: relative !important;
+    position: absolute !important;
     width: 215px;
     padding: 1em 1.5em 5.5em !important;
     border-color: white;
