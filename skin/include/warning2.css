@@ -549,25 +549,29 @@
 .wot-button {
     display: inline !important;
     float: left !important;
-    border: 1px solid #C0C0C0 !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-top-color: #DFDFDF !important;
+    border-right-color: #C2C2C2 !important;
+    border-left-color: #D1CECE !important;
+    border-bottom-color: #AEAEAE !important;
     padding: 0.5em 1.5em !important;
     margin: 0.4em 1em !important;
     min-width: 95px;
     border-radius: 2px !important;
     font-size: 12px !important;
     font-weight: bold !important;
-    color: #5C5C5C !important;
+    color: #585858 !important;
 
-    background: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#EBEBEB)) !important;
+    background-image: -webkit-linear-gradient(top, #FFF 0%, #e7e5e5 100%) !important;
     box-shadow: 1px 1px 5px #d2d2d2 !important;
-    text-shadow: 1px 1px #DDD !important;
+    text-shadow: 1px 1px rgba(255,255,255,0.75) !important;
     cursor: pointer !important;
 }
 
 .wot-button:hover {
-    /*box-shadow: 0px 0px 20px rgba(121, 180, 42, 0.8) !important;*/
-    /*border-color: #80ba33 !important;*/
-    color: #0b5a1b !important;
+    background-image: -webkit-linear-gradient(top, #FFF 0%,#dadada 83%, #f3f1f1 100%) !important;
+    /*color: #6aac43 !important;*/
 }
 
 .accessible .wot-button:hover {
