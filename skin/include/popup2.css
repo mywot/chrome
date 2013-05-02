@@ -195,14 +195,14 @@
     margin: 6px 0 !important;
 }
 
-.cat-item {
+.wot-popup-layer .cat-item {
     font-size: 9pt;
     color: silver;
     list-style: none !important;
     padding: 0.25em 0 !important;
 }
 
-.cat-item:before {
+.wot-popup-layer .cat-item:before {
     width: 1em;
     height: 1em;
     border: 1px solid #C0C0C0;
@@ -238,53 +238,63 @@
     border-color: #6dc14a;
 }
 
-.c0 {
+/* reset styles */
+.wot-popup-layer .c0,
+.wot-popup-layer .c1,
+.wot-popup-layer .c2,
+.wot-popup-layer .c3,
+.wot-popup-layer .c4,
+.wot-popup-layer .c5 {
+    height: auto;
+}
+
+.wot-popup-layer .c0 {
     font-size: 11px !important;
     color: #a7a7a7 !important;
 }
 
-.c0.cat-item:before {
+.wot-popup-layer .c0.cat-item:before {
     width: 4px !important;
     height: 4px !important;
     margin-left: -19px !important;
     margin-top: 4px !important;
 }
 
-.c1 {
+.wot-popup-layer .c1 {
     font-size: 12px;
     color: #a7a7a7;
 }
 
-.c1.cat-item:before {
+.wot-popup-layer .c1.cat-item:before {
     width: 6px;
     height: 6px;
     margin-left: -20px;
     margin-top: 3px;
 }
 
-.c2,
-.c3 {
+.wot-popup-layer .c2,
+.wot-popup-layer .c3 {
     font-size: 12px;
     color: #646464;
 }
 
-.c2.cat-item:before,
-.c3.cat-item:before {
+.wot-popup-layer .c2.cat-item:before,
+.wot-popup-layer .c3.cat-item:before {
     width: 8px;
     height: 8px;
     margin-left: -21px;
     margin-top: 1px;
 }
 
-.c4,
-.c5 {
+.wot-popup-layer .c4,
+.wot-popup-layer .c5 {
     font-size: 12px;
     color: #5c5c5c;
     font-weight: bold;
 }
 
-.c4.cat-item:before,
-.c5.cat-item:before {
+.wot-popup-layer .c4.cat-item:before,
+.wot-popup-layer .c5.cat-item:before {
     width: 10px;
     height: 10px;
     margin-left: -22px;

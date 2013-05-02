@@ -802,6 +802,18 @@ body {
     border-color: #6dc14a;
 }
 
+.c0 {
+    font-size: 11px !important;
+    color: #a7a7a7 !important;
+}
+
+.c0.cat-item:before {
+    width: 4px !important;
+    height: 4px !important;
+    margin-left: -19px !important;
+    margin-top: 4px !important;
+}
+
 .c1 {
     font-size: 12px;
     color: #a7a7a7;
