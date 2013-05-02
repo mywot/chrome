@@ -444,7 +444,8 @@ wot.search = {
 			"use_search_level",
 			"ninja_donuts",
 			"ninja_announceshown",
-			"ninja_wave"
+			"ninja_wave",
+            "update:cats"
 		];
 
 		wot.components.forEach(function(item) {
@@ -490,7 +491,9 @@ wot.search = {
 					wot.utils.attach_style({style: wot.search.formatcss(data.rule.prestyle)}, wot.search.getname("prestyle"), window);
 				}
 
-				if (data.rule.popup && data.rule.popup.match &&
+				wot.init_categories(wot.search.settings);   // init categories
+
+                if (data.rule.popup && data.rule.popup.match &&
 						data.rule.popup.match.length) {
 					var elem = wot.search.findmatchingelement(
 									rule.popup.match[0], window);

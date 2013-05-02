@@ -273,5 +273,11 @@
     },
     "buttons_save": {
         "message": "Save"
+    },
+    "popup_headertext": {
+        "message": "click to view details"
+    },
+    "popup_nocattext": {
+        "message": "share your opinion about this website"
     }
 }

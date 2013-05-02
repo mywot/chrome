@@ -853,7 +853,7 @@ $.extend(wot, { ratingwindow: {
         // restore previous testimonies
         wot.components.forEach(function(item){
             var a = item.name;
-            var t = cached.value[a].t !== undefined ? cached.value[a].t : -1;
+            var t = (cached.value[a] && cached.value[a].t !== undefined) ? cached.value[a].t : -1;
             if (_rw.state[a]) {
                 _rw.state[a].t = t;
             } else {

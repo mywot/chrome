@@ -450,6 +450,18 @@
     border-color: #6dc14a !important;
 }
 
+.c0 {
+    font-size: 11px !important;
+    color: #a7a7a7 !important;
+}
+
+.c0.cat-item:before {
+    width: 4px !important;
+    height: 4px !important;
+    margin-left: -19px !important;
+    margin-top: 4px !important;
+}
+
 .c1 {
     font-size: 12px !important;
     color: #a7a7a7 !important;
@@ -459,7 +471,7 @@
     width: 6px !important;
     height: 6px !important;
     margin-left: -20px !important;
-    margin-top: 4px !important;
+    margin-top: 3px !important;
 }
 
 .c2,
@@ -473,7 +485,7 @@
     width: 8px !important;
     height: 8px !important;
     margin-left: -21px !important;
-    margin-top: 3px !important;
+    margin-top: 2px !important;
 }
 
 .c4,

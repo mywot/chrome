@@ -36,13 +36,17 @@ wot.warning = {
                 "<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
                 "</div>";
         } else {
-            var lst = [];
-            for (var cid in categories) {
-                var cconf = wot.getlevel(wot.confidencelevels, categories[cid].c).name,
+            var lst = [],
+                ordered_cats = wot.rearrange_categories(categories).all;
+            for (var k in ordered_cats) {
+                var cat = ordered_cats[k], cid = cat.id,
+                    cconf = wot.getlevel(wot.confidencelevels, cat.c).name,
                     css = wot.get_category_css(cid),
-                    li = "<li class='cat-item " + css + " " + cconf + "'>" + wot.get_category_name(cid) + "</li>";
-                console.log(cid, categories[cid], li);
-                lst.push(li);
+                    cat_name = wot.get_category_name(cid),
+                    li = "<li class='cat-item " + css + " " + cconf + "'>" + cat_name + "</li>";
+                if (cat_name) {
+                    lst.push(li);
+                }
             }
 
             tmpl = "<div class='ws-categories-title'>{REASONTITLE}</div>" +

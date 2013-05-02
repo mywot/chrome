@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20130431,
+	version: 20130502,
 	platform: "chrome",
 	debug: true,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
@@ -37,10 +37,10 @@ var wot = {
 	},
 
 	components: [
-		{ name: 0, short: "tr" },
+		{ name: 0 },
 //		{ name: 1 },    // removed in wot 2.0
 //		{ name: 2 },
-		{ name: 4, short: "cs" }
+		{ name: 4 }
 	],
 
     // default groups and their mapping to colors and TR/CS
@@ -110,7 +110,7 @@ var wot = {
 
     categories: {}, // is loaded from preferences during launch and updated from server regularly
 
-    category_threshold: 6,
+    category_threshold: 3,
 
 	reputationlevels: [
 		{ name: "rx", min: -2 },
@@ -767,6 +767,8 @@ var wot = {
                 console.error("Failed to rearrange categories", e);
             }
 
+            var alltogether = sort_array.slice(0);
+
             try {
                 // filter out Child Safety cats to other array
                 for (var i=sort_array.length-1; i>=0; i--) {
@@ -781,6 +783,7 @@ var wot = {
         }
 
         return {
+            all: alltogether,
             trustworthy: sort_array,
             childsafety: cs_array
         };

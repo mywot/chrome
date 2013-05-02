@@ -636,6 +636,7 @@ $.extend(wot, { core: {
 
 						if (obj.status == wot.cachestatus.ok ||
 							obj.status == wot.cachestatus.link) {
+                            obj.value.decodedtarget = wot.url.decodehostname(obj.value.target);
 							ratings[target] = obj.value;
 						}
 					});
