@@ -42,7 +42,7 @@
 		"message": "Плохо"
 	},
 	"reputationlevels_r3": {
-		"message": "Неудовлетворительно"
+		"message": "Есть сомнения"
 	},
 	"reputationlevels_r4": {
 		"message": "Хорошо"
@@ -131,6 +131,12 @@
 	"warnings_back": {
 		"message": "Назад"
 	},
+    "warnings_reasontitle": {
+        "message": "Пользователи определили этот сайт как"
+    },
+    "warnings_noreasontitle": {
+        "message": "Пользователи не определи этот сайт пока что"
+    },
 	"contextmenu_open_scorecard": {
 		"message": "Открыть оценочную карту WOT"
 	},
@@ -198,6 +204,75 @@
     },
     "fbl_dismiss": {
         "message": "пропустить"
+    },
+    "ratingwindow_question0": {
+        "message": "Насколько вы доверяете этому сайту?"
+    },
+    "ratingwindow_categories": {
+        "message": "Выберите хотя бы одну категорию, объясняющую вашу оценку"
+    },
+    "ratingwindow_novoted": {
+        "message": "причины такой репутации не установлены"
+    },
+    "ratingwindow_question4": {
+        "message": "Насколько этот сайт подходит для детей?"
+    },
+    "messages_ready": {
+        "message": "Репутация сайта"
+    },
+    "testimony_0_levels_r0": {
+        "message": "кликните чтобы оценить"
+    },
+    "testimony_0_levels_r1": {
+        "message": "не доверяю"
+    },
+    "testimony_0_levels_r2": {
+        "message": "не доверяю"
+    },
+    "testimony_0_levels_r3": {
+        "message": "подозрительный сайт"
+    },
+    "testimony_0_levels_r4": {
+        "message": "доверяю"
+    },
+    "testimony_0_levels_r5": {
+        "message": "доверяю"
+    },
+    "testimony_4_levels_r0": {
+        "message": "кликните чтобы оценить"
+    },
+    "testimony_4_levels_r1": {
+        "message": "не подходит"
+    },
+    "testimony_4_levels_r2": {
+        "message": "не подходит"
+    },
+    "testimony_4_levels_r3": {
+        "message": "неудовлетворительно"
+    },
+    "testimony_4_levels_r4": {
+        "message": "подходит"
+    },
+    "testimony_4_levels_r5": {
+        "message": "подходит"
+    },
+    "testimony_unrated": {
+        "message": "нет мнения"
+    },
+    "testimony_delete": {
+        "message": "удалить"
+    },
+    "buttons_delete": {
+        "message": "Удалить оценки"
+    },
+    "buttons_delete_title": {
+        "message": "Удалить мои оценки и причины для этого сайта"
+    },
+    "buttons_cancel": {
+        "message": "Отмена"
+    },
+    "buttons_save": {
+        "message": "Сохранить"
     },
     "popup_headertext": {
         "message": "кликните, чтобы посмотреть подробности"
