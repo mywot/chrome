@@ -212,10 +212,16 @@
         "message": "Choose at least one category that supports your rating"
     },
     "ratingwindow_novoted": {
-        "message": "no reason for ratings has been provided yet"
+        "message": "Please provide a reason for your ratings by choosing a category"
     },
     "ratingwindow_question4": {
         "message": "How suitable is this site for children?"
+    },
+    "ratingwindow_rerate_change": {
+        "message": "change"
+    },
+    "ratingwindow_rerate_category": {
+        "message": "provide"
     },
     "messages_ready": {
         "message": "Reputation of"

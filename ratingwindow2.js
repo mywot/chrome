@@ -181,8 +181,10 @@ $.extend(wot, { ratingwindow: {
                 var votes_changed = _rw.cat_difference(_rw.is_rated(_rw.state));
                 bg.console.log("the Diff", votes_changed);
 
-                if_cond = (_rw.was_in_ratemode && bgwot.cache.cacheratingstate(_rw.state.target, _rw.state, votes_changed) || votes_changed.length > 0) &&
-                    _rw.is_allowed_submit();
+//                if_cond = (_rw.was_in_ratemode && (bgwot.cache.cacheratingstate(_rw.state.target, _rw.state, votes_changed) || votes_changed.length > 0)) &&
+//                    _rw.is_allowed_submit();
+
+                if_cond = (_rw.was_in_ratemode && (bgwot.cache.cacheratingstate(_rw.state.target, _rw.state, votes_changed) || votes_changed.length > 0));
             } else {
                 bg.console.log("finishstate: no state yet");
             }
@@ -505,60 +507,58 @@ $.extend(wot, { ratingwindow: {
         });
 
         [	{	selector: "#wot-header-link-guide",
-            text: wot.i18n("ratingwindow", "guide")
-        }, {
-            selector: "#wot-header-link-forum",
-            text: wot.i18n("ratingwindow", "forum")
-        }, {
-            selector: "#wot-header-link-settings",
-            text: wot.i18n("ratingwindow", "settings")
-        }, {
-            selector: "#wot-title-text",
-            text: wot.i18n("messages", "initializing")
-        }, {
-            selector: "#wot-rating-header-wot",
-            text: wot.i18n("ratingwindow", "wotrating")
-        }, {
-            selector: "#wot-rating-header-my",
-            text: wot.i18n("ratingwindow", "myrating")
-        }, {
-            selector: "#wot-scorecard-visit",
-            text: wot.i18n("ratingwindow", "viewscorecard")
-        }, {
-            selector: "#wot-scorecard-comment",
-            text: wot.i18n("ratingwindow", "addcomment")
-        }, {
-            selector: "#wot-partner-text",
-            text: wot.i18n("ratingwindow", "inpartnership")
-        }, {
-            selector: ".wt-rw-header-text",
-            html: wot.i18n("wt", "rw_text_hdr")
-        }, {
-            selector: ".wt-rw-body",
-            html: wot.i18n("wt", "rw_text")
-        }, {
-            selector: "#wt-rw-btn-ok",
-            text: wot.i18n("wt", "rw_ok")
-        },
-            {
+                text: wot.i18n("ratingwindow", "guide")
+            }, {
+                selector: "#wot-header-link-forum",
+                text: wot.i18n("ratingwindow", "forum")
+            }, {
+                selector: "#wot-header-link-settings",
+                text: wot.i18n("ratingwindow", "settings")
+            }, {
+                selector: "#wot-title-text",
+                text: wot.i18n("messages", "initializing")
+            }, {
+                selector: "#wot-rating-header-wot",
+                text: wot.i18n("ratingwindow", "wotrating")
+            }, {
+                selector: "#wot-rating-header-my",
+                text: wot.i18n("ratingwindow", "myrating")
+            }, {
+                selector: "#wot-scorecard-visit",
+                text: wot.i18n("ratingwindow", "viewscorecard")
+            }, {
+                selector: "#wot-scorecard-comment",
+                text: wot.i18n("ratingwindow", "addcomment")
+            }, {
+                selector: "#wot-partner-text",
+                text: wot.i18n("ratingwindow", "inpartnership")
+            }, {
+                selector: ".wt-rw-header-text",
+                html: wot.i18n("wt", "rw_text_hdr")
+            }, {
+                selector: ".wt-rw-body",
+                html: wot.i18n("wt", "rw_text")
+            }, {
+                selector: "#wt-rw-btn-ok",
+                text: wot.i18n("wt", "rw_ok")
+            }, {
                 selector: "#btn-delete",
                 text: wot.i18n("buttons", "delete")
-            },
-            {
+            }, {
                 selector: "#btn-delete",
                 title: wot.i18n("buttons", "delete_title")
-            },
-            {
+            }, {
                 selector: "#btn-cancel",
                 text: wot.i18n("buttons", "cancel")
-            },
-            {
+            }, {
                 selector: "#btn-submit",
                 text: wot.i18n("buttons", "save")
-            },
-            {
+            }, {
                 selector: ".category-title",
                 text: wot.i18n("ratingwindow", "categories")
+            }, {
+                selector: "#change-ratings",
+                text: wot.i18n("ratingwindow", "rerate_change")
             }
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -576,7 +576,9 @@ $.extend(wot, { ratingwindow: {
         var _rw = wot.ratingwindow;
         var res = "",
             yes_voted = [],
-            cat = null;
+            cat = null,
+            $_change = $("#change-ratings"),
+            change_link_text = "";
 
         // try to get user's votes from the category selector (if there are any)
         var voted = _rw.cat_selector.get_user_votes();
@@ -600,11 +602,14 @@ $.extend(wot, { ratingwindow: {
 
         if (yes_voted.length > 0) {
             res = yes_voted.join(", ");
+            change_link_text = wot.i18n("ratingwindow", "rerate_change");
         } else {
             res = wot.i18n("ratingwindow", "novoted");
+            change_link_text = wot.i18n("ratingwindow", "rerate_category");
         }
 
-        $("#voted-categories").text(res).closest("#rated-votes").toggleClass("voted", (yes_voted.length > 0));
+        $("#voted-categories-content").text(res).closest("#rated-votes").toggleClass("voted", (yes_voted.length > 0));
+        $_change.text(change_link_text);
     },
 
     is_allowed_submit: function () {
@@ -766,7 +771,7 @@ $.extend(wot, { ratingwindow: {
         $("#btn-submit").bind("click", _rw.on_submit);
         $("#btn-cancel").bind("click", _rw.on_cancel);
         $("#btn-delete").bind("click", _rw.on_delete_button);
-        $("#change-ratings").bind("click", _rw.on_change_ratings);
+        $("#change-ratings, #voted-categories-content").bind("click", _rw.on_change_ratings);
 
         $(window).unload(wot.ratingwindow.on_unload);
 
@@ -1036,8 +1041,6 @@ $.extend(wot, { ratingwindow: {
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("unrated")) return false;
-//                $("#wot-ratingwindow").addClass().removeClass();
-//                wot.ratingwindow.cat_selector.destroy();
                 return true;
             }
         },
@@ -1050,7 +1053,6 @@ $.extend(wot, { ratingwindow: {
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("rated")) return false;
-//                $("#wot-ratingwindow").addClass.removeClass();
                 wot.ratingwindow.update_uservoted();
                 return true;
             }
@@ -1065,7 +1067,6 @@ $.extend(wot, { ratingwindow: {
             activate: function () {
                 var _rw = wot.ratingwindow;
                 if (!_rw.modes._activate("rate")) return false;
-//                $("#wot-ratingwindow").addClass().removeClass();
 
                 if (!_rw.cat_selector.inited) {
                     _rw.cat_selector.build();

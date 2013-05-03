@@ -212,10 +212,16 @@
         "message": "Выберите хотя бы одну категорию, объясняющую вашу оценку"
     },
     "ratingwindow_novoted": {
-        "message": "причины такой репутации не установлены"
+        "message": "Пожалуйста, укажите причину, объясняющую вашу оценку"
     },
     "ratingwindow_question4": {
         "message": "Насколько этот сайт подходит для детей?"
+    },
+    "ratingwindow_rerate_change": {
+        "message": "изменить"
+    },
+    "ratingwindow_rerate_category": {
+        "message": "указать"
     },
     "messages_ready": {
         "message": "Репутация сайта"
