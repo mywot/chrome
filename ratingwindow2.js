@@ -671,13 +671,6 @@ $.extend(wot, { ratingwindow: {
         }
     },
 
-    try_submit: function (is_intentional) {
-        // is_intentional = true | false, shows whether user intentionally clicked "Submit", "Delete" or just closed the window.
-        console.log(wot.ratingwindow.cat_selector.get_user_votes());
-        console.log("allow to submit?", wot.ratingwindow.is_allowed_submit());
-        wot.ratingwindow.finishstate(!is_intentional);
-    },
-
     onload: function()
     {
         var _rw = wot.ratingwindow;
@@ -858,7 +851,7 @@ $.extend(wot, { ratingwindow: {
             _rw.delete_testimony(item.name);
         });
 
-        wot.ratingwindow.try_submit(true);
+        wot.ratingwindow.finishstate(false);
         _rw.modes.auto();   // switch RW mode according to current state
 
     },
@@ -894,7 +887,7 @@ $.extend(wot, { ratingwindow: {
         if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
 
         var _rw = wot.ratingwindow;
-        wot.ratingwindow.try_submit(true);
+        wot.ratingwindow.finishstate(false);
         _rw.modes.auto();   // switch RW mode according to current state
     },
 
@@ -903,7 +896,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     on_unload: function () {
-        wot.ratingwindow.try_submit(false);
+        wot.ratingwindow.finishstate(true);
     },
 
     rate_control: {
@@ -1072,6 +1065,7 @@ $.extend(wot, { ratingwindow: {
                     _rw.cat_selector.build();
                     _rw.cat_selector.init();
                 }
+                _rw.cat_selector.init_voted();
                 _rw.update_catsel_state();  // update the category selector with current state
                 _rw.update_submit_button();
                 _rw.was_in_ratemode = true;
