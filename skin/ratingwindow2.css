@@ -622,7 +622,7 @@ body {
     z-index: 1;
 }
 
-.unrated .rating-delete:not(.delete) .rating-delete-icon:before {
+.unrated.rating-delete:not(.delete) .rating-delete-icon:before {
     content: "";
     position: absolute;
     top: 6px;
@@ -1028,6 +1028,20 @@ body {
     display: none;
 }
 
+.buttons-wrapper {
+    position: relative;
+}
+
+.right-side {
+    position: absolute;
+    right: 33px;
+}
+
+.left-side {
+    position: absolute;
+    left: 10px;
+}
+
 .rw-button {
     display: inline;
     float: left;
@@ -1072,6 +1086,7 @@ body {
 .btn-submit {
     padding-left: 2em;
     padding-right: 2em;
+    text-transform: capitalize;
 }
 
 .rw-buttons-expander {

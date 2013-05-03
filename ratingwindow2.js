@@ -639,9 +639,10 @@ $.extend(wot, { ratingwindow: {
 
     },
 
-    update_submit_style: function (enable) {
+    update_submit_button: function (enable) {
         var _rw = wot.ratingwindow,
-            $_submit = $("#btn-submit");
+            $_submit = $("#btn-submit"),
+            save_delete = false;
 
         if (enable) {
             $_submit.removeClass("disabled");
@@ -650,6 +651,18 @@ $.extend(wot, { ratingwindow: {
         } else {
             enable = _rw.is_allowed_submit();
             $_submit.toggleClass("disabled", !enable);
+
+            // If user wants to delete ratings, change the text of the button and hide "Delete ratings" button
+            if (enable && !_rw.is_rated(_rw.state)) {
+                $_submit.text(wot.i18n("testimony", "delete"));
+                $("#btn-delete").hide();
+                save_delete = true; // remember the reverse of the label
+        }
+        }
+
+        if (!save_delete) {
+            $_submit.text(wot.i18n("buttons", "save"));
+            $("#btn-delete").show();
         }
     },
 
@@ -1006,7 +1019,7 @@ $.extend(wot, { ratingwindow: {
                 }
             });
 
-            _rw.update_submit_style();
+            _rw.update_submit_button();
         }
     },
 
@@ -1059,6 +1072,7 @@ $.extend(wot, { ratingwindow: {
                     _rw.cat_selector.init();
                 }
                 _rw.update_catsel_state();  // update the category selector with current state
+                _rw.update_submit_button();
                 _rw.was_in_ratemode = true;
                 return true;
             }
@@ -1440,7 +1454,7 @@ $.extend(wot, { ratingwindow: {
                 if (_this.votes[cat_id]) delete _this.votes[cat_id];
             }
 
-            wot.ratingwindow.update_submit_style(); // enable/disable "Save" button
+            wot.ratingwindow.update_submit_button(); // enable/disable "Save" button
         }
     } /* end of cat_selector {} */
 
