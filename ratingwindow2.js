@@ -933,6 +933,10 @@ $.extend(wot, { ratingwindow: {
 
         on_mousedown: function (e) {
             var _rw = wot.ratingwindow;
+
+            // skip the click if ratings are disabled
+            if ($("#ratings-area").attr("disabled")) return;
+
             var c = $(this).attr("component");
             var t = _rw.getrating(e, this);
             _rw.state.down = c;
@@ -963,13 +967,29 @@ $.extend(wot, { ratingwindow: {
             }
         },
 
+        update_ratings_visibility: function (mode) {
+            var _rw = wot.ratingwindow,
+                $_ratingarea = $("#ratings-area");
+
+            if (mode == "unrated") {
+                var cached = _rw.getcached();
+                if (cached.value && cached.value.target) {
+                    $_ratingarea.attr("disabled", null);
+                } else {
+                    $_ratingarea.attr("disabled", "disabled");
+                    // TODO: show some text to explain that there is nothing to rate
+                }
+            } else {
+                $_ratingarea.attr("disabled", null);
+            }
+        },
+
         updateratings: function(state)
         {
             /* indicator state */
             state = state || {};
 
             var _rw = wot.ratingwindow;
-            var l18n_prefix = "reputationlevels";
 
             /* update each component */
             wot.components.forEach(function(item) {
@@ -1106,6 +1126,7 @@ $.extend(wot, { ratingwindow: {
             if (_rw.modes.current_mode == mode_name) return false;
             _rw.modes.show_hide(mode_name);
             _rw.modes.current_mode = mode_name;
+            _rw.rate_control.update_ratings_visibility(mode_name);
             return true;
         },
 

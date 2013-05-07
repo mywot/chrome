@@ -659,14 +659,15 @@ var wot = {
 		}
 	},
 
-    // copies and validates categories from saved preferences
+    // copies and validates categories from saved preferences (actually prefs['update:state'])
     init_categories: function (_prefs) {
         try {
             var update_state = (typeof _prefs.get == "function") ? _prefs.get("update:state") : _prefs["update:state"];
 
-            if (update_state && !wot.utils.isEmptyObject(update_state) && update_state.categories && update_state.categories.length > 0) {
-                // update groupings and groups
+            if (update_state && !wot.utils.isEmptyObject(update_state) &&
+                update_state.categories && update_state.categories.length > 0) {
 
+                // update groupings and groups
                 if(update_state.categories[0].grouping) {
                     var groupings = update_state.categories[0].grouping;
                     for (var k=0; k < groupings.length; k++) {
@@ -687,6 +688,7 @@ var wot = {
                     wot.grouping = groupings;
                 }
 
+                // update categories
                 if (update_state.categories[0].category) {
                     var cats = update_state.categories[0].category;
                     for (var m=0; m < cats.length; m++) {
@@ -699,7 +701,6 @@ var wot = {
                             cat.cs = (cat.application == "4");  // set CS flag
                             wot.categories[cat.name] = cat;
                         }
-
                     }
                 }
             } else {
