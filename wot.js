@@ -21,7 +21,9 @@
 var wot = {
 	version: 20130502,
 	platform: "chrome",
-	debug: true,           // when changing this, don't forget to switch ga_id value also!
+    locale: "en",           // cached value of the locale
+    lang: "en-US",          // cached value of the lang
+	debug: true,            // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
@@ -38,74 +40,49 @@ var wot = {
 
 	components: [
 		{ name: 0 },
-//		{ name: 1 },    // removed in wot 2.0
-//		{ name: 2 },
 		{ name: 4 }
 	],
 
-    // default groups and their mapping to colors and TR/CS
-    cgroups: {
-        "0": { css: "c-negative" },
-        "1": { css: "c-negative" },
-        "2": { css: "c-deficient" },
-        "3": { css: "c-deficient" },
-        "4": { css: "c-neutral" },
-        "5": { css: "c-neutral" },
-        "6": { css: "c-neutral" },
-        "7": { css: "c-neutral" },
-        "8": { css: "c-positive" },
-        "9": { css: "c-positive" },
-        // child safety groups
-        "10": { css: "c-negative", cs: true },
-        "11": { css: "c-negative", cs: true },
-        "12": { css: "c-deficient", cs: true },
-        "13": { css: "c-deficient", cs: true },
-        "14": { css: "c-neutral",  cs: true },
-        "15": { css: "c-neutral",  cs: true },
-        "16": { css: "c-neutral",  cs: true },
-        "17": { css: "c-neutral",  cs: true },
-        "18": { css: "c-positive",  cs: true },
-        "19": { css: "c-positive",  cs: true }
-    },
+    cgroups: {}, // Categories' groups and their mapping to colors and TR/CS. Initialized by calling "wot.init_categories(prefs)"
 
-    // Grouping for building category selector in Rating Window. Loaded from API server, update.xml file.
+    // Groupings for building category selector in Rating Window. Loaded from API server, update.xml file.
     grouping: [
-        {
-            name: "0",
-            text: "Negative",
-            groups: [ {name: "0", type: "negative"} ],
-            tmin: 0,
-            tmax: 39
-        },
-        {
-            name: "1",
-            text: "Questionable",
-            groups: [ {name: "2", type: "questionable"} ],
-            tmin: 40,
-            tmax: 59
-        },
-        {
-            name: "2",
-            text: "Neutral",
-            groups: [ {name: "4", type: "neutral"}, {name: "9", type: "positive"} ]
-        },
-        {
-            name: "5",
-            text: "Do you agree with?",
-            dynamic: true,
-            groups: [ {name: "9", type: "positive"} ],
-            tmin: 60,
-            tmax: 100
-        },
-        {
-            name: "4",
-            omnipresent: true,      // this grouping is virtual and only contains ChildSafety categories
-            groups: [
-                {name: "10", type: "negative"},
-                {name: "12", type: "questionable"},
-                {name: "19", type: "positive"}
-            ]
-        }
+//        {
+//            name: "0",
+//            text: "Negative",
+//            groups: [ {name: "0", type: "negative"} ],
+//            tmin: 0,
+//            tmax: 39
+//        },
+//        {
+//            name: "1",
+//            text: "Questionable",
+//            groups: [ {name: "2", type: "questionable"} ],
+//            tmin: 40,
+//            tmax: 59
+//        },
+//        {
+//            name: "2",
+//            text: "Neutral",
+//            groups: [ {name: "4", type: "neutral"}, {name: "9", type: "positive"} ]
+//        },
+//        {
+//            name: "5",
+//            text: "Do you agree with?",
+//            dynamic: true,
+//            groups: [ {name: "9", type: "positive"} ],
+//            tmin: 60,
+//            tmax: 100
+//        },
+//        {
+//            name: "4",
+//            omnipresent: true,      // this grouping is virtual and only contains ChildSafety categories
+//            groups: [
+//                {name: "10", type: "negative"},
+//                {name: "12", type: "questionable"},
+//                {name: "19", type: "positive"}
+//            ]
+//        }
     ],
 
     categories: {}, // is loaded from preferences during launch and updated from server regularly
@@ -155,7 +132,8 @@ var wot = {
 
 	urls: {
 		base:		"http://www.mywot.com/",
-		scorecard:	"http://www.mywot.com/scorecard/",
+//		scorecard:	"http://www.mywot.com/scorecard/",
+		scorecard:	"http://dev.mywot.com/scorecard/",  // TODO: change back!
 		settings:	"http://www.mywot.com/settings",
 		welcome:	"http://www.mywot.com/settings/welcome",
 		setcookies:	"http://www.mywot.com/setcookies.php",
@@ -613,6 +591,11 @@ var wot = {
 		wot.env.is_accessible = wot.prefs.get("accessible");
 	},
 
+    cache_locale: function () {
+        wot.lang = wot.i18n("lang");
+        wot.locale = wot.i18n("locale");
+    },
+
 	time_sincefirstrun: function()
 	{
 		// gives time (in seconds) spent from very first run of the addon.
@@ -678,25 +661,52 @@ var wot = {
 
     // copies and validates categories from saved preferences
     init_categories: function (_prefs) {
-        var update_cats = (typeof _prefs.get == "function") ? _prefs.get("update:cats") : _prefs["update:cats"];
+        try {
+            var update_state = (typeof _prefs.get == "function") ? _prefs.get("update:state") : _prefs["update:state"];
 
-        if (update_cats) {
-            for (var cid in update_cats) {
-                var cat = update_cats[cid];
-                if (cat && cat.name && cat.g !== undefined) {
-                    var g = String(cat.g),
-                        cgrp = wot.cgroups[g];
+            if (update_state && !wot.utils.isEmptyObject(update_state) && update_state.categories && update_state.categories.length > 0) {
+                // update groupings and groups
 
-                    // copy the category only if it's group is known to the addon
-                    if (cgrp) {
-                        cat.css = cgrp.css;
-                        cat.cs = !!cgrp.cs;
-                        wot.categories[cid] = cat;
+                if(update_state.categories[0].grouping) {
+                    var groupings = update_state.categories[0].grouping;
+                    for (var k=0; k < groupings.length; k++) {
+                        var grp = groupings[k];
+                        grp.tmax = grp.tmax !== undefined ? parseInt(grp.tmax) : undefined;
+                        grp.tmin = grp.tmin !== undefined ? parseInt(grp.tmin) : undefined;
+                        grp.groups = grp.group; // change the name to comply with current implementation
+                        delete grp.group;
+
+                        if (grp.groups) {
+                            for (var n=0; n < grp.groups.length; n++) {
+                                wot.cgroups[grp.groups[n].name] = {
+                                    type: grp.groups[n].type
+                                }
+                            }
+                        }
+                    }
+                    wot.grouping = groupings;
+                }
+
+                if (update_state.categories[0].category) {
+                    var cats = update_state.categories[0].category;
+                    for (var m=0; m < cats.length; m++) {
+                        cat = cats[m];
+                        if (cat.name && cat.text != null) {
+                            cat.id = parseInt(cat.name);
+                            if (cat.group && wot.cgroups[cat.group] && wot.cgroups[cat.group].type) {
+                                cat.type = wot.cgroups[cat.group].type;
+                            }
+                            cat.cs = (cat.application == "4");  // set CS flag
+                            wot.categories[cat.name] = cat;
+                        }
+
                     }
                 }
+            } else {
+                console.warn("No categories are known yet. Not good situation.");
             }
-        } else {
-            console.warn("No categories are known yet. Not good situation.");
+        } catch (e) {
+            console.error("init_categories() failed, ", e);
         }
     },
 
@@ -712,17 +722,17 @@ var wot = {
 
     get_category_name: function (cat_id, is_short) {
         var cat = wot.get_category(cat_id);
-        var name = is_short ? cat.short : cat.name;
-        return name ? name : cat.name;  // if no short name is known, return full name
+        var text = is_short ? cat.shorttext : cat.text;
+        return text ? text : cat.text;  // if no short name is known, return full name
     },
 
     get_category_group_id: function (cat_id) {
-        return wot.get_category(cat_id).g;
+        return wot.get_category(cat_id).group;
     },
 
     get_category_css: function (cat_id) {
-        var css = wot.get_category(cat_id).css;
-        return css !== undefined ? css : "";
+        var type = wot.get_category(cat_id).type;
+        return type !== undefined ? "c-" + type : "";
     },
 
     rearrange_categories: function (cats_object) {
@@ -738,24 +748,24 @@ var wot = {
                     var cat = wot.get_category(key);
                     cats_object[key].id = key;
                     cats_object[key].cs = cat.cs;
-                    cats_object[key].g = cat.g;
+                    cats_object[key].group = cat.group;
                     sort_array.push(cats_object[key]);
                 }
 
                 // Sort the array
                 sort_array.sort(function(a, b) {
                     // first, make sure all CS categories are the last one
-                    var ag = String(a.g),
-                        bg = String(b.g);
+                    var ag = String(a.group),
+                        bg = String(b.group);
 
-                    if (ag.cs != bg.cs) {
+                    if (a.cs != b.cs) {
                         return -1;
                     } else {
                         if (a.c != b.c) {   // try to sort by confidence level
                             return a.c - b.c
                         } else {    // otherwise try to sort by group id
-                            if (a.g != b.g) {
-                                return a.g - b.g;
+                            if (a.group != b.group) {
+                                return a.group - b.group;
                             } else {
                                 return a.id > b.id;
                             }
@@ -791,10 +801,10 @@ var wot = {
 
     select_categories: function (g_from, g_to) {
         var l = [];
-        for(i in wot.categories) {
+        for(var i in wot.categories) {
             var c = wot.categories[i];
-            if (((g_from != null && c.g >= g_from) || g_from == null) &&
-                ((g_to != null && c.g <= g_to) || g_to == null)) {
+            if (((g_from != null && c.group >= g_from) || g_from == null) &&
+                ((g_to != null && c.group <= g_to) || g_to == null)) {
                 l.push(parseInt(i));
             }
         }

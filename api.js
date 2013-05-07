@@ -675,7 +675,8 @@ $.extend(wot, { api: {
 
 		var age = Date.now() - state.last;
 
-		if (age < updateinterval && state.lastversion == wot.version) {
+		// Don't request for the update file if it isn't outdated, loaded by same addon's version and same language
+        if (age < updateinterval && state.lastversion == wot.version && wot.lang == state.lang) {
 			this.state = state;
 			wot.url.updatestate(state);
 			wot.api.retry("update", [], updateinterval - age);

@@ -404,7 +404,7 @@
     border-color: #7d7d7d !important;
 }
 
-.c-deficient.cat-item:before {
+.c-questionable.cat-item:before {
     background-color: #ffd100 !important;
     background: -webkit-radial-gradient(center, ellipse cover, #f8df68 0%,#f6cd0e 100%) !important; /* Chrome10+,Safari5.1+ */
     border-color: #f6cd0e !important;

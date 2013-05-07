@@ -214,7 +214,7 @@ $.extend(wot, { core: {
 				"accessible",
 				"min_confidence_level",
 				"warning_opacity",
-                "update:cats"
+                "update:state"
 			];
 
 			wot.components.forEach(function(item) {
@@ -616,6 +616,7 @@ $.extend(wot, { core: {
 			/* load the manifest for reference */
 			this.loadmanifest();
 			wot.core.launch_time = new Date();
+            wot.cache_locale();
 			wot.detect_environment();
 			wot.exp.init();
 

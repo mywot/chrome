@@ -445,7 +445,7 @@ wot.search = {
 			"ninja_donuts",
 			"ninja_announceshown",
 			"ninja_wave",
-            "update:cats"
+            "update:state"
 		];
 
 		wot.components.forEach(function(item) {

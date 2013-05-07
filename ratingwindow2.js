@@ -403,13 +403,16 @@ $.extend(wot, { ratingwindow: {
             var cdata = cat_list[i];
             var cat_id = cdata.id,
                 cat_conf = wot.getlevel(wot.confidencelevels, cdata.c).name,
-                cgroup_style = wot.get_category_css(cat_id, cdata.g),
-                $_new_cat = $("<li class='cat-item'></li>");
+                cgroup_style = wot.get_category_css(cat_id),
+                $_new_cat = $("<li class='cat-item'></li>"),
+                cat_text = wot.get_category_name(cat_id, true);
 
-            $_new_cat.text(wot.get_category_name(cat_id, true));
-            $_new_cat.addClass(cgroup_style);   // set group style
-            $_new_cat.addClass(cat_conf);   // set confidence style
-            $_target.append($_new_cat);
+            if (cat_text) {
+                $_new_cat.text(cat_text);
+                $_new_cat.addClass(cgroup_style);   // set group style
+                $_new_cat.addClass(cat_conf);   // set confidence style
+                $_target.append($_new_cat);
+            }
         }
         $_target.show();
     },
@@ -1174,10 +1177,9 @@ $.extend(wot, { ratingwindow: {
                     var cobj = cat_list[ci],// here we may get a category object, or simple category ID. Depends on source.
                         cid = 0;
                     cid = (typeof cobj == "object") ? cobj.id : cobj; // in case if we work with category object instead if just a number
-//                    console.log(cat_list);
 
                     var cat = wot.get_category(cid);
-                    if (cat) {
+                    if (!wot.utils.isEmptyObject(cat)) {
                         var $_po_cat = $("<div></div>").addClass("category"); // container for a category
                         $_po_cat.attr("data-cat", cat.id);
                         if (omni) {
