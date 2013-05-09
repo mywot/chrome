@@ -1256,7 +1256,8 @@ $.extend(wot, { ratingwindow: {
 
             // 2. Create and show omni-part with CS categories based on user's CS testimony
             var omnigroupings = wot.determ_grouping(t0, "omnipresent");
-            var omni_categories = [];
+            var omni_categories = [],
+                omni_to_show = [];
 
             if (omnigroupings && omnigroupings.groups) {
                 for (var gi = 0; gi < omnigroupings.groups.length; gi++) {
@@ -1266,7 +1267,7 @@ $.extend(wot, { ratingwindow: {
                 }
 
                 // filter out categories irrelevant to user's testimony
-                var omni_to_show = omni_categories.filter(function(elem, i, arr) {
+                omni_to_show = omni_categories.filter(function(elem, i, arr) {
                     var cat = wot.get_category(elem);
                     return (cat.rmin !== null && cat.rmax !== null && t4 >= cat.rmin && t4 <= cat.rmax);
                 });
@@ -1278,13 +1279,14 @@ $.extend(wot, { ratingwindow: {
                 dyn_cats = [],
                 dyn_grp = wot.determ_grouping(null, "dynamic"); // find the dynamic group to identify "popover" DOM element
 
-            for (var i= 0, gid; i < dyn_grp.groups.length; i++) {
-                console.log(dyn_grp.groups[i]);
-                gid = parseInt(dyn_grp.groups[i].name);
-                dyn_cats = dyn_cats.concat(wot.select_categories(gid, gid));
+            if (dyn_grp.groups) {
+                for (var i= 0, gid; i < dyn_grp.groups.length; i++) {
+                    gid = parseInt(dyn_grp.groups[i].name);
+                    dyn_cats = dyn_cats.concat(wot.select_categories(gid, gid));
+                }
             }
 
-            if (cats_object) {
+            if (!wot.utils.isEmptyObject(cats_object) && omni_to_show && omni_to_show.length > 0) {
                 var cats = wot.rearrange_categories(cats_object);   // list of categories' IDs
                 // filter out categories that are in the omni-area already
                 // and that are only voted but not identified by community
