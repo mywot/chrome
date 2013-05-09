@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20130502,
+	version: 20130509,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -46,48 +46,11 @@ var wot = {
     cgroups: {}, // Categories' groups and their mapping to colors and TR/CS. Initialized by calling "wot.init_categories(prefs)"
 
     // Groupings for building category selector in Rating Window. Loaded from API server, update.xml file.
-    grouping: [
-//        {
-//            name: "0",
-//            text: "Negative",
-//            groups: [ {name: "0", type: "negative"} ],
-//            tmin: 0,
-//            tmax: 39
-//        },
-//        {
-//            name: "1",
-//            text: "Questionable",
-//            groups: [ {name: "2", type: "questionable"} ],
-//            tmin: 40,
-//            tmax: 59
-//        },
-//        {
-//            name: "2",
-//            text: "Neutral",
-//            groups: [ {name: "4", type: "neutral"}, {name: "9", type: "positive"} ]
-//        },
-//        {
-//            name: "5",
-//            text: "Do you agree with?",
-//            dynamic: true,
-//            groups: [ {name: "9", type: "positive"} ],
-//            tmin: 60,
-//            tmax: 100
-//        },
-//        {
-//            name: "4",
-//            omnipresent: true,      // this grouping is virtual and only contains ChildSafety categories
-//            groups: [
-//                {name: "10", type: "negative"},
-//                {name: "12", type: "questionable"},
-//                {name: "19", type: "positive"}
-//            ]
-//        }
-    ],
+    grouping: [],
 
     categories: {}, // is loaded from preferences during launch and updated from server regularly
 
-    category_threshold: 3,
+    category_threshold: 3,  // confidence level to show a category as identified
 
 	reputationlevels: [
 		{ name: "rx", min: -2 },
@@ -132,8 +95,7 @@ var wot = {
 
 	urls: {
 		base:		"http://www.mywot.com/",
-//		scorecard:	"http://www.mywot.com/scorecard/",
-		scorecard:	"http://dev.mywot.com/scorecard/",  // TODO: change back!
+		scorecard:	"http://www.mywot.com/scorecard/",
 		settings:	"http://www.mywot.com/settings",
 		welcome:	"http://www.mywot.com/settings/welcome",
 		setcookies:	"http://www.mywot.com/setcookies.php",

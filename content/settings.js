@@ -19,9 +19,10 @@
 */
 
 wot.settings = {
-	trigger: /^http(s)?\:\/\/(.+\.)?mywot\.com\/([^\/]{2}(-[^\/]+)?\/)?settings\/.+/,
-	forward: /^http(s)?\:\/\/(.+\.)?mywot\.com\/([^\/]{2}(-[^\/]+)?\/)?settings(\/([^\/]+))?\/?(\?.+)?$/,
-	match: 6,
+	trigger: /^(http(s)?\:\/\/(.+\.)?mywot\.com)\/([^\/]{2}(-[^\/]+)?\/)?settings\/.+/,
+	forward: /^(http(s)?\:\/\/(.+\.)?mywot\.com)\/([^\/]{2}(-[^\/]+)?\/)?settings(\/([^\/]+))?\/?(\?.+)?$/,
+    base: 1,
+	match: 7,
 
 	addscript: function(js)
 	{
@@ -291,7 +292,8 @@ wot.settings = {
 
 				/* make sure we have set up authentication cookies */
 				wot.bind("my:ready", function() {
-					 var loc = wot.urls.settings + "/" +
+                    var base = (match[wot.settings.base] + "/settings") || wot.urls.settings,
+					    loc = base + "/" +
 						wot.i18n("lang") + "/" + wot.platform + "/" + wot.version +
 						(wot.partner ? "/" + wot.partner : "") +
 						(section ? "/" + section : "");
