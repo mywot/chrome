@@ -24,6 +24,7 @@ $.extend(wot, {
         reset_cache: function () {
             var bg = chrome.extension.getBackgroundPage();
             bg.wot.cache.clearall();
+            bg.wot.api.update();
             $("#cache-state").text("Cache is cleared.");
         },
 
@@ -48,6 +49,7 @@ $.extend(wot, {
             wot.prefs.set("super_showtestimonies", event.currentTarget.checked);
             wot.prefs.clear("update:state");    // to force the variable update
             bg.wot.api.info.prefetch_link = event.currentTarget.checked;
+            bg.wot.api.update();
             bg.wot.cache.clearall();    // clear cache
         },
 
