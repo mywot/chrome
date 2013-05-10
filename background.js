@@ -475,10 +475,11 @@ $.extend(wot, { core: {
 		chrome.tabs.create({ url: c_url });
 	},
 
-	open_scorecard: function(target, context)
+	open_scorecard: function(target, context, hash)
 	{
 		if(!target) return;
-		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context);
+        hash = hash ? "#" + hash : "";
+		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context) + hash;
 		chrome.tabs.create({ url: url });
 	},
 
@@ -678,6 +679,10 @@ $.extend(wot, { core: {
 
 			wot.bind("message:search:openscorecard", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx);
+			});
+
+			wot.bind("message:search:ratesite", function(port, data) {
+				wot.core.open_scorecard(data.target, data.ctx, "rate");
 			});
 
 			wot.bind("message:my:update", function(port, data) {

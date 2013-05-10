@@ -139,6 +139,11 @@ wot.popup = {
 				wot.popup.onmousemove(event);
 			}, false);
 
+            var rate_link = document.getElementById("wot-cat-text");
+            if (rate_link) {
+                rate_link.addEventListener("click", wot.popup.on_rate_click);
+            }
+
         } catch (e) {
             console.error("popup.add: failed with " + e);
         }
@@ -532,8 +537,7 @@ wot.popup = {
         }
     },
 
-    onclick: function(event)
-    {
+    get_target: function() {
         try {
             var layer = document.getElementById(wot.popup.id + wot.popup.postfix);
 
@@ -542,14 +546,44 @@ wot.popup = {
                     wot.popup.postfix);
 
                 if (target) {
-                    wot.post("search", "openscorecard", { target: target,
-                        ctx: wot.urls.contexts.popupviewsc });
-
-                    wot.popup.hide(wot.popup.version, true);
+                    return target;
                 }
             }
         } catch (e) {
-            console.error("popup.onclick: failed with " + e);
+            console.error("popup.get_target: failed with ", e);
+        }
+        return null;
+    },
+
+    onclick: function(event)
+    {
+        try {
+           var target = wot.popup.get_target();
+
+            if (target) {
+                wot.post("search", "openscorecard", { target: target,
+                    ctx: wot.urls.contexts.popupviewsc });
+
+                wot.popup.hide(wot.popup.version, true);
+            }
+        } catch (e) {
+            console.error("popup.onclick: failed with ", e);
+        }
+    },
+
+    on_rate_click: function(event) {
+        try {
+            var target = wot.popup.get_target();
+
+            if (target) {
+                wot.post("search", "ratesite", { target: target,
+                    ctx: wot.urls.contexts.popuprate });
+
+                wot.popup.hide(wot.popup.version, true);
+            }
+            event.stopPropagation();
+        } catch (e) {
+            console.error("popup.onclick: failed with ", e);
         }
     }
 };
