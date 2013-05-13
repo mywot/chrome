@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "2.0.0.9",
+	"version": "2.0.0.10",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -21,9 +21,7 @@
 		"http://api.mywot.com/*",
 		"https://api.mywot.com/*",
         "http://beta.mywot.com/*",
-        "https://beta.mywot.com/*",
-		"http://dev.mywot.com/*",
-		"https://dev.mywot.com/*"
+        "https://beta.mywot.com/*"
 	],
 	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [

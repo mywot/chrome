@@ -74,7 +74,7 @@ wot.popup = {
 
             parentelem = parentelem || document.body;
 
-            if (!parentelem) {
+            if (!parentelem || parentelem.isContentEditable) {
                 return;
             }
 

@@ -19,15 +19,15 @@
 */
 
 var wot = {
-	version: 20130509,
+	version: 20130513,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
-	debug: true,            // when changing this, don't forget to switch ga_id value also!
+	debug: false,            // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
-	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
@@ -99,6 +99,7 @@ var wot = {
 		settings:	"http://beta.mywot.com/settings",
 		welcome:	"http://beta.mywot.com/settings/welcome",
 		setcookies:	"http://beta.mywot.com/setcookies.php",
+		setcookies2: "http://www.mywot.com/setcookies.php", // TODO: remove when Beta is finished
 		update:		"http://beta.mywot.com/update",
 		tour_warning:"http://beta.mywot.com/support/tour/warningscreen",
 		tour:       "http://beta.mywot.com/support/tour/",
@@ -777,7 +778,7 @@ var wot = {
 
     select_identified: function (cat_list) {
         // Returns categories identified by community (not sorted order)
-        console.log("select_identified()", cat_list);
+//        console.log("select_identified()", cat_list);
 
         var res = {};
         for (var i in cat_list) {
@@ -789,7 +790,7 @@ var wot = {
 
     select_voted: function (cat_list) {
         // Returns categories voted by the current user (the state from server/cache)
-        console.log("select_voted()", cat_list);
+//        console.log("select_voted()", cat_list);
 
         var res = {};
         for (var i in cat_list) {
@@ -797,7 +798,7 @@ var wot = {
             if (cat.v != 0) res[i] = cat;
         }
 
-        console.log("__result", res);
+//        console.log("__result", res);
         return res;
     },
 

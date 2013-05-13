@@ -32,14 +32,14 @@ $.extend(wot, { ratingwindow: {
         var ratings = wot.ratingwindow.getcached().value,
             is_rated = false;
 
-        console.log("is_rated()", state, ratings);
+//        console.log("is_rated()", state, ratings);
 
         state = state ? state : ratings;
 
         // Detect if the website is rated by user, to activate proper mode
         wot.components.forEach(function (i) {
             var name = i.name;
-            console.log(name, state[name]);
+//            console.log(name, state[name]);
             if (state[name] && state[name].t >= 0) {
                 is_rated = true;
                 return false;
@@ -118,8 +118,8 @@ $.extend(wot, { ratingwindow: {
             new_votes_arr = _rw.cat_selector.get_user_votes();
         }
 
-        console.log("old", old_votes);
-        console.log("new", new_votes_arr);
+//        console.log("old", old_votes);
+//        console.log("new", new_votes_arr);
 
         for(var i in new_votes_arr) {
             cat = new_votes_arr[i];
@@ -138,7 +138,7 @@ $.extend(wot, { ratingwindow: {
             }
         }
 
-        console.log("diff", diff);
+//        console.log("diff", diff);
         return diff;
     },
 
@@ -148,7 +148,7 @@ $.extend(wot, { ratingwindow: {
             votes.push(String(cat) + ":" + diff[cat]);
         }
 
-        console.log("votes", votes);
+//        console.log("votes", votes);
 
         if (votes.length > 0) {
             return votes.join("/") + "/";
@@ -179,17 +179,17 @@ $.extend(wot, { ratingwindow: {
 
             if (_rw.state.target) {
                 var votes_changed = _rw.cat_difference(_rw.is_rated(_rw.state));
-                bg.console.log("the Diff", votes_changed);
+//                bg.console.log("the Diff", votes_changed);
 
 //                if_cond = (_rw.was_in_ratemode && (bgwot.cache.cacheratingstate(_rw.state.target, _rw.state, votes_changed) || votes_changed.length > 0)) &&
 //                    _rw.is_allowed_submit();
 
                 if_cond = (_rw.was_in_ratemode && (bgwot.cache.cacheratingstate(_rw.state.target, _rw.state, votes_changed) || votes_changed.length > 0));
             } else {
-                bg.console.log("finishstate: no state yet");
+//                bg.console.log("finishstate: no state yet");
             }
 
-            bg.console.log("IF COND:", if_cond);
+//            bg.console.log("IF COND:", if_cond);
 
             /* if user's testimonies or categories were changed, store them in the cache and submit */
             if (if_cond) {
@@ -218,7 +218,7 @@ $.extend(wot, { ratingwindow: {
                 // TODO: add either label or number to count voted categories AND/OR whether ratings were deleted
                 bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY);
             } else {
-                bg.console.log("No testimonies & votes to submit them. Ignored.");
+//                bg.console.log("No testimonies & votes to submit them. Ignored.");
             }
 
             /* update all views */
@@ -418,7 +418,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     update_categories: function () {
-        console.log("wot.ratingwindow.update_categories()");
+//        console.log("wot.ratingwindow.update_categories()");
         var _rw = wot.ratingwindow,
             cached = _rw.getcached();
 
@@ -588,7 +588,7 @@ $.extend(wot, { ratingwindow: {
         if (voted.length > 0) {
             for (var i = 0; i < voted.length; i++) {
                 cat = voted[i];
-                console.log(cat);
+//                console.log(cat);
                 if (cat.v == 1) {
                     yes_voted.push(wot.get_category_name(cat.id, true));
                 }
@@ -847,7 +847,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     on_delete_button: function () {
-        console.log("on_delete_button()");
+//        console.log("on_delete_button()");
         var _rw = wot.ratingwindow;
 
         wot.components.forEach(function(item){
@@ -860,7 +860,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     on_cancel: function () {
-        console.log("on_cancel()");
+//        console.log("on_cancel()");
         var _rw = wot.ratingwindow,
             cached = _rw.getcached();
 
@@ -885,7 +885,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     on_submit: function (e) {
-        console.log("on_submit()");
+//        console.log("on_submit()");
 
         if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
 
@@ -1120,7 +1120,7 @@ $.extend(wot, { ratingwindow: {
 
         _activate: function (mode_name) {
             /* Generic func to do common things for switching modes. Returns false if there is no need to switch the mode. */
-            console.log("RW.modes.activate(" + mode_name + ")");
+//            console.log("RW.modes.activate(" + mode_name + ")");
 
             var _rw = wot.ratingwindow;
             if (_rw.modes.current_mode == mode_name) return false;
@@ -1378,7 +1378,7 @@ $.extend(wot, { ratingwindow: {
 
             this.inited = true;
 
-            console.log("votes", _this.votes);
+//            console.log("votes", _this.votes);
         },
 
         init_voted: function () {

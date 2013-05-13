@@ -689,7 +689,7 @@ $.extend(wot, { core: {
 				port.post("setcookies", {
 					cookies: wot.api.processcookies(data.cookies) || []
 				});
-			});
+            });
 
 			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 

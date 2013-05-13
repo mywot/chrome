@@ -254,7 +254,8 @@ $.extend(wot, { api: {
 		if (match && match[1] != id) {
 			this.reload(match[1], function() {
 				wot.api.cookieupdated = 0;
-			});
+                wot.core.update();  // load ratings and user's info after syncronization
+            });
 		}
 
 		var now = Date.now();
@@ -300,6 +301,13 @@ $.extend(wot, { api: {
 				they haven't been set already */
 			$.ajax({
 				url: wot.urls.setcookies + "?" + cookies.join("&"),
+				complete: onready
+			});
+
+            // TODO: remove this when BETA is finished
+
+			$.ajax({
+				url: wot.urls.setcookies2 + "?" + cookies.join("&"),
 				complete: onready
 			});
 		}

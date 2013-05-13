@@ -27,7 +27,7 @@ wot.warning = {
 	make_categories_block: function (categories, options) {
 
         var tmpl = '';
-        console.log("make_categories_block", categories);
+//        console.log("make_categories_block", categories);
 
         if (wot.utils.isEmptyObject(categories)) {
             // If no categories are indentified for now
