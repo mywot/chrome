@@ -137,7 +137,7 @@ $.extend(wot, { cache: {
     // Detects changes in user's ratings and stores them in local cache. Returns the flag whether the testimonies have been changed.
 	{
         var bg = chrome.extension.getBackgroundPage();
-        bg.console.log("cacheratingstate(name, state, votes_changed)", arguments);
+//        bg.console.log("cacheratingstate(name, state, votes_changed)", arguments);
 
 //		try {
 			state = state || {};
@@ -158,7 +158,7 @@ $.extend(wot, { cache: {
 					}
 				});
 
-                bg.console.log("testimonies, changed?", changed);
+//                bg.console.log("testimonies, changed?", changed);
 
                 if (!wot.utils.isEmptyObject(votes_changed)) {
                     for (var cid in votes_changed) {
@@ -173,7 +173,7 @@ $.extend(wot, { cache: {
                     changed = true;
                 }
 
-                bg.console.log("categories, changed?", changed);
+//                bg.console.log("categories, changed?", changed);
 
 				if (changed) {
 					this.set(name, obj.status, obj.value);
@@ -191,7 +191,7 @@ $.extend(wot, { cache: {
 	cacheresponse: function(hosts, data, status)
 	{
 		var processed = 0;
-        console.log("data", data);
+//        console.log("data", data);
 
 		try {
 			status = status || wot.cachestatus.ok;
