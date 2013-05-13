@@ -59,7 +59,8 @@ $.extend(wot, { prefs: {
 		ratingwindow_shown:     0,   // how many times RatingWindow was opened
 		activity_score:         0,
         super_wtips:            false,  // "super" settings for debug purpose: "Show welcome tips always"
-        super_fbl:              false   // "super" settings for debug purpose: "Show FBL always if question is available"
+        super_fbl:              false,   // "super" settings for debug purpose: "Show FBL always if question is available"
+        super_showtestimonies:  false
     },
 
 	set: function(name, value)
