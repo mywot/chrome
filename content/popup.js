@@ -80,8 +80,8 @@ wot.popup = {
 
 			parentelem = parentelem || document.body;
 
-			if (!parentelem) {
-				return;
+            if (!parentelem || parentelem.isContentEditable) {
+                return;
 			}
 
 			var style = document.createElement("style");
