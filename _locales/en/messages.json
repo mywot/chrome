@@ -126,13 +126,13 @@
 		"message": "Go to the site"
 	},
 	"warnings_leave": {
-		"message": "Leave the site"
+		"message": "Exit"
 	},
 	"warnings_back": {
 		"message": "Go back"
 	},
 	"warnings_reasontitle": {
-		"message": "Users have identified this site as"
+		"message": "Users have identified the following issues"
 	},
 	"warnings_noreasontitle": {
 		"message": "Users have not identified this site yet and only have rated it"
@@ -209,10 +209,10 @@
         "message": "How much do you trust this site?"
     },
     "ratingwindow_categories": {
-        "message": "Choose at least one category that supports your rating"
+        "message": "Pick at least one category that supports your rating the best"
     },
     "ratingwindow_novoted": {
-        "message": "Please provide a reason for your ratings by choosing a category"
+        "message": "Please provide a reason for your ratings by picking a category"
     },
     "ratingwindow_question4": {
         "message": "How suitable is this site for children?"

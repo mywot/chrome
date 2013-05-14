@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "2.0.0.12",
+	"version": "2.0.1",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -148,6 +148,6 @@
 			"all_frames": true 
 		}
 	],
-	"update_url": "http://api.mywot.com/chromeupdates.xml",
+	"update_url": "http://api.mywot.com/chromeupdates-beta.xml",
 	"options_page": "options.html"
 }
