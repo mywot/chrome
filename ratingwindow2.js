@@ -230,12 +230,16 @@ $.extend(wot, { ratingwindow: {
 
     /* helpers */
 
-    navigate: function(url, context)
+    navigate: function(url, context, keep_opened)
     {
         try {
             var contextedurl = wot.contextedurl(url, context);
-            chrome.tabs.create({ url: contextedurl });
-            this.hide();
+            chrome.tabs.create({ url: contextedurl, active:!keep_opened },
+                function(tab) {
+                    if (!keep_opened) wot.ratingwindow.hide();
+                }
+            );
+            if (!keep_opened) wot.ratingwindow.hide();
         } catch (e) {
             console.error("ratingwindow.navigate: failed with ", e);
         }
@@ -420,15 +424,21 @@ $.extend(wot, { ratingwindow: {
     update_categories: function () {
 //        console.log("wot.ratingwindow.update_categories()");
         var _rw = wot.ratingwindow,
-            cached = _rw.getcached();
+            cached = _rw.getcached(),
+            $_tr_list = $("#tr-categories-list"),
+            $_cs_list = $("#cs-categories-list");
 
         try {
+            // delete categories from the visible area
+            _rw.insert_categories({}, $_tr_list);
+            _rw.insert_categories({}, $_cs_list);
+
             if (this.current.target && cached.status == wot.cachestatus.ok && cached.value) {
                 var cats = cached.value.cats;
                 if (cats != null) {
                     var sorted = wot.rearrange_categories(wot.select_identified(cats));    // sort categories and split into two parts (TR, CS)
-                    _rw.insert_categories(sorted.trustworthy, $("#tr-categories-list"));
-                    _rw.insert_categories(sorted.childsafety, $("#cs-categories-list"));
+                    _rw.insert_categories(sorted.trustworthy, $_tr_list);
+                    _rw.insert_categories(sorted.childsafety, $_cs_list);
                 }
             }
         } catch (e) {
@@ -446,6 +456,7 @@ $.extend(wot, { ratingwindow: {
                         _rw.current = data || {};
                         _rw.updatecontents();
                         _rw.update_categories();
+                        _rw.modes.reset();
                         _rw.modes.auto();
                     }
                 } catch (e) {
@@ -1137,7 +1148,10 @@ $.extend(wot, { ratingwindow: {
             } else {
                 _rw.modes.unrated.activate();
             }
+        },
 
+        reset: function () {
+            wot.ratingwindow.modes.current_mode = "";
         }
     },
 
@@ -1322,7 +1336,7 @@ $.extend(wot, { ratingwindow: {
 
             $(".category.identified", _this.$_cat_selector).removeClass("identified");
 
-            for(cat_id in cats) {
+            for(var cat_id in cats) {
                 $(".category[data-cat=" + cat_id + "]", _this.$_cat_selector).addClass("identified");
             }
         },
