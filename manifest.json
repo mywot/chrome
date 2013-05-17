@@ -19,7 +19,13 @@
 		"contextMenus",
 		"http://www.mywot.com/*",
 		"http://api.mywot.com/*",
-		"https://api.mywot.com/*"
+		"https://api.mywot.com/*",
+        "webRequest",
+        "webRequestBlocking",
+        "webNavigation",
+        "management",
+        "cookies",
+        "storage"
 	],
 	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
@@ -132,6 +138,6 @@
 			"all_frames": true 
 		}
 	],
-	"update_url": "http://api.mywot.com/chromeupdates.xml",
+	"update_url": "http://api.mywot.com/operaupdates.xml",
 	"options_page": "options.html"
 }

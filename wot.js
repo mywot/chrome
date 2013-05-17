@@ -20,7 +20,7 @@
 
 var wot = {
 	version: 20130514,
-	platform: "chrome",
+	platform: "opera",      // this is important
 	debug: false,           // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
