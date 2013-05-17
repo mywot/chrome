@@ -139,3 +139,74 @@
 	background: url("../fusion/confidence-5.png") right top no-repeat;
 }
 
+/* small hints about user's ratings on the popup */
+.wot-pp-tr,
+.wot-pp-cs {
+    position: relative;
+    width: 0;
+    height: 0;
+    bottom: 7px;
+    left: 1px;
+    border: 4px solid transparent;
+    /*border-left-color: red;*/
+    /*border-bottom-color: red;*/
+}
+
+.wot-pp-cs {
+    right: 6px;
+    left: auto;
+    margin-left: auto;
+    bottom: 15px;
+    /*border-left-color: transparent;*/
+    /*border-right-color: red;*/
+}
+
+.wot-pp-tr[r="r1"] {
+    border-left-color: #fd0000;
+    border-bottom-color: #fd0000;
+}
+
+.wot-pp-cs[r="r1"] {
+    border-right-color: #fd0000;
+    border-bottom-color: #fd0000;
+}
+
+.wot-pp-tr[r="r2"] {
+    border-left-color: #ff9f75;
+    border-bottom-color: #ff9f75;
+}
+
+.wot-pp-cs[r="r2"] {
+    border-right-color: #ff9f75;
+    border-bottom-color: #ff9f75;
+}
+
+.wot-pp-tr[r="r3"] {
+    border-left-color: #ffd100;
+    border-bottom-color: #ffd100;
+}
+
+.wot-pp-cs[r="r3"] {
+    border-right-color: #ffd100;
+    border-bottom-color: #ffd100;
+}
+
+.wot-pp-tr[r="r4"] {
+    border-left-color: #a7df21;
+    border-bottom-color: #a7df21;
+}
+
+.wot-pp-cs[r="r4"] {
+    border-right-color: #a7df21;
+    border-bottom-color: #a7df21;
+}
+
+.wot-pp-tr[r="r5"] {
+    border-left-color: #68c800;
+    border-bottom-color: #68c800;
+}
+
+.wot-pp-cs[r="r5"] {
+    border-right-color: #68c800;
+    border-bottom-color: #68c800;
+}

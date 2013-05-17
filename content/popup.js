@@ -41,6 +41,10 @@ const WOT_POPUP_HTML =
 		"<div id=\"wot-r4-rep{ID}\" class=\"wot-rep {ACCESSIBLE}\"></div>" +
 		"<div id=\"wot-r4-cnf{ID}\" class=\"wot-cnf\"></div>" +
 		"</div>" +
+        "<div>" +
+            "<div id='wot-pp-tr' class='wot-pp-tr'></div>" +
+            "<div id='wot-pp-cs' class='wot-pp-cs'></div>" +
+        "</div>" +
 		"</div>";
 
 wot.popup = {
@@ -76,8 +80,8 @@ wot.popup = {
 
 			parentelem = parentelem || document.body;
 
-			if (!parentelem) {
-				return;
+            if (!parentelem || parentelem.isContentEditable) {
+                return;
 			}
 
 			var style = document.createElement("style");
@@ -143,7 +147,8 @@ wot.popup = {
 				return false;
 			}
 
-			var bottom = null;
+			var bottom = null,
+                tr_t = "", cs_t = ""; // user's testimonies for trust and child safety to show in bottom corners
 			this.offsetheight = 0;
 
 			wot.components.forEach(function(item) {
@@ -182,7 +187,32 @@ wot.popup = {
 						elem.style.display = "none";
 					}
 				}
+
+                try {
+                    // set testimonies for TR and CS to bottom corners of the popup
+                    if (item.name == 0) {
+                        tr_t = (cachedv && cachedv.t != null) ? cachedv.t : -1;
+                        tr_t = wot.getlevel(wot.reputationlevels, tr_t).name;
+                    } else if (item.name == 4) {
+                        cs_t = (cachedv && cachedv.t != null) ? cachedv.t : -1;
+                        cs_t = wot.getlevel(wot.reputationlevels, cs_t).name;
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
 			});
+
+            if (wot.search.settings["super_showtestimonies"]) {
+                var tr_t_corner = document.getElementById("wot-pp-tr");
+                if (tr_t_corner && tr_t) {
+                    tr_t_corner.setAttribute("r", tr_t);
+                }
+
+                var cs_t_corner = document.getElementById("wot-pp-cs");
+                if (cs_t_corner && cs_t) {
+                    cs_t_corner.setAttribute("r", cs_t);
+                }
+            }
 
 			if (bottom) {
 				bottom.style.borderBottom = "0";
@@ -351,7 +381,6 @@ wot.popup = {
 
 	delayedhide: function(layer)
 	{
-
 		if (this.show_wtip && wot.search.on_update_callback) {
 			wot.wt.donuts.delayed_hide();
 			return;

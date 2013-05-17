@@ -57,10 +57,10 @@
 		"message": "Активация WOT…"
 	},
 	"messages_failed": {
-		"message": "Не удалось загрузить оценки."
+		"message": "Не удалось загрузить оценки"
 	},
 	"messages_notavailable": {
-		"message": "Оценки не доступны."
+		"message": "Оценки недоступны"
 	},
 	"messages_loading": {
 		"message": "Загрузка оценок…"

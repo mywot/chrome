@@ -618,6 +618,8 @@ $.extend(wot, { core: {
 			wot.detect_environment();
 			wot.exp.init();
 
+            wot.exp.is_running("beta-old"); // init value for "WOT beta" dummy experiment
+
 			/* messages */
 
 			wot.bind("message:search:hello", function(port, data) {

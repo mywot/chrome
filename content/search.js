@@ -444,7 +444,8 @@ wot.search = {
 			"use_search_level",
 			"ninja_donuts",
 			"ninja_announceshown",
-			"ninja_wave"
+			"ninja_wave",
+            "super_showtestimonies"
 		];
 
 		wot.components.forEach(function(item) {

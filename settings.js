@@ -43,6 +43,14 @@ $.extend(wot, {
             wot.prefs.set("super_fbl", event.currentTarget.checked);
         },
 
+        supers_showtestimonies: function (event) {
+            var bg = chrome.extension.getBackgroundPage();
+            wot.prefs.set("super_showtestimonies", event.currentTarget.checked);
+            wot.prefs.clear("update:state");    // to force the variable update
+            bg.wot.api.info.prefetch_link = event.currentTarget.checked;
+            bg.wot.cache.clearall();    // clear cache
+        },
+
         init: function () {
             wot.surveys.init();
             $("#btn-reset-fbl").click(wot.settings_ui.reset_fbl);
@@ -54,6 +62,10 @@ $.extend(wot, {
             $("#chk-super-fbl").
                 click(wot.settings_ui.supers_fbl).
                 attr("checked", wot.prefs.get("super_fbl"));
+
+            $("#chk-user-showtestimonies").
+                click(wot.settings_ui.supers_showtestimonies).
+                attr("checked", wot.prefs.get("super_showtestimonies"));
 
             $("#btn-reset-cache").click(wot.settings_ui.reset_cache);
         }
