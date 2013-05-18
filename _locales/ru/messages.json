@@ -74,6 +74,9 @@
     "ratingwindow_forum": {
         "message": "Форум"
     },
+    "ratingwindow_profile": {
+        "message": "Мой профиль"
+    },
 	"ratingwindow_wotrating": {
 		"message": "Репутация этого сайта по мнению пользователей"
 	},

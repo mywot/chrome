@@ -529,6 +529,9 @@ $.extend(wot, { ratingwindow: {
                 selector: "#wot-header-link-settings",
                 text: wot.i18n("ratingwindow", "settings")
             }, {
+                selector: "#wot-header-link-profile",
+                text: wot.i18n("ratingwindow", "profile")
+            }, {
                 selector: "#wot-title-text",
                 text: wot.i18n("messages", "initializing")
             }, {
@@ -733,6 +736,10 @@ $.extend(wot, { ratingwindow: {
 
         $("#wot-header-link-settings").bind("click", function() {
             wot.ratingwindow.navigate(wurls.settings, wurls.contexts.rwsettings);
+        });
+
+        $("#wot-header-link-profile").bind("click", function() {
+            wot.ratingwindow.navigate(wurls.profile, wurls.contexts.rwprofile);
         });
 
         $("#wot-header-link-guide").bind("click", function() {

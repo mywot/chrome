@@ -97,6 +97,7 @@ var wot = {
 		base:		"http://beta.mywot.com/",
 		scorecard:	"http://beta.mywot.com/scorecard/",
 		settings:	"http://beta.mywot.com/settings",
+		profile:	"http://beta.mywot.com/user",
 		welcome:	"http://beta.mywot.com/settings/welcome",
 		setcookies:	"http://beta.mywot.com/setcookies.php",
 		setcookies2: "http://www.mywot.com/setcookies.php", // TODO: remove when Beta is finished
