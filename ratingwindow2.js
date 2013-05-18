@@ -1300,7 +1300,7 @@ $.extend(wot, { ratingwindow: {
                 }
             }
 
-            if (!wot.utils.isEmptyObject(cats_object) && omni_to_show && omni_to_show.length > 0) {
+            if (!wot.utils.isEmptyObject(cats_object)) {
                 var cats = wot.rearrange_categories(cats_object);   // list of categories' IDs
                 // filter out categories that are in the omni-area already
                 // and that are only voted but not identified by community
