@@ -100,7 +100,8 @@
             }, opts);
 
         var MOUSE_LOCS_TRACKED = 3,  // number of past mouse locations to track
-            DELAY = 300;  // ms delay when user appears to be entering submenu
+            DELAY = 200,  // ms delay when user appears to be entering submenu
+            ACTIVATE_DELAY = 5;   // ms delay when user appears to hovering sections
 
         /**
          * Keep track of the last few locations of the mouse.
@@ -233,7 +234,7 @@
                     prevLoc.y < offset.top || prevLoc.y > lowerRight.y) {
                     // If the previous mouse location was outside of the entire
                     // menu's bounds, immediately activate.
-                    return 0;
+                    return ACTIVATE_DELAY;
                 }
 
                 if (lastDelayLoc &&
@@ -264,7 +265,7 @@
                 // increase (somewhat counterintuitively).
                 function slope(a, b) {
                     return (b.y - a.y) / (b.x - a.x);
-                };
+                }
 
                 var decreasingCorner = upperRight,
                     increasingCorner = lowerRight;
@@ -292,11 +293,19 @@
                     prevDecreasingSlope = slope(prevLoc, decreasingCorner),
                     prevIncreasingSlope = slope(prevLoc, increasingCorner);
 
+                console.log("decreasingSlope",decreasingSlope, "increasingSlope", increasingSlope);
+                console.log("prevDecreasingSlope",prevDecreasingSlope, "prevIncreasingSlope", prevIncreasingSlope);
+
                 if (decreasingSlope < prevDecreasingSlope &&
                         increasingSlope > prevIncreasingSlope) {
                     // Mouse is moving from previous location towards the
                     // currently activated submenu. Delay before activating a
                     // new menu row, because user may be moving into submenu.
+                    lastDelayLoc = loc;
+                    return DELAY;
+                }
+                else if (decreasingSlope > prevDecreasingSlope && increasingSlope < prevIncreasingSlope) {
+                    // if mouse goes away from submenu but still angled, apply delay.
                     lastDelayLoc = loc;
                     return DELAY;
                 }
@@ -315,6 +324,6 @@
                 .mouseleave(mouseleaveRow);
         $(document).mousemove(mousemoveDocument);
 
-    };
+    }
 })(jQuery);
 
