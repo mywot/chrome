@@ -699,6 +699,8 @@ $.extend(wot, { ratingwindow: {
         wot.init_categories(bg.wot.prefs);
 
         /* accessibility */
+
+        // TODO: use only 1 "global" style on the most top element to specify accessible mode for all children
         $("#wot-header-logo, " +
             "#wot-header-close, " +
             ".wot-header-link, " +
@@ -1275,11 +1277,13 @@ $.extend(wot, { ratingwindow: {
                 _this.activate_submenu($_grouping);
             }
 
-            // 2. Create and show omni-part with CS categories based on user's CS testimony
+            // 2. Create omni-part with CS categories based on user's CS testimony
             var omnigroupings = wot.determ_grouping(t0, "omnipresent");
-            var omni_categories = [],
-                omni_to_show = [];
+            var omni_categories = [],   // all possible omni-categories
+                omni_to_show = [],  // plain filtered list of omni-categories
+                omni_per_section = {};  // list of omni-categories per selector's section
 
+            // make a list of all categories for omni-area that we may show
             if (omnigroupings && omnigroupings.groups) {
                 for (var gi = 0; gi < omnigroupings.groups.length; gi++) {
                     var g_id = parseInt(omnigroupings.groups[gi].name);
@@ -1291,6 +1295,21 @@ $.extend(wot, { ratingwindow: {
                 omni_to_show = omni_categories.filter(function(elem, i, arr) {
                     var cat = wot.get_category(elem);
                     return (cat.rmin !== null && cat.rmax !== null && t4 >= cat.rmin && t4 <= cat.rmax);
+                });
+            }
+
+            /* now omni_to_show[] contains all cats for the given testimony and we need to make filtered lists
+            for every section in the selector.         */
+            for (var j = 0; j < wot.grouping.length; j++) {
+                if (wot.grouping[j].omnipresent) continue;  // skip omni grouping for obvious reason
+                var section_id = wot.grouping[j].name;
+                omni_per_section[section_id] = omni_to_show.filter(function (elem, i , arr) {
+                    var cat = wot.get_category(elem);
+                    if (cat.excludegroupings) {
+                        var excludegroupings = cat.excludegroupings.split(",");
+                        return (excludegroupings.indexOf(section_id) < 0);
+                    }
+                    return true;
                 });
             }
 
@@ -1329,8 +1348,13 @@ $.extend(wot, { ratingwindow: {
             // 4. Append finally Omni Categories
             $(".category-selector .popover .omni").detach();    // remove all previous omni groups from all popovers
 
-            // Create and attach omni categories to _all_ popovers (groupings) at one time
-            _this._build_from_list(omni_to_show, $(".category-selector .popover"), true);
+            // Create and attach omni categories to _all_ popovers (groupings)
+            for (var si in omni_per_section) {
+                if (omni_per_section[si]) {
+                    _this._build_from_list(omni_per_section[si], $(".category-selector li[grp-name=" + si + "] .popover"), true);
+                }
+            }
+
             _this.highlight_identified(cats_object);    // assign CSS styles to identified categories
             _this.markup_voted();                       // assign extra data to voted categories
         },
@@ -1355,7 +1379,7 @@ $.extend(wot, { ratingwindow: {
 
             $(".category", _this.$_cat_selector).removeAttr("voted");
 
-            for(cat_id in _this.votes) {
+            for(var cat_id in _this.votes) {
                 $(".category[data-cat=" + cat_id + "]", _this.$_cat_selector).attr("voted", _this.votes[cat_id].v);
             }
         },
