@@ -293,9 +293,6 @@
                     prevDecreasingSlope = slope(prevLoc, decreasingCorner),
                     prevIncreasingSlope = slope(prevLoc, increasingCorner);
 
-                console.log("decreasingSlope",decreasingSlope, "increasingSlope", increasingSlope);
-                console.log("prevDecreasingSlope",prevDecreasingSlope, "prevIncreasingSlope", prevIncreasingSlope);
-
                 if (decreasingSlope < prevDecreasingSlope &&
                         increasingSlope > prevIncreasingSlope) {
                     // Mouse is moving from previous location towards the
