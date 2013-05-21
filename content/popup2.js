@@ -47,6 +47,8 @@ wot.popup = {
     version:		0,
     offsety:		-15,
     offsetx:		0,
+    height:			200,    // minimal reserved height for the popup
+    width:			300,    // minimal reserved width for the popup
     ratingheight:	52,
     areaheight:		214,
     barsize:		20,
@@ -385,8 +387,8 @@ wot.popup = {
     show: function(layer)
     {
         try {
-            var popupheight = layer.style.height + this.offsetheight,
-                popupwidth = layer.style.width;
+            var popupheight = Math.max(layer.style.height + this.offsetheight,  this.height),
+                popupwidth = layer.style.width || this.width;
 
             var win_height = window.innerHeight - this.barsize;
             var win_width  = window.innerWidth  - this.barsize;
