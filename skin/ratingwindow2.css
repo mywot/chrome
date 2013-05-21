@@ -502,14 +502,15 @@ body {
     position: relative;
     font-size: 11px;
     height: 1.3em;
-    margin: 0 8px 0 8px;
+    margin: 1px 9px -2px 8px;
     color: #919191;
     opacity: 0;
     -webkit-transition: opacity 0.5s;
 }
 
 /* show boundary labels only when rating bars are enabled */
-#ratings-area:not([disabled=disabled]) .wot-rating:hover .wot-rating-bounds {
+#ratings-area:not([disabled=disabled]) .wot-rating:hover .wot-rating-bounds,
+#ratings-area:not([disabled=disabled]) .wot-rating.hover .wot-rating-bounds {
     opacity: 1;
 }
 
@@ -606,34 +607,41 @@ body {
     margin-left: 8px;
     margin-right: 0;
     margin-top: -2px;
-    width: 175px;
+    width: 185px;
 }
 
 .wot-rating-helptext,
 .wot-rating-helplink {
+    height: 1.2em;
+    margin-top: 3px;
+    font-size: 11px;
+    text-align: left;
     color: #878787;
-    font-size: 10px;
-    margin-top: 4px;
 }
 
 .wot-rating-helptext[r=r1] {
-    color: #fd0000;
+    color: #dd2e31;
+    text-align: left;
 }
 
 .wot-rating-helptext[r=r2] {
-    color: #ff5933;
+    color: #e25533;
+    text-align: left;
 }
 
 .wot-rating-helptext[r=r3] {
     color: #de7c1b;
+    text-align: center;
 }
 
 .wot-rating-helptext[r=r4] {
     color: #5bab28;
+    text-align: right;
 }
 
 .wot-rating-helptext[r=r5] {
     color: #3b9013;
+    text-align: right;
 }
 
 #ratings-area[disabled=disabled] .wot-rating-helptext {
