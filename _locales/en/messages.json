@@ -226,6 +226,9 @@
     "ratingwindow_rerate_category": {
         "message": "provide"
     },
+    "ratingwindow_fulllist": {
+        "message": "show full list"
+    },
     "messages_ready": {
         "message": "Reputation of"
     },

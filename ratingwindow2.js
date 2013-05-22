@@ -25,8 +25,8 @@ $.extend(wot, { ratingwindow: {
     was_in_ratemode: false,
 
     /* rating state */
-
     state: {},
+    prefs: {},  // shortcut for background preferences
 
     is_rated: function (state) {
         var ratings = wot.ratingwindow.getcached().value,
@@ -691,12 +691,14 @@ $.extend(wot, { ratingwindow: {
     onload: function()
     {
         var _rw = wot.ratingwindow;
+        var bg = chrome.extension.getBackgroundPage();
 
         _rw.opened_time = new Date(); // remember time when RW was opened (for UX measurements)
-        var bg = chrome.extension.getBackgroundPage();
-        var first_opening = !bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
+        _rw.prefs = bg.wot.prefs;   // shortcut
 
-        wot.init_categories(bg.wot.prefs);
+        var first_opening = !_rw.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
+
+        wot.init_categories(_rw.prefs);
 
         /* accessibility */
 
@@ -1167,6 +1169,7 @@ $.extend(wot, { ratingwindow: {
     cat_selector: {
         inited: false,
         $_cat_selector: null,
+        short_list: true,
         voted: {},
 
         build: function () {
@@ -1175,6 +1178,7 @@ $.extend(wot, { ratingwindow: {
                 cats = [];
 
             _this.$_cat_selector = $(".category-selector .dropdown-menu"); // all operations are done on the menu actually
+            $("*", _this.$_cat_selector).detach();  // remove everything if present
 
             // cycle through grouping to create main sections
             for (var gi = 0; gi < wot.grouping.length; gi++) {
@@ -1190,12 +1194,23 @@ $.extend(wot, { ratingwindow: {
                             g_id = parseInt(g.name);
 
                         cats = wot.select_categories(g_id, g_id);   // list if categories' IDs
-                        _rw.cat_selector._build_from_list(cats, $_popover);
+                        _rw.cat_selector._build_from_list(cats, $_popover, false);
                     }
 
                     $_li.append($_popover);
                     _this.$_cat_selector.append($_li);
                 }
+            }
+
+            var _i18n_fulllist = wot.i18n("ratingwindow", "fulllist");
+
+            if (_i18n_fulllist) {
+                var chk_html = '<div class="cat-full-list">' +
+                    '<input type="checkbox" id="chk-full-list" class="css-checkbox"/>' +
+                    '<label for="chk-full-list" class="css-label">' + _i18n_fulllist + '</label>' +
+                    '</div>';
+
+                _this.$_cat_selector.append($(chk_html));
             }
         },
 
@@ -1209,6 +1224,7 @@ $.extend(wot, { ratingwindow: {
 
         _build_from_list: function (cat_list, $_target_popover, omni) {
             /* Makes HTML elements of categories with all controls and inserts them into Popover wrapper */
+            var _this = wot.ratingwindow.cat_selector;
 
             $(".category-breakline", $_target_popover).detach();    // remove any breaklines
             if (cat_list.length > 0) {
@@ -1228,6 +1244,11 @@ $.extend(wot, { ratingwindow: {
                         $_po_cat.attr("data-cat", cat.id);
                         if (omni) {
                             $_po_cat.addClass("omni");
+                        }
+
+                        if (cat.fullonly) {
+                            $_po_cat.addClass("fullonly");
+                            $_po_cat.toggleClass("invisible", _this.short_list);
                         }
 
                         $("<div></div>")    // the category line
@@ -1351,7 +1372,8 @@ $.extend(wot, { ratingwindow: {
             // Create and attach omni categories to _all_ popovers (groupings)
             for (var si in omni_per_section) {
                 if (omni_per_section[si]) {
-                    _this._build_from_list(omni_per_section[si], $(".category-selector li[grp-name=" + si + "] .popover"), true);
+                    var $_popover = $(".category-selector li[grp-name=" + si + "] .popover");
+                    _this._build_from_list(omni_per_section[si], $_popover, true);
                 }
             }
 
@@ -1368,7 +1390,9 @@ $.extend(wot, { ratingwindow: {
             $(".category.identified", _this.$_cat_selector).removeClass("identified");
 
             for(var cat_id in cats) {
-                $(".category[data-cat=" + cat_id + "]", _this.$_cat_selector).addClass("identified");
+                $(".category[data-cat=" + cat_id + "]", _this.$_cat_selector)
+                    .addClass("identified")
+                    .removeClass("fullonly invisible"); // if a category is identified, show it in both full/short list modes and prevent to be hidden
             }
         },
 
@@ -1380,7 +1404,9 @@ $.extend(wot, { ratingwindow: {
             $(".category", _this.$_cat_selector).removeAttr("voted");
 
             for(var cat_id in _this.votes) {
-                $(".category[data-cat=" + cat_id + "]", _this.$_cat_selector).attr("voted", _this.votes[cat_id].v);
+                $(".category[data-cat=" + cat_id + "]", _this.$_cat_selector)
+                    .removeClass("fullonly invisible")  // if a category is voted, show it in both full/short list modes
+                    .attr("voted", _this.votes[cat_id].v);
             }
         },
 
@@ -1407,6 +1433,14 @@ $.extend(wot, { ratingwindow: {
             return voted;
         },
 
+        update_categories_visibility: function () {
+            var _rw = wot.ratingwindow,
+                _this = _rw.cat_selector;
+
+            // show / hide categories from short/full list
+            $(".category.fullonly", _this.$_cat_selector).toggleClass("invisible", _this.short_list);
+        },
+
         init: function() {
             var _rw = wot.ratingwindow,
                 _this = _rw.cat_selector;
@@ -1421,9 +1455,27 @@ $.extend(wot, { ratingwindow: {
 
             $(_this.$_cat_selector).on("click", ".category, .cat-vote-left, .cat-vote-right, .cat-vote-del", _this.vote);
 
+            _this.short_list = !_rw.prefs.get("show_fulllist");
+
+            $("#chk-full-list").
+                bind("change", _this.on_show_full).
+                attr("checked", _this.short_list ? null : "checked");
+
+            _this.update_categories_visibility();
+
             this.inited = true;
 
 //            console.log("votes", _this.votes);
+        },
+
+        on_show_full: function () {
+            var _rw = wot.ratingwindow,
+                _this = _rw.cat_selector;
+
+            _this.short_list = ($(this).attr("checked") != "checked");
+            _rw.prefs.set("show_fulllist", !_this.short_list);  // store the value
+
+            _this.update_categories_visibility();
         },
 
         init_voted: function () {

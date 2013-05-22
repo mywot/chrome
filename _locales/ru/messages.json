@@ -226,6 +226,9 @@
     "ratingwindow_rerate_category": {
         "message": "указать"
     },
+    "ratingwindow_fulllist": {
+        "message": "полный список"
+    },
     "messages_ready": {
         "message": "Репутация сайта"
     },
