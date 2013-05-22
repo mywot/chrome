@@ -1225,6 +1225,8 @@ $.extend(wot, { ratingwindow: {
         _build_from_list: function (cat_list, $_target_popover, omni) {
             /* Makes HTML elements of categories with all controls and inserts them into Popover wrapper */
             var _this = wot.ratingwindow.cat_selector;
+            var textvote_yes = wot.i18n("ratingwindow", "vote_yes"),
+                textvote_no = wot.i18n("ratingwindow", "vote_no");
 
             $(".category-breakline", $_target_popover).detach();    // remove any breaklines
             if (cat_list.length > 0) {
@@ -1259,8 +1261,8 @@ $.extend(wot, { ratingwindow: {
                         var $_cat_vote = $("<div></div>").addClass("cat-vote");
 
                         // TODO: use translations for strings
-                        $("<div></div>").text("Yes").addClass("cat-vote-left").appendTo($_cat_vote);
-                        $("<div></div>").text("No").addClass("cat-vote-right").appendTo($_cat_vote);
+                        $("<div></div>").text(textvote_yes).addClass("cat-vote-left").appendTo($_cat_vote);
+                        $("<div></div>").text(textvote_no).addClass("cat-vote-right").appendTo($_cat_vote);
 
                         $("<div></div>").addClass("delete-icon")
                             .appendTo($("<div></div>").addClass("cat-vote-del").appendTo($_cat_vote));
