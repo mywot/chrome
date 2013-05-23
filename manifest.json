@@ -22,9 +22,7 @@
 		"https://api.mywot.com/*",
         "webRequest",
         "webRequestBlocking",
-        "webNavigation",
         "management",
-        "cookies",
         "storage"
 	],
 	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
