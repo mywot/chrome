@@ -263,9 +263,31 @@ body {
     font-size: 12px;
     padding: 11px 10px 6px 45px;
     height: 2em;
-    background-image: url(../skin/b/categories_icon.png);
+}
+
+#rated-votes:before {
+    content: "";
+    position: absolute;
+    background-image: url(../skin/b/input-icons.png);
     background-repeat: no-repeat;
-    background-position: 6px 6px;
+    background-position: 0 0;
+    background-size: 31px;
+    width: 32px;
+    height: 23px;
+    margin-left: -36px;
+    margin-top: -4px;
+}
+
+#rated-votes:not(.commented).voted:before {
+    background-position: 0 -27px;
+}
+
+#rated-votes.voted.commented:before {
+    background-position: 0 -54px;
+}
+
+#rated-votes:not(.voted).commented:before {
+    background-position: 0 -81px;
 }
 
 #voted-categories {
