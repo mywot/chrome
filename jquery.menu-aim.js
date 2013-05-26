@@ -99,8 +99,8 @@
                 exitMenu: $.noop
             }, opts);
 
-        var MOUSE_LOCS_TRACKED = 3,  // number of past mouse locations to track
-            DELAY = 200,  // ms delay when user appears to be entering submenu
+        var MOUSE_LOCS_TRACKED = 5,  // number of past mouse locations to track
+            DELAY = 90,  // ms delay when user appears to be entering submenu
             ACTIVATE_DELAY = 5;   // ms delay when user appears to hovering sections
 
         /**
@@ -196,6 +196,11 @@
          * checking again to see if the row should be activated.
          */
         var activationDelay = function() {
+
+                if (!activeRow) {
+                    activeRow = get_active();
+                }
+
                 if (!activeRow || !$(activeRow).is(options.submenuSelector)) {
                     // If there is no other submenu row already active, then
                     // go ahead and activate immediately.
@@ -223,7 +228,7 @@
                     prevLoc = mouseLocs[0];
 
                 if (!loc) {
-                    return 0;
+                    return ACTIVATE_DELAY;
                 }
 
                 if (!prevLoc) {
