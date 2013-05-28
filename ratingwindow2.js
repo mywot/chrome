@@ -296,13 +296,14 @@ $.extend(wot, { ratingwindow: {
 
         /* update current rating state */
         this.updatestate(this.current.target, cached);
+        var normalized_target = cached.value.normalized ? cached.value.normalized : this.current.target;
 
         var $_hostname = $("#hostname-text"),
             $_wot_title_text = $("#wot-title-text");
 
         /* target */
         if (this.current.target && cached.status == wot.cachestatus.ok) {
-            visible_hostname = bg.wot.url.decodehostname(this.current.target);
+            visible_hostname = bg.wot.url.decodehostname(normalized_target);
             rw_title = wot.i18n("messages", "ready");
         } else if (cached.status == wot.cachestatus.busy) {
             rw_title = wot.i18n("messages", "loading");

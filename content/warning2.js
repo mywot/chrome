@@ -210,7 +210,11 @@ wot.warning = {
 
 			this.target = data.target;
 
-			// preprocess link "Rate the site"
+            var normalized_target = (data.cached && data.cached.value &&
+                data.cached.value.normalized) ? data.cached.value.normalized : data.decodedtarget;
+
+
+            // preprocess link "Rate the site"
 			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
 			var wt_text_2 = wot.i18n("wt", "warning_text_2") || "";
 			var wt_text = wot.i18n("wt", "warning_text") || "";
@@ -221,7 +225,7 @@ wot.warning = {
 				to: wot.i18n("warnings", "warning")
 			},			{
 					from: "TITLE",
-					to: (data.decodedtarget || "").replace(/[<>&="']/g, "")
+					to: (normalized_target || "").replace(/[<>&="']/g, "")
 				}, {
 					from: "LANG",
 					to: wot.i18n("lang")
