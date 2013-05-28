@@ -1,6 +1,6 @@
 /*
 	crypto.js
-	Copyright © 2009, 2010, 2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -33,6 +33,32 @@ $.extend(wot, { crypto: {
 						":" + (seed || "");
 
 		return this.bintohex(this.sha1.sha1str(data));
+	},
+
+	decrypt: function(data, nonce, index)
+	{
+		try {
+			if (data && nonce) {
+				var key = (wot.witness || {}).key;
+
+				if (index == undefined || index < 0) {
+					index = "";
+				} else {
+					index = "-" + index;
+				}
+
+				if (key) {
+					return this.bintostr(this.arc4.crypt(
+							this.arc4.create(this.sha1.hmacsha1hex(key,
+								"response-" + nonce + index)),
+							this.strtobin(atob(data))));
+				}
+			}
+		} catch (e) {
+			console.log("crypto.decrypt: failed with " + e + "\n");
+		}
+
+		return null;
 	},
 
 	encrypt: function(data, nonce)

@@ -80,8 +80,8 @@ wot.popup = {
 
 			parentelem = parentelem || document.body;
 
-			if (!parentelem) {
-				return;
+            if (!parentelem || parentelem.isContentEditable) {
+                return;
 			}
 
 			var style = document.createElement("style");
@@ -202,14 +202,16 @@ wot.popup = {
                 }
 			});
 
-            var tr_t_corner = document.getElementById("wot-pp-tr");
-            if (tr_t_corner && tr_t) {
-                tr_t_corner.setAttribute("r", tr_t);
-            }
+            if (wot.search.settings["super_showtestimonies"]) {
+                var tr_t_corner = document.getElementById("wot-pp-tr");
+                if (tr_t_corner && tr_t) {
+                    tr_t_corner.setAttribute("r", tr_t);
+                }
 
-            var cs_t_corner = document.getElementById("wot-pp-cs");
-            if (cs_t_corner && cs_t) {
-                cs_t_corner.setAttribute("r", cs_t);
+                var cs_t_corner = document.getElementById("wot-pp-cs");
+                if (cs_t_corner && cs_t) {
+                    cs_t_corner.setAttribute("r", cs_t);
+                }
             }
 
 			if (bottom) {
