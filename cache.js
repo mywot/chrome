@@ -1,6 +1,6 @@
 /*
 	cache.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -174,15 +174,28 @@ $.extend(wot, { cache: {
 		try {
 			status = status || wot.cachestatus.ok;
 
+			var nonce = data.firstChild.getAttribute("nonce");
 			var targets = data.getElementsByTagName("target");
 
 			$(targets).each(function() {
+				var index = $(this).attr("index");
+
 				var obj = {
-					target: hosts[$(this).attr("index") || 0]
+					target: hosts[index || 0]
 				};
 
 				if (!obj.target) {
 					return;
+				}
+
+				var normalized = $(this).attr("normalized");
+
+				if (normalized !== undefined) {
+					normalized = wot.crypto.decrypt(normalized, nonce, index);
+
+					if (/^[\x00-\xFF]*$/.test(normalized)) {
+						obj.normalized = normalized;
+					}
 				}
 
 				$("application", this).each(function() {
