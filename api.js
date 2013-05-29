@@ -263,7 +263,8 @@ $.extend(wot, { api: {
 		/* these are set every time */
 		var setcookies = [
 			"accessible=" + (wot.prefs.get("accessible") ? "true" : "false"),
-			"partner=" 	  + (wot.partner || "")
+			"partner=" 	  + (wot.partner || ""),
+            "beta=1"        // TODO: remove this after releasing the final WOT 2.0 version
 		];
 
 		if (this.cookieupdated > 0 &&
