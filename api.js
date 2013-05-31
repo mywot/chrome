@@ -729,10 +729,252 @@ $.extend(wot, { api: {
 					/* poll for updates regularly */
 					wot.api.retry("update", [], updateinterval);
 				} catch (e) {
-					console.log("api.update.success: failed with " + e + "\n");
+					console.log("api.update.success: failed with ", e);
 					wot.api.retry("update");
 				}
 			});
-	}
+	},
+
+    comments: {
+
+        server: "dev.mywot.com",
+        version: "1",   // Comments API version
+        postponed: {},  // queue for sending comments
+        nonces: {},
+
+        error_codes: {
+            "1": "NO_ACTION_DEFINED",
+            "2": "IS_BANNED",
+            "3": "AUTHENTICATION_FAILED",
+            "4": "NO_TARGET",
+            "5": "COMMENT_NOT_FOUND",
+            "6": "COMMENT_REMOVAL_FAILED",
+            "7": "COMMENT_NOT_ALLOWED",
+            "8": "NO_COMMENTID",
+            "9": "NO_CATEGORIES_SPECIFIED",
+            "10": "NO_COMMENT_SPECIFIED",
+            "11": "AUTHENTICATION_INVALID_QUERY_PARAMETERS",
+            "12": "AUTHENTICATION_REP_SERVER_ERROR",
+            "13": "NO_QUERY_SPECIFIED",
+            "14": "QUERY_STRING_MISSING",
+            "15": "COMMENT_HAS_BEEN_ALTERED",
+            "16": "COMMENT_TOO_SHORT",
+            "17": "COMMENT_TOO_LONG"
+        },
+
+        call: function (apiname, options, params, on_error, on_success) {
+//            try {
+                var _this = wot.api.comments,
+                    nonce = wot.crypto.getnonce(apiname),
+                    original_target = params.target;
+
+                params = params || {};
+                var post_params = {};
+
+                $.extend(params, {
+                    id:		 (wot.witness || {}).id,
+                    nonce:   nonce,
+                    version: wot.platform + "-" + wot.version
+                });
+
+                options = options || {
+                    type: "GET"
+                };
+
+                if (options.encryption) {
+                    $.extend(params, {
+                        target: wot.crypto.encrypt(params.target, nonce)
+                    });
+                }
+
+                var components = [];
+
+                for (var i in params) {
+                    if (params[i] != null) {
+                        var param_name = i,
+                            param_value = params[i];
+
+                        // Use a hash instead of the real value in the authenticated query
+                        if (options.hash && options.hash == i) {
+                            param_name = "SHA1";
+                            param_value = wot.crypto.bintohex(wot.crypto.sha1.sha1str(params[i]));
+                        }
+
+                        components.push(param_name + "=" + encodeURIComponent(param_value));
+                    }
+                }
+
+                var query_string = components.join("&"),
+                    path = "/api/" + _this.version + "/addon/comment/" + apiname,
+                    full_path = path + "?" + query_string;
+
+                if (options.authentication) {
+                    var auth = wot.crypto.authenticate(full_path);
+
+                    if (!auth || !components.length) {
+                        return false;
+                    }
+                    full_path += "&auth=" + auth;
+                }
+
+                if (options.type == "POST") {
+                    post_params.query = full_path;
+
+                    if (options.hash) {
+                        post_params[options.hash] = params[options.hash];   // submit the real value of the parameter that is authenticated as the hash
+                    }
+                }
+
+                // the add-on does NOT have permissions for httpS://www.mywot.com so we use http and own encryption
+                var url = "http://" + this.server + (options.type == "POST" ? path : full_path);
+
+                var type = options.type;
+
+                console.log("api.comments.call: url", url, "params", params);
+
+                _this.nonces[nonce] = original_target;    // remember the link between nonce and target
+
+                $.ajax({
+                    dataType: "json",
+                    timeout: wot.api.info.timeout,
+                    type: type,
+                    data: (type == "POST" ? post_params : null),
+                    url: url,
+
+                    error: function(request, status, error)
+                    {
+                        console.log("api.comments.call.error: url = ", url, ", status = ", status);
+
+                        if (typeof(on_error) == "function") {
+                            on_error(request, status, error);
+                        }
+                    },
+
+                    success: function(data, status)
+                    {
+                        console.log("api.comments.call.success: url = ", url, ", status = ", status);
+
+                        if (typeof(on_success) == "function") {
+                            on_success(data, status, nonce);
+                        }
+                    }
+                });
+
+                return true;
+//            } catch (e) {
+//                console.error("api.comments.call: failed with ", e);
+//            }
+
+            return false;
+
+        },
+
+        get: function(target, on_error, on_success) {
+            var _this = wot.api.comments;
+            console.log("wot.api.comments.get(target)", target);
+
+            wot.api.comments.call("get",
+                {
+                    encryption: true,
+                    authentication: true
+                },
+                {
+                    target: target
+                },
+                on_error,
+                function (data) {
+                    console.log("almost there...", data);
+                    _this._on_get_comment_response(data);
+                }
+            );
+        },
+
+        submit: function (target, comment, comment_id, votes) {
+            console.log("wot.api.comments.submit(target, comment, comment_id, votes)", target, comment, comment_id, votes);
+            wot.api.comments.call("submit",
+                {
+                    encryption: true,
+                    authentication: true,
+                    type: "POST",
+                    hash: "comment" // this field must be hashed and the hash must be authenticated
+                },
+                {
+                    target: target,
+                    comment: comment,
+                    categories: votes,
+                    cid: comment_id
+                },
+                onerror,
+                onsuccess
+            );
+        },
+
+        remove: function (target) {
+            console.log("wot.api.comments.remove(target)", target);
+
+            wot.api.comments.call("remove",
+                {
+                    encryption: true,
+                    authentication: true,
+                    type: "POST"
+                },
+                {
+                    target: target
+                },
+                onerror,
+                onsuccess
+            );
+
+        },
+
+        _pull_nonce: function (nonce) {
+            wot.log("wot.api.comments._pull_once(nonce)", nonce);
+
+            var _this = wot.api.comments,
+                target = null;
+
+            if (_this.nonces[nonce]) {
+                target = _this.nonces[nonce];
+                delete _this.nonces[nonce];
+            }
+
+            return target;
+        },
+
+        _is_error: function (error) {
+            wot.log("wot.api.comments._is_error(error)", error);
+
+            var error_code = 0,
+                error_debug = "it is raining outside :(";
+
+            if (error instanceof Array && error.length > 1) {
+                error_code = error[0];
+                error_debug = error[1];
+            } else {
+                error_code = (error !== undefined ? error : 0);
+            }
+
+            if (error_code) {
+                console.error("Error is returned:", error_code, error_debug, error);
+            }
+
+            return error_code;  // if not zero, than it is error
+        },
+
+        _on_get_comment_response: function (data) {
+            wot.log("wot.api.comments._on_get_comment_response(data)", data);
+            // check whether error occured or data arrived
+            var _this = wot.api.comments,
+                nonce = data.nonce, // to recover target from response
+                target = _this._pull_nonce(nonce);
+
+            if (_this._is_error(data.error)) {
+                // TODO: implement errors handling
+            } else {
+                wot.cache.set_comment(target, data);
+                wot.core.update_ratingwindow_comment();
+            }
+        }
+    }
 
 }});

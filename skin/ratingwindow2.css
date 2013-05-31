@@ -261,8 +261,9 @@ body {
 #rated-votes {
     margin-top: 60px;
     font-size: 12px;
-    padding: 11px 10px 6px 45px;
+    padding: 3px 10px 6px 36px;
     height: 2em;
+    display: none;
 }
 
 #rated-votes:before {
@@ -271,23 +272,23 @@ body {
     background-image: url(../skin/b/input-icons.png);
     background-repeat: no-repeat;
     background-position: 0 0;
-    background-size: 31px;
-    width: 32px;
-    height: 23px;
-    margin-left: -36px;
-    margin-top: -4px;
+    background-size: 24px;
+    width: 28px;
+    height: 20px;
+    margin-left: -30px;
+    margin-top: -2px;
 }
 
 #rated-votes:not(.commented).voted:before {
-    background-position: 0 -27px;
+    background-position: 0 -20px;
 }
 
 #rated-votes.voted.commented:before {
-    background-position: 0 -54px;
+    background-position: 0 -40px;
 }
 
 #rated-votes:not(.voted).commented:before {
-    background-position: 0 -81px;
+    background-position: 0 -62px;
 }
 
 #voted-categories {
@@ -330,6 +331,11 @@ body {
     border-bottom: 1px dotted #3163B9;
     color: #3163B9;
     cursor: pointer;
+}
+
+/* don't chow this link during "commenting" mode */
+.commenting #change-ratings {
+    visibility: hidden;
 }
 
 .wot-rating-header {
@@ -1112,7 +1118,7 @@ body {
 
 .left-side {
     position: absolute;
-    left: 10px;
+    left: 0;
 }
 
 .rw-button {
@@ -1182,7 +1188,8 @@ body {
     cursor: pointer;
 }
 
-.category-title {
+.category-title,
+.comment-title {
     font-size: 12px;
     font-weight: normal;
     margin-top: -9px;
@@ -1427,5 +1434,45 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 #chk-full-list {
+
+}
+
+/* The commenting feature */
+
+#commenting-area {
+    display: none;  /* is shown from JS when needed */
+    margin: auto 9px;
+}
+
+.comment-title {
+    /* see the initial values at the beginning of this file */
+    padding: 3px 0 11px;
+}
+
+.user-comment-wrapper {
+    float: left;
+}
+
+#user-comment {
+    height: 140px;
+    width: 350px;
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #C0C0C0;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+#comment-side-hint {
+    padding: 10px 10px 0;
+}
+
+.comment-hint-piece {
+    margin: 0 0 8px;
+    font-size: 11px;
+    color: #666;
+}
+
+#comment-bottom-hint {
 
 }

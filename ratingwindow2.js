@@ -20,12 +20,10 @@
 
 $.extend(wot, { ratingwindow: {
     sliderwidth: 194,
-
     opened_time: null,
     was_in_ratemode: false,
-
-    /* rating state */
-    state: {},
+    state: {},  // rating state
+    is_registered: false,   // whether user has an account on mywot.com
     prefs: {},  // shortcut for background preferences
 
     is_rated: function (state) {
@@ -222,7 +220,7 @@ $.extend(wot, { ratingwindow: {
             }
 
             /* update all views */
-            bgwot.core.update();
+            bgwot.core.update(false);   // explicitly told to not update the rating window
         } catch (e) {
             console.log("ratingwindow.finishstate: failed with ", e);
         }
@@ -325,15 +323,6 @@ $.extend(wot, { ratingwindow: {
             var rep_level = (cached.status == wot.cachestatus.ok) ?
                 wot.getlevel(wot.reputationlevels,
                     (cachedv && cachedv.r != null) ? cachedv.r : -1).name : "r0";
-
-            // WOT2.0: no need to show/hide components any more. All 2 are visible
-//			if (bg.wot.prefs.get("show_application_" + item.name)) {
-//				$("#wot-rating-" + item.name + ", #wot-rating-" + item.name +
-//					"-border").css("display", "block");
-//			} else {
-//				$("#wot-rating-" + item.name + ", #wot-rating-" + item.name +
-//					"-border").hide();
-//			}
 
             $("#wot-rating-" + item.name + "-reputation").attr("reputation", rep_level);
 
@@ -454,9 +443,16 @@ $.extend(wot, { ratingwindow: {
                 var _rw = wot.ratingwindow;
                 try {
                     if (tab.id == target.id) {
+                        // TODO: check whether target is changed. If not, then don't update
                         _rw.current = data || {};
                         _rw.updatecontents();
                         _rw.update_categories();
+
+                        if (_rw.is_registered) {
+                            // ask server if there is my comment for the website
+                            _rw.comments.get_comment(data.target);
+                        }
+
                         _rw.modes.reset();
                         _rw.modes.auto();
                     }
@@ -465,6 +461,28 @@ $.extend(wot, { ratingwindow: {
                 }
             });
         });
+    },
+
+    update_comment: function (cached) {
+        var _rw = wot.ratingwindow,
+            _comments = wot.ratingwindow.comments,
+            data = {};
+        console.log("update_comment()", cached);
+
+        // update current cached state
+        _rw.current.cached = cached;
+
+        if (cached && cached.comment) {
+            data = cached.comment;
+        }
+
+        if (data && data.comment && data.wcid) {
+            _comments.posted_comment = data;
+            _comments.set_comment(data.comment, data.wcid, data.timestamp);
+            $("#rated-votes").addClass("commented");
+        } else {
+            $("#rated-votes").removeClass("commented");
+        }
     },
 
     hide: function()
@@ -577,6 +595,9 @@ $.extend(wot, { ratingwindow: {
             }, {
                 selector: "#change-ratings",
                 text: wot.i18n("ratingwindow", "rerate_change")
+            }, {
+                selector: ".comment-title",
+                text: wot.i18n("ratingwindow", "comment")
             }
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -701,9 +722,10 @@ $.extend(wot, { ratingwindow: {
 
         wot.init_categories(_rw.prefs);
 
-        /* accessibility */
+        _rw.is_registered = bg.wot.core.is_level("registered");
 
-        // TODO: use only 1 "global" style on the most top element to specify accessible mode for all children
+        /* accessibility */
+        // TODO: use only 1 "global" style on the most top element to specify accessible mode for all children elements
         $("#wot-header-logo, " +
             "#wot-header-close, " +
             ".wot-header-link, " +
@@ -787,6 +809,7 @@ $.extend(wot, { ratingwindow: {
         $(".rating-delete-icon, .rating-deletelabel").bind("click", _rw.rate_control.on_remove);
 
         // Rate mode event handlers
+        $("#btn-comment").bind("click", _rw.on_comment_button);
         $("#btn-submit").bind("click", _rw.on_submit);
         $("#btn-cancel").bind("click", _rw.on_cancel);
         $("#btn-delete").bind("click", _rw.on_delete_button);
@@ -795,7 +818,7 @@ $.extend(wot, { ratingwindow: {
         $(window).unload(wot.ratingwindow.on_unload);
 
         _rw.rate_control.init(); // init handlers of rating controls
-        bg.wot.core.update();     // this starts main data initialization (e.g. before it there is no "cached" data)
+        bg.wot.core.update(true);     // this starts main data initialization (e.g. before it, there is no "cached" data)
 
         var wt =     bg.wot.wt,
             locale = bg.wot.i18n("locale");
@@ -867,6 +890,21 @@ $.extend(wot, { ratingwindow: {
 //        _rw.modes.auto();
         // DEBUG ONLY:
 //        _this.modes.rate.activate();
+    },
+
+    on_comment_button: function () {
+        var _rw = wot.ratingwindow;
+
+        switch (_rw.modes.current_mode) {
+            case "rate":
+        if (!_rw.comments.allow_commenting) return;
+                _rw.update_uservoted();
+        _rw.modes.comment.activate();
+                break;
+            case "comment":
+                _rw.modes.rate.activate();
+                break;
+        }
     },
 
     on_delete_button: function () {
@@ -966,7 +1004,7 @@ $.extend(wot, { ratingwindow: {
             _rw.setstate(c, t);
             _rw.rate_control.updateratings({ name: c, t: t });
 
-            _rw.modes.rate.activate();
+            if (!_rw.modes.is_current("comment")) _rw.modes.rate.activate();  // switch to rate mode if we are not in "comment" mode
 
             // there is a nasty issue in Chrome & jQuery: when dragging an object, the cursor has "text select" form.
             e.originalEvent.preventDefault(); // http://stackoverflow.com/a/9743380/954197
@@ -982,8 +1020,8 @@ $.extend(wot, { ratingwindow: {
 
             if ($(this).closest(".rating-delete").hasClass("delete")) {
 
-                var was_in_rate_mode = _rw.modes.rate.activate(),  // switch to rate mode
-                    c = parseInt($(this).closest(".wot-rating-data").attr("component"));
+                if (!_rw.modes.is_current("comment")) _rw.modes.rate.activate();  // switch to rate mode if we are not in "comment" mode
+                var c = parseInt($(this).closest(".wot-rating-data").attr("component"));
 
                 // TODO: show the warning that categories will be deleted also (?)
                 _rw.delete_testimony(c);
@@ -1074,9 +1112,9 @@ $.extend(wot, { ratingwindow: {
 
         unrated: {
             visible: ["#reputation-info", "#user-communication", ".user-comm-social"],
-            invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes"],
+            invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes", "#commenting-area"],
             addclass: "view-mode unrated",
-            removeclass: "rated",
+            removeclass: "rated commenting",
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("unrated")) return false;
@@ -1086,9 +1124,9 @@ $.extend(wot, { ratingwindow: {
 
         rated: {
             visible: ["#reputation-info", "#user-communication", "#rated-votes"],
-            invisible: ["#rate-buttons", "#categories-selection-area", ".user-comm-social"],
+            invisible: ["#rate-buttons", "#categories-selection-area", ".user-comm-social", "#commenting-area"],
             addclass: "view-mode rated",
-            removeclass: "unrated",
+            removeclass: "unrated commenting",
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("rated")) return false;
@@ -1099,34 +1137,44 @@ $.extend(wot, { ratingwindow: {
 
         rate: {
             visible: ["#rate-buttons", "#categories-selection-area"],
-            invisible: ["#reputation-info", "#user-communication", "#rated-votes"],
+            invisible: ["#reputation-info", "#user-communication", "#rated-votes", "#commenting-area"],
             addclass: "rate",
-            removeclass: "view-mode rated unrated",
+            removeclass: "view-mode rated unrated commenting",
 
             activate: function () {
-                var _rw = wot.ratingwindow;
+                var _rw = wot.ratingwindow,
+                    prev_mode = _rw.modes.current_mode;
+
                 if (!_rw.modes._activate("rate")) return false;
 
+                if (prev_mode != "comment") {
                 if (!_rw.cat_selector.inited) {
                     _rw.cat_selector.build();
                     _rw.cat_selector.init();
                 }
                 _rw.cat_selector.init_voted();
                 _rw.update_catsel_state();  // update the category selector with current state
+                }
+
                 _rw.update_submit_button();
+                _rw.comments.update_button("rate", true);
                 _rw.was_in_ratemode = true;
                 return true;
             }
         },
 
         comment: { // Not implemented yet
-            visible: ["#rate-buttons"],
-            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area", "#rated-votes"],
+            visible: ["#rate-buttons", "#commenting-area", "#rated-votes"],
+            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area"],
+            addclass: "commenting",
+            removeclass: "view-mode rated unrated rate",
 
             activate: function () {
+                var _rw = wot.ratingwindow;
                 if (!wot.ratingwindow.modes._activate("comment")) return false;
-                $("#wot-ratingwindow").removeClass("view-mode");
                 // some logic here
+                _rw.comments.update_button("comment", true);
+                _rw.comments.focus();
                 return true;
             }
         },
@@ -1164,6 +1212,10 @@ $.extend(wot, { ratingwindow: {
 
         reset: function () {
             wot.ratingwindow.modes.current_mode = "";
+        },
+
+        is_current: function (mode) {
+            return wot.ratingwindow.modes.current_mode == mode;
         }
     },
 
@@ -1287,6 +1339,8 @@ $.extend(wot, { ratingwindow: {
                 _this = _rw.cat_selector;
 
             if (!_this.inited) return;  // do nothing when I'm not ready yet
+
+            if (!_rw.modes.is_current("rate")) return; // do nothing when not in Rate mode
 
             var t0 = state[0] ? state[0].t : -1;    // Trustworthiness user's testimony
             var t4 = state[4] ? state[4].t : -1;    // Child Safety user's testimony
@@ -1576,7 +1630,76 @@ $.extend(wot, { ratingwindow: {
 
             wot.ratingwindow.update_submit_button(); // enable/disable "Save" button
         }
-    } /* end of cat_selector {} */
+    }, /* end of cat_selector {} */
+
+    /* Start of Comments API and Comments UI code */
+    comments: {
+        allow_commenting: true,
+        MIN_LIMIT: 30,
+        MAX_LIMIT: 20000,
+        is_changed: false,
+        posted_comment: {},
+
+        is_commented: function() {
+            var _this = wot.ratingwindow.comments;
+            return (_this.posted_comment && _this.posted_comment.comment && _this.posted_comment.comment.length > 0);
+        },
+
+        get_comment: function (target) {
+            var _this = wot.ratingwindow.comments;
+            var bg = chrome.extension.getBackgroundPage(),
+                bgwot = bg.wot;
+
+//            var data = {
+//                target: "google.com",
+//                error: [1, 'shit happens']
+//            };
+            bg.console.log("RW: wot.ratingwindow.comments.get_comment(target)", target);
+
+            bgwot.api.comments.get(target,
+                function(error) {
+                    console.error("error happened in bgwot.api.comments.get()");
+                }
+            );
+        },
+
+        remove_comment: function () {
+
+        },
+
+        submit_comment: function () {
+
+        },
+
+        update_button: function (mode, enabled) {
+            var _this = wot.ratingwindow.comments,
+                $_button = $("#btn-comment");
+
+            $_button.toggleClass("enabled", enabled && _this.allow_commenting); // take into account other restrictions like "banned"
+
+            switch (mode) {
+                case "rate":
+                    if (_this.is_commented()) {
+                        $_button.text(wot.i18n("ratingwindow", "editcomment"));
+                    } else {
+                        $_button.text(wot.i18n("ratingwindow", "addcomment"));
+                    }
+
+                    break;
+                case "comment":
+                    $_button.text(wot.i18n("ratingwindow", "backtoratings"));
+                    break;
+            }
+        },
+
+        set_comment: function (text, comment_id, timestamp) {
+            $("#user-comment").text(text).attr("data-cid", comment_id).attr("data-timestamp", timestamp);
+        },
+
+        focus: function () {
+            $("#user-comment").focus();
+        }
+    }
 
 }});
 

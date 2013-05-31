@@ -47,11 +47,17 @@ $.extend(wot, { cache: {
 	set: function(name, status, value)
 	{
 		try {
-			this.cache[name] = {
-				updated: Date.now(),
-				status: status || wot.cachestatus.error,
-				value: value || {}
-			};
+
+            if (!this.cache[name]) {
+                this.cache[name] = {};
+                console.warn("inited the cache obj for ", name);
+            }
+
+            $.extend(this.cache[name], {
+                updated: Date.now(),
+                status: status || wot.cachestatus.error,
+                value: value || {}
+            });
 
 			wot.trigger("cache:set", [ name, this.cache[name ] ]);
 			return true;
@@ -61,6 +67,18 @@ $.extend(wot, { cache: {
 
 		return false;
 	},
+
+    set_comment: function (name, comment_data) {
+        wot.log("wot.cache.set_comment(name, comment_data)", name, comment_data);
+
+        if (!this.cache[name]) {
+            this.cache[name] = {}
+        }
+
+        $.extend(this.cache[name], {
+            comment: comment_data
+        });
+    },
 
 	get: function(name)
 	{

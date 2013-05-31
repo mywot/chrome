@@ -186,7 +186,7 @@ var wot = {
 	log: function (s)
 	{
 		if (wot.debug) {
-			console.log(s);
+			console.log(s, arguments);
 		}
 	},
 
