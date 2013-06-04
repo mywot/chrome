@@ -87,7 +87,7 @@
 		"message": "Посмотреть подробности оценок"
 	},
 	"ratingwindow_addcomment": {
-		"message": "добавить свой комментарий"
+		"message": "Добавить комментарий"
 	},
 	"ratingwindow_editcomment": {
 		"message": "Изменить комментарий"
@@ -95,6 +95,9 @@
 	"ratingwindow_backtoratings": {
 		"message": "Вернутся к оцениванию"
 	},
+    "ratingwindow_backtoratings_category": {
+        "message": "Выбрать причину"
+    },
 	"ratingwindow_inpartnership": {
 		"message": "Сотрудничает с"
 	},

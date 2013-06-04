@@ -1451,6 +1451,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 .user-comment-wrapper {
     float: left;
+    position: relative;
 }
 
 #user-comment {
@@ -1474,5 +1475,19 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 #comment-bottom-hint {
+    font-size: 12px;
+    text-align: right;
+    position: absolute;
+    bottom: 12px;
+    right: 22px;
+    background-color: #F00;
+    padding: 3px 10px;
+    font-weight: bold;
+    border-radius: 8px;
+    color: #FFF;
+    display: none;
+}
 
+#comment-bottom-hint.error {
+    display: block;
 }

@@ -80,6 +80,22 @@ $.extend(wot, { cache: {
         });
     },
 
+    update_comment: function (name, data) {
+        wot.log("wot.cache.update_comment(name, comment_data)", name, data);
+
+        if (this.cache[name] && this.cache[name].comment) {
+            $.extend(this.cache[name].comment, data);
+        } else {
+            wot.log("WARN! wot.cache.update_comment() can't find comment data for ", name);
+        }
+    },
+
+    remove_comment: function (name) {
+        if (this.cache[name] && this.cache[name].comment) {
+            delete this.cache[name].comment;
+        }
+    },
+
 	get: function(name)
 	{
 		try {

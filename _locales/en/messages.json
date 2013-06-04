@@ -95,6 +95,9 @@
 	"ratingwindow_backtoratings": {
 		"message": "Back to ratings"
 	},
+	"ratingwindow_backtoratings_category": {
+		"message": "Pick a category"
+	},
 	"ratingwindow_inpartnership": {
 		"message": "In partnership with"
 	},

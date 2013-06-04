@@ -153,6 +153,37 @@ var wot = {
 		}
 	},
 
+    comments: {
+        error_codes: {
+            "0": "SUCCESS",
+            "1": "NO_ACTION_DEFINED",
+            "2": "IS_BANNED",
+            "3": "AUTHENTICATION_FAILED",
+            "4": "NO_TARGET",
+            "5": "COMMENT_NOT_FOUND",
+            "6": "COMMENT_REMOVAL_FAILED",
+            "7": "COMMENT_NOT_ALLOWED",
+            "8": "NO_COMMENTID",
+            "9": "NO_CATEGORIES_SPECIFIED",
+            "10": "NO_COMMENT_SPECIFIED",
+            "11": "AUTHENTICATION_INVALID_QUERY_PARAMETERS",
+            "12": "AUTHENTICATION_REP_SERVER_ERROR",
+            "13": "NO_QUERY_SPECIFIED",
+            "14": "QUERY_STRING_MISSING",
+            "15": "COMMENT_HAS_BEEN_ALTERED",
+            "16": "COMMENT_TOO_SHORT",
+            "17": "COMMENT_TOO_LONG",
+            "18": "COMMENT_SAVE_FAILED",
+            SUCCESS: 0,
+            NO_ACTION_DEFINED: 1,
+            IS_BANNED: 2,
+            AUTHENTICATION_FAILED: 3,
+            COMMENT_NOT_FOUND: 5,
+            COMMENT_NOT_ALLOWED: 7,
+            COMMENT_SAVE_FAILED: 18
+        }
+    },
+
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
 	// trusted extensions IDs

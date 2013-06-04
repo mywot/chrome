@@ -1,6 +1,6 @@
 /*
 	api.js
-	Copyright © 2009, 2010, 2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -95,7 +95,7 @@ $.extend(wot, { api: {
 			var url = ((this.info.secure && options.secure) ?
 							"https://" : "http://") + this.info.server + path;
 
-			wot.log("api.call: url = " + url + "\n");
+			wot.log("api.call: url = " + url);
 
 			$.ajax({
 				dataType: "xml",
@@ -104,8 +104,7 @@ $.extend(wot, { api: {
 
 				error: function(request, status, error)
 				{
-					console.log("api.call.error: url = " + url + ", status = " +
-						status + "\n");
+					console.log("api.call.error: url = " + url + ", status = ", status);
 
 					if (typeof(onerror) == "function") {
 						onerror(request, status, error);
@@ -114,8 +113,7 @@ $.extend(wot, { api: {
 
 				success: function(data, status)
 				{
-					wot.log("api.call.success: url = " + url + ", status = " +
-						status + "\n");
+					wot.log("api.call.success: url = " + url + ", status = ", status);
 
 					if (typeof(onsuccess) == "function") {
 						onsuccess(data, status, nonce);
@@ -125,7 +123,7 @@ $.extend(wot, { api: {
 
 			return true;
 		} catch (e) {
-			console.log("api.call: failed with " + e + "\n");
+			console.log("api.call: failed with ", e);
 		}
 
 		return false;
@@ -740,30 +738,10 @@ $.extend(wot, { api: {
         server: "dev.mywot.com",
         version: "1",   // Comments API version
         postponed: {},  // queue for sending comments
-        nonces: {},
-
-        error_codes: {
-            "1": "NO_ACTION_DEFINED",
-            "2": "IS_BANNED",
-            "3": "AUTHENTICATION_FAILED",
-            "4": "NO_TARGET",
-            "5": "COMMENT_NOT_FOUND",
-            "6": "COMMENT_REMOVAL_FAILED",
-            "7": "COMMENT_NOT_ALLOWED",
-            "8": "NO_COMMENTID",
-            "9": "NO_CATEGORIES_SPECIFIED",
-            "10": "NO_COMMENT_SPECIFIED",
-            "11": "AUTHENTICATION_INVALID_QUERY_PARAMETERS",
-            "12": "AUTHENTICATION_REP_SERVER_ERROR",
-            "13": "NO_QUERY_SPECIFIED",
-            "14": "QUERY_STRING_MISSING",
-            "15": "COMMENT_HAS_BEEN_ALTERED",
-            "16": "COMMENT_TOO_SHORT",
-            "17": "COMMENT_TOO_LONG"
-        },
+        nonces: {},     // to know connection between nonce and target
 
         call: function (apiname, options, params, on_error, on_success) {
-//            try {
+            try {
                 var _this = wot.api.comments,
                     nonce = wot.crypto.getnonce(apiname),
                     original_target = params.target;
@@ -830,7 +808,7 @@ $.extend(wot, { api: {
 
                 var type = options.type;
 
-                console.log("api.comments.call: url", url, "params", params);
+//                console.log("api.comments.call: url", url, "params", params);
 
                 _this.nonces[nonce] = original_target;    // remember the link between nonce and target
 
@@ -843,7 +821,7 @@ $.extend(wot, { api: {
 
                     error: function(request, status, error)
                     {
-                        console.log("api.comments.call.error: url = ", url, ", status = ", status);
+                        wot.log("api.comments.call.error: url = ", url, ", status = ", status);
 
                         if (typeof(on_error) == "function") {
                             on_error(request, status, error);
@@ -852,7 +830,7 @@ $.extend(wot, { api: {
 
                     success: function(data, status)
                     {
-                        console.log("api.comments.call.success: url = ", url, ", status = ", status);
+                        wot.log("api.comments.call.success: url = ", url, ", status = ", status);
 
                         if (typeof(on_success) == "function") {
                             on_success(data, status, nonce);
@@ -861,19 +839,19 @@ $.extend(wot, { api: {
                 });
 
                 return true;
-//            } catch (e) {
-//                console.error("api.comments.call: failed with ", e);
-//            }
+            } catch (e) {
+                console.error("api.comments.call: failed with ", e);
+            }
 
             return false;
 
         },
 
-        get: function(target, on_error, on_success) {
+        get: function(target) {
             var _this = wot.api.comments;
-            console.log("wot.api.comments.get(target)", target);
+            wot.log("wot.api.comments.get(target)", target);
 
-            wot.api.comments.call("get",
+            _this.call("get",
                 {
                     encryption: true,
                     authentication: true
@@ -881,16 +859,15 @@ $.extend(wot, { api: {
                 {
                     target: target
                 },
-                on_error,
+                null,   // TODO: handle network errors
                 function (data) {
-                    console.log("almost there...", data);
-                    _this._on_get_comment_response(data);
+                    _this.on_get_comment_response(data);
                 }
             );
         },
 
         submit: function (target, comment, comment_id, votes) {
-            console.log("wot.api.comments.submit(target, comment, comment_id, votes)", target, comment, comment_id, votes);
+//            console.log("wot.api.comments.submit(target, comment, comment_id, votes)", target, comment, comment_id, votes);
             wot.api.comments.call("submit",
                 {
                     encryption: true,
@@ -904,13 +881,21 @@ $.extend(wot, { api: {
                     categories: votes,
                     cid: comment_id
                 },
-                onerror,
-                onsuccess
+                null,   // TODO: handle network errors
+                wot.api.comments.on_submit_comment_response
             );
+
+            // set the local cache to the comment value
+            wot.cache.set_comment(target, {
+                comment: comment,
+                wcid: comment_id,
+                status: wot.cachestatus.busy,    // the sign of unverified submission
+                timestamp: Date.now()
+            });
         },
 
         remove: function (target) {
-            console.log("wot.api.comments.remove(target)", target);
+//            console.log("wot.api.comments.remove(target)", target);
 
             wot.api.comments.call("remove",
                 {
@@ -921,13 +906,13 @@ $.extend(wot, { api: {
                 {
                     target: target
                 },
-                onerror,
-                onsuccess
+                null,   // TODO: handle network errors
+                wot.api.comments.on_remove_comment_response
             );
 
         },
 
-        _pull_nonce: function (nonce) {
+        pull_nonce: function (nonce) {
             wot.log("wot.api.comments._pull_once(nonce)", nonce);
 
             var _this = wot.api.comments,
@@ -941,8 +926,8 @@ $.extend(wot, { api: {
             return target;
         },
 
-        _is_error: function (error) {
-            wot.log("wot.api.comments._is_error(error)", error);
+        is_error: function (error) {
+            wot.log("wot.api.comments.is_error(error)", error);
 
             var error_code = 0,
                 error_debug = "it is raining outside :(";
@@ -961,19 +946,67 @@ $.extend(wot, { api: {
             return error_code;  // if not zero, than it is error
         },
 
-        _on_get_comment_response: function (data) {
-            wot.log("wot.api.comments._on_get_comment_response(data)", data);
+        on_get_comment_response: function (data) {
+            wot.log("wot.api.comments.on_get_comment_response(data)", data);
             // check whether error occured or data arrived
             var _this = wot.api.comments,
                 nonce = data.nonce, // to recover target from response
-                target = _this._pull_nonce(nonce);
+                target = _this.pull_nonce(nonce),
+                error_code = _this.is_error(data.error);
 
-            if (_this._is_error(data.error)) {
-                // TODO: implement errors handling
-            } else {
-                wot.cache.set_comment(target, data);
-                wot.core.update_ratingwindow_comment();
+            switch (error_code) {
+                case wot.comments.error_codes.SUCCESS:
+                    wot.cache.set_comment(target, data);
+                    break;
+                case wot.comments.error_codes.COMMENT_NOT_FOUND:
+                    wot.cache.remove_comment(target);   // remove the comment if is cached
+                    break;
+                default:
+                    wot.cache.set_comment(target, { status: wot.cachestatus.error, error_code: error_code });
             }
+
+            wot.core.update_ratingwindow_comment();
+        },
+
+        on_submit_comment_response: function (data) {
+            /* Handler for "Submit" responses. On success it updates the local cache  */
+
+            wot.log("wot.api.comments.on_submit_comment_response(data)", data);
+            var _this = wot.api.comments,
+                nonce = data.nonce, // to recover target from response
+                target = _this.pull_nonce(nonce),
+                error_code = _this.is_error(data.error);
+
+            switch (error_code) {
+                case wot.comments.error_codes.SUCCESS:
+                case 18: // TODO: remove error_code == 18 when Timo fixed the API bug
+                    wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
+                    break;
+                default:
+                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+            }
+
+            wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
+        },
+
+        on_remove_comment_response: function (data) {
+            wot.log("wot.api.comments.on_remove_comment_response(data)", data);
+            // TODO: make changes to Cache
+            var _this = wot.api.comments,
+                nonce = data.nonce, // to recover target from response
+                target = _this.pull_nonce(nonce),
+                error_code = _this.is_error(data.error);
+
+            switch (error_code) {
+                case wot.comments.error_codes.SUCCESS:
+//                case 18: // TODO: remove error_code == 18 when Timo fixed the API bug
+                    wot.cache.remove_comment(target);
+                    break;
+                default:
+                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+            }
+
+            wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
         }
     }
 
