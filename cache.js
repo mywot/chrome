@@ -1,6 +1,6 @@
 /*
 	cache.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -47,11 +47,17 @@ $.extend(wot, { cache: {
 	set: function(name, status, value)
 	{
 		try {
-			this.cache[name] = {
-				updated: Date.now(),
-				status: status || wot.cachestatus.error,
-				value: value || {}
-			};
+
+            if (!this.cache[name]) {
+                this.cache[name] = {};
+                console.warn("inited the cache obj for ", name);
+            }
+
+            $.extend(this.cache[name], {
+                updated: Date.now(),
+                status: status || wot.cachestatus.error,
+                value: value || {}
+            });
 
 			wot.trigger("cache:set", [ name, this.cache[name ] ]);
 			return true;
@@ -61,6 +67,34 @@ $.extend(wot, { cache: {
 
 		return false;
 	},
+
+    set_comment: function (name, comment_data) {
+        wot.log("wot.cache.set_comment(name, comment_data)", name, comment_data);
+
+        if (!this.cache[name]) {
+            this.cache[name] = {}
+        }
+
+        $.extend(this.cache[name], {
+            comment: comment_data
+        });
+    },
+
+    update_comment: function (name, data) {
+        wot.log("wot.cache.update_comment(name, comment_data)", name, data);
+
+        if (this.cache[name] && this.cache[name].comment) {
+            $.extend(this.cache[name].comment, data);
+        } else {
+            wot.log("WARN! wot.cache.update_comment() can't find comment data for ", name);
+        }
+    },
+
+    remove_comment: function (name) {
+        if (this.cache[name] && this.cache[name].comment) {
+            delete this.cache[name].comment;
+        }
+    },
 
 	get: function(name)
 	{
@@ -191,21 +225,33 @@ $.extend(wot, { cache: {
 	cacheresponse: function(hosts, data, status)
 	{
 		var processed = 0;
-//        console.log("data", data);
 
 		try {
 			status = status || wot.cachestatus.ok;
 
+			var nonce = data.firstChild.getAttribute("nonce");
 			var targets = data.getElementsByTagName("target");
 
 			$(targets).each(function() {
+				var index = $(this).attr("index");
+
 				var obj = {
-					target: hosts[$(this).attr("index") || 0],
+					target: hosts[index || 0],
                     cats: {}
 				};
 
 				if (!obj.target) {
 					return;
+				}
+
+				var normalized = $(this).attr("normalized");
+
+				if (normalized !== undefined) {
+					normalized = wot.crypto.decrypt(normalized, nonce, index);
+
+					if (/^[\x00-\xFF]*$/.test(normalized)) {
+						obj.normalized = normalized;
+					}
 				}
 
 				$("application", this).each(function() {

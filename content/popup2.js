@@ -163,9 +163,11 @@ wot.popup = {
             var tr_t = "", cs_t = ""; // user's testimonies for trust and child safety to show in bottom corners
             this.offsetheight = 0;
 
+            var normalized_target = cached.value.normalized ? cached.value.normalized : cached.value.decodedtarget;
+
             var hostname_elem = document.getElementById("wot-hostname");
-            if (hostname_elem && cached.value.decodedtarget) {
-                hostname_elem.textContent = cached.value.decodedtarget;
+            if (hostname_elem && normalized_target) {
+                hostname_elem.textContent = normalized_target;
             }
 
             wot.components.forEach(function(item) {

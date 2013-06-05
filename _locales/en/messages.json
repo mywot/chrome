@@ -89,6 +89,15 @@
 	"ratingwindow_addcomment": {
 		"message": "Add your comment"
 	},
+	"ratingwindow_editcomment": {
+		"message": "Edit your comment"
+	},
+	"ratingwindow_backtoratings": {
+		"message": "Back to ratings"
+	},
+	"ratingwindow_backtoratings_category": {
+		"message": "Pick a category"
+	},
 	"ratingwindow_inpartnership": {
 		"message": "In partnership with"
 	},
@@ -211,14 +220,17 @@
     "ratingwindow_question0": {
         "message": "How much do you trust this site?"
     },
+    "ratingwindow_question4": {
+        "message": "How suitable is this site for children?"
+    },
     "ratingwindow_categories": {
         "message": "Pick at least one category that supports your rating the best"
     },
+    "ratingwindow_comment": {
+        "message": "Describe your experience with the site by leaving a comment"
+    },
     "ratingwindow_novoted": {
         "message": "Please provide a reason for your ratings by picking a category"
-    },
-    "ratingwindow_question4": {
-        "message": "How suitable is this site for children?"
     },
     "ratingwindow_rerate_change": {
         "message": "change"

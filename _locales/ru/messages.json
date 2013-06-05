@@ -87,8 +87,17 @@
 		"message": "Посмотреть подробности оценок"
 	},
 	"ratingwindow_addcomment": {
-		"message": "добавить свой комментарий"
+		"message": "Добавить комментарий"
 	},
+	"ratingwindow_editcomment": {
+		"message": "Изменить комментарий"
+	},
+	"ratingwindow_backtoratings": {
+		"message": "Вернутся к оцениванию"
+	},
+    "ratingwindow_backtoratings_category": {
+        "message": "Выбрать причину"
+    },
 	"ratingwindow_inpartnership": {
 		"message": "Сотрудничает с"
 	},
@@ -211,14 +220,17 @@
     "ratingwindow_question0": {
         "message": "Насколько вы доверяете этому сайту?"
     },
+    "ratingwindow_question4": {
+        "message": "Насколько этот сайт подходит для детей?"
+    },
     "ratingwindow_categories": {
         "message": "Выберите хотя бы одну категорию, объясняющую вашу оценку"
     },
+    "ratingwindow_comment": {
+        "message": "Расскажите о вашем опыте с этим сайтом"
+    },
     "ratingwindow_novoted": {
         "message": "Пожалуйста, укажите причину, объясняющую вашу оценку"
-    },
-    "ratingwindow_question4": {
-        "message": "Насколько этот сайт подходит для детей?"
     },
     "ratingwindow_rerate_change": {
         "message": "изменить"

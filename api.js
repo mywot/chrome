@@ -1,6 +1,6 @@
 /*
 	api.js
-	Copyright © 2009, 2010, 2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -95,7 +95,7 @@ $.extend(wot, { api: {
 			var url = ((this.info.secure && options.secure) ?
 							"https://" : "http://") + this.info.server + path;
 
-			wot.log("api.call: url = " + url + "\n");
+			wot.log("api.call: url = " + url);
 
 			$.ajax({
 				dataType: "xml",
@@ -104,8 +104,7 @@ $.extend(wot, { api: {
 
 				error: function(request, status, error)
 				{
-					console.log("api.call.error: url = " + url + ", status = " +
-						status + "\n");
+					console.log("api.call.error: url = " + url + ", status = ", status);
 
 					if (typeof(onerror) == "function") {
 						onerror(request, status, error);
@@ -114,8 +113,7 @@ $.extend(wot, { api: {
 
 				success: function(data, status)
 				{
-					wot.log("api.call.success: url = " + url + ", status = " +
-						status + "\n");
+					wot.log("api.call.success: url = " + url + ", status = ", status);
 
 					if (typeof(onsuccess) == "function") {
 						onsuccess(data, status, nonce);
@@ -125,7 +123,7 @@ $.extend(wot, { api: {
 
 			return true;
 		} catch (e) {
-			console.log("api.call: failed with " + e + "\n");
+			console.log("api.call: failed with ", e);
 		}
 
 		return false;
@@ -263,7 +261,8 @@ $.extend(wot, { api: {
 		/* these are set every time */
 		var setcookies = [
 			"accessible=" + (wot.prefs.get("accessible") ? "true" : "false"),
-			"partner=" 	  + (wot.partner || "")
+			"partner=" 	  + (wot.partner || ""),
+            "beta=1"        // TODO: remove this after releasing the final WOT 2.0 version
 		];
 
 		if (this.cookieupdated > 0 &&
@@ -728,10 +727,287 @@ $.extend(wot, { api: {
 					/* poll for updates regularly */
 					wot.api.retry("update", [], updateinterval);
 				} catch (e) {
-					console.log("api.update.success: failed with " + e + "\n");
+					console.log("api.update.success: failed with ", e);
 					wot.api.retry("update");
 				}
 			});
-	}
+	},
+
+    comments: {
+
+        server: "dev.mywot.com",
+        version: "1",   // Comments API version
+        postponed: {},  // queue for sending comments
+        nonces: {},     // to know connection between nonce and target
+
+        call: function (apiname, options, params, on_error, on_success) {
+            try {
+                var _this = wot.api.comments,
+                    nonce = wot.crypto.getnonce(apiname),
+                    original_target = params.target;
+
+                params = params || {};
+                var post_params = {};
+
+                $.extend(params, {
+                    id:		 (wot.witness || {}).id,
+                    nonce:   nonce,
+                    version: wot.platform + "-" + wot.version
+                });
+
+                options = options || {
+                    type: "GET"
+                };
+
+                if (options.encryption) {
+                    $.extend(params, {
+                        target: wot.crypto.encrypt(params.target, nonce)
+                    });
+                }
+
+                var components = [];
+
+                for (var i in params) {
+                    if (params[i] != null) {
+                        var param_name = i,
+                            param_value = params[i];
+
+                        // Use a hash instead of the real value in the authenticated query
+                        if (options.hash && options.hash == i) {
+                            param_name = "SHA1";
+                            param_value = wot.crypto.bintohex(wot.crypto.sha1.sha1str(params[i]));
+                        }
+
+                        components.push(param_name + "=" + encodeURIComponent(param_value));
+                    }
+                }
+
+                var query_string = components.join("&"),
+                    path = "/api/" + _this.version + "/addon/comment/" + apiname,
+                    full_path = path + "?" + query_string;
+
+                if (options.authentication) {
+                    var auth = wot.crypto.authenticate(full_path);
+
+                    if (!auth || !components.length) {
+                        return false;
+                    }
+                    full_path += "&auth=" + auth;
+                }
+
+                if (options.type == "POST") {
+                    post_params.query = full_path;
+
+                    if (options.hash) {
+                        post_params[options.hash] = params[options.hash];   // submit the real value of the parameter that is authenticated as the hash
+                    }
+                }
+
+                // the add-on does NOT have permissions for httpS://www.mywot.com so we use http and own encryption
+                var url = "http://" + this.server + (options.type == "POST" ? path : full_path);
+
+                var type = options.type;
+
+//                console.log("api.comments.call: url", url, "params", params);
+
+                _this.nonces[nonce] = original_target;    // remember the link between nonce and target
+
+                $.ajax({
+                    dataType: "json",
+                    timeout: wot.api.info.timeout,
+                    type: type,
+                    data: (type == "POST" ? post_params : null),
+                    url: url,
+
+                    error: function(request, status, error)
+                    {
+                        wot.log("api.comments.call.error: url = ", url, ", status = ", status);
+
+                        if (typeof(on_error) == "function") {
+                            on_error(request, status, error);
+                        }
+                    },
+
+                    success: function(data, status)
+                    {
+                        wot.log("api.comments.call.success: url = ", url, ", status = ", status);
+
+                        if (typeof(on_success) == "function") {
+                            on_success(data, status, nonce);
+                        }
+                    }
+                });
+
+                return true;
+            } catch (e) {
+                console.error("api.comments.call: failed with ", e);
+            }
+
+            return false;
+
+        },
+
+        get: function(target) {
+            var _this = wot.api.comments;
+            wot.log("wot.api.comments.get(target)", target);
+
+            _this.call("get",
+                {
+                    encryption: true,
+                    authentication: true
+                },
+                {
+                    target: target
+                },
+                null,   // TODO: handle network errors
+                function (data) {
+                    _this.on_get_comment_response(data);
+                }
+            );
+        },
+
+        submit: function (target, comment, comment_id, votes) {
+//            console.log("wot.api.comments.submit(target, comment, comment_id, votes)", target, comment, comment_id, votes);
+            wot.api.comments.call("submit",
+                {
+                    encryption: true,
+                    authentication: true,
+                    type: "POST",
+                    hash: "comment" // this field must be hashed and the hash must be authenticated
+                },
+                {
+                    target: target,
+                    comment: comment,
+                    categories: votes,
+                    cid: comment_id
+                },
+                null,   // TODO: handle network errors
+                wot.api.comments.on_submit_comment_response
+            );
+
+            // set the local cache to the comment value
+            wot.cache.set_comment(target, {
+                comment: comment,
+                wcid: comment_id,
+                status: wot.cachestatus.busy,    // the sign of unverified submission
+                timestamp: Date.now()
+            });
+        },
+
+        remove: function (target) {
+//            console.log("wot.api.comments.remove(target)", target);
+
+            wot.api.comments.call("remove",
+                {
+                    encryption: true,
+                    authentication: true,
+                    type: "POST"
+                },
+                {
+                    target: target
+                },
+                null,   // TODO: handle network errors
+                wot.api.comments.on_remove_comment_response
+            );
+
+        },
+
+        pull_nonce: function (nonce) {
+            wot.log("wot.api.comments._pull_once(nonce)", nonce);
+
+            var _this = wot.api.comments,
+                target = null;
+
+            if (_this.nonces[nonce]) {
+                target = _this.nonces[nonce];
+                delete _this.nonces[nonce];
+            }
+
+            return target;
+        },
+
+        is_error: function (error) {
+            wot.log("wot.api.comments.is_error(error)", error);
+
+            var error_code = 0,
+                error_debug = "it is raining outside :(";
+
+            if (error instanceof Array && error.length > 1) {
+                error_code = error[0];
+                error_debug = error[1];
+            } else {
+                error_code = (error !== undefined ? error : 0);
+            }
+
+            if (error_code) {
+                console.error("Error is returned:", error_code, error_debug, error);
+            }
+
+            return error_code;  // if not zero, than it is error
+        },
+
+        on_get_comment_response: function (data) {
+            wot.log("wot.api.comments.on_get_comment_response(data)", data);
+            // check whether error occured or data arrived
+            var _this = wot.api.comments,
+                nonce = data.nonce, // to recover target from response
+                target = _this.pull_nonce(nonce),
+                error_code = _this.is_error(data.error);
+
+            switch (error_code) {
+                case wot.comments.error_codes.SUCCESS:
+                    wot.cache.set_comment(target, data);
+                    break;
+                case wot.comments.error_codes.COMMENT_NOT_FOUND:
+                    wot.cache.remove_comment(target);   // remove the comment if is cached
+                    break;
+                default:
+                    wot.cache.set_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+            }
+
+            wot.core.update_ratingwindow_comment();
+        },
+
+        on_submit_comment_response: function (data) {
+            /* Handler for "Submit" responses. On success it updates the local cache  */
+
+            wot.log("wot.api.comments.on_submit_comment_response(data)", data);
+            var _this = wot.api.comments,
+                nonce = data.nonce, // to recover target from response
+                target = _this.pull_nonce(nonce),
+                error_code = _this.is_error(data.error);
+
+            switch (error_code) {
+                case wot.comments.error_codes.SUCCESS:
+                case 18: // TODO: remove error_code == 18 when Timo fixed the API bug
+                    wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
+                    break;
+                default:
+                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+            }
+
+            wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
+        },
+
+        on_remove_comment_response: function (data) {
+            wot.log("wot.api.comments.on_remove_comment_response(data)", data);
+            // TODO: make changes to Cache
+            var _this = wot.api.comments,
+                nonce = data.nonce, // to recover target from response
+                target = _this.pull_nonce(nonce),
+                error_code = _this.is_error(data.error);
+
+            switch (error_code) {
+                case wot.comments.error_codes.SUCCESS:
+//                case 18: // TODO: remove error_code == 18 when Timo fixed the API bug
+                    wot.cache.remove_comment(target);
+                    break;
+                default:
+                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+            }
+
+            wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
+        }
+    }
 
 }});

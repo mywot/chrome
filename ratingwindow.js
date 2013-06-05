@@ -248,11 +248,12 @@ $.extend(wot, { ratingwindow: {
 
 		/* update current rating state */
 		this.updatestate(this.current.target, cached);
+        var normalized_target = cached.value.normalized ? cached.value.normalized : this.current.target;
 
 		/* target */
 		if (this.current.target && cached.status == wot.cachestatus.ok) {
 			$("#wot-title-text").text(
-				bg.wot.url.decodehostname(this.current.target));
+				bg.wot.url.decodehostname(normalized_target));
 		} else if (cached.status == wot.cachestatus.busy) {
 			$("#wot-title-text").text(wot.i18n("messages", "loading"));
 		} else if (cached.status == wot.cachestatus.error) {

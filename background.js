@@ -42,13 +42,13 @@ $.extend(wot, { core: {
 		return false;
 	},
 
-	update: function ()
+	update: function (update_rw)
 	{
 		try {
 			chrome.windows.getAll({}, function(windows) {
 				windows.forEach(function(view) {
 					chrome.tabs.getSelected(view.id, function(tab) {
-						wot.core.updatetab(tab.id);
+						wot.core.updatetab(tab.id, update_rw);
 					});
 				});
 			});
@@ -57,7 +57,7 @@ $.extend(wot, { core: {
 		}
 	},
 
-	updatetab: function(id)
+	updatetab: function(id, update_rw)
 	{
 		chrome.tabs.get(id, function(tab) {
 			wot.log("core.updatetab: " + id + " = " + tab.url);
@@ -68,7 +68,7 @@ $.extend(wot, { core: {
 						target: hosts[0],
 						decodedtarget: wot.url.decodehostname(hosts[0]),
 						cached: wot.cache.get(hosts[0]) || { value: {} }
-					});
+					}, update_rw);
 				});
 
 				wot.core.engage_me();
@@ -149,7 +149,51 @@ $.extend(wot, { core: {
 		}
 	},
 
-	updatetabstate: function(tab, data)
+    get_ratingwindow: function (callback) {
+//        Enumerates "views" of current tab of current window and if WOT RatingWindow is found,
+//        then call callback and pass selected tab and view found to it.
+//        Callback should be as some_function (tab, view)
+
+        chrome.tabs.query({
+                active: true,           // lookup for active tabs
+                currentWindow: true     // in active windows
+            },
+            function (tabs) {
+                for (var i in tabs) {
+                    var tab = tabs[i];  // now we have active tab to pass it to callback function
+                    var views = chrome.extension.getViews({});
+
+                    for (var i in views) {
+                        if (views[i].wot && views[i].wot.ratingwindow) {
+                            callback(tab, views[i]);
+                        }
+                    }
+                }
+            });
+    },
+
+    update_ratingwindow: function (tab0, data) {
+        // Invokes update() of the Rating Window
+        wot.core.get_ratingwindow(function (tab, view) {
+            if (tab0.id == tab.id) {    // update RW only for the related tab
+                view.wot.ratingwindow.update(tab, data);
+            }
+        });
+    },
+
+    update_ratingwindow_comment: function () {
+        wot.core.get_ratingwindow(function (tab, view) {
+            wot.log("update_ratingwindow_comment()", tab, view);
+            var _rw = view.wot.ratingwindow;
+
+            var target = wot.url.gethostname(tab.url),
+                cached = wot.cache.get(target);
+
+            _rw.update_comment(cached);
+        });
+    },
+
+	updatetabstate: function(tab, data, update_rw)
 	{
 		try {
 			if (tab.selected) {
@@ -157,13 +201,14 @@ $.extend(wot, { core: {
 				this.seticon(tab, data);
 
 				/* update the rating window */
-				var views = chrome.extension.getViews({});
-
-				for (var i in views) {
-					if (views[i].wot && views[i].wot.ratingwindow) {
-						views[i].wot.ratingwindow.update(tab, data);
-					}
-				}
+                if (update_rw) wot.core.update_ratingwindow(tab, data);
+//				var views = chrome.extension.getViews({});
+//
+//				for (var i in views) {
+//					if (views[i].wot && views[i].wot.ratingwindow) {
+//						views[i].wot.ratingwindow.update(tab, data);
+//					}
+//				}
 			}
 
 			/* update content scripts */
@@ -418,9 +463,24 @@ $.extend(wot, { core: {
 				wot.prefs.clear("status_level");
 			}
 		} catch (e) {
-			console.log("core.setuserlevel: failed with " + e + "\n");
+			console.error("core.setuserlevel: failed with ", e);
 		}
 	},
+
+    is_level: function (level) {
+        try {
+            var w_key = wot.prefs.get("witness_key"),
+                user_level = wot.prefs.get("status_level");
+
+            if (!user_level && level == null) return true;
+            var h = wot.crypto.bintohex(wot.crypto.sha1.hmacsha1hex(w_key, "level="+level)); // encrypt the string by user's key
+            return (user_level == h);
+
+        } catch (e) {
+            console.error("wot.core.is_level failed", e);
+            return false;   // in case of errors it is safer to assume that user is not registered yet
+        }
+    },
 
 	processrules: function(url, onmatch)
 	{
