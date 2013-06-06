@@ -735,7 +735,7 @@ $.extend(wot, { api: {
 
     comments: {
 
-        server: "dev.mywot.com",
+        server: "beta.mywot.com",
         version: "1",   // Comments API version
         postponed: {},  // queue for sending comments
         nonces: {},     // to know connection between nonce and target
@@ -775,7 +775,7 @@ $.extend(wot, { api: {
                         // Use a hash instead of the real value in the authenticated query
                         if (options.hash && options.hash == i) {
                             param_name = "SHA1";
-                            param_value = wot.crypto.bintohex(wot.crypto.sha1.sha1str(params[i]));
+                            param_value = wot.crypto.bintohex(wot.crypto.sha1.sha1str(unescape( encodeURIComponent( params[i] ))));
                         }
 
                         components.push(param_name + "=" + encodeURIComponent(param_value));

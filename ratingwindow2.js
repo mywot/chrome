@@ -541,14 +541,13 @@ $.extend(wot, { ratingwindow: {
         }
 
         // change appearance of commenting area regarding to permissions
-        if (_comments.allow_commenting) {
-
-        } else {
-
-        }
+//        if (_comments.allow_commenting) {
+//
+//        } else {
+//
+//        }
 
         _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting);
-
     },
 
     hide: function()

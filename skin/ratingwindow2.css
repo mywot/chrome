@@ -261,9 +261,14 @@ body {
 #rated-votes {
     margin-top: 60px;
     font-size: 12px;
-    padding: 3px 10px 6px 36px;
+    padding: 3px 10px 6px 10px;
     height: 2em;
     display: none;
+}
+
+#wot-ratingwindow:not(.commenting) #rated-votes.commented,
+#wot-ratingwindow:not(.commenting) #rated-votes:not(.commented):not(.voted) {
+    padding-left: 36px;
 }
 
 #rated-votes:before {
@@ -280,7 +285,9 @@ body {
 }
 
 #rated-votes:not(.commented).voted:before {
-    background-position: 0 -20px;
+    /* don't show icon if website is not commented */
+    /*background-position: 0 -20px;*/
+    display: none;
 }
 
 #rated-votes.voted.commented:before {
@@ -288,7 +295,13 @@ body {
 }
 
 #rated-votes:not(.voted).commented:before {
-    background-position: 0 -62px;
+    /*background-position: 0 -62px;*/
+    background-position: 0 0;
+}
+
+.commenting #rated-votes:before {
+    /* hide icon in Commenting mode */
+    display: none;
 }
 
 #voted-categories {
