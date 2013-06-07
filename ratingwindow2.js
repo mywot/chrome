@@ -19,6 +19,7 @@
  */
 
 $.extend(wot, { ratingwindow: {
+    MAX_VOTED_VISIBLE: 4,   // how many voted categories we can show in one line
     sliderwidth: 194,
     opened_time: null,
     was_in_ratemode: false,
@@ -676,12 +677,31 @@ $.extend(wot, { ratingwindow: {
             });
     },
 
+    build_voted_category_html: function (category, vote) {
+        console.log(category, vote);
+        var cat_name = wot.get_category_name(category.id, true);    // use short name
+        var $_cat_wrapper = $('<div class="votedcategory"></div>'),
+            $_hand = $('<div class="category-hand"><div class="hand-icon"></div></div>'),
+            $_cat_text = $('<div class="category-text"></div>');
+
+        $_hand.addClass(vote == 1 ? "hand-up" : "hand-down");
+        $_hand.attr("title", wot.i18n("ratingwindow", vote == 1 ? "vote_yes" : "vote_no"));
+        $_cat_text.attr("title", cat_name);
+        $_cat_text.text(cat_name);
+        $_cat_wrapper.append($_hand);
+        $_cat_wrapper.append($_cat_text);
+
+        return $_cat_wrapper;
+    },
+
     update_uservoted: function () {
         var _rw = wot.ratingwindow;
         var res = "",
-            yes_voted = [],
+            up_voted = [],
+            down_voted = [],
             cat = null,
             $_change = $("#change-ratings"),
+            $_voted_content = $("#voted-categories-content"),
             change_link_text = "";
 
         // try to get user's votes from the category selector (if there are any)
@@ -689,9 +709,10 @@ $.extend(wot, { ratingwindow: {
         if (voted.length > 0) {
             for (var i = 0; i < voted.length; i++) {
                 cat = voted[i];
-//                console.log(cat);
                 if (cat.v == 1) {
-                    yes_voted.push(wot.get_category_name(cat.id, true));
+                    up_voted.push(_rw.build_voted_category_html(cat, cat.v));
+                } else if (cat.v == -1) {
+                    down_voted.push(_rw.build_voted_category_html(cat, cat.v));
                 }
             }
         } else {
@@ -699,20 +720,41 @@ $.extend(wot, { ratingwindow: {
             voted = wot.select_voted(_rw.getcached().value.cats);
             for(cat in voted) {
                 if (voted[cat].v == 1) {
-                    yes_voted.push(wot.get_category_name(cat, true));
+                    up_voted.push(_rw.build_voted_category_html(wot.get_category(cat), voted[cat].v));
+                } else if (voted[cat].v == -1) {
+                    down_voted.push(_rw.build_voted_category_html(wot.get_category(cat), voted[cat].v));
                 }
             }
         }
 
-        if (yes_voted.length > 0) {
-            res = yes_voted.join(", ");
+        $_voted_content.empty();
+
+        if (up_voted.length > 0) {
+
+            up_voted.forEach(function(elem) {
+                $_voted_content.append(elem);
+            });
+
+            down_voted.forEach(function(elem) {
+                $_voted_content.append(elem);
+            });
+
+            var more_voted = up_voted.length + down_voted.length - _rw.MAX_VOTED_VISIBLE;
+
+            if (more_voted > 0) {
+                var $_more = $('<div class="more-categories"></div>');
+                $_more.text("+" + more_voted + " more");
+                $_voted_content.append($_more);
+            }
+
             change_link_text = wot.i18n("ratingwindow", "rerate_change");
         } else {
             res = wot.i18n("ratingwindow", "novoted");
+            $_voted_content.text(res);
             change_link_text = wot.i18n("ratingwindow", "rerate_category");
         }
 
-        $("#voted-categories-content").text(res).closest("#rated-votes").toggleClass("voted", (yes_voted.length > 0));
+        $("#rated-votes").toggleClass("voted", (up_voted.length > 0));
         $_change.text(change_link_text);
     },
 

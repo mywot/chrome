@@ -281,7 +281,7 @@ body {
     width: 28px;
     height: 20px;
     margin-left: -30px;
-    margin-top: -2px;
+    margin-top: 0;
 }
 
 #rated-votes:not(.commented).voted:before {
@@ -312,6 +312,7 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 1px 0;
+    height: 20px;
 }
 
 #rated-votes.voted #voted-categories {
@@ -326,17 +327,79 @@ body {
 #rated-votes:not(.voted) #voted-categories-content {
     color: #d14540;
     font-weight: bold;
+    display: inline;
 }
 
-#rated-votes #voted-categories-content:hover {
-    border-bottom-color: #acacac;
-}
+/*#rated-votes #voted-categories-content:hover {*/
+    /*border-bottom-color: #acacac;*/
+/*}*/
 
 #rated-votes:not(.voted) #voted-categories-content:hover {
     border-bottom-color: #d14540;
 }
 
+#voted-categories-content .votedcategory {
+    width: auto;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border: 1px solid #DEDEDE;
+    background-color: #DEDEDE;
+    height: 15px;
+    width: 81px;
+    float: left;
+    margin: 2px 4px 2px 0;
+}
 
+#voted-categories-content .category-text {
+    float: left;
+    font-size: 11px;
+    color: #515151;
+    padding-left: 5px;
+    line-height: 15px;
+    width: 52px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#voted-categories-content .more-categories {
+    font-size: 11px;
+    color: #808080;
+    padding: 5px 0;
+}
+
+.category-hand {
+    padding: 0 6px 4px 4px;
+    float: left;
+    border-radius: 100px 0 0 100px;
+    -moz-border-radius: 100px 0 0 100px;
+    -webkit-border-radius: 100px 0 0 100px;
+    height: 11px;
+    width: 8px;
+}
+
+.category-hand.hand-up {
+    background-color: #FCFCFC;
+}
+
+.category-hand.hand-down {
+    background-color: #A3A3A3;
+}
+
+.hand-up .hand-icon,
+.hand-down .hand-icon {
+    background-image: url(../skin/b/thumbs.png);
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 14px;
+}
+
+
+.hand-down .hand-icon {
+    background-position: -12px 0;
+}
 
 #change-ratings {
     position: absolute;
