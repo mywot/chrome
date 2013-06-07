@@ -304,10 +304,16 @@
     "buttons_save": {
         "message": "Save"
     },
+    "buttons_ok": {
+        "message": "OK"
+    },
     "popup_headertext": {
         "message": "click to view details"
     },
     "popup_nocattext": {
         "message": "share your opinion about this website"
+    },
+    "ratingwindow_thankyou": {
+        "message": "Thank you for your opinion!"
     }
 }

@@ -304,10 +304,16 @@
     "buttons_save": {
         "message": "Сохранить"
     },
+    "buttons_ok": {
+        "message": "OK"
+    },
     "popup_headertext": {
         "message": "кликните, чтобы посмотреть подробности"
     },
     "popup_nocattext": {
         "message": "высказать своё мнение об этом сайте"
+    },
+    "ratingwindow_thankyou": {
+        "message": "Спасибо за ваше мнение!"
     }
 }

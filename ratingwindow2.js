@@ -416,6 +416,10 @@ $.extend(wot, { ratingwindow: {
         $("#wot-user-0-header").text(user_header);
         $("#user-activityscore").text(user_as);
 
+        $(".thanks-activityscore-text").text(user_header); // on the "Thank you" screen
+        $(".thanks-activityscore-number").text(user_as);   // on the "Thank you" screen
+        $(".thanks-ratemore").text(item.notice || "");     // on the "Thank you" screen
+
         $_user_text.attr("url", item.url || "");
 
         if (item.notice) {
@@ -656,6 +660,9 @@ $.extend(wot, { ratingwindow: {
                 selector: "#btn-submit",
                 text: wot.i18n("buttons", "save")
             }, {
+                selector: "#btn-thanks-ok",
+                text: wot.i18n("buttons", "ok")
+            }, {
                 selector: ".category-title",
                 text: wot.i18n("ratingwindow", "categories")
             }, {
@@ -664,6 +671,9 @@ $.extend(wot, { ratingwindow: {
             }, {
                 selector: ".comment-title",
                 text: wot.i18n("ratingwindow", "comment")
+            }, {
+                selector: ".thanks-text",
+                text: wot.i18n("ratingwindow", "thankyou")
             }
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -678,7 +688,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     build_voted_category_html: function (category, vote) {
-        console.log(category, vote);
+
         var cat_name = wot.get_category_name(category.id, true);    // use short name
         var $_cat_wrapper = $('<div class="votedcategory"></div>'),
             $_hand = $('<div class="category-hand"><div class="hand-icon"></div></div>'),
@@ -944,6 +954,7 @@ $.extend(wot, { ratingwindow: {
         // Rate mode event handlers
         $("#btn-comment").bind("click", _rw.on_comment_button);
         $("#btn-submit").bind("click", _rw.on_submit);
+        $("#btn-thanks-ok").bind("click", _rw.on_thanks_ok);
         $("#btn-cancel").bind("click", _rw.on_cancel);
         $("#btn-delete").bind("click", _rw.on_delete_button);
         $("#change-ratings, #voted-categories-content").bind("click", _rw.on_change_ratings);
@@ -1087,7 +1098,12 @@ $.extend(wot, { ratingwindow: {
 
         var _rw = wot.ratingwindow;
         wot.ratingwindow.finishstate(false);
-        _rw.modes.auto();   // switch RW mode according to current state
+        _rw.modes.thanks.activate();
+//        _rw.modes.auto();   // switch RW mode according to current state
+    },
+
+    on_thanks_ok: function () {
+        wot.ratingwindow.modes.auto();
     },
 
     on_change_ratings: function () {
@@ -1247,9 +1263,10 @@ $.extend(wot, { ratingwindow: {
 
         unrated: {
             visible: ["#reputation-info", "#user-communication", ".user-comm-social"],
-            invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes", "#commenting-area"],
+            invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
+                "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "view-mode unrated",
-            removeclass: "rated commenting",
+            removeclass: "rated commenting thanks",
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("unrated")) return false;
@@ -1259,9 +1276,10 @@ $.extend(wot, { ratingwindow: {
 
         rated: {
             visible: ["#reputation-info", "#user-communication", "#rated-votes"],
-            invisible: ["#rate-buttons", "#categories-selection-area", ".user-comm-social", "#commenting-area"],
+            invisible: ["#rate-buttons", "#categories-selection-area", ".user-comm-social",
+                "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "view-mode rated",
-            removeclass: "unrated commenting",
+            removeclass: "unrated commenting thanks",
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("rated")) return false;
@@ -1272,9 +1290,10 @@ $.extend(wot, { ratingwindow: {
 
         rate: {
             visible: ["#rate-buttons", "#categories-selection-area"],
-            invisible: ["#reputation-info", "#user-communication", "#rated-votes", "#commenting-area"],
+            invisible: ["#reputation-info", "#user-communication", "#rated-votes",
+                "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "rate",
-            removeclass: "view-mode rated unrated commenting",
+            removeclass: "view-mode rated unrated commenting thanks",
 
             activate: function () {
                 var _rw = wot.ratingwindow,
@@ -1300,9 +1319,10 @@ $.extend(wot, { ratingwindow: {
 
         comment: { // Not implemented yet
             visible: ["#rate-buttons", "#commenting-area", "#rated-votes"],
-            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area"],
+            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
+                "#thanks-area", "#ok-button"],
             addclass: "commenting",
-            removeclass: "view-mode rated unrated rate",
+            removeclass: "view-mode rated unrated rate thanks",
 
             activate: function () {
                 var _rw = wot.ratingwindow;
@@ -1310,6 +1330,25 @@ $.extend(wot, { ratingwindow: {
                 // some logic here
                 _rw.comments.update_button("comment", true);
                 _rw.comments.focus();
+                return true;
+            }
+        },
+
+        thanks: {
+            visible: ["#thanks-area", "#rated-votes", "#ok-button"],
+            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area", "#rate-buttons"],
+            addclass: "thanks view-mode",
+            removeclass: "view-mode rated unrated rate commenting",
+
+            activate: function () {
+                var _rw = wot.ratingwindow;
+                if (!_rw.modes._activate("thanks")) return false;
+
+                _rw.update_uservoted();
+
+                setTimeout(function() {
+                    wot.ratingwindow.modes.auto();
+                }, 5000);   // after 5 seconds
                 return true;
             }
         },
