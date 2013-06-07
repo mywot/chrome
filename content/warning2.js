@@ -31,8 +31,7 @@ wot.warning = {
 
         if (wot.utils.isEmptyObject(categories)) {
             // If no categories are indentified for now
-            tmpl = "<div class='ws-categories-title'>{NOREASONTITLE}</div>" +
-                "<div class='wot-openscorecard-wrap'>" +
+            tmpl = "<div class='wot-openscorecard-wrap'>" +
                 "<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
                 "</div>";
         } else {
