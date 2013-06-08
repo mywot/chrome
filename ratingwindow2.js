@@ -1336,7 +1336,8 @@ $.extend(wot, { ratingwindow: {
 
         thanks: {
             visible: ["#thanks-area", "#rated-votes", "#ok-button"],
-            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area", "#rate-buttons"],
+            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
+                "#commenting-area", "#rate-buttons"],
             addclass: "thanks view-mode",
             removeclass: "view-mode rated unrated rate commenting",
 
@@ -1687,6 +1688,9 @@ $.extend(wot, { ratingwindow: {
 
             $(_this.$_cat_selector).on("click", ".category, .cat-vote-left, .cat-vote-right, .cat-vote-del", _this.vote);
 
+            // show description of the hovered category
+            $(_this.$_cat_selector).on("mouseenter mouseleave", ".category", _this.on_category_hover);
+
             _this.short_list = !_rw.prefs.get("show_fulllist");
 
             $("#chk-full-list").
@@ -1696,8 +1700,30 @@ $.extend(wot, { ratingwindow: {
             _this.update_categories_visibility();
 
             this.inited = true;
+        },
 
-//            console.log("votes", _this.votes);
+        on_category_hover: function (e) {
+
+            var $_cat = $(e.currentTarget),
+                $_category_title = $(".category-title"),
+                $_cat_description = $(".category-description");
+
+            var cat_id = $_cat.attr("data-cat"),
+                is_hovered = (e.type == "mouseenter") && (cat_id !== undefined);
+
+            var cat_description = wot.get_category(cat_id).description;
+
+            if (is_hovered && cat_description) {
+                $_category_title.hide(0, function () {
+                    $_cat_description.text(cat_description);
+                    $_cat_description.show();
+                });
+
+            } else {
+                $_cat_description.hide(0, function (){
+                    $_category_title.show();
+                });
+            }
         },
 
         on_show_full: function () {
@@ -1741,15 +1767,15 @@ $.extend(wot, { ratingwindow: {
 
             selected_elem.addClass("maintainHover");
 
-            var left_distance = menu.outerWidth() + (menu.offset().left - $_external_container.offset().left);
-            var top_distance = menu.offset().top - category_title.offset().top;
+            var left_distance = 179; //menu.outerWidth() + (menu.offset().left - $_external_container.offset().left);
+            var top_distance = 10;//menu.offset().top;
 
             //TO DO: what if user changes category manully.
 
             // Show the submenu
             sub_menu.css({
-                top: top_distance + 1,
-                left: left_distance - 1  // main should overlay submenu
+                top: top_distance,
+                left: left_distance  // main should overlay submenu
             }).show();
         },
 

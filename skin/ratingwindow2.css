@@ -1258,6 +1258,22 @@ body {
     display: none;
     padding: 0 9px;
     position: relative;
+    min-height: 200px;
+}
+
+.category-description {
+    display: none;
+    background-color: #e6f0f9;
+    height: 24px;
+    width: 530px;
+    margin-top: -16px;
+    font-size: 11px;
+    padding: 4px 5px;
+    border-radius: 3px;
+    color: #5b5d5e;
+    line-height: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .group-title {
@@ -1268,12 +1284,16 @@ body {
 .category-title,
 .comment-title {
     font-size: 12px;
-    font-weight: normal;
-    margin-top: -9px;
+    font-weight: bold;
+    margin-top: -8px;
+    height: 24px;
+    color: #5C5C5C;
 }
 
 .category-selector {
     height: 210px;  /* to occupy space and give other elements proper positioning */
+    position: absolute;
+    margin-top: -8px;
 }
 
 .category-selector .dropdown-menu {
