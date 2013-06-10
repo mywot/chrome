@@ -214,10 +214,10 @@ $.extend(wot, { ratingwindow: {
                 }
             }
 
-            bg.console.log("testimonies_changed:", testimonies_changed);
-            bg.console.log("comment_changed:", comment_changed);
-            bg.console.log("is_rated:", is_rated);
-            bg.console.log("has_comment:", has_comment);
+//            bg.console.log("testimonies_changed:", testimonies_changed);
+//            bg.console.log("comment_changed:", comment_changed);
+//            bg.console.log("is_rated:", is_rated);
+//            bg.console.log("has_comment:", has_comment);
 
             /* if user's testimonies or categories were changed, store them in the cache and submit */
             if (testimonies_changed) {
@@ -250,7 +250,7 @@ $.extend(wot, { ratingwindow: {
             }
 
             // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
-            if ((comment_changed || votes_changed) && has_up_votes) {
+            if ((comment_changed || votes_changed) && has_up_votes && !unload) {
                 if (has_comment) {
                     bg.console.log("SUBMIT COMMENT");
                     bgwot.api.comments.submit(rw.state.target, user_comment, user_comment_id, rw._make_votes(votes));
@@ -262,6 +262,8 @@ $.extend(wot, { ratingwindow: {
                     // TODO: send GA signal about removing a comment
                 }
             }
+
+            // TODO: Keep the user's comment between sessions if it wasn't saved due to auto-close (important!)
 
             /* update all views */
             bgwot.core.update(false);   // explicitly told to not update the rating window
