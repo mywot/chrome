@@ -111,14 +111,15 @@
 
 .wot-title  {
     margin-top: 6px !important;
-    max-width: 100% !important;
+    max-width: 90% !important;
     font-size: 9pt !important;
     font-weight: bold !important;
     color: #C5C5C5 !important;
     text-shadow: 1px 1px 1px #fff !important;
     overflow: hidden !important;
     white-space: nowrap !important;
-    padding: 0 0.5em 0.5em 0.5em !important
+    padding: 0 0.5em 0.5em 0.5em !important;
+    text-overflow: ellipsis !important;
 }
 
 .wot-desc {
