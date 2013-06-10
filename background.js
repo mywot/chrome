@@ -787,7 +787,8 @@ $.extend(wot, { core: {
 				if (wot.api.isregistered()) {
 					wot.core.welcome_user();
 					wot.api.update();
-					wot.api.processpending();
+					wot.api.processpending();   // submit
+                    wot.api.comments.processpending();
 					wot.wt.init();  // initialize welcome tips engine
 					wot.surveys.init(); // init surveys engine
 				}

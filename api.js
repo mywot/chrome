@@ -589,7 +589,7 @@ $.extend(wot, { api: {
 				if (request.status != 403) {
 					wot.api.retry("submit", [ target ]);
 				} else {
-					wot.log("api.submit: failed " + target + " (403)")
+                    console.warn("api.submit: failed " + target + " (403)");
 					wot.prefs.clear("pending:" + target);
 				}
 			},
@@ -650,14 +650,14 @@ $.extend(wot, { api: {
 						obj[name].push(child);
 					} else {
 						/* shouldn't happen... */
-						wot.log("api.parse: attribute / child collision\n");
+						wot.log("api.parse: attribute / child collision");
 					}
 				}
 			});
 
 			return obj;
 		} catch (e) {
-			console.log("api.parse: failed with " + e + "\n");
+			console.error("api.parse: failed with ", e);
 		}
 
 		return null;
@@ -727,7 +727,7 @@ $.extend(wot, { api: {
 					/* poll for updates regularly */
 					wot.api.retry("update", [], updateinterval);
 				} catch (e) {
-					console.log("api.update.success: failed with ", e);
+                    console.error("api.update.success: failed with ", e);
 					wot.api.retry("update");
 				}
 			});
@@ -737,7 +737,13 @@ $.extend(wot, { api: {
 
         server: "beta.mywot.com",
         version: "1",   // Comments API version
-        postponed: {},  // queue for sending comments
+        PENDING_COMMENT_SID: "pending_comment:",
+        PENDING_REMOVAL_SID: "pending_removal:",
+        MAX_TRIES: 10,  // maximum amount of tries to send a comment or remove a comment
+        retrytimeout: {
+            submit: 30 * 1000,
+            remove: 20 * 1000
+        },
         nonces: {},     // to know connection between nonce and target
 
         call: function (apiname, options, params, on_error, on_success) {
@@ -805,10 +811,7 @@ $.extend(wot, { api: {
 
                 // the add-on does NOT have permissions for httpS://www.mywot.com so we use http and own encryption
                 var url = "http://" + this.server + (options.type == "POST" ? path : full_path);
-
                 var type = options.type;
-
-//                console.log("api.comments.call: url", url, "params", params);
 
                 _this.nonces[nonce] = original_target;    // remember the link between nonce and target
 
@@ -868,20 +871,51 @@ $.extend(wot, { api: {
 
         submit: function (target, comment, comment_id, votes) {
 //            console.log("wot.api.comments.submit(target, comment, comment_id, votes)", target, comment, comment_id, votes);
-            wot.api.comments.call("submit",
+
+            var _this =  wot.api.comments,
+                pref_pending_name = _this.PENDING_COMMENT_SID + target;
+
+            // try to restore pending submission first
+            var state = wot.prefs.get(pref_pending_name) || {
+                target: target,
+                comment_data: {},
+                tries: 0
+            };
+
+            // if params are given, it means we are on normal way of sending data (not on retrying)
+            if (comment && votes) {
+                $.extend(state.comment_data, {
+                    comment: comment,
+                    cid: comment_id || 0,
+                    categories: votes
+                });
+                state.tries = 0;
+            }
+
+            if (++state.tries > _this.MAX_TRIES) {
+                console.warn("api.comments.submit: failed " + target + " (max tries)");
+                wot.prefs.clear(pref_pending_name);
+                return;
+            }
+
+            wot.prefs.set(pref_pending_name, state);    // remember the submission
+
+            _this.call("submit",
                 {
                     encryption: true,
                     authentication: true,
                     type: "POST",
                     hash: "comment" // this field must be hashed and the hash must be authenticated
                 },
-                {
-                    target: target,
-                    comment: comment,
-                    categories: votes,
-                    cid: comment_id
+                $.extend({ target: target }, state.comment_data),
+                function (request) { // handle network errors
+                    if (request.status != 403) {
+                        wot.api.comments.retry("submit", [ target ]);
+                    } else {
+                        console.warn("api.comment.submit: failed " + target + " (403)");
+                        wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
+                    }
                 },
-                null,   // TODO: handle network errors
                 wot.api.comments.on_submit_comment_response
             );
 
@@ -897,7 +931,24 @@ $.extend(wot, { api: {
         remove: function (target) {
 //            console.log("wot.api.comments.remove(target)", target);
 
-            wot.api.comments.call("remove",
+            var _this =  wot.api.comments,
+                pref_pending_name = _this.PENDING_REMOVAL_SID + target;
+
+            // try to restore pending submission first
+            var state = wot.prefs.get(pref_pending_name) || {
+                target: target,
+                tries: 0
+            };
+
+            if (++state.tries > _this.MAX_TRIES) {
+                console.warn("api.comments.submit: failed " + target + " (max tries)");
+                wot.prefs.clear(pref_pending_name);
+                return;
+            }
+
+            wot.prefs.set(pref_pending_name, state);    // remember the submission
+
+            _this.call("remove",
                 {
                     encryption: true,
                     authentication: true,
@@ -906,10 +957,39 @@ $.extend(wot, { api: {
                 {
                     target: target
                 },
-                null,   // TODO: handle network errors
+                function (request) {   // handle network errors
+                    if (request.status != 403) {
+                        wot.api.comments.retry("remove", [ target ]);
+                    } else {
+                        console.warn("api.comment.remove: failed " + target + " (403)");
+                        wot.prefs.clear(wot.api.comments.PENDING_REMOVAL_SID + target);
+                    }
+                },
                 wot.api.comments.on_remove_comment_response
             );
+        },
 
+        retry: function(apiname, params, customtimeout)
+        {
+            var timeout = customtimeout || wot.api.comments.retrytimeout[apiname];
+
+            if (timeout) {
+                window.setTimeout(function() {
+                    wot.api.comments[apiname].apply(wot.api.comments, params || []);
+                }, timeout);
+            }
+        },
+
+        processpending: function()
+        {
+            wot.prefs.each(function(name, value) {
+                if (/^pending_comment\:/.test(name)) {
+                    wot.api.comments.submit(name.replace(/^pending_comment\:/, ""));
+                } else if (/^pending_removal\:/.test(name)) {
+                    wot.api.comments.remove(name.replace(/^pending_removal\:/, ""));
+                }
+                return false;
+            });
         },
 
         pull_nonce: function (nonce) {
@@ -979,11 +1059,21 @@ $.extend(wot, { api: {
 
             switch (error_code) {
                 case wot.comments.error_codes.SUCCESS:
-                case 18: // TODO: remove error_code == 18 when Timo fixed the API bug
                     wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
+                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
                     break;
+
+                // for these errors we should try again, because there is non-zero possibility of quantum glitches around
+                case wot.comments.error_codes.AUTHENTICATION_FAILED:
+                case wot.comments.error_codes.AUTHENTICATION_REP_SERVER_ERROR:
+                case wot.comments.error_codes.COMMENT_SAVE_FAILED:
+                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+                    wot.api.comments.retry("submit", [ target ]);   // yeah, try it again, ddos own server ;)
+                    break;
+
                 default:
                     wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
             }
 
             wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
@@ -991,7 +1081,7 @@ $.extend(wot, { api: {
 
         on_remove_comment_response: function (data) {
             wot.log("wot.api.comments.on_remove_comment_response(data)", data);
-            // TODO: make changes to Cache
+
             var _this = wot.api.comments,
                 nonce = data.nonce, // to recover target from response
                 target = _this.pull_nonce(nonce),
@@ -999,11 +1089,21 @@ $.extend(wot, { api: {
 
             switch (error_code) {
                 case wot.comments.error_codes.SUCCESS:
-//                case 18: // TODO: remove error_code == 18 when Timo fixed the API bug
                     wot.cache.remove_comment(target);
+                    wot.prefs.clear(wot.api.comments.PENDING_REMOVAL_SID + target);
                     break;
+
+                // some errors require retry due to singularity of the Universe
+                case wot.comments.error_codes.AUTHENTICATION_FAILED:
+                case wot.comments.error_codes.AUTHENTICATION_REP_SERVER_ERROR:
+                case wot.comments.error_codes.COMMENT_REMOVAL_FAILED:
+                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+                    wot.api.comments.retry("remove", [ target ]);
+                    break;
+
                 default:
                     wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+                    wot.prefs.clear(wot.api.comments.PENDING_REMOVAL_SID + target);
             }
 
             wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"

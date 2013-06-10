@@ -179,7 +179,9 @@ var wot = {
             IS_BANNED: 2,
             AUTHENTICATION_FAILED: 3,
             COMMENT_NOT_FOUND: 5,
+            COMMENT_REMOVAL_FAILED: 6,
             COMMENT_NOT_ALLOWED: 7,
+            AUTHENTICATION_REP_SERVER_ERROR: 12,
             COMMENT_SAVE_FAILED: 18
         }
     },
