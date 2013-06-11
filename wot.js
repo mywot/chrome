@@ -812,8 +812,6 @@ var wot = {
 
     select_identified: function (cat_list) {
         // Returns categories identified by community (not sorted order)
-//        console.log("select_identified()", cat_list);
-
         var res = {};
         for (var i in cat_list) {
             var cat = cat_list[i];
@@ -824,7 +822,6 @@ var wot = {
 
     select_voted: function (cat_list) {
         // Returns categories voted by the current user (the state from server/cache)
-//        console.log("select_voted()", cat_list);
 
         var res = {};
         for (var i in cat_list) {
@@ -832,7 +829,6 @@ var wot = {
             if (cat.v != 0) res[i] = cat;
         }
 
-//        console.log("__result", res);
         return res;
     },
 

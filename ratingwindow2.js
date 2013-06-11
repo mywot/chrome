@@ -1086,8 +1086,8 @@ $.extend(wot, { ratingwindow: {
             }
         });
 
-        _rw.rate_control.updateratings(_rw.state);  // restore user's testimonies visually
         _rw.cat_selector.init_voted(); // restore previous votes
+        _rw.rate_control.updateratings(_rw.state);  // restore user's testimonies visually
         _rw.update_comment(cached); // restore comment
 
         _rw.modes.auto();   // switch RW mode according to current state
@@ -1746,6 +1746,7 @@ $.extend(wot, { ratingwindow: {
                 cats_object = (cached && cached.value && cached.value.cats) ? cached.value.cats : {};
 
             _this.votes = wot.select_voted(cats_object);
+            _this.markup_voted();
         },
 
         destroy: function () {

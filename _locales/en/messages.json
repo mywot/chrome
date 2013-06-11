@@ -87,10 +87,10 @@
 		"message": "View details and comments"
 	},
 	"ratingwindow_addcomment": {
-		"message": "Add your comment"
+		"message": "Add a comment"
 	},
 	"ratingwindow_editcomment": {
-		"message": "Edit your comment"
+		"message": "Edit the comment"
 	},
 	"ratingwindow_backtoratings": {
 		"message": "Back to ratings"
