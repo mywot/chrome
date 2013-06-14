@@ -72,6 +72,23 @@ var wot = {
 		{ name: "c5", min: 45 }
 	],
 
+    // reference: http://www.mywot.com/wiki/Activity_scores
+    activityscore_levels: [
+        { name: "rookie", min: 0 },
+        { name: "bronze", min: 1500 },
+        { name: "silver", min: 3000 },
+        { name: "gold", min: 6000 },
+        { name: "platinum", min: 10000 }
+    ],
+
+    AS_LEVELS: {
+        ROOKIE: 0,
+        BRONZE: 1500,
+        SILVER: 3000,
+        GOLD: 6000,
+        PLATINUM: 10000
+    },
+
 	searchtypes: {
 		optimized: 0,
 		worst: 1,
@@ -418,12 +435,17 @@ var wot = {
 
 	/* reputation and confidence */
 
-	getlevel: function(levels, n)
+	getlevel: function(levels, n, next)
 	{
+        next = next ? next : false;
+
+		var next_level = levels[levels.length - 1];
+
 		for (var i = levels.length - 1; i >= 0; --i) {
 			if (n >= levels[i].min) {
-				return levels[i];
+				return next ? next_level : levels[i];
 			}
+            next_level = levels[i];
 		}
 
 		return levels[1];
@@ -437,6 +459,11 @@ var wot = {
         } else {
             return wot.i18n("reputationlevels", rep_level);
         }
+    },
+
+    get_user_level: function (activity_score, next) {
+        activity_score = parseInt(activity_score) || 0;
+        return wot.getlevel(wot.activityscore_levels, activity_score, next);
     },
 
 	getwarningtypeforcomponent: function(comp, data, prefs)
@@ -753,21 +780,13 @@ var wot = {
 
                 // Sort the array
                 sort_array.sort(function(a, b) {
-                    // first, make sure all CS categories are the last one
-                    var ag = String(a.group),
-                        bg = String(b.group);
-
-                    if (a.cs != b.cs) {
-                        return -1;
-                    } else {
-                        if (a.c != b.c) {   // try to sort by confidence level
-                            return a.c - b.c
-                        } else {    // otherwise try to sort by group id
-                            if (a.group != b.group) {
-                                return a.group - b.group;
-                            } else {
-                                return a.id > b.id;
-                            }
+                    if (a.c != b.c) {   // try to sort by confidence level
+                        return a.c - b.c
+                    } else {    // otherwise try to sort by group id
+                        if (a.group != b.group) {
+                            return a.group - b.group;
+                        } else {
+                            return a.id > b.id;
                         }
                     }
                 });

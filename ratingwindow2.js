@@ -20,12 +20,14 @@
 
 $.extend(wot, { ratingwindow: {
     MAX_VOTED_VISIBLE: 4,   // how many voted categories we can show in one line
-    sliderwidth: 194,
+	sliderwidth: 154,
+    slider_shift: -4,       // ajustment
     opened_time: null,
     was_in_ratemode: false,
     timer_save_button: null,
     state: {},  // rating state
     is_registered: false,   // whether user has an account on mywot.com
+    delete_action: false,   // remembers whether user is deleting rating
     prefs: {},  // shortcut for background preferences
 
     is_rated: function (state) {
@@ -82,7 +84,6 @@ $.extend(wot, { ratingwindow: {
             new_value = { t: parseInt(t) };
         } else {
             new_value = { t: -1 };
-//			delete(this.state[component]);
         }
 
         this.state[component] = new_value;
@@ -301,19 +302,22 @@ $.extend(wot, { ratingwindow: {
 
     getrating: function(e, stack)
     {
+        var noopinion_threshold = 102;
         try {
             if (this.getcached().status == wot.cachestatus.ok) {
                 var slider = $(".wot-rating-slider", stack);
 
                 /* rating from slider position */
-                var position = 100 * (e.clientX - slider.offset().left) /
+				var position = 100 * (wot.ratingwindow.slider_shift + e.clientX - slider.offset().left) /
                     wot.ratingwindow.sliderwidth;
 
                 /* sanitize the rating value */
                 if (position < 0) {
                     position = 0;
-                } else if (position > 100) {
+				} else if (position >= 100 && position <= noopinion_threshold) {
                     position = 100;
+                } else if (position > noopinion_threshold) {
+                    position = -1;
                 } else {
                     position = position.toFixed();
                 }
@@ -409,23 +413,32 @@ $.extend(wot, { ratingwindow: {
             item = (bg.wot.core.usercontent && bg.wot.core.usercontent.length > 0) ? bg.wot.core.usercontent[0] : {},
             user_header = "",
             user_as = "",
-            $_user_text = $("#wot-user-0-text");
+            $_user_text = $("#wot-user-0-text"),
+            as_notice = wot.i18n("activityscore", "next");
 
         if (item.bar && item.length != null && item.label) {
             user_header = item.bar;
             user_as = item.label;
         }
-        $("#wot-user-0-header").text(user_header);
+
+        // insert next level name
+        var level_name = '<span class="user-level">' +
+            wot.i18n("activityscore", wot.get_user_level(user_as, true).name) +
+            '</span>';
+
+        as_notice = as_notice.replace("{NEXT_LEVEL}", level_name);
+
+        $("#wot-user-0-header").text(wot.i18n("activityscore", "text"));
         $("#user-activityscore").text(user_as);
 
         $(".thanks-activityscore-text").text(user_header); // on the "Thank you" screen
         $(".thanks-activityscore-number").text(user_as);   // on the "Thank you" screen
-        $(".thanks-ratemore").text(item.notice || "");     // on the "Thank you" screen
+        $(".thanks-ratemore").html(as_notice || "");     // on the "Thank you" screen
 
         $_user_text.attr("url", item.url || "");
 
-        if (item.notice) {
-            $("#wot-user-0-notice").text(item.notice).show();
+        if (user_as < wot.AS_LEVELS.PLATINUM) {
+            $("#wot-user-0-notice").html(as_notice).show();
         } else {
             $("#wot-user-0-notice").hide();
         }
@@ -449,12 +462,14 @@ $.extend(wot, { ratingwindow: {
                 cat_conf = wot.getlevel(wot.confidencelevels, cdata.c).name,
                 cgroup_style = wot.get_category_css(cat_id),
                 $_new_cat = $("<li class='cat-item'></li>"),
-                cat_text = wot.get_category_name(cat_id, true);
+                cat_text = wot.get_category_name(cat_id, true),
+                $_ico = $("<div class='ico'></div>");
 
             if (cat_text) {
                 $_new_cat.text(cat_text);
-                $_new_cat.addClass(cgroup_style);   // set group style
-                $_new_cat.addClass(cat_conf);   // set confidence style
+                $_new_cat.addClass([cgroup_style, cat_conf].join(" "));   // set group style, confidence style
+                $_ico.addClass([cgroup_style, cat_conf].join(" "));
+                $_new_cat.prepend($_ico);
                 $_target.append($_new_cat);
             }
         }
@@ -465,20 +480,17 @@ $.extend(wot, { ratingwindow: {
 //        console.log("wot.ratingwindow.update_categories()");
         var _rw = wot.ratingwindow,
             cached = _rw.getcached(),
-            $_tr_list = $("#tr-categories-list"),
-            $_cs_list = $("#cs-categories-list");
+            $_tr_list = $("#tr-categories-list");
 
         try {
             // delete categories from the visible area
             _rw.insert_categories({}, $_tr_list);
-            _rw.insert_categories({}, $_cs_list);
 
             if (this.current.target && cached.status == wot.cachestatus.ok && cached.value) {
                 var cats = cached.value.cats;
                 if (cats != null) {
                     var sorted = wot.rearrange_categories(wot.select_identified(cats));    // sort categories and split into two parts (TR, CS)
-                    _rw.insert_categories(sorted.trustworthy, $_tr_list);
-                    _rw.insert_categories(sorted.childsafety, $_cs_list);
+                    _rw.insert_categories(sorted.all, $_tr_list);
                 }
             }
         } catch (e) {
@@ -611,7 +623,10 @@ $.extend(wot, { ratingwindow: {
             $("#wot-rating-" + n + "-boundright").text(wot.i18n("testimony", item.name + "_levels_" + wot.getlevel(wot.reputationlevels, 100).name));
         });
 
-        [	{	selector: "#wot-header-link-guide",
+        [	{	selector: "#myrating-header",
+                text: wot.i18n("ratingwindow", "myrating")
+            }, {
+                selector: "#wot-header-link-guide",
                 text: wot.i18n("ratingwindow", "guide")
             }, {
                 selector: "#wot-header-link-forum",
@@ -839,6 +854,7 @@ $.extend(wot, { ratingwindow: {
             $_submit.text(wot.i18n("buttons", "save"));
             $("#btn-delete").show();
         }
+        _rw.delete_action = delete_action;
     },
 
     onload: function()
@@ -1100,8 +1116,11 @@ $.extend(wot, { ratingwindow: {
 
         var _rw = wot.ratingwindow;
         wot.ratingwindow.finishstate(false);
+        if (_rw.delete_action) {
+            _rw.modes.auto();   // switch RW mode according to current state
+        } else {
         _rw.modes.thanks.activate();
-//        _rw.modes.auto();   // switch RW mode according to current state
+        }
     },
 
     on_thanks_ok: function () {
@@ -1216,7 +1235,8 @@ $.extend(wot, { ratingwindow: {
                     t = -1,
                     wrs = _rw.state[item.name];
 
-                ["stack", "slider", "indicator", "deleteicon", "deletelabel", "helptext", "helplink"].forEach(function(elem) {
+                ["stack", "slider", "indicator", "deleteicon", "deletelabel",
+                    "helptext", "helplink", "data"].forEach(function(elem) {
                     elems[elem] = $("#wot-rating-" + item.name + "-" + elem);
                 });
 
@@ -1224,24 +1244,31 @@ $.extend(wot, { ratingwindow: {
 
                 if (t >= 0) {
                     /* rating */
+                    rep = wot.getlevel(wot.reputationlevels, t).name;
                     elems.indicator.css("left", (t * _rw.sliderwidth / 100).toFixed() + "px");
                     elems.stack.addClass("testimony").removeClass("hover");
                     elems.deletelabel.text(wot.i18n("testimony", "delete"));
                     elems.deleteicon.closest(".rating-delete").removeClass("unrated");
                     elems.deleteicon.closest(".rating-delete").addClass("delete");
-                    rep = wot.getlevel(wot.reputationlevels, t).name;
 
                 } else if (state.name != null && state.t >= 0) {
                     /* temporary indicator position */
+                    rep = wot.getlevel(wot.reputationlevels, state.t).name;
                     elems.indicator.css("left", (state.t * _rw.sliderwidth / 100).toFixed() + "px");
                     elems.stack.removeClass("testimony").addClass("hover");
-                    rep = wot.getlevel(wot.reputationlevels, state.t).name;
 
                 } else {
+                    elems.indicator.css("left", "");    // reset the x-position
                     elems.stack.removeClass("testimony").removeClass("hover");
                     elems.deletelabel.text(wot.i18n("testimony", "unrated"));
                     elems.deleteicon.closest(".rating-delete").addClass("unrated");
                     elems.deleteicon.closest(".rating-delete").removeClass("delete");
+                }
+
+                if (rep) {
+                    elems.stack.attr("r", rep);
+                    elems.indicator.attr("r", rep);
+                    elems.data.attr("r", rep);
                 }
 
                 var helptext = wot.get_level_label(item.name, rep, true);
@@ -1268,7 +1295,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
                 "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "view-mode unrated",
-            removeclass: "rated commenting thanks",
+            removeclass: "rated commenting thanks rate",
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("unrated")) return false;
@@ -1277,11 +1304,11 @@ $.extend(wot, { ratingwindow: {
         },
 
         rated: {
-            visible: ["#reputation-info", "#user-communication", "#rated-votes"],
-            invisible: ["#rate-buttons", "#categories-selection-area", ".user-comm-social",
+            visible: ["#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social"],
+            invisible: ["#rate-buttons", "#categories-selection-area",
                 "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "view-mode rated",
-            removeclass: "unrated commenting thanks",
+            removeclass: "unrated commenting thanks rate",
 
             activate: function () {
                 if (!wot.ratingwindow.modes._activate("rated")) return false;
@@ -1341,7 +1368,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
                 "#commenting-area", "#rate-buttons"],
             addclass: "thanks view-mode",
-            removeclass: "view-mode rated unrated rate commenting",
+            removeclass: "rated unrated rate commenting",
 
             activate: function () {
                 var _rw = wot.ratingwindow;
@@ -1349,9 +1376,14 @@ $.extend(wot, { ratingwindow: {
 
                 _rw.update_uservoted();
 
+                // no need to show this to platinum members
+                if ((_rw.prefs.get("activity_score") || 0) >= wot.AS_LEVELS.PLATINUM) {
+                    $(".thanks-ratemore").hide();
+                }
+
                 setTimeout(function() {
-                    wot.ratingwindow.modes.auto();
-                }, 5000);   // after 5 seconds
+                    wot.ratingwindow.modes.auto();  // switch to default mode
+                }, 6000);
                 return true;
             }
         },
@@ -1699,6 +1731,8 @@ $.extend(wot, { ratingwindow: {
                 bind("change", _this.on_show_full).
                 attr("checked", _this.short_list ? null : "checked");
 
+            _this.$_cat_selector.toggleClass("shortlist", _this.short_list); // change appearance of the list
+
             _this.update_categories_visibility();
 
             this.inited = true;
@@ -1734,6 +1768,8 @@ $.extend(wot, { ratingwindow: {
 
             _this.short_list = ($(this).attr("checked") != "checked");
             _rw.prefs.set("show_fulllist", !_this.short_list);  // store the value
+
+            _this.$_cat_selector.toggleClass("shortlist", _this.short_list); // change appearance of the list
 
             _this.update_categories_visibility();
         },
@@ -1874,7 +1910,7 @@ $.extend(wot, { ratingwindow: {
                 cls = "";
 
             if (len > 0 && len < _this.MIN_LIMIT) {
-                fix_len = len - _this.MIN_LIMIT;
+                fix_len = String(len - _this.MIN_LIMIT).replace("-", "– "); // readability is our everything
                 cls = "error min"
             } else if (len > _this.MAX_LIMIT) {
                 fix_len = len - _this.MAX_LIMIT;

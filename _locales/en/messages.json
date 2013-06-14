@@ -78,7 +78,7 @@
         "message": "My profile"
     },
 	"ratingwindow_wotrating": {
-		"message": "The site’s reputation based on user ratings"
+		"message": "Website's reputation based on user ratings"
 	},
 	"ratingwindow_myrating": {
 		"message": "My rating"
@@ -315,5 +315,26 @@
     },
     "ratingwindow_thankyou": {
         "message": "Thank you for your opinion!"
+    },
+    "activityscore_text": {
+        "message": "Your activity score is now "
+    },
+    "activityscore_rookie": {
+        "message": "rookie"
+    },
+    "activityscore_bronze": {
+        "message": "bronze"
+    },
+    "activityscore_silver": {
+        "message": "silver"
+    },
+    "activityscore_gold": {
+        "message": "gold"
+    },
+    "activityscore_platinum": {
+        "message": "platinum"
+    },
+    "activityscore_next": {
+        "message": "Keep on rating and commenting to reach {NEXT_LEVEL} level!"
     }
 }

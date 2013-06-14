@@ -315,5 +315,26 @@
     },
     "ratingwindow_thankyou": {
         "message": "Спасибо за ваше мнение!"
+    },
+    "activityscore_text": {
+        "message": "Ваша оценка активности – "
+    },
+    "activityscore_rookie": {
+        "message": "новичок"
+    },
+    "activityscore_bronze": {
+        "message": "бронзовый"
+    },
+    "activityscore_silver": {
+        "message": "серебряный"
+    },
+    "activityscore_gold": {
+        "message": "золотой"
+    },
+    "activityscore_platinum": {
+        "message": "платиновый"
+    },
+    "activityscore_next": {
+        "message": "Продолжайте оценивать и комментировать, чтобы получить {NEXT_LEVEL} уровень!"
     }
 }

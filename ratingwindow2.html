@@ -61,6 +61,7 @@
         <div id="ratings-area">
             <!-- rating header -->
             <div id="wot-myratings-header">
+                <div id="myrating-header"></div>
                 <div id="wot-myrating-0-header"></div>
                 <div id="wot-myrating-4-header"></div>
             </div>
@@ -72,17 +73,17 @@
                                     <div id="wot-rating-0-helptext" class="wot-rating-helptext"></div>
                                     <div id="wot-rating-0-helplink" class="wot-rating-helplink"></div>
                         </div>
-                        <div id="wot-rating-0-stack" class="wot-rating-stack" component="0">
-                            <div id="wot-rating-0-slider" class="wot-rating-slider"></div>
-                            <div id="wot-rating-0-indicator" class="wot-rating-indicator"></div>
-                        </div>
                                 <div class="wot-rating-bounds">
                                     <div id="wot-rating-0-boundleft" class="rating-bound-left"></div>
                                     <div id="wot-rating-0-boundright" class="rating-bound-right"></div>
                                 </div>
+                        <div id="wot-rating-0-stack" class="wot-rating-stack" component="0">
+                            <div id="wot-rating-0-slider" class="wot-rating-slider"></div>
+                            <div id="wot-rating-0-indicator" class="wot-rating-indicator"></div>
+                        </div>
                         <div id="wot-rating-0-delete" class="rating-delete">
                             <div id="wot-rating-0-deleteicon" class="rating-delete-icon"></div>
-                            <div id="wot-rating-0-deletelabel" class="rating-deletelabel"></div>
+                                    <!--<div id="wot-rating-0-deletelabel" class="rating-deletelabel"></div>-->
                         </div>
                         </div>
                     </div>
@@ -96,21 +97,27 @@
                                     <div id="wot-rating-4-helptext" class="wot-rating-helptext"></div>
                                     <div id="wot-rating-4-helplink" class="wot-rating-helplink"></div>
                         </div>
-                        <div id="wot-rating-4-stack" class="wot-rating-stack" component="4">
-                            <div id="wot-rating-4-slider" class="wot-rating-slider"></div>
-                            <div id="wot-rating-4-indicator" class="wot-rating-indicator"></div>
-                        </div>
                                 <div class="wot-rating-bounds">
                                     <div id="wot-rating-4-boundleft" class="rating-bound-left"></div>
                                     <div id="wot-rating-4-boundright" class="rating-bound-right"></div>
                                 </div>
+                        <div id="wot-rating-4-stack" class="wot-rating-stack" component="4">
+                            <div id="wot-rating-4-slider" class="wot-rating-slider"></div>
+                            <div id="wot-rating-4-indicator" class="wot-rating-indicator"></div>
+                        </div>
                         <div id="wot-rating-4-delete" class="rating-delete">
                             <div id="wot-rating-4-deleteicon" class="rating-delete-icon"></div>
-                            <div id="wot-rating-4-deletelabel" class="rating-deletelabel"></div>
+                                    <!--<div id="wot-rating-4-deletelabel" class="rating-deletelabel"></div>-->
                         </div>
                     </div>
                 </div>
             </div>
+
+                    <div class="user-comm-activity">
+                        <div id="wot-user-0-header" class="wot-user-header"></div>
+                        <div id="user-activityscore"></div>
+                        <div id="wot-user-0-notice" class="wot-user-notice"></div>
+                    </div>
 
             <div id="rated-votes">
                 <div id="voted-categories">
@@ -130,10 +137,10 @@
                             <div id="wot-rating-0-header" class="wot-rating-header"></div>
                             <div class="rating-values">
                                 <div id="wot-rating-0-reputation" class="wot-rating-reputation"></div>
+                                        <div id="wot-rating-0-confidence" class="wot-rating-confidence"></div>
                                 <div class="rating-legend-wrapper">
                                     <div class="rating-legend"></div>
                                 </div>
-                                <div id="wot-rating-0-confidence" class="wot-rating-confidence"></div>
                             </div>
                         </div>
 
@@ -141,10 +148,10 @@
                             <div id="wot-rating-4-header" class="wot-rating-header"></div>
                             <div class="rating-values">
                                 <div id="wot-rating-4-reputation" class="wot-rating-reputation"></div>
+                                        <div id="wot-rating-4-confidence" class="wot-rating-confidence"></div>
                                 <div class="rating-legend-wrapper">
                                     <div class="rating-legend"></div>
                                 </div>
-                                <div id="wot-rating-4-confidence" class="wot-rating-confidence"></div>
                             </div>
                         </div>
 
@@ -156,9 +163,8 @@
                         </div>
                     </div>
 
-                    <div class="categories-area">
+                            <div class="categories-area" style="display: block;">
                         <ul id="tr-categories-list"></ul>
-                        <ul id="cs-categories-list"></ul>
                     </div>
                 </div>
 
@@ -201,7 +207,7 @@
             </div>
 
                     <div id="thanks-area">
-                        <div class="thanks-text">Thank you for your opinion!</div>
+                        <div class="thanks-text"></div>
                         <div class="thanks-activityscore">
                             <span class="thanks-activityscore-text"></span>
                             <span class="thanks-activityscore-number"></span>
@@ -213,11 +219,6 @@
         <div id="bottom-area">
 
             <div id="user-communication">
-                <div class="user-comm-activity">
-                    <div id="wot-user-0-header" class="wot-user-header"></div>
-                    <div id="user-activityscore"></div>
-                    <div id="wot-user-0-notice" class="wot-user-notice"></div>
-                </div>
                 <div class="user-comm-social">
                     <!-- message -->
                     <div id="wot-message">
