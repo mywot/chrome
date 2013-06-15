@@ -51,10 +51,7 @@ wot.warning = {
             tmpl = "<div class='ws-categories-title'>{REASONTITLE}</div>" +
                 "<ul id='ws-categories-list'>" +
                     lst.join("") +
-                "</ul>" +
-                "<div class='wot-openscorecard-wrap'>" +
-                "<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
-                "</div>";
+                "</ul>";
         }
 
         return tmpl;
@@ -77,27 +74,36 @@ wot.warning = {
                 "</div>" +
             "</div>" +
             "<div class='wot-desc'>{DESC}</div>" +
-            "<div class='wot-rep-components'>" +
-                "<div class='wot-component'>" +
-                    "<div class='wot-comp-name'>{RATINGDESC0}</div>" +
-                    "<div class='rating-legend' r='{RATING0}'>{RATINGEXPL0}</div>" +
-                    "<div class='wot-rep-data'>" +
-                    "<div class='wot-comp-icon' r='{RATING0}'></div>" +
-                    "<div class='wot-comp-conf' c='{CONFIDENCE0}'></div>" +
+            "<div class='wot-rep-components-wrapper'>" +
+                "<div class='wot-rep-components'>" +
+                    "<div class='wot-component'>" +
+                        "<div class='wot-comp-name'>{RATINGDESC0}</div>" +
+                        "<div class='wot-rep-data'>" +
+                            "<div class='wot-comp-icon' r='{RATING0}'></div>" +
+                            "<div class='wot-comp-conf' c='{CONFIDENCE0}'></div>" +
+                            "<div class='rating-legend-wrapper'>" +
+                            "<div class='rating-legend' r='{RATING0}'>{RATINGEXPL0}</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                    "<div class='wot-component'>" +
+                        "<div class='wot-comp-name'>{RATINGDESC4}</div>" +
+                        "<div class='wot-rep-data'>" +
+                            "<div class='wot-comp-icon' r='{RATING4}'></div>" +
+                            "<div class='wot-comp-conf' c='{CONFIDENCE4}'></div>" +
+                            "<div class='rating-legend-wrapper'>" +
+                                "<div class='rating-legend' r='{RATING4}'>{RATINGEXPL4}</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
                 "</div>" +
-            "</div>" +
-            "<div class='wot-component'>" +
-                "<div class='wot-comp-name'>{RATINGDESC4}</div>" +
-                "<div class='rating-legend' r='{RATING4}'>{RATINGEXPL4}</div>" +
-                "<div class='wot-rep-data'>" +
-                    "<div class='wot-comp-icon' r='{RATING4}'></div>" +
-                    "<div class='wot-comp-conf' c='{CONFIDENCE4}'></div>" +
-                "</div>" +
-            "</div>" +
             "</div>" +
             "<div class='ws-categories-area'>" +
                 this.make_categories_block(categories, options) +
             "</div>"+
+            "<div class='wot-openscorecard-wrap'>" +
+                "<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
+            "</div>" +
             "<div id='wot-warn-ratings'>"+
             "</div>" +
             "<div class='wot-rateit-wrap'>" +

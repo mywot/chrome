@@ -46,15 +46,15 @@
 
 #wotcontainer {
     position: static !important;
-    width: 375px ! important;
+    width: 388px ! important;
     margin: 0 auto 0 !important;
     outline: 0 !important;
     padding: 0 0 17px !important;
     z-index: 2147483647 !important;
     text-align: center !important;
     font-family: "Arial", sans-serif !important;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     border: #babbbb solid 1px;
     box-shadow: 5px 5px 20px #111;
     background-color: #ffffff !important;
@@ -100,21 +100,21 @@
 }
 
 .wot-warning {
-    margin-top: 0.1em !important;
+    margin-top: 6px !important;
     width: 100% !important;
     text-align: center !important;
-    font-size: 22pt !important;
+    font-size: 25pt !important;
     font-weight: 800 !important;
     color: #504f4f !important;
     text-shadow: 1px 1px 1px #fff !important;
 }
 
 .wot-title  {
-    margin-top: 6px !important;
+    margin-top: 4px !important;
     max-width: 90% !important;
-    font-size: 9pt !important;
+    font-size: 12px !important;
     font-weight: bold !important;
-    color: #C5C5C5 !important;
+    color: #454545 !important;
     text-shadow: 1px 1px 1px #fff !important;
     overflow: hidden !important;
     white-space: nowrap !important;
@@ -125,8 +125,8 @@
 .wot-desc {
     margin-top: 0 !important;
     width: 100% !important;
-    font-size: 14px !important;
-    color: black !important;
+    font-size: 13px !important;
+    color: #454545 !important;
     margin-bottom: 1em !important;
 }
 
@@ -140,9 +140,18 @@
     display: none !important;
 }
 
+.wot-rep-components-wrapper {
+    min-height: 105px;
+    background-color: #F5F5F5 !important;
+    border-top: 1px solid #D1D1D1 !important;
+    border-bottom: 1px solid #D1D1D1 !important;
+}
+
 .wot-rep-components {
-    clear: left;
-    min-height: 80px;
+    /*clear: left;*/
+    display: inline-block;
+    margin: 0 auto !important;
+    /*padding-left: 20px !important;*/
 }
 
 .wot-component {
@@ -150,221 +159,191 @@
     text-align: left !important;
     display: inline;
     float: left;
-    width: 39%;
-    margin-left: 26px !important;
+    min-width: 140px !important;
+    /*margin-left: 22px !important;*/
+    margin-top: 10px !important;
 }
 
 .wot-comp-name {
-    padding: 8px 0 0.5em 1em !important;
-    color: #4F4F4E !important;
+    padding: 8px 0 0.5em 0 !important;
+    color: #454545 !important;
     text-align: left !important;
     font-size: 12px !important;
-    font-weight: bold !important;
     white-space: nowrap;
     min-height: 18px !important;
 }
 
-.wot-comp-level {
-    padding: 0.2em 0 0.3em 1em !important;
-    margin-right: 38px !important;
-    border-top-left-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
-    color: #ffffff !important;
-    box-shadow: 2px 2px 6px #b6b6b6 !important;
-    text-align: left !important;
-    font-size: 10pt !important;
-}
-
-/* Colors for reputation's levels */
-.wot-comp-level[r="r0"]{
-    background-image: -webkit-linear-gradient(left, #aeafb0, #dddede) !important;
-}
-
-.wot-comp-level[r="r1"]{
-    background-image: -webkit-linear-gradient(left, #fd0000, #ff6464) !important;
-}
-
-.wot-comp-level[r="r2"]{
-    background-image: -webkit-linear-gradient(left, #ff5933, #ff9f75) !important;
-}
-
-.wot-comp-level[r="r3"]{
-    background-image: -webkit-linear-gradient(left, #de7c1b, #ffd100) !important;
-}
-
-.wot-comp-level[r="r4"]{
-    background-image: -webkit-linear-gradient(left, #5bab28, #a7df21) !important;
-}
-
-.wot-comp-level[r="r5"]{
-    background-image: -webkit-linear-gradient(left, #3b9013, #68c800) !important;
-}
-
 /* Accessible mode */
-.accessible .wot-comp-level[r="r0"]{
+/*.accessible .wot-comp-level[r="r0"]{*/
     /* angled stripes */
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAT0lEQVQYV2N88fTFfwYgeP7qOYhCAZJikmA+I0gRPgVgRefPnwebhAxgJsDEMBShKwDZgqIImwIU63ApgCvCpwDuO2RHY/MpOAhginAFBQCXxzf2ZTB/RwAAAABJRU5ErkJggg==) !important;
-}
+    /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAT0lEQVQYV2N88fTFfwYgeP7qOYhCAZJikmA+I0gRPgVgRefPnwebhAxgJsDEMBShKwDZgqIImwIU63ApgCvCpwDuO2RHY/MpOAhginAFBQCXxzf2ZTB/RwAAAABJRU5ErkJggg==) !important;*/
+/*}*/
 
-.accessible .wot-comp-level[r="r1"]{
-    background-image: -webkit-linear-gradient(left, #000000, #b2b2b2) !important;
-}
+/*.accessible .wot-comp-level[r="r1"]{*/
+    /*background-image: -webkit-linear-gradient(left, #000000, #b2b2b2) !important;*/
+/*}*/
 
-.accessible .wot-comp-level[r="r2"]{
-    background-image: -webkit-linear-gradient(left, #6b5a1a, #948345) !important;
-}
+/*.accessible .wot-comp-level[r="r2"]{*/
+    /*background-image: -webkit-linear-gradient(left, #6b5a1a, #948345) !important;*/
+/*}*/
 
-.accessible .wot-comp-level[r="r3"]{
-    background-image: -webkit-linear-gradient(left, #e0bb2f, #ffe37f) !important;
-}
+/*.accessible .wot-comp-level[r="r3"]{*/
+    /*background-image: -webkit-linear-gradient(left, #e0bb2f, #ffe37f) !important;*/
+/*}*/
 
-.accessible .wot-comp-level[r="r4"]{
-    background-image: -webkit-linear-gradient(left, #b6ad88, #f2e9b2) !important;
-}
+/*.accessible .wot-comp-level[r="r4"]{*/
+    /*background-image: -webkit-linear-gradient(left, #b6ad88, #f2e9b2) !important;*/
+/*}*/
 
-.accessible .wot-comp-level[r="r5"] {
-    background-image: -webkit-linear-gradient(left, #BEBDBD, rgba(255, 255, 255, 0.9) 96%, rgba(255, 255, 255, 0) 100%) !important;
+/*.accessible .wot-comp-level[r="r5"] {*/
+    /*background-image: -webkit-linear-gradient(left, #BEBDBD, rgba(255, 255, 255, 0.9) 96%, rgba(255, 255, 255, 0) 100%) !important;*/
     /* mask right part of label under the thin "green" donut */
-    -webkit-border-top-right-radius: 13px !important;
-    box-shadow: -1px 2px 6px #B6B6B6 !important;
-}
+    /*-webkit-border-top-right-radius: 13px !important;*/
+    /*box-shadow: -1px 2px 6px #B6B6B6 !important;*/
+/*}*/
 
 .wot-rep-data {
     position: relative !important;
-    margin-top: 30px !important;
+    margin-top: 4px !important;
+    margin-left: 0 !important;
+    display: inline !important;
 }
 
 /* Donuts icons */
 .wot-comp-icon {
-    background-image: url("../fusion/28_28/r0.png") !important;
-    background-repeat: no-repeat !important;
-    width: 30px !important;
-    height: 30px !important;
-    margin-left: 11px !important;
-    margin-top: 7px !important;
-}
-
-.wot-comp-icon {
-    background-image: url("../fusion/28_28/r0.png") !important;;
+    position: absolute !important;
+    background: url("../b/donuts_150.png") top left no-repeat !important;
+    background-position: 0 -168px !important;
+    background-size: 36px auto !important;
+    height: 32px !important;
+    width: 32px !important;
+    margin-left: -5px !important;
+    margin-top: 10px !important;
 }
 
 .wot-comp-icon[r="r1"] {
-    background-image: url("../fusion/28_28/r1.png") !important;;
+    background-position: 0 -134px !important;
 }
 
 .wot-comp-icon[r="r2"] {
-    background-image: url("../fusion/28_28/r2.png") !important;;
+    background-position: 0 -102px !important;
 }
 
 .wot-comp-icon[r="r3"] {
-    background-image: url("../fusion/28_28/r3.png") !important;;
+    background-position: 0 -68px !important;
 }
 
 .wot-comp-icon[r="r4"] {
-    background-image: url("../fusion/28_28/r4.png") !important;;
+    background-position: 0 -34px !important;
 }
 
 .wot-comp-icon[r="r5"] {
-    background-image: url("../fusion/28_28/r5.png") !important;;
+    background-position: 0 0px !important;
 }
 
-.accessible .wot-comp-icon {
-    background-image: url("../fusion/28_28/r0.png") !important;;
-}
+/*.accessible .wot-comp-icon {*/
+    /*background-image: url("skin/fusion/28_28/r0.png");*/
+/*}*/
 
-.accessible .wot-comp-icon[r="r1"] {
-    background-image: url("../b/accessible/r1.png") !important;
-}
+/*.accessible .wot-comp-icon[r="r1"] {*/
+    /*background-image: url("skin/b/accessible/r1.png");*/
+/*}*/
 
-.accessible .wot-comp-icon[r="r2"] {
-    background-image: url("../b/accessible/r2.png") !important;
-}
+/*.accessible .wot-comp-icon[r="r2"] {*/
+    /*background-image: url("skin/b/accessible/r2.png");*/
+/*}*/
 
-.accessible .wot-comp-icon[r="r3"] {
-    background-image: url("../b/accessible/r3.png") !important;
-}
+/*.accessible .wot-comp-icon[r="r3"] {*/
+    /*background-image: url("skin/b/accessible/r3.png");*/
+/*}*/
 
-.accessible .wot-comp-icon[r="r4"] {
-    background-image: url("../b/accessible/r4.png") !important;
-}
+/*.accessible .wot-comp-icon[r="r4"] {*/
+    /*background-image: url("skin/b/accessible/r4.png");*/
+/*}*/
 
-.accessible .wot-comp-icon[r="r5"] {
-    background-image: url("../b/accessible/r5.png") !important;
-}
+/*.accessible .wot-comp-icon[r="r5"] {*/
+    /*background-image: url("skin/b/accessible/r5.png");*/
+/*}*/
 
 .wot-comp-conf {
     position: absolute !important;
-    top: 6px;
-    left: 52px;
-    margin-left: 144px;
-    margin-top: 9px;
-    width: 51px;
-    height: 18px;
-    background: url("../fusion/confidence-0.png") top left no-repeat !important;
+    height: 42px !important;
+    margin-left: 26px !important;
+    margin-top: -2px !important;
+    width: 34px !important;
+    background: url("../b/confidence_150dpi.png") top left no-repeat !important;
+    background-size: 33px auto !important;
+    background-position: 0 -168px !important;
+
 }
 
 .wot-comp-conf[c="c1"] {
-    background: url("../fusion/confidence-1.png") top left no-repeat !important;
+    background-position: 0 -126px !important;
 }
 .wot-comp-conf[c="c2"] {
-    background: url("../fusion/confidence-2.png") top left no-repeat !important;
+    background-position: 0 -84px !important;
 }
 .wot-comp-conf[c="c3"] {
-    background: url("../fusion/confidence-3.png") top left no-repeat !important;
+    background-position: 0 -42px !important;
 }
 .wot-comp-conf[c="c4"] {
-    background: url("../fusion/confidence-4.png") top left no-repeat !important;
+    background-position: 0 0 !important;
 }
 .wot-comp-conf[c="c5"] {
-    background: url("../fusion/confidence-5.png") top left no-repeat !important;
+    background-position: 0 -210px !important;
 }
 
 .rating-legend-wrapper {
-    position: absolute;
-    margin: 2px 0 auto 43px;
-    width: 85px;
+    position: relative !important;
+    margin: 3px 18px auto 74px !important;
+    background: url("../b/bubl_speech_c_150.png")  top left repeat-x !important;
+    background-size: 1px 24px !important;
+    height: 24px !important;
+    left: 1px;
+    display: inline-block;
+    padding: 5px 0 !important;
+}
+
+.rating-legend-wrapper:before {
+    position: absolute !important;
+    content: "" !important;
+    height: 24px !important;
+    width: 17px !important;
+    background: url("../b/bubl_speech_l_150.png") top left no-repeat !important;
+    background-size: 17px 24px !important;
+    left: -17px;
+    top: 0;
+}
+
+.rating-legend-wrapper:after {
+    position: absolute !important;
+    content: "" !important;
+    height: 24px !important;
+    width: 17px !important;
+    right: -17px !important;
+    background: url("../b/bubl_speech_r_150.png") top left no-repeat !important;
+    background-size: 10px 24px !important;
+    top: 0 !important;
 }
 
 .rating-legend {
-    position: absolute !important;
-    height: 26px !important;
-    padding: 6px 4px 0px !important;
-    background-image: url("../b/ws/grey.svg") !important;
-    background-repeat: no-repeat !important;
-    color: #555 !important;
-    display: block !important;
-    font-size: 11px !important;
+    position: relative !important;
+    height: 24px !important;
+    min-width: 48px !important;
+    margin: 2px 0 0em !important;
+    padding: 3px 4px 0 0px !important;
+    color: #454545 !important;
+    font-size: 12px !important;
     text-align: center !important;
     white-space: nowrap !important;
-    width: 84px !important;
-    left: 12px !important;
+    display: inline;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.rating-legend[r=r0] {
-}
-
-.rating-legend[r=r1],
-.rating-legend[r=r2] {
-    background-image: url("../b/ws/red.svg") !important;
-}
-
-.rating-legend[r=r3] {
-    background-image: url("../b/ws/yellow.svg") !important;
-}
-
-.rating-legend[r=r4],
-.rating-legend[r=r5] {
-    background-image: url("../b/ws/green.svg") !important;
-}
-
 .ws-categories-area {
-    margin: 18px 0 9px !important;
-    background-color: #F5F5F5 !important;
-    padding: 0.4em 0 0.9em !important;
-    border-top: 1px solid #D1D1D1 !important;
-    border-bottom: 1px solid #D1D1D1 !important;
+    margin: 4px 0 0 !important;
+    padding: 0.4em 0 0 !important;
 }
 
 .ws-categories-title {
@@ -375,7 +354,7 @@
 }
 
 #ws-categories-list {
-    margin: 10px 25px 0 59px !important;
+    margin: 8px 25px 0 74px !important;
     text-align: left !important;
 }
 
@@ -475,34 +454,33 @@
     margin-left: -22px !important;
 }
 
-.cat-cs-separator {
-    padding: 2px !important;
-    font-size: 0px !important;
-    list-style: none !important;
-    margin-top: 6px !important;
-}
+/*.cat-cs-separator {*/
+    /*padding: 2px !important;*/
+    /*font-size: 0px !important;*/
+    /*list-style: none !important;*/
+    /*margin-top: 6px !important;*/
+/*}*/
 
-.cat-cs {
-    -webkit-transform: scale(0.9) !important;
-    margin-left: -1.4em !important;
-}
+/*.cat-cs {*/
+    /*-webkit-transform: scale(0.9) !important;*/
+    /*margin-left: -1.4em !important;*/
+/*}*/
 
 /* fix for scaled CS categories */
-.cat-cs.c1 {
-    margin-left: -1.65em !important;
-}
+/*.cat-cs.c1 {*/
+    /*margin-left: -1.65em !important;*/
+/*}*/
 
 .wot-openscorecard-wrap {
-    margin-top: 0.8em !important;
-    width: 100% !important;
+    margin-top: 14px !important;
     text-align: left !important;
-    margin-left: 37px !important;
+    margin-left: 52px !important;
 }
 
 #wotinfobutton,
 .wot-openscorecard {
-    padding: 0.3em 0 0.6em 0px !important;
-    font-size: 12px !important;
+    padding: 0.4em 0 0.6em 0px !important;
+    font-size: 13px !important;
 }
 
 .wot-link {
@@ -515,6 +493,9 @@
     text-decoration: underline !important;
 }
 
+.wot-rateit-wrap {
+    margin-top: 20px !important;
+}
 .wot-rateit-wrap span {
     font-size: 12px !important;
 }
@@ -557,9 +538,6 @@
 .wot-button:hover {
     background-image: -webkit-linear-gradient(top, #FFF 0%,#dadada 83%, #f3f1f1 100%) !important;
     /*color: #6aac43 !important;*/
-}
-
-.accessible .wot-button:hover {
 }
 
 .wot-button:active {
