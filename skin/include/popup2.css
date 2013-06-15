@@ -26,10 +26,10 @@
     padding: 0;
     position: absolute;
     z-index: 2147483647;
-    max-width: 310px;
+    max-width: 395px;
     cursor: pointer;
     -webkit-user-select: none;
-    box-shadow: 1px 1px 5px rgba(189, 189, 189, 0.45);
+    box-shadow: 4px 4px 6px rgba(189, 189, 189, 0.65);
     background-color: white;
 }
 
@@ -49,7 +49,7 @@
     margin: 0;
     padding: 0 5px 0;
     background-color: #F9F9F9;
-    height: 78px;
+    height: 100px;
     border-top: 1px solid #D9D9D9;
     border-bottom: 1px solid #D9D9D9;
 }
@@ -61,17 +61,17 @@
     padding: 6px 0px;
     overflow: hidden;
     font-weight: bold;
-    color: #808080;
+    color: #454545;
 }
 
 .wot-stack {
     display: table-cell;
     height: 50px;
-    min-width: 120px;
+    min-width: 110px;
 }
 
 .wot-stack-left {
-    padding-left: 15px;
+    padding-left: 12px;
 }
 
 .wot-stack-right {
@@ -79,96 +79,147 @@
 }
 
 .wot-header {
-    color: #878787;
+    color: #454545;
     display: block;
     font-size: 12px;
     font-weight: normal;
     line-height: 14px;
     margin: 0;
     overflow: hidden;
-    padding: 0 0 2px 0;
+    padding: 0 0 10px 0;
     text-align: left;
     white-space: nowrap;
 }
 
 .wot-rep {
-    background: url("../fusion/28_28/r0.png") left top no-repeat;
-    height: 28px;
-    width: 28px;
-    margin: 1px 0px 0px 1px;
+    background: url("../b/donuts_150.png") left top no-repeat;
+    background-position: 0 -168px;
+    background-size: 36px auto;
+    height: 32px;
+    width: 32px;
+    margin-left: -4px;
+    margin-top: 7px;
     padding: 0;
     float: left;
-    background-size: 90%;
-}
-
-.wot-rep[reputation="rx"] {
-    background-image: url("../fusion/28_28/rx.png");
 }
 
 .wot-rep[reputation="r1"] {
-    background-image: url("../fusion/28_28/r1.png");
+    background-position: 0 -134px;
 }
 
 .wot-rep[reputation="r2"] {
-    background-image: url("../fusion/28_28/r2.png");
+    background-position: 0 -102px;
 }
 
 .wot-rep[reputation="r3"] {
-    background-image: url("../fusion/28_28/r3.png");
+    background-position: 0 -68px;
 }
 
 .wot-rep[reputation="r4"] {
-    background-image: url("../fusion/28_28/r4.png");
+    background-position: 0 -34px;
 }
 
 .wot-rep[reputation="r5"] {
-    background-image: url("../fusion/28_28/r5.png");
+    background-position: 0 0;
 }
 
-.wot-rep.accessible {
-    background-image: url("../fusion/accessible/28_28/r0.png");
-}
-.wot-rep.accessible[reputation="rx"] {
-    background-image: url("../fusion/28_28/rx.png");
-}
-.wot-rep.accessible[reputation="r1"] {
-    background-image: url("../fusion/accessible/28_28/r1.png");
-}
-.wot-rep.accessible[reputation="r2"] {
-    background-image: url("../fusion/accessible/28_28/r2.png");
-}
-.wot-rep.accessible[reputation="r3"] {
-    background-image: url("../fusion/accessible/28_28/r3.png");
-}
-.wot-rep.accessible[reputation="r4"] {
-    background-image: url("../fusion/accessible/28_28/r4.png");
-}
-.wot-rep.accessible[reputation="r5"] {
-    background-image: url("../fusion/accessible/28_28/r5.png");
-}
+/*.wot-rep.accessible {*/
+    /*background-image: url("../fusion/accessible/28_28/r0.png");*/
+/*}*/
+/*.wot-rep.accessible[reputation="rx"] {*/
+    /*background-image: url("../fusion/28_28/rx.png");*/
+/*}*/
+/*.wot-rep.accessible[reputation="r1"] {*/
+    /*background-image: url("../fusion/accessible/28_28/r1.png");*/
+/*}*/
+/*.wot-rep.accessible[reputation="r2"] {*/
+    /*background-image: url("../fusion/accessible/28_28/r2.png");*/
+/*}*/
+/*.wot-rep.accessible[reputation="r3"] {*/
+    /*background-image: url("../fusion/accessible/28_28/r3.png");*/
+/*}*/
+/*.wot-rep.accessible[reputation="r4"] {*/
+    /*background-image: url("../fusion/accessible/28_28/r4.png");*/
+/*}*/
+/*.wot-rep.accessible[reputation="r5"] {*/
+    /*background-image: url("../fusion/accessible/28_28/r5.png");*/
+/*}*/
+
 .wot-cnf {
-    background: url("../fusion/confidence-0.png") right top no-repeat;
-    height: 18px;
-    width: 51px;
-    margin: 5px 0 0px 4px;
+    height: 42px;
+    margin-left: 2px;
+    margin-top: -5px;
+    width: 34px;
+    background: url("../b/confidence_150dpi.png") top left no-repeat;
+    background-size: 33px auto;
+    background-position: 0 -168px;
     padding: 0;
     float: left;
 }
 
 .wot-cnf[confidence="c1"] {
-    background-image: url("../fusion/confidence-1.png");
+    background-position: 0 -126px;
 }
+
 .wot-cnf[confidence="c2"] {
-    background-image: url("../fusion/confidence-2.png");
+    background-position: 0 -84px;
 }
+
 .wot-cnf[confidence="c3"] {
-    background-image: url("../fusion/confidence-3.png");
+    background-position: 0 -42px;
 }
+
 .wot-cnf[confidence="c4"] {
-    background-image: url("../fusion/confidence-4.png");
+    background-position: 0 0;
 }
+
 .wot-cnf[confidence="c5"] {
-    background-image: url("../fusion/confidence-5.png");
+    background-position: 0 -210px;
+}
+
+.rating-legend-wrapper {
+    /*position: absolute;*/
+    background: url("../b/bubl_speach_c_150.png")  top left repeat-x;
+    background-size: 1px 24px;
+    height: 24px;
+    margin: 1px 0 auto 14px;
+    float: left;
+    position: relative;
+
+    display: none; /* don't show bubble speeches for now until we have their new styles */
+}
+
+.rating-legend-wrapper:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 17px;
+    margin-left: -17px;
+    background: url("../b/bubl_speach_l_150.png") top left no-repeat;
+    background-size: 17px 24px;
+}
+
+.rating-legend-wrapper:after {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 17px;
+    right: -17px;
+    background: url("../b/bubl_speach_r_150.png") top left no-repeat;
+    background-size: 10px 24px;
+    top: 0px;
+}
+
+.rating-legend {
+    position: relative;
+    height: 24px;
+    min-width: 48px;
+    margin: -2px 0 0em;
+    padding: 7px 4px 0 0px;
+    color: #454545;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
 }
 
 #wot-categories {
@@ -200,7 +251,7 @@
     font-size: 9pt;
     color: silver;
     list-style: none !important;
-    padding: 0.25em 0 !important;
+    padding: 0.2em 0 !important;
 }
 
 .wot-popup-layer .cat-item:before {
@@ -212,7 +263,7 @@
     content: "";
     position: absolute;
     margin-left: -1.65em;
-    margin-top: 1px;
+    margin-top: 0px;
 }
 
 .c-neutral.cat-item:before {

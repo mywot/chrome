@@ -26,11 +26,19 @@ const WOT_POPUP_HTML =
         '<div id="wot-r0-header{ID}" class="wot-header">{POPUPTEXT0}</div>' +
         '<div id="wot-r0-rep{ID}" class="wot-rep {ACCESSIBLE}"></div>' +
         '<div id="wot-r0-cnf{ID}" class="wot-cnf"></div>' +
+        '<div class="rating-legend-wrapper">' +
+            '<div class="rating-legend">{REPTEXT0}</div>' +
+        '</div>' +
+
         '</div>' +
         '<div id="wot-r4-stack{ID}" class="wot-stack wot-stack-right">' +
         '<div id="wot-r4-header{ID}" class="wot-header">{POPUPTEXT4}</div>' +
         '<div id="wot-r4-rep{ID}" class="wot-rep {ACCESSIBLE}"></div>' +
         '<div id="wot-r4-cnf{ID}" class="wot-cnf"></div>' +
+        '<div class="rating-legend-wrapper">' +
+        '<div class="rating-legend">{REPTEXT4}</div>' +
+        '</div>' +
+
         '</div>' +
         '</div>' +
         '<div id="wot-categories">' +
