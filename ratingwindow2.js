@@ -311,6 +311,8 @@ $.extend(wot, { ratingwindow: {
 				var position = 100 * (wot.ratingwindow.slider_shift + e.clientX - slider.offset().left) /
                     wot.ratingwindow.sliderwidth;
 
+                if (e.type == "mouseleave") position = noopinion_threshold + 1;
+
                 /* sanitize the rating value */
                 if (position < 0) {
                     position = 0;
@@ -1144,14 +1146,15 @@ $.extend(wot, { ratingwindow: {
             $(".wot-rating-stack").bind({
                 mousedown: _this.rate_control.on_mousedown,
                 mouseup: _this.rate_control.on_mouseup,
-                mousemove: _this.rate_control.on_mousemove
+                mousemove: _this.rate_control.on_mousemove,
+                mouseleave: _this.rate_control.on_mousemove
             });
         },
 
         on_mousemove: function (e) {
             var _rw = wot.ratingwindow;
 
-            if (_rw.state.down == -1) return;
+//            if (_rw.state.down == -1) return;
             var c = $(this).attr("component");
             var t = _rw.getrating(e, this);
 
@@ -1254,7 +1257,7 @@ $.extend(wot, { ratingwindow: {
                 } else if (state.name != null && state.t >= 0) {
                     /* temporary indicator position */
                     rep = wot.getlevel(wot.reputationlevels, state.t).name;
-                    elems.indicator.css("left", (state.t * _rw.sliderwidth / 100).toFixed() + "px");
+//                    elems.indicator.css("left", (state.t * _rw.sliderwidth / 100).toFixed() + "px");
                     elems.stack.removeClass("testimony").addClass("hover");
 
                 } else {
@@ -1267,8 +1270,10 @@ $.extend(wot, { ratingwindow: {
 
                 if (rep) {
                     elems.stack.attr("r", rep);
+                    if (state.down != -1) {
                     elems.indicator.attr("r", rep);
                     elems.data.attr("r", rep);
+                }
                 }
 
                 var helptext = wot.get_level_label(item.name, rep, true);

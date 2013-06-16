@@ -751,24 +751,24 @@ body {
     cursor: default;
 }
 
-.wot-rating-stack.testimony[r="r1"] .wot-rating-slider {
+.wot-rating-stack[r="r1"] .wot-rating-slider {
     background-position: 0 -144px;
 }
 
-.wot-rating-stack.testimony[r="r2"] .wot-rating-slider {
+.wot-rating-stack[r="r2"] .wot-rating-slider {
     background-position: 0 -108px;
 }
 
-.wot-rating-stack.testimony[r="r3"] .wot-rating-slider {
+.wot-rating-stack[r="r3"] .wot-rating-slider {
     background-position: 0 -72px;
 }
 
-.wot-rating-stack.testimony[r="r4"] .wot-rating-slider {
+.wot-rating-stack[r="r4"] .wot-rating-slider {
     background-position: 0 -36px;
 }
 
-.wot-rating-stack.testimony[r="r5"] .wot-rating-slider {
-    background-position: 0 0px;
+.wot-rating-stack[r="r5"] .wot-rating-slider {
+    background-position: 0 0;
 }
 
 /*.wot-rating-stack:hover .wot-rating-slider*/
