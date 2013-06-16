@@ -494,40 +494,40 @@ body {
 .wot-rating-reputation {
     position: absolute;
 	background: url("b/donuts_150.png") top left no-repeat;
-    background-position: 0 -168px;
-    background-size: 36px auto;
-	height: 32px;
-	width: 32px;
+    background-position: 0 -165px;
+    background-size: 35px 198px;
+	height: 33px;
+	width: 35px;
     margin-left: -5px;
     margin-top: 10px;
 }
 
 .wot-rating-reputation[reputation="rx"] {
-    background-position: 0 -168px;
+    background-position: 0 -165px;
 }
 
 .wot-rating-reputation[reputation="r0"] {
-    background-position: 0 -168px;
+    background-position: 0 -165px;
 }
 
 .wot-rating-reputation[reputation="r1"] {
-    background-position: 0 -134px;
+    background-position: 0 -132px;
 }
 
 .wot-rating-reputation[reputation="r2"] {
-    background-position: 0 -102px;
+    background-position: 0 -99px;
 }
 
 .wot-rating-reputation[reputation="r3"] {
-    background-position: 0 -68px;
+    background-position: 0 -66px;
 }
 
 .wot-rating-reputation[reputation="r4"] {
-    background-position: 0 -34px;
+    background-position: 0 -33px;
 }
 
 .wot-rating-reputation[reputation="r5"] {
-    background-position: 0 0px;
+    background-position: 0 0;
 }
 
 /*.wot-rating-reputation.accessible {*/
@@ -596,28 +596,28 @@ body {
     position: absolute;
     margin: 3px 0 auto 75px;
     background: url("b/bubl_speech_c_150.png")  top left repeat-x;
-    background-size: 1px 24px;
-    height: 24px;
+    background-size: 1px 23px;
+    height: 23px;
 }
 
 .rating-legend-wrapper:before {
     position: absolute;
     content: "";
-    height: 24px;
+    height: 23px;
     width: 17px;
     margin-left: -17px;
     background: url("b/bubl_speech_l_150.png") top left no-repeat;
-    background-size: 17px 24px;
+    background-size: 17px 23px;
 }
 
 .rating-legend-wrapper:after {
     position: absolute;
     content: "";
-    height: 24px;
+    height: 23px;
     width: 17px;
     right: -17px;
     background: url("b/bubl_speech_r_150.png") top left no-repeat;
-    background-size: 10px 24px;
+    background-size: 10px 23px;
     top: 0px;
 }
 
@@ -1006,7 +1006,7 @@ body {
     position: absolute;
     right: 104px;
     top: 130px;
-    z-index: 3px;
+    z-index: 3;
 }
 
 #wot-scorecard-content {

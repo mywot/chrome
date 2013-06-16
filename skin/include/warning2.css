@@ -124,10 +124,11 @@
 
 .wot-desc {
     margin-top: 0 !important;
-    width: 100% !important;
     font-size: 13px !important;
     color: #454545 !important;
     margin-bottom: 1em !important;
+    padding: 0 10px !important;
+    text-align: center !important;
 }
 
 /* Section of ratings */
@@ -213,32 +214,32 @@
 .wot-comp-icon {
     position: absolute !important;
     background: url("../b/donuts_150.png") top left no-repeat !important;
-    background-position: 0 -168px !important;
-    background-size: 36px auto !important;
-    height: 32px !important;
-    width: 32px !important;
+    background-position: 0 -165px !important;
+    background-size: 35px 198px !important;
+    height: 33px !important;
+    width: 35px !important;
     margin-left: -5px !important;
     margin-top: 10px !important;
 }
 
 .wot-comp-icon[r="r1"] {
-    background-position: 0 -134px !important;
+    background-position: 0 -132px !important;
 }
 
 .wot-comp-icon[r="r2"] {
-    background-position: 0 -102px !important;
+    background-position: 0 -99px !important;
 }
 
 .wot-comp-icon[r="r3"] {
-    background-position: 0 -68px !important;
+    background-position: 0 -66px !important;
 }
 
 .wot-comp-icon[r="r4"] {
-    background-position: 0 -34px !important;
+    background-position: 0 -33px !important;
 }
 
 .wot-comp-icon[r="r5"] {
-    background-position: 0 0px !important;
+    background-position: 0 0 !important;
 }
 
 /*.accessible .wot-comp-icon {*/
@@ -297,20 +298,20 @@
     position: relative !important;
     margin: 3px 18px auto 74px !important;
     background: url("../b/bubl_speech_c_150.png")  top left repeat-x !important;
-    background-size: 1px 24px !important;
-    height: 24px !important;
+    background-size: 1px 23px !important;
+    height: 23px !important;
     left: 1px;
     display: inline-block;
-    padding: 5px 0 !important;
+    padding: 4px 0 !important;
 }
 
 .rating-legend-wrapper:before {
     position: absolute !important;
     content: "" !important;
-    height: 24px !important;
+    height: 23px !important;
     width: 17px !important;
     background: url("../b/bubl_speech_l_150.png") top left no-repeat !important;
-    background-size: 17px 24px !important;
+    background-size: 17px 23px !important;
     left: -17px;
     top: 0;
 }
@@ -318,11 +319,11 @@
 .rating-legend-wrapper:after {
     position: absolute !important;
     content: "" !important;
-    height: 24px !important;
+    height: 23px !important;
     width: 17px !important;
     right: -17px !important;
     background: url("../b/bubl_speech_r_150.png") top left no-repeat !important;
-    background-size: 10px 24px !important;
+    background-size: 10px 23px !important;
     top: 0 !important;
 }
 

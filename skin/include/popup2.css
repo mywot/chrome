@@ -93,10 +93,10 @@
 
 .wot-rep {
     background: url("../b/donuts_150.png") left top no-repeat;
-    background-position: 0 -168px;
-    background-size: 36px auto;
-    height: 32px;
-    width: 32px;
+    background-position: 0 -165px;
+    background-size: 35px 198px;
+    height: 33px;
+    width: 35px;
     margin-left: -4px;
     margin-top: 7px;
     padding: 0;
@@ -104,19 +104,19 @@
 }
 
 .wot-rep[reputation="r1"] {
-    background-position: 0 -134px;
+    background-position: 0 -132px;
 }
 
 .wot-rep[reputation="r2"] {
-    background-position: 0 -102px;
+    background-position: 0 -99px;
 }
 
 .wot-rep[reputation="r3"] {
-    background-position: 0 -68px;
+    background-position: 0 -66px;
 }
 
 .wot-rep[reputation="r4"] {
-    background-position: 0 -34px;
+    background-position: 0 -33px;
 }
 
 .wot-rep[reputation="r5"] {
@@ -147,7 +147,7 @@
 
 .wot-cnf {
     height: 42px;
-    margin-left: 2px;
+    margin-left: -2px;
     margin-top: -5px;
     width: 34px;
     background: url("../b/confidence_150dpi.png") top left no-repeat;
