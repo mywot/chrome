@@ -691,7 +691,7 @@ body {
     position: relative;
     font-size: 11px;
     height: 16px;
-    margin: 6px 50px -7px 5px;
+    margin: 5px 48px -6px 2px;
     color: #919191;
     opacity: 0;
     display: none;
@@ -708,6 +708,10 @@ body {
 #ratings-area:not([disabled=disabled]) .wot-rating:hover .wot-rating-data[r=r0] .wot-rating-help,
 #ratings-area:not([disabled=disabled]) .wot-rating.hover .wot-rating-data[r=r0] .wot-rating-help {
     display: none;
+}
+
+.wot-rating-data[r] .wot-rating-help {
+    opacity: 1;
 }
 
 .rating-bound-left,
@@ -845,11 +849,16 @@ body {
 .wot-rating-help {
     display: block;
 
-    margin-bottom: -5px;
-    margin-left: 8px;
+    margin-bottom: -4px;
+    margin-left: 2px;
     margin-right: 0;
-    margin-top: 6px;
-    width: 148px;
+    margin-top: 5px;
+    width: 154px;
+    -webkit-transition: opacity 2.5s linear 2s;
+}
+
+.wot-rating-data:not([r]) .wot-rating-help {
+    opacity: 0;
 }
 
 .wot-rating-helptext,
@@ -1110,7 +1119,7 @@ body {
 .c0.cat-item .ico {
     width: 4px !important;
     height: 4px !important;
-    margin: -2px 5px 0 0;
+    margin: 1px 8px 0 3px;
 }
 
 .c1 {
@@ -1707,7 +1716,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     padding: 8px;
     border: 1px solid #C0C0C0;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 13px;
+    font-family: Arial;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 #comment-side-hint {
