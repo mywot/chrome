@@ -623,10 +623,10 @@ body {
 
 .rating-legend {
     position: relative;
-    height: 24px;
+    height: 16px;
     min-width: 48px;
     margin: -2px 0 0em;
-    padding: 7px 4px 0 0px;
+    padding: 6px 4px 0 0px;
     color: #454545;
     font-size: 12px;
     text-align: center;
@@ -1726,7 +1726,8 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     padding: 10px 10px 0;
 }
 
-.comment-hint-piece {
+#comment-side-hint p {
+    /* hints pieces */
     margin: 0 0 8px;
     font-size: 11px;
     color: #666;
