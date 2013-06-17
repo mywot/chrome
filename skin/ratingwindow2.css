@@ -803,34 +803,35 @@ body {
 .wot-rating-indicator {
     display: block;
 	height: 30px;
-	margin-left: -18px;
+	margin-left: -8px;
 	margin-top: -22px;
-	width: 42px;
+	width: 21px;
     float: left;
     position: relative;
     background: url("b/slider%20handle.png") top left no-repeat;
+    background-size: 21px auto;
     z-index: 5;
     left: 166px;
 }
 
 .wot-rating-stack .wot-rating-indicator {
-    background-position: 0 -150px;
+    background-position: 0 -140px;
 }
 
 .wot-rating-stack.testimony[r="r1"] .wot-rating-indicator {
-    background-position: 0 -120px;
+    background-position: 0 -112px;
 }
 
 .wot-rating-stack.testimony[r="r2"] .wot-rating-indicator {
-    background-position: 0 -90px;
+    background-position: 0 -84px;
 }
 
 .wot-rating-stack.testimony[r="r3"] .wot-rating-indicator {
-    background-position: 0 -60px;
+    background-position: 0 -56px;
 }
 
 .wot-rating-stack.testimony[r="r4"] .wot-rating-indicator {
-    background-position: 0 -30px;
+    background-position: 0 -28px;
 }
 
 .wot-rating-stack.testimony[r="r5"] .wot-rating-indicator {
@@ -920,50 +921,19 @@ body {
     z-index: 1;
 }
 
-.unrated.rating-delete:not(.delete) .rating-delete-icon:before {
-    content: "";
-    position: absolute;
-    top: 7px;
-    z-index: 4;
-    left: 3px;
-    width: 6px;
-    height: 6px;
-    margin-top: -4px;
-    background: #AFAEAE;
-    border-radius: 50%;
-    border: 1px solid #B9B9B9;
-}
-
 .rating-delete-icon {
     position: relative;
-    width: 14px;
-    height: 14px;
-    background-color: #f3f2f2;
-    margin: 0 0 0 1px;
-    border-radius: 50%;
-    border: 1px solid #A5A5A5;
+    background: url("b/delete-testimony.png") top left no-repeat;
+    background-size: auto 18px;
+    background-position: -34px 0;
+    width: 18px;
+    height: 18px;
+    margin: -1px 0 0 0;
 }
 
 /* Cross inside the "delete" icon */
-.delete .rating-delete-icon:after,
-.delete .rating-delete-icon:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    z-index: 4;
-    left: 6px;
-    width: 2px;
-    height: 10px;
-    margin-top: -5px;
-    background: #7E7E7E;
-}
-
-.delete .rating-delete-icon:before {
-    -webkit-transform: rotate(45deg);
-}
-
-.delete .rating-delete-icon:after {
-    -webkit-transform: rotate(135deg);
+.delete .rating-delete-icon {
+    background-position: 0 0;
 }
 
 .rating-delete.delete .rating-delete-icon,
@@ -978,11 +948,14 @@ body {
     text-align: center;
     height: 1.4em;
     white-space: nowrap;
-    /*cursor: pointer;*/
 }
 
 .rating-delete.delete:hover .rating-deletelabel {
     color: red;
+}
+
+.rating-delete.delete:hover .rating-delete-icon {
+    background-position: -17px 0;
 }
 
 /* Reputation Info area */
