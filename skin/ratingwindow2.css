@@ -1336,7 +1336,7 @@ body {
 #ok-button {
     position: absolute;
     bottom: 0.5em;
-    width: 100%;
+    width: 529px;
     height: 30px;
     display: none;
 }
@@ -1347,7 +1347,7 @@ body {
 
 .right-side {
     position: absolute;
-    right: 33px;
+    right: 0;
 }
 
 .left-side {
@@ -1413,7 +1413,7 @@ body {
 
 #categories-selection-area {
     display: none;
-    padding: 0 9px;
+    padding: 0 20px;
     position: relative;
     min-height: 200px;
 }
@@ -1422,7 +1422,7 @@ body {
     display: none;
     background-color: #e6f0f9;
     height: 22px;
-    width: 530px;
+    width: 500px;
     margin-top: -1px;
     font-size: 11px;
     padding: 3px 5px 5px;
@@ -1446,7 +1446,7 @@ body {
     margin-top: 5px;
     height: 26px;
     color: #454545;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .category-selector {
@@ -1468,7 +1468,7 @@ body {
     display: block;
     margin: 1px 0;
     padding: 11px 0 11px 16px;
-    width: 162px;
+    width: 145px;
     z-index: 1000;
     list-style: none;
     cursor: pointer;
@@ -1496,7 +1496,7 @@ body {
     display: none;
     min-height: 165px;
     max-height: 190px;
-    width: 360px;
+    width: 348px;
     padding: 2px 0;
     text-align: left;
     white-space: normal;
@@ -1696,7 +1696,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #commenting-area {
     display: none;  /* is shown from JS when needed */
-    margin: auto 9px;
+    margin: auto 19px;
 }
 
 .comment-title {
@@ -1705,14 +1705,13 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 .user-comment-wrapper {
-    float: left;
-    position: relative;
+    float: right;
 }
 
 #user-comment {
     height: 115px;
     width: 350px;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
     padding: 8px;
     border: 1px solid #C0C0C0;
     border-radius: 3px;
@@ -1720,10 +1719,13 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     font-family: Arial;
     overflow-x: hidden;
     overflow-y: auto;
+    outline-color: #DDF6FF;
 }
 
 #comment-side-hint {
-    padding: 10px 10px 0;
+    padding: 10px 0 0 0;
+    float: left;
+    width: 135px;
 }
 
 #comment-side-hint p {
@@ -1737,8 +1739,8 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     font-size: 14px;
     text-align: right;
     position: absolute;
-    bottom: 12px;
-    right: 22px;
+    bottom: 55px;
+    right: 50px;
     background-color: #FC4B56;
     padding: 3px 10px;
     font-weight: normal;

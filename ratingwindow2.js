@@ -1813,7 +1813,7 @@ $.extend(wot, { ratingwindow: {
 
             selected_elem.addClass("maintainHover");
 
-            var left_distance = 179; //menu.outerWidth() + (menu.offset().left - $_external_container.offset().left);
+            var left_distance = 162; //menu.outerWidth() + (menu.offset().left - $_external_container.offset().left);
             var top_distance = 10;//menu.offset().top;
 
             //TO DO: what if user changes category manully.
