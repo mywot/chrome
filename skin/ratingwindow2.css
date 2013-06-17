@@ -1352,7 +1352,8 @@ body {
 
 .left-side {
     position: absolute;
-    left: 0;
+    left: 8px;
+    margin-top: 0.2em;
 }
 
 .rw-button {
@@ -1394,6 +1395,33 @@ body {
 
 #btn-delete {
     margin-left: 0;
+    cursor: pointer;
+}
+
+.btn-delete_icon {
+    height: 18px;
+    width: 18px;
+    background: url("b/delete-myrating.png") top left no-repeat;
+    background-size: auto 18px;
+    float: left;
+    margin-right: 4px;
+}
+
+#btn-delete:hover .btn-delete_icon {
+    background-position: -19px 0;
+}
+
+.btn-delete_label {
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 3px;
+    font-weight: bold;
+    color: #c33035;
+    display: none;
+}
+
+#btn-delete:hover .btn-delete_label {
+    display: block;
 }
 
 .btn-submit {

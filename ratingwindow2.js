@@ -666,7 +666,7 @@ $.extend(wot, { ratingwindow: {
                 selector: "#wt-rw-btn-ok",
                 text: wot.i18n("wt", "rw_ok")
             }, {
-                selector: "#btn-delete",
+                selector: ".btn-delete_label",
                 text: wot.i18n("buttons", "delete")
             }, {
                 selector: "#btn-delete",
