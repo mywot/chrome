@@ -922,7 +922,7 @@ $.extend(wot, { ratingwindow: {
         });
 
         $("#wot-header-link-guide").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.settings + "/guide", wurls.contexts.rwguide);
+            wot.ratingwindow.navigate(wurls.tour, wurls.contexts.rwguide);
         });
 
         $("#wot-header-link-forum").bind("click", function() {
