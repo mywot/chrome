@@ -229,8 +229,14 @@
     "ratingwindow_comment": {
         "message": "Describe your experience with the site by leaving a comment"
     },
+    "ratingwindow_commenthints": {
+        "message": "<p>Be precise</p><p>Give evidence or example</p><p>Comment according to your real experiences</p><p>Do not spam</p>"
+    },
     "ratingwindow_novoted": {
         "message": "Please provide a reason for your ratings by picking a category"
+    },
+    "ratingwindow_morecats": {
+        "message": "more"
     },
     "ratingwindow_rerate_change": {
         "message": "change"

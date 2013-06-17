@@ -413,13 +413,12 @@ $.extend(wot, { ratingwindow: {
         // TODO: rewrite below
         var index = 0,
             item = (bg.wot.core.usercontent && bg.wot.core.usercontent.length > 0) ? bg.wot.core.usercontent[0] : {},
-            user_header = "",
+            user_header = wot.i18n("activityscore","text"),
             user_as = "",
             $_user_text = $("#wot-user-0-text"),
             as_notice = wot.i18n("activityscore", "next");
 
-        if (item.bar && item.length != null && item.label) {
-            user_header = item.bar;
+        if (item.label) {
             user_as = item.label;
         }
 
@@ -691,6 +690,9 @@ $.extend(wot, { ratingwindow: {
                 selector: ".comment-title",
                 text: wot.i18n("ratingwindow", "comment")
             }, {
+                selector: "#comment-side-hint",
+                html: wot.i18n("ratingwindow", "commenthints")
+            }, {
                 selector: ".thanks-text",
                 text: wot.i18n("ratingwindow", "thankyou")
             }
@@ -772,7 +774,7 @@ $.extend(wot, { ratingwindow: {
 
             if (more_voted > 0) {
                 var $_more = $('<div class="more-categories"></div>');
-                $_more.text("+" + more_voted + " more");
+                $_more.text("+" + more_voted + " " + wot.i18n("ratingwindow", "morecats"));
                 $_voted_content.append($_more);
             }
 

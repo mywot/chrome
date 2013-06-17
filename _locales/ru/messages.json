@@ -224,13 +224,19 @@
         "message": "Насколько этот сайт подходит для детей?"
     },
     "ratingwindow_categories": {
-        "message": "Выберите хотя бы одну категорию, объясняющую вашу оценку"
+        "message": "Выберите хотя бы одну причину, объясняющую вашу оценку"
     },
     "ratingwindow_comment": {
         "message": "Расскажите о вашем опыте с этим сайтом"
     },
+    "ratingwindow_commenthints": {
+        "message": "<p>Будьте точны</p><p>Излагайте факты</p><p>Избегайте оскорбительных фраз</p><p>Не рекламируйте другие сайты</p>"
+    },
     "ratingwindow_novoted": {
         "message": "Пожалуйста, укажите причину, объясняющую вашу оценку"
+    },
+    "ratingwindow_morecats": {
+        "message": "ещё"
     },
     "ratingwindow_rerate_change": {
         "message": "изменить"
@@ -269,7 +275,7 @@
         "message": "доверяю"
     },
     "testimony_4_levels_r0": {
-        "message": "кликните чтобы оценить"
+        "message": "кликните, чтобы оценить"
     },
     "testimony_4_levels_r1": {
         "message": "не подходит"
@@ -293,10 +299,10 @@
         "message": "удалить"
     },
     "buttons_delete": {
-        "message": "Удалить оценки"
+        "message": "Удалить оценку"
     },
     "buttons_delete_title": {
-        "message": "Удалить мои оценки и причины для этого сайта"
+        "message": "Удалить мою оценку этого сайта"
     },
     "buttons_cancel": {
         "message": "Отмена"
@@ -335,6 +341,6 @@
         "message": "платиновый"
     },
     "activityscore_next": {
-        "message": "Продолжайте оценивать и комментировать, чтобы получить {NEXT_LEVEL} уровень!"
+        "message": "Продолжайте оценивать, чтобы получить {NEXT_LEVEL} уровень!"
     }
 }
