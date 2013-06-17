@@ -224,16 +224,16 @@
         "message": "How suitable is this site for children?"
     },
     "ratingwindow_categories": {
-        "message": "Pick at least one category that supports your rating the best"
+        "message": "Pick at least one category to support your rating"
     },
     "ratingwindow_comment": {
-        "message": "Describe your experience with the site by leaving a comment"
+        "message": "Leave a comment to describe your experience with this site"
     },
     "ratingwindow_commenthints": {
         "message": "<p>Be precise</p><p>Give evidence or example</p><p>Comment according to your real experiences</p><p>Do not spam</p>"
     },
     "ratingwindow_novoted": {
-        "message": "Please provide a reason for your ratings by picking a category"
+        "message": "Click here to provide a reason for your rating by selecting a category"
     },
     "ratingwindow_morecats": {
         "message": "more"
@@ -242,7 +242,7 @@
         "message": "change"
     },
     "ratingwindow_rerate_category": {
-        "message": "provide"
+        "message": " "
     },
     "ratingwindow_fulllist": {
         "message": "show full list"
@@ -320,7 +320,7 @@
         "message": "share your opinion about this website"
     },
     "ratingwindow_thankyou": {
-        "message": "Thank you for your opinion!"
+        "message": "Thanks for sharing your experience!"
     },
     "activityscore_text": {
         "message": "Your activity score is now "
