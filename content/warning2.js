@@ -29,12 +29,7 @@ wot.warning = {
         var tmpl = '';
 //        console.log("make_categories_block", categories);
 
-        if (wot.utils.isEmptyObject(categories)) {
-            // If no categories are indentified for now
-            tmpl = "<div class='wot-openscorecard-wrap'>" +
-                "<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
-                "</div>";
-        } else {
+        if (!wot.utils.isEmptyObject(categories)) {
             var lst = [],
                 ordered_cats = wot.rearrange_categories(categories).all;
             for (var k in ordered_cats) {
