@@ -26,6 +26,7 @@ $.extend(wot, { ratingwindow: {
     was_in_ratemode: false,
     timer_save_button: null,
     state: {},  // rating state
+    local_comment: null,
     is_registered: false,   // whether user has an account on mywot.com
     delete_action: false,   // remembers whether user is deleting rating
     prefs: {},  // shortcut for background preferences
@@ -171,6 +172,7 @@ $.extend(wot, { ratingwindow: {
             var rw = wot.ratingwindow;
             var bg = chrome.extension.getBackgroundPage();
             var bgwot = bg.wot, // shortage for perfomance and readability
+                target = "",
                 is_rated = false,
                 testimonies_changed = false,
                 comment_changed = false,
@@ -196,13 +198,14 @@ $.extend(wot, { ratingwindow: {
             }
 
             if (rw.state.target) {
+                target = rw.state.target;
                 cached = rw.getcached();
                 is_rated = rw.is_rated(rw.state);
                 changed_votes = rw.cat_difference(is_rated);
                 votes_changed = !wot.utils.isEmptyObject(changed_votes);
 
                 // Whether ratings OR categories were changed?
-                testimonies_changed = (rw.was_in_ratemode && (bgwot.cache.cacheratingstate(rw.state.target, rw.state, changed_votes) || votes_changed));
+                testimonies_changed = (rw.was_in_ratemode && (bgwot.cache.cacheratingstate(target, rw.state, changed_votes) || votes_changed));
 
                 has_comment = (user_comment.length > 0);
 
@@ -225,7 +228,7 @@ $.extend(wot, { ratingwindow: {
 
                 // don't show warning screen immediately after rating and set "expire to" flag
                 var warned_expire = (new Date()).getTime() + wot.expire_warned_after;
-                bgwot.cache.setflags(rw.state.target, {warned: true, warned_expire: warned_expire });
+                bgwot.cache.setflags(target, {warned: true, warned_expire: warned_expire });
 
                 /* submit new ratings */
                 var params = {};
@@ -241,7 +244,7 @@ $.extend(wot, { ratingwindow: {
                     params.votes = rw._make_votes(changed_votes);
                 }
 
-                bgwot.api.submit(rw.state.target, params);
+                bgwot.api.submit(target, params);
 
                 // count testimony event
                 // TODO: add either label or number to count voted categories AND/OR whether ratings were deleted
@@ -250,21 +253,33 @@ $.extend(wot, { ratingwindow: {
 //                bg.console.log("No testimonies & votes to submit them. Ignored.");
             }
 
-            // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
-            if ((comment_changed || votes_changed) && has_up_votes && !unload) {
-                if (has_comment) {
-                    bg.console.log("SUBMIT COMMENT");
-                    bgwot.api.comments.submit(rw.state.target, user_comment, user_comment_id, rw._make_votes(votes));
-                    // TODO: send GA signal about submitting a comment
-                } else {
-                    // remove the comment
-                    bg.console.log("REMOVE COMMENT");
-                    bgwot.api.comments.remove(rw.state.target);
-                    // TODO: send GA signal about removing a comment
-                }
-            }
+            if (unload) {  // RW was closed by browser (not by clicking "Save")
+                bg.console.log("RW triggered finish state during Unload");
 
-            // TODO: Keep the user's comment between sessions if it wasn't saved due to auto-close (important!)
+                if ((comment_changed)) {
+                    bg.console.log("The comment seems to be changed");
+                    // when comment body is changed, we might want to store it locally
+                    bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes);
+                }
+
+            } else { // User clicked Save
+                if ((comment_changed || votes_changed) && has_up_votes) {
+                    // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
+                    if (has_comment) {
+                        bg.console.log("SUBMIT COMMENT");
+                        bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes);
+                        bgwot.api.comments.submit(target, user_comment, user_comment_id, rw._make_votes(votes));
+                        // TODO: send GA signal about submitting a comment
+                    } else {
+                        // remove the comment
+                        bg.console.log("REMOVE COMMENT");
+                        bgwot.keeper.remove_by_name(target);
+                        bgwot.api.comments.remove(target);
+                        // TODO: send GA signal about removing a comment
+                    }
+                }
+
+            }
 
             /* update all views */
             bgwot.core.update(false);   // explicitly told to not update the rating window
@@ -526,14 +541,17 @@ $.extend(wot, { ratingwindow: {
         });
     },
 
-    update_comment: function (cached) {
+    update_comment: function (cached, local_comment) {
         wot.log("update_comment()", cached);
 
         var _rw = wot.ratingwindow,
             _comments = wot.ratingwindow.comments,
-            data = {};
+            data = {},
+            bg = chrome.extension.getBackgroundPage(),
+            is_unsubmitted = false;
 
         _rw.current.cached = cached;    // update current cached state
+        _rw.local_comment = local_comment;  // keep locally stored comment
 
         if (cached && cached.comment) {
             data = cached.comment;
@@ -549,11 +567,33 @@ $.extend(wot, { ratingwindow: {
 
         _comments.is_banned = (error_code == wot.comments.error_codes.IS_BANNED);
 
+        // If there is a locally stored comment, use it if it's newer than server-stored one
+        if (local_comment && !wot.utils.isEmptyObject(local_comment)) {
+
+            // If server-side comment is newer, than drop locally stored one
+            if (local_comment.timestamp && data.timestamp && data.timestamp >= local_comment.timestamp) {
+                // Remove a comment from keeper
+                bg.wot.keeper.remove_comment(local_comment.target);
+                _rw.local_comment = null;
+            } else {
+                data.comment = local_comment.comment;
+                data.timestamp = local_comment.timestamp;
+                data.wcid = data.wcid === undefined ? 0 : data.wcid;
+                is_unsubmitted = true;
+            }
+        }
+
         // check whether comment exists: "comment" should not be empty, and wcid should not be null (but it can be zero)
         if (data && data.comment && data.wcid !== undefined) {
             _comments.posted_comment = data;
             _comments.set_comment(data.comment);
             $("#rated-votes").addClass("commented");
+
+            // switch to commenting mode if we have unfinished comment
+            if (is_unsubmitted) {
+                _rw.modes.comment.activate();
+            }
+
         } else {
             _comments.set_comment("");
             $("#rated-votes").removeClass("commented");
@@ -1049,9 +1089,10 @@ $.extend(wot, { ratingwindow: {
         _rw.count_window_opened();
 
         // shown RatingWindow means that we shown a message => remove notice badge from the button
-        if (bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
-            bg.wot.core.set_badge(false);   // hide badge
-        }
+        // this was commented on 24.06.2013 to avoid concurrent changing of the badge
+//        if (bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
+//            bg.wot.core.set_badge(null, false);   // hide badge
+//        }
 
 //        _rw.modes.auto();
         // DEBUG ONLY:
@@ -1093,7 +1134,8 @@ $.extend(wot, { ratingwindow: {
     on_cancel: function () {
 //        console.log("on_cancel()");
         var _rw = wot.ratingwindow,
-            cached = _rw.getcached();
+            cached = _rw.getcached(),
+            bg = chrome.extension.getBackgroundPage();
 
         // restore previous testimonies
         wot.components.forEach(function(item){
@@ -1108,7 +1150,9 @@ $.extend(wot, { ratingwindow: {
 
         _rw.cat_selector.init_voted(); // restore previous votes
         _rw.rate_control.updateratings(_rw.state);  // restore user's testimonies visually
-        _rw.update_comment(cached); // restore comment
+
+        bg.wot.keeper.remove_comment(_rw.state.target); // remove locally saved comment
+        _rw.update_comment(cached, null); // restore comment to server-side version
 
         _rw.modes.auto();   // switch RW mode according to current state
     },
@@ -1364,6 +1408,7 @@ $.extend(wot, { ratingwindow: {
                 var _rw = wot.ratingwindow;
                 if (!wot.ratingwindow.modes._activate("comment")) return false;
                 // some logic here
+                _rw.comments.update_hint();
                 _rw.comments.update_button("comment", true);
                 _rw.comments.focus();
                 return true;
@@ -1419,10 +1464,16 @@ $.extend(wot, { ratingwindow: {
 
         auto: function () {
             var _rw = wot.ratingwindow;
-            if (_rw.is_rated()) {
-                _rw.modes.rated.activate();
+
+            if (_rw.local_comment && _rw.local_comment.comment) {
+                _rw.modes.comment.activate();
             } else {
-                _rw.modes.unrated.activate();
+                // If no locally saved comment exists, switch modes between Rated / Unrated
+                if (_rw.is_rated()) {
+                    _rw.modes.rated.activate();
+                } else {
+                    _rw.modes.unrated.activate();
+                }
             }
         },
 

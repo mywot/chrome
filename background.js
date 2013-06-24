@@ -100,13 +100,14 @@ $.extend(wot, { core: {
 				if (result != "rx") {
 					if (this.unseenmessage()) {
 						result = "message_" + result;
-					} else if (result != "r0" &&
-								!wot.components.some(function(item) {
-									return (cached.value[item.name] &&
-											cached.value[item.name].t >= 0);
-								})) {
-						result = "new_" + result;
 					}
+//                    else if (result != "r0" &&
+//								!wot.components.some(function(item) {
+//									return (cached.value[item.name] &&
+//											cached.value[item.name].t >= 0);
+//								})) {
+//						result = "new_" + result;   // this adds yellow star on top of the donut
+//					}
 				}
 
 				return result;
@@ -189,27 +190,57 @@ $.extend(wot, { core: {
             var target = wot.url.gethostname(tab.url),
                 cached = wot.cache.get(target);
 
-            _rw.update_comment(cached);
+            // get locally stored comment if exists
+            var local_comment = wot.keeper.get_comment(target);
+            _rw.update_comment(cached, local_comment);
         });
     },
 
 	updatetabstate: function(tab, data, update_rw)
 	{
 		try {
-			if (tab.selected) {
-				/* update the browser action */
-				this.seticon(tab, data);
 
-				/* update the rating window */
+            if (!data.target) return;
+
+            var cached = data.cached || {};
+
+			if (tab.selected) {
+
+				this.seticon(tab, data); /* update the browser action */
+
+//                console.info("Updated ICON", data);
+
+                var local_comment = wot.keeper.get_comment(data.target);
+
+                // First priority: is user's input submitted successfully?
+                if (local_comment && local_comment.comment) {
+                    this.toggle_badge(tab.id, wot.badge_types.unsaved_comment);
+
+                } else {
+
+                    // Second: is the website rated by user?
+                    if (!wot.is_rated(cached) && cached.status == wot.cachestatus.ok) {
+                        this.toggle_badge(tab.id, wot.badge_types.unrated);
+                    } else {
+                        // Third: are categories selected for the website?
+                        if (cached.status == wot.cachestatus.ok && cached.value &&
+                            cached.value.cats && wot.utils.isEmptyObject(wot.select_voted(cached.value.cats))) {
+                            // categories are not selected
+                            this.set_badge(tab.id, wot.badge_types.nocategories);
+
+                        } else {
+                            this.set_badge(tab.id, null);
+                        }
+
+                    }
+                }
+
+
+
+                /* update the rating window */
                 if (update_rw) wot.core.update_ratingwindow(tab, data);
-//				var views = chrome.extension.getViews({});
-//
-//				for (var i in views) {
-//					if (views[i].wot && views[i].wot.ratingwindow) {
-//						views[i].wot.ratingwindow.update(tab, data);
-//					}
-//				}
-			}
+
+            }
 
 			/* update content scripts */
 			var warning_type = this.updatetabwarning(tab, data);
@@ -406,6 +437,8 @@ $.extend(wot, { core: {
 	engage_me: function()
 	{   // this is general entry point to "communication with user" activity. Function is called on every tab switch
 
+        return; // this is so for the beta-version to rewrite utilization of badge feature
+
 		var engage_settings = wot.engage_settings,
 			core = wot.core;
 
@@ -441,7 +474,7 @@ $.extend(wot, { core: {
 
 					// put a badge on the add-on's button
 					if(!core.badge_status) {
-						core.set_badge(wot.badge_types.notice);
+						core.set_badge(null, wot.badge_types.notice);
 					}
 
 				}
@@ -570,8 +603,35 @@ $.extend(wot, { core: {
 		});
 	},
 
-	set_badge: function(type, text)
-	{   /* sets the badge on the BrowserAction icon. If no params are provided, set the "notice" type */
+    toggle_badge: function (tab_id, type, text) {
+        // Makes badge on the donut blink several times
+        var counter = 5,
+            delay = 220,
+            on = true,
+            ticker = null;
+
+        ticker = window.setInterval(function(){
+            if (counter > 0) {
+//                console.log("TICK", counter);
+
+                if (counter % 2 == 0) {
+                    wot.core.set_badge(tab_id, null);
+                } else {
+                    wot.core.set_badge(tab_id, type, text);
+                }
+
+                counter -= 1;
+            } else {
+                if (ticker) {
+                    window.clearInterval(ticker);
+                }
+            }
+        }, delay);
+
+    },
+
+	set_badge: function (tab_id, type, text)
+	{   /* sets the badge on the BrowserAction icon. If no params are provided, clear the badge */
 		var type = type || false,
 			text = text || "", color = "";
 
@@ -579,13 +639,26 @@ $.extend(wot, { core: {
 			type = type || wot.badge_types.notice;
 			text = text || type.text;
 			color = type.color || "#ffffff";
-			chrome.browserAction.setBadgeBackgroundColor({ color: color });
+
+            var obj = {
+                color: color
+            };
+
+            if (tab_id) {
+                obj.tabId = tab_id;
+            }
+
+			chrome.browserAction.setBadgeBackgroundColor(obj);
 			wot.core.badge_status = type;   // remember badge's status to prevent concurrent badges
 		} else {
 			wot.core.badge_status = null;
 		}
 
-		chrome.browserAction.setBadgeText({ text: text });
+		var obj = { text: text };
+        if (tab_id) {
+            obj.tabId = tab_id;
+        }
+        chrome.browserAction.setBadgeText(obj);
 	},
 
 	show_updatepage: function()
