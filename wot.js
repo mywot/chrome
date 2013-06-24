@@ -154,20 +154,41 @@ var wot = {
 		ok:		1,
 		busy:	2,
 		retry:	3,
-		link:	4
+		link:	4,
+        unsubmitted: 5
 	},
 
 	badge_types: {
+        unsaved_comment: {
+            color: [255, 0, 0, 255],
+            text: "?",
+            type: "unsaved_comment",
+            priority: 1
+        },
 		notice: {   // for system notifications
 			color: [240, 0, 0, 255],
 			text: "1",
-			type: "notice"  // important to compare with current status type
+			type: "notice",  // important to compare with current status type
+            priority: 2
 		},
 		message: { // for messages from another users
 			color: [160, 160, 160, 255],
 			text: "",
-			type: "message"
-		}
+			type: "message",
+            priority: 3
+		},
+        unrated: {
+            color: [255, 235, 0, 255],
+            text: "-",
+            type: "unrated",
+            priority: 4
+        },
+        nocategories: {
+            color: [200, 200, 200, 255],
+            text: "?",
+            type: "nocategories",
+            priority: 5
+        }
 	},
 
     comments: {
@@ -845,7 +866,7 @@ var wot = {
         var res = {};
         for (var i in cat_list) {
             var cat = cat_list[i];
-            if (cat.v != 0) res[i] = cat;
+            if (cat.v != 0 && cat.v !== undefined) res[i] = cat;
         }
 
         return res;
@@ -870,7 +891,19 @@ var wot = {
         }
 
         return {};
-	}
+	},
+
+    is_rated: function (cached) {
+
+        if (cached && cached.value) {
+            return wot.components.some(function(item) {
+                return (cached.value[item.name] &&
+                    cached.value[item.name].t >= 0);
+            });
+        }
+
+        return false;
+    }
 };
 
 

@@ -365,6 +365,7 @@
     list-style: none !important;
     padding: 0.25em 0 !important;
     text-align: left !important;
+    background: none !important; /* issue fix */
 }
 
 .cat-item:before {
