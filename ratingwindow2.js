@@ -1381,13 +1381,14 @@ $.extend(wot, { ratingwindow: {
 
                 if (!_rw.modes._activate("rate")) return false;
 
-                if (prev_mode != "comment") {
-                if (!_rw.cat_selector.inited) {
-                    _rw.cat_selector.build();
-                    _rw.cat_selector.init();
-                }
-                _rw.cat_selector.init_voted();
-                _rw.update_catsel_state();  // update the category selector with current state
+                // "Comment" mode can be the first active mode in session, so we have to init things still.
+                if (prev_mode != "comment" || !_rw.cat_selector.inited) {
+                    if (!_rw.cat_selector.inited) {
+                        _rw.cat_selector.build();
+                        _rw.cat_selector.init();
+                    }
+                    _rw.cat_selector.init_voted();
+                    _rw.update_catsel_state();  // update the category selector with current state
                 }
 
                 _rw.update_submit_button();
