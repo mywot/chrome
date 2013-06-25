@@ -101,13 +101,13 @@ $.extend(wot, { core: {
 					if (this.unseenmessage()) {
 						result = "message_" + result;
 					}
-//                    else if (result != "r0" &&
-//								!wot.components.some(function(item) {
-//									return (cached.value[item.name] &&
-//											cached.value[item.name].t >= 0);
-//								})) {
-//						result = "new_" + result;   // this adds yellow star on top of the donut
-//					}
+                    else if (result != "r0" &&
+								!wot.components.some(function(item) {
+									return (cached.value[item.name] &&
+											cached.value[item.name].t >= 0);
+								})) {
+						result = "new_" + result;   // this adds yellow star on top of the donut
+					}
 				}
 
 				return result;
@@ -220,7 +220,8 @@ $.extend(wot, { core: {
 
                     // Second: is the website rated by user?
                     if (!wot.is_rated(cached) && cached.status == wot.cachestatus.ok) {
-                        this.toggle_badge(tab.id, wot.badge_types.unrated);
+                        // turned off intentionally on 25.06.2013 to deploy old style of notification about unrated
+//                        this.toggle_badge(tab.id, wot.badge_types.unrated);
                     } else {
                         // Third: are categories selected for the website?
                         if (cached.status == wot.cachestatus.ok && cached.value &&
