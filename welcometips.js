@@ -125,11 +125,13 @@ $.extend(wot, { wt: {
 			}
 
 			var timesincefirstrun = wot.time_sincefirstrun() || 0,
-				wt_settings = wot.wt.settings;
+				wt_settings = wot.wt.settings,
+                timesince_launch = wot.time_since(wot.core.launch_time);
 
 			if (wt_settings.intro_0_shown < 2 &&
 				!wt_settings.intro_0_ok &&
-				wot.time_since(wot.core.launch_time) <= 10 * wot.DT.MINUTE &&
+                timesince_launch <= 10 * wot.DT.MINUTE &&
+                timesincefirstrun >= 10 * wot.DT.MINUTE &&
 				timesincefirstrun <= 15 * wot.DT.DAY ) {
 
 				// don't show intro tip first time if the user already has experience with WOT longer than 2 days
