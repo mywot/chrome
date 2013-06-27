@@ -118,6 +118,8 @@ $.extend(wot, { wt: {
 
             if (wot.prefs.get("super_wtips")) return true;
 
+            return false;   // Don't show IntroTip at all (temporary decision, will be reviewed later. 27.06.2013)
+
             var locale = wot.i18n("locale");
 			// Mailru only. RU or EN only.
 			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
