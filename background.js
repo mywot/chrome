@@ -213,7 +213,7 @@ $.extend(wot, { core: {
                 var local_comment = wot.keeper.get_comment(data.target);
 
                 // First priority: is user's input submitted successfully?
-                if (local_comment && local_comment.comment) {
+                if (local_comment && local_comment.comment && local_comment.status === wot.keeper.STATUSES.LOCAL) {
                     this.toggle_badge(tab.id, wot.badge_types.unsaved_comment);
 
                 } else {
@@ -232,11 +232,8 @@ $.extend(wot, { core: {
                         } else {
                             this.set_badge(tab.id, null);
                         }
-
                     }
                 }
-
-
 
                 /* update the rating window */
                 if (update_rw) wot.core.update_ratingwindow(tab, data);

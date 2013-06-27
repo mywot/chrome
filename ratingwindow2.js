@@ -259,7 +259,7 @@ $.extend(wot, { ratingwindow: {
                 if ((comment_changed)) {
                     bg.console.log("The comment seems to be changed");
                     // when comment body is changed, we might want to store it locally
-                    bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes);
+                    bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.LOCAL);
                 }
 
             } else { // User clicked Save
@@ -267,7 +267,7 @@ $.extend(wot, { ratingwindow: {
                     // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
                     if (has_comment) {
                         bg.console.log("SUBMIT COMMENT");
-                        bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes);
+                        bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.SUBMITTING);
                         bgwot.api.comments.submit(target, user_comment, user_comment_id, rw._make_votes(votes));
                         // TODO: send GA signal about submitting a comment
                     } else {
@@ -1406,11 +1406,22 @@ $.extend(wot, { ratingwindow: {
             removeclass: "view-mode rated unrated rate thanks",
 
             activate: function () {
-                var _rw = wot.ratingwindow;
+                var _rw = wot.ratingwindow,
+                    prev_mode = _rw.modes.current_mode;
                 if (!wot.ratingwindow.modes._activate("comment")) return false;
-                // some logic here
+
+                // TODO: this piece of code is a duplication. Should be refactored.
+                if (prev_mode == "" || !_rw.cat_selector.inited) {
+                    if (!_rw.cat_selector.inited) {
+                        _rw.cat_selector.build();
+                        _rw.cat_selector.init();
+                    }
+                    _rw.cat_selector.init_voted();
+                }
+
                 _rw.comments.update_hint();
                 _rw.comments.update_button("comment", true);
+                _rw.update_submit_button();
                 _rw.comments.focus();
                 return true;
             }

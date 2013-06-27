@@ -20,6 +20,11 @@
 
 $.extend(wot, { keeper: {
 
+    STATUSES: {
+        LOCAL: 1,
+        SUBMITTING: 2
+    },
+
     /* Comment-specific methods to work with Keeper */
 
     get_comment: function (target) {
@@ -32,22 +37,23 @@ $.extend(wot, { keeper: {
         }
     },
 
-    save_comment: function (target, comment_body, wcid, votes) {
-        console.log("keeper.save_comment()");
+    save_comment: function (target, comment_body, wcid, votes, status) {
+//        console.log("keeper.save_comment()");
 
         var data = {
             timestamp: Date.now(),
             target: target,
             comment: comment_body,
             wcid: wcid,
-            votes: votes    // votes as object to be able to restore them to UI
+            votes: votes,    // votes as object to be able to restore them to UI
+            status: status || wot.keeper.STATUSES.LOCAL
         };
 
         this.store_by_name(target, "comment", data);
     },
 
     remove_comment: function (target) {
-        console.log("keeper.save_comment()");
+//        console.log("keeper.save_comment()");
         this.remove_by_name(target, "comment");
     },
 
@@ -55,18 +61,18 @@ $.extend(wot, { keeper: {
 
     get_by_name: function (target, name) {
         // generic method to get data from local by target and name
-        console.log("keeper.get_by_name()", target, name);
+//        console.log("keeper.get_by_name()", target, name);
 
         return wot.prefs.get(wot.keeper._fullname(target, name)) || null;
     },
 
     store_by_name: function (target, name, data) {
-        console.log("keeper.store_by_name()", target, name, data);
+//        console.log("keeper.store_by_name()", target, name, data);
         wot.prefs.set(wot.keeper._fullname(target, name), data);
     },
 
     remove_by_name: function (target, name) {
-        console.log("keeper.remove_by_name()", target, name);
+//        console.log("keeper.remove_by_name()", target, name);
         wot.prefs.clear(wot.keeper._fullname(target, name));
     },
 
