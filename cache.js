@@ -50,7 +50,6 @@ $.extend(wot, { cache: {
 
             if (!this.cache[name]) {
                 this.cache[name] = {};
-                console.warn("inited the cache obj for ", name);
             }
 
             $.extend(this.cache[name], {
@@ -111,7 +110,7 @@ $.extend(wot, { cache: {
 				}
 			}
 		} catch (e) {
-			console.log("cache.get: failed with ", e);
+			console.log("cache.get: failed with", e);
 		}
 
 		return null;
@@ -126,7 +125,7 @@ $.extend(wot, { cache: {
 				return true;
 			}
 		} catch (e) {
-			console.log("cache.clear: failed with ", e);
+			console.log("cache.clear: failed with", e);
 		}
 
 		return false;
@@ -157,7 +156,7 @@ $.extend(wot, { cache: {
 
 	purge: function()
 	{
-		wot.log("cache.purge\n");
+		wot.log("cache.purge");
 
 		/* clear all expired items by going through them */
 		this.each(function() {});
