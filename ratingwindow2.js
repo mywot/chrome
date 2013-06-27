@@ -273,7 +273,7 @@ $.extend(wot, { ratingwindow: {
                     } else {
                         // remove the comment
                         bg.console.log("REMOVE COMMENT");
-                        bgwot.keeper.remove_by_name(target);
+                        bgwot.keeper.remove_comment(target);
                         bgwot.api.comments.remove(target);
                         // TODO: send GA signal about removing a comment
                     }

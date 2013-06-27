@@ -1091,6 +1091,7 @@ $.extend(wot, { api: {
             switch (error_code) {
                 case wot.comments.error_codes.SUCCESS:
                     wot.cache.remove_comment(target);
+                    wot.keeper.remove_comment(target);
                     wot.prefs.clear(wot.api.comments.PENDING_REMOVAL_SID + target);
                     break;
 
