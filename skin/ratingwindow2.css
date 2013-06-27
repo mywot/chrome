@@ -691,7 +691,7 @@ body {
     position: relative;
     font-size: 11px;
     height: 16px;
-    margin: 5px 48px -6px 2px;
+    margin: 4px 48px -6px 2px;
     color: #919191;
     opacity: 0;
     display: none;
@@ -850,10 +850,10 @@ body {
 .wot-rating-help {
     display: block;
 
-    margin-bottom: -4px;
+    margin-bottom: -6px;
     margin-left: 2px;
     margin-right: 0;
-    margin-top: 5px;
+    margin-top: 4px;
     width: 154px;
     -webkit-transition: opacity 2.5s linear 2s;
 }
@@ -864,7 +864,7 @@ body {
 
 .wot-rating-helptext,
 .wot-rating-helplink {
-    height: 1.2em;
+    height: 16px;
     margin-top: 3px;
     font-size: 11px;
     text-align: left;
@@ -928,7 +928,7 @@ body {
     background-position: -34px 0;
     width: 18px;
     height: 18px;
-    margin: -1px 0 0 0;
+    margin: -2px 0 0 0;
 }
 
 /* Cross inside the "delete" icon */
