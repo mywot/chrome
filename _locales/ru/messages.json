@@ -33,7 +33,7 @@
 		"message": "Безоп-ть детей"
 	},
 	"reputationlevels_r0": {
-		"message": "не известно"
+		"message": "Неизвестно"
 	},
 	"reputationlevels_r1": {
 		"message": "Очень плохо"
@@ -342,5 +342,29 @@
     },
     "activityscore_next": {
         "message": "Продолжайте оценивать, чтобы получить {NEXT_LEVEL} уровень!"
+    },
+    "bl_description": {
+        "message": "По данным сторонних источников этот сайт находится в черном списке"
+    },
+    "bl_information": {
+        "message": "Что это? Узнать подробности"
+    },
+    "bl_malware": {
+        "message": "Вредоносное ПО"
+    },
+    "bl_phishing": {
+        "message": "Фишинг"
+    },
+    "bl_scam": {
+        "message": "Мошенничество"
+    },
+    "bl_spam": {
+        "message": "СПАМ"
+    },
+    "bl_tracking": {
+        "message": "Онлайн слежение"
+    },
+    "bl_other": {
+        "message": "Иные проблемы"
     }
 }

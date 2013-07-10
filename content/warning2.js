@@ -53,8 +53,38 @@ wot.warning = {
 
     },
 
-    make_warning: function (categories, options) {
-		var wot_warning = "<div id='wotcontainer' class='wotcontainer {CLASS} {ACCESSIBLE} notranslate'>" +
+    make_blacklists: function(blacklists, options) {
+
+        var bl = blacklists || [],
+            tmpl = "";
+
+        if (bl && bl.length > 0) {
+            tmpl = "<div class='wot-blacklisting-info'>" +
+                        "<div class='wot-blacklist'>" +
+                            "<div class='wot-bl-decoration'>" +
+                                "<div class='wot-comp-icon wot-bl-decoration-donut' r='{RATING0}'></div>" +
+                            "</div>";
+
+            // the blacklist is unordered. We can order it in later versions by time or by risk level.
+            for (var i = 0, bl_type=""; i < 5; i++) {
+                if (bl.length > i) {
+                    bl_type = wot.i18n("bl", bl[i].type);
+                    bl_type = bl_type ? bl_type : wot.i18n("bl", "other");
+
+                    tmpl += "<div class='wot-bl-verdict'>" + bl_type + "</div>"
+                } else {
+                    tmpl += "<div class='wot-bl-verdict empty'></div>";
+                }
+            }
+
+            tmpl += "</div></div>";
+        }
+
+        return tmpl;
+    },
+
+    make_warning: function (categories, blacklists, options) {
+		var wot_warning = "<div id='wotcontainer' class='wotcontainer {CLASS} {ACCESSIBLE} {BL_OR_REP} notranslate'>" +
             "<div class='wot-logo'></div>" +
             "<div class='wot-warning'>{WARNING}</div>" +
             "<div class='wot-title'>{TITLE}</div>" +
@@ -69,6 +99,9 @@ wot.warning = {
                 "</div>" +
             "</div>" +
             "<div class='wot-desc'>{DESC}</div>" +
+
+            this.make_blacklists(blacklists, options) +
+
             "<div class='wot-rep-components-wrapper'>" +
                 "<div class='wot-rep-components'>" +
                     "<div class='wot-component'>" +
@@ -199,7 +232,7 @@ wot.warning = {
 			our layer... */
 
 		try {
-			if (!data.target || document.getElementById("wotwarning")) {
+			if (!data.target || !data.cached || document.getElementById("wotwarning")) {
 				return;
 			}
 
@@ -210,9 +243,13 @@ wot.warning = {
 
 			this.target = data.target;
 
-            var normalized_target = (data.cached && data.cached.value &&
+            var normalized_target = (data.cached.value &&
                 data.cached.value.normalized) ? data.cached.value.normalized : data.decodedtarget;
 
+            var blacklists = (data.cached.value && data.cached.value.blacklist) ? data.cached.value.blacklist : [];
+//            blacklists = ["malware", "phishing","shit", "scam", "spam", "spam"];
+
+            var is_blacklisted = blacklists && blacklists.length > 0;
 
             // preprocess link "Rate the site"
 			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
@@ -221,9 +258,12 @@ wot.warning = {
 
 			var replaces = [
 				{
-				from: "WARNING",
-				to: wot.i18n("warnings", "warning")
-			},			{
+				    from: "WARNING",
+				    to: wot.i18n("warnings", "warning")
+			    }, {
+                    from: "BL_OR_REP",
+                    to: is_blacklisted ? "blacklist": "reputation"
+                }, {
 					from: "TITLE",
 					to: (normalized_target || "").replace(/[<>&="']/g, "")
 				}, {
@@ -231,7 +271,7 @@ wot.warning = {
 					to: wot.i18n("lang")
 				}, {
 					from: "INFO",
-					to: wot.i18n("warnings", "information")
+					to: is_blacklisted ? wot.i18n("bl", "information") : wot.i18n("warnings", "information")
 				}, {
 					from: "RATETEXT",
 					to: rate_site
@@ -296,25 +336,35 @@ wot.warning = {
 				warnclass = "wotnoratings";
 			}
 
-			if (reason == wot.warningreasons.reputation) {
-				replaces.push({ from: "CLASS", to: warnclass });
-				replaces.push({
-					from: "DESC",
-					to: wot.i18n("warnings", "reputation")
-				});
-			} else if (reason == wot.warningreasons.rating) {
-				replaces.push({ from: "CLASS", to: "wotnoratings" });
-				replaces.push({
-					from: "DESC",
-					to: wot.i18n("warnings", "rating")
-				});
-			} else {
-				replaces.push({ from: "CLASS", to: warnclass });
-				replaces.push({
-					from: "DESC",
-					to: wot.i18n("warnings", "unknown")
-				});
-			}
+            if (is_blacklisted) { // If warning should show Blacklisted status
+                replaces.push({ from: "CLASS", to: warnclass });
+                replaces.push({
+                    from: "DESC",
+                    to: wot.i18n("bl", "description")
+                });
+
+            } else { // if Warning should show reputation reason
+
+                if (reason == wot.warningreasons.reputation) {
+                    replaces.push({ from: "CLASS", to: warnclass });
+                    replaces.push({
+                        from: "DESC",
+                        to: wot.i18n("warnings", "reputation")
+                    });
+                } else if (reason == wot.warningreasons.rating) {
+                    replaces.push({ from: "CLASS", to: "wotnoratings" });
+                    replaces.push({
+                        from: "DESC",
+                        to: wot.i18n("warnings", "rating")
+                    });
+                } else {
+                    replaces.push({ from: "CLASS", to: warnclass });
+                    replaces.push({
+                        from: "DESC",
+                        to: wot.i18n("warnings", "unknown")
+                    });
+                }
+            }
 
 			var body = document.getElementsByTagName("body");
 
@@ -352,7 +402,7 @@ wot.warning = {
 					this.settings.warning_opacity + " ! important;");
 			}
 
-            var _cats = (data && data.cached && data.cached.value && data.cached.value.cats) ? data.cached.value.cats : {},
+            var _cats = (data.cached.value && data.cached.value.cats) ? data.cached.value.cats : {},
                 categories = wot.select_identified(_cats);
 
 			wrapper.setAttribute("id", "wotwrapper");
@@ -360,7 +410,7 @@ wot.warning = {
 			warning = body[0].appendChild(warning);
 			wrapper = body[0].appendChild(wrapper);
 
-			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(categories, {}), replaces);
+			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(categories, blacklists, {}), replaces);
 			this.hideobjects(true);
 
 			wot.post("warnings", "shown", { type: "overlay", target: data.decodedtarget });   // for counting in stats

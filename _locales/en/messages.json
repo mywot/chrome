@@ -342,5 +342,29 @@
     },
     "activityscore_next": {
         "message": "Keep on rating and commenting to reach {NEXT_LEVEL} level!"
+    },
+    "bl_description": {
+        "message": "This website appears on the third party blacklist"
+    },
+    "bl_information": {
+        "message": "What does it mean? Read details"
+    },
+    "bl_malware": {
+        "message": "Malware"
+    },
+    "bl_phishing": {
+        "message": "Phishing"
+    },
+    "bl_scam": {
+        "message": "Scam"
+    },
+    "bl_spam": {
+        "message": "SPAM"
+    },
+    "bl_tracking": {
+        "message": "Tracking"
+    },
+    "bl_other": {
+        "message": "Other reason"
     }
 }

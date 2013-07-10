@@ -236,7 +236,8 @@ $.extend(wot, { cache: {
 
 				var obj = {
 					target: hosts[index || 0],
-                    cats: {}
+                    cats: {},
+                    blacklist: []
 				};
 
 				if (!obj.target) {
@@ -292,6 +293,19 @@ $.extend(wot, { cache: {
                             c: $.isNumeric(c) ? parseInt(c) : 0,
                             v: $.isNumeric(vote) ? parseInt(vote) : undefined
                         };
+                    }
+                });
+
+                // parse blacklisting info
+                $("bl", this).each(function() {
+                    var type = $(this).attr("type"),
+                        time = $(this).attr("time");
+
+                    if (type) {
+                        obj.blacklist.push({
+                            type: type,
+                            time: time
+                        });
                     }
                 });
 

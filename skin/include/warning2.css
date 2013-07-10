@@ -110,7 +110,7 @@
 }
 
 .wot-title  {
-    margin-top: 4px !important;
+    margin: 4px auto !important;
     max-width: 90% !important;
     font-size: 12px !important;
     font-weight: bold !important;
@@ -146,6 +146,11 @@
     background-color: #F5F5F5 !important;
     border-top: 1px solid #D1D1D1 !important;
     border-bottom: 1px solid #D1D1D1 !important;
+}
+
+#wotcontainer.blacklist .wot-rep-components-wrapper {
+    /* don't show reputation area in blacklist mode */
+    display: none;
 }
 
 .wot-rep-components {
@@ -347,6 +352,11 @@
     padding: 0.4em 0 0 !important;
 }
 
+#wotcontainer.blacklist .ws-categories-area {
+    /* don't show it in blacklist mode */
+    display: none;
+}
+
 .ws-categories-title {
     font-size: 12px !important;
     font-weight: bold !important;
@@ -477,6 +487,12 @@
     margin-top: 14px !important;
     text-align: left !important;
     margin-left: 52px !important;
+}
+
+#wotcontainer.blacklist .wot-openscorecard-wrap {
+    /* in blacklist mode, align by center */
+    margin-left: 0 !important;
+    text-align: center !important;
 }
 
 #wotinfobutton,
@@ -684,4 +700,84 @@
 
 .wot-checkbox {
 
+}
+
+.wot-blacklisting-info {
+    display: none;
+    /*min-width: 150px !important;*/
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    margin-top: 66px !important;
+}
+
+#wotcontainer.blacklist .wot-blacklisting-info {
+    display: block;
+}
+
+#wotcontainer.blacklist .wot-openscorecard-wrap {
+    margin-top: 4px !important;
+}
+
+.wot-bl-decoration {
+    position: relative !important;
+    background: url(../b/ws/robot.png) no-repeat;
+    background-size: auto 72px;
+    height: 72px !important;
+    margin-left: -52px !important;
+    width: 96px !important;
+    margin-top: -68px !important;
+}
+
+.wot-bl-decoration-donut {
+    left: 86px;
+    top: 0;
+    height: 27px !important;
+}
+
+.wot-blacklist {
+    background: transparent !important;
+    background: url(../b/ws/list_c.png) repeat-x !important;
+    display: inline-block !important;
+    padding-top: 18px !important;
+    background-size: 1px 164px !important;
+    height: 154px !important;
+    position: relative !important;
+}
+
+.wot-blacklist:before {
+    content: "";
+    background: url("../b/ws/list_l.png") no-repeat !important;
+    background-size: 36px auto !important;
+    width: 36px !important;
+    height: 164px !important;
+    position: absolute !important;
+    left: -36px !important;
+    top: 0 !important;
+}
+
+.wot-blacklist:after {
+    content: "";
+    background: url("../b/ws/list_r.png") no-repeat !important;
+    background-size: auto 164px !important;
+    width: 30px !important;
+    height: 164px !important;
+    position: absolute !important;
+    right: -30px !important;
+    top: 0 !important;
+}
+
+.wot-bl-verdict {
+    margin: 4px 2px !important;
+    padding: 2px 10px !important;
+    color: #FFF !important;
+    text-align: left !important;
+    font-family: sans-serif !important;
+}
+
+.wot-bl-verdict.empty {
+    min-width: 50px !important;
+    background-color: #606060 !important;
+    padding: 2px 0 3px !important;
+    margin: 14px 8px 10px 12px !important;
+    content: "";
 }
