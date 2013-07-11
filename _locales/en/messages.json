@@ -344,8 +344,11 @@
         "message": "Keep on rating and commenting to reach {NEXT_LEVEL} level!"
     },
     "bl_description": {
-        "message": "This website appears on the third party blacklist"
+        "message": "This website appears on third party blacklist"
     },
+    "bl_description_pl": {
+        "message": "This website appears on third party blacklists"
+	},
     "bl_information": {
         "message": "What does it mean? Read details"
     },

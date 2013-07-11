@@ -338,9 +338,11 @@ wot.warning = {
 
             if (is_blacklisted) { // If warning should show Blacklisted status
                 replaces.push({ from: "CLASS", to: warnclass });
+
+                var bl_description = blacklists.length == 1 ? wot.i18n("bl", "description") : wot.i18n("bl", "description_pl");
                 replaces.push({
                     from: "DESC",
-                    to: wot.i18n("bl", "description")
+                    to: bl_description
                 });
 
             } else { // if Warning should show reputation reason
