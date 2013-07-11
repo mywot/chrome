@@ -512,7 +512,8 @@
 }
 
 .wot-rateit-wrap {
-    margin-top: 20px !important;
+    margin: 14px auto 0 !important;
+    width: 80% !important;
 }
 .wot-rateit-wrap span {
     font-size: 12px !important;
