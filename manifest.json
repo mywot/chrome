@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "2.0.13",
+	"version": "2.0.13.1",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -147,7 +147,7 @@
 				"wot.js",
 				"content/common.js",
 				"content/my.js",
-				"content/settings.js"
+				"content/settings2.js"
 			],
 			"run_at": "document_start",
 			"all_frames": true 

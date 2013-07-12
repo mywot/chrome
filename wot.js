@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20130711,
+	version: 20130712,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -27,7 +27,7 @@ var wot = {
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
-	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
