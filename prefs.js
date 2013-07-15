@@ -61,7 +61,11 @@ $.extend(wot, { prefs: {
         show_fulllist:          false,  // Whether to show full list of categories on rating window selector
         super_wtips:            false,  // "super" settings for debug purpose: "Show welcome tips always"
         super_fbl:              false,   // "super" settings for debug purpose: "Show FBL always if question is available"
-        super_showtestimonies:  false
+        super_showtestimonies:  false,
+
+        settingsui_warnlevel:   "normal",   // this is should not be considered by the add-on. Only to render prefs on the settings page
+        settingsui_parental:    false,
+        settingsui_searchlevel: "normal"
     },
 
 	set: function(name, value)
