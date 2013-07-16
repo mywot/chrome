@@ -31,6 +31,11 @@ $.extend(wot, { ratingwindow: {
     delete_action: false,   // remembers whether user is deleting rating
     prefs: {},  // shortcut for background preferences
 
+    get_bg: function () {
+        // just a shortcut
+        return chrome.extension.getBackgroundPage();
+    },
+
     is_rated: function (state) {
         var ratings = wot.ratingwindow.getcached().value,
             is_rated = false;
@@ -168,9 +173,10 @@ $.extend(wot, { ratingwindow: {
 
     finishstate: function(unload)
     {
+        var rw = wot.ratingwindow,
+            bg = rw.get_bg();
+
         try {
-            var rw = wot.ratingwindow;
-            var bg = chrome.extension.getBackgroundPage();
             var bgwot = bg.wot, // shortage for perfomance and readability
                 target = "",
                 is_rated = false,
@@ -254,10 +260,10 @@ $.extend(wot, { ratingwindow: {
             }
 
             if (unload) {  // RW was closed by browser (not by clicking "Save")
-                bg.console.log("RW triggered finish state during Unload");
+//                bg.console.log("RW triggered finish state during Unload");
 
                 if ((comment_changed)) {
-                    bg.console.log("The comment seems to be changed");
+//                    bg.console.log("The comment seems to be changed");
                     // when comment body is changed, we might want to store it locally
                     bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.LOCAL);
                 }
@@ -266,25 +272,33 @@ $.extend(wot, { ratingwindow: {
                 if ((comment_changed || votes_changed) && has_up_votes) {
                     // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
                     if (has_comment) {
-                        bg.console.log("SUBMIT COMMENT");
-                        bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.SUBMITTING);
-                        bgwot.api.comments.submit(target, user_comment, user_comment_id, rw._make_votes(votes));
-                        // TODO: send GA signal about submitting a comment
+//                        bg.console.log("SUBMIT COMMENT");
+
+                        // If user can't leave a comment for a reason, accept the comment locally, otherwise submit it silently
+                        var keeper_status = (rw.allow_commenting && rw.is_registered) ? wot.keeper.STATUSES.SUBMITTING : wot.keeper.STATUSES.LOCAL;
+                        bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, keeper_status);
+
+                        if (rw.allow_commenting && rw.is_registered) {
+                            // TODO: send GA signal about submitting a comment
+                            bgwot.api.comments.submit(target, user_comment, user_comment_id, rw._make_votes(votes));
+                        }
+
                     } else {
                         // remove the comment
-                        bg.console.log("REMOVE COMMENT");
+//                        bg.console.log("REMOVE COMMENT");
                         bgwot.keeper.remove_comment(target);
-                        bgwot.api.comments.remove(target);
-                        // TODO: send GA signal about removing a comment
+                        if (rw.is_registered) {
+                            bgwot.api.comments.remove(target);
+                            // TODO: send GA signal about removing a comment
+                        }
                     }
                 }
-
             }
 
             /* update all views */
             bgwot.core.update(false);   // explicitly told to not update the rating window
         } catch (e) {
-            console.log("ratingwindow.finishstate: failed with ", e);
+            bg.console.log("ratingwindow.finishstate: failed with ", e);
         }
     },
 
@@ -529,6 +543,9 @@ $.extend(wot, { ratingwindow: {
                         if (_rw.is_registered) {
                             // ask server if there is my comment for the website
                             _rw.comments.get_comment(data.target);
+                        } else {
+                            var bg = chrome.extension.getBackgroundPage();
+                            bg.wot.core.update_ratingwindow_comment(); // don't allow unregistered addons to comment
                         }
 
                         _rw.modes.reset();
@@ -1118,17 +1135,20 @@ $.extend(wot, { ratingwindow: {
 
     on_delete_button: function () {
 //        console.log("on_delete_button()");
-        var _rw = wot.ratingwindow;
+        var _rw = wot.ratingwindow,
+            bg = _rw.get_bg();
 
         wot.components.forEach(function(item){
             _rw.delete_testimony(item.name);
         });
 
+        bg.wot.keeper.remove_comment(_rw.state.target);
         _rw.comments.set_comment("");   // clear the comment
+        _rw.local_comment = null;
+        _rw.comments.update_hint();
 
         wot.ratingwindow.finishstate(false);
         _rw.modes.auto();   // switch RW mode according to current state
-
     },
 
     on_cancel: function () {
@@ -1419,6 +1439,7 @@ $.extend(wot, { ratingwindow: {
                     _rw.cat_selector.init_voted();
                 }
 
+                _rw.was_in_ratemode = true; // since in comment mode user is able to change rating, we should set the flag
                 _rw.comments.update_hint();
                 _rw.comments.update_button("comment", true);
                 _rw.update_submit_button();
