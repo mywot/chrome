@@ -115,6 +115,7 @@ var wot = {
 		scorecard:	"http://beta.mywot.com/scorecard/",
 		settings:	"http://beta.mywot.com/settings",
 		profile:	"http://beta.mywot.com/user",
+        signup:     "https://beta.mywot.com/signup",
 		welcome:	"http://beta.mywot.com/settings/welcome",
 		setcookies:	"http://beta.mywot.com/setcookies.php",
 		setcookies2: "http://www.mywot.com/setcookies.php", // TODO: remove when Beta is finished
@@ -132,6 +133,7 @@ var wot = {
 			rwviewsc:   "rw-viewsc",
 			rwprofile:  "rw-profile",
 			rwmsg:      "rw-msg",
+			rwcommreg:  "rw-commreg",
 			warnviewsc: "warn-viewsc",
 			warnrate:   "warn-rate",
 			popupviewsc: "popup",

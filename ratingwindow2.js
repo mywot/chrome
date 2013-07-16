@@ -612,19 +612,27 @@ $.extend(wot, { ratingwindow: {
             }
 
         } else {
+            bg.console.log("no comment to show");
+
             _comments.set_comment("");
             $("#rated-votes").removeClass("commented");
             _comments.posted_comment = {};
         }
 
         // change appearance of commenting area regarding to permissions
-//        if (_comments.allow_commenting) {
-//
-//        } else {
-//
-//        }
+        if (!_rw.is_registered) {
+            // show the invitation to create an account
+            _rw.comments.show_register_invitation();
 
-        _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting);
+        } else {
+            if (_rw.comments.is_banned) {
+                // this is considered below
+            } else if (error_code == wot.comments.error_codes.COMMENT_NOT_ALLOWED) { // FIXME: to captcha
+
+            }
+        }
+
+        _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting && !_comments.is_banned);
     },
 
     hide: function()
@@ -681,78 +689,34 @@ $.extend(wot, { ratingwindow: {
             $("#wot-rating-" + n + "-boundright").text(wot.i18n("testimony", item.name + "_levels_" + wot.getlevel(wot.reputationlevels, 100).name));
         });
 
-        [	{	selector: "#myrating-header",
-                text: wot.i18n("ratingwindow", "myrating")
-            }, {
-                selector: "#wot-header-link-guide",
-                text: wot.i18n("ratingwindow", "guide")
-            }, {
-                selector: "#wot-header-link-forum",
-                text: wot.i18n("ratingwindow", "forum")
-            }, {
-                selector: "#wot-header-link-settings",
-                text: wot.i18n("ratingwindow", "settings")
-            }, {
-                selector: "#wot-header-link-profile",
-                text: wot.i18n("ratingwindow", "profile")
-            }, {
-                selector: "#wot-title-text",
-                text: wot.i18n("messages", "initializing")
-            }, {
-                selector: "#wot-rating-header-wot",
-                text: wot.i18n("ratingwindow", "wotrating")
-            }, {
-                selector: "#wot-rating-header-my",
-                text: wot.i18n("ratingwindow", "myrating")
-            }, {
-                selector: "#wot-scorecard-visit",
-                text: wot.i18n("ratingwindow", "viewscorecard")
-            }, {
-                selector: "#wot-scorecard-comment",
-                text: wot.i18n("ratingwindow", "addcomment")
-            }, {
-                selector: "#wot-partner-text",
-                text: wot.i18n("ratingwindow", "inpartnership")
-            }, {
-                selector: ".wt-rw-header-text",
-                html: wot.i18n("wt", "rw_text_hdr")
-            }, {
-                selector: ".wt-rw-body",
-                html: wot.i18n("wt", "rw_text")
-            }, {
-                selector: "#wt-rw-btn-ok",
-                text: wot.i18n("wt", "rw_ok")
-            }, {
-                selector: ".btn-delete_label",
-                text: wot.i18n("buttons", "delete")
-            }, {
-                selector: "#btn-delete",
-                title: wot.i18n("buttons", "delete_title")
-            }, {
-                selector: "#btn-cancel",
-                text: wot.i18n("buttons", "cancel")
-            }, {
-                selector: "#btn-submit",
-                text: wot.i18n("buttons", "save")
-            }, {
-                selector: "#btn-thanks-ok",
-                text: wot.i18n("buttons", "ok")
-            }, {
-                selector: ".category-title",
-                text: wot.i18n("ratingwindow", "categories")
-            }, {
-                selector: "#change-ratings",
-                text: wot.i18n("ratingwindow", "rerate_change")
-            }, {
-                selector: ".comment-title",
-                text: wot.i18n("ratingwindow", "comment")
-            }, {
-                selector: "#comment-side-hint",
-                html: wot.i18n("ratingwindow", "commenthints")
-            }, {
-                selector: ".thanks-text",
-                text: wot.i18n("ratingwindow", "thankyou")
-            }
+        [
+            { selector: "#myrating-header",         text: wot.i18n("ratingwindow", "myrating") },
+            { selector: "#wot-header-link-guide",   text: wot.i18n("ratingwindow", "guide") },
+            { selector: "#wot-header-link-forum",   text: wot.i18n("ratingwindow", "forum") },
+            { selector: "#wot-header-link-settings",text: wot.i18n("ratingwindow", "settings") },
+            { selector: "#wot-header-link-profile", text: wot.i18n("ratingwindow", "profile") },
+            { selector: "#wot-title-text",          text: wot.i18n("messages", "initializing") },
+            { selector: "#wot-rating-header-wot",   text: wot.i18n("ratingwindow", "wotrating") },
+            { selector: "#wot-rating-header-my",    text: wot.i18n("ratingwindow", "myrating") },
+            { selector: "#wot-scorecard-visit",     text: wot.i18n("ratingwindow", "viewscorecard") },
+            { selector: "#wot-scorecard-comment",   text: wot.i18n("ratingwindow", "addcomment") },
+            { selector: "#wot-partner-text",        text: wot.i18n("ratingwindow", "inpartnership") },
+            { selector: ".wt-rw-header-text",       html: wot.i18n("wt", "rw_text_hdr") },
+            { selector: ".wt-rw-body",              html: wot.i18n("wt", "rw_text") },
+            { selector: "#wt-rw-btn-ok",            text: wot.i18n("wt", "rw_ok") },
+            { selector: ".btn-delete_label",        text: wot.i18n("buttons", "delete") },
+            { selector: "#btn-delete",              title: wot.i18n("buttons", "delete_title") },
+            { selector: "#btn-cancel",              text: wot.i18n("buttons", "cancel") },
+            { selector: "#btn-submit",              text: wot.i18n("buttons", "save") },
+            { selector: "#btn-thanks-ok",           text: wot.i18n("buttons", "ok") },
+            { selector: ".category-title",          text: wot.i18n("ratingwindow", "categories") },
+            { selector: "#change-ratings",          text: wot.i18n("ratingwindow", "rerate_change") },
+            { selector: ".comment-title",           text: wot.i18n("ratingwindow", "comment") },
+            { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
+            { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
+            { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
+            { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") }
+
         ].forEach(function(item) {
                 var $elem = $(item.selector);
                 if (item.text) {
@@ -1037,6 +1001,11 @@ $.extend(wot, { ratingwindow: {
         $("#btn-cancel").bind("click", _rw.on_cancel);
         $("#btn-delete").bind("click", _rw.on_delete_button);
         $("#change-ratings, #voted-categories-content").bind("click", _rw.on_change_ratings);
+
+
+        $("#comment-register-link").bind("click", function() {
+            wot.ratingwindow.navigate(wurls.signup, wurls.contexts.rwcommreg);
+        });
 
         $(window).unload(wot.ratingwindow.on_unload);
 
@@ -2053,6 +2022,11 @@ $.extend(wot, { ratingwindow: {
 
         focus: function () {
             $("#user-comment").focus();
+        },
+
+        show_register_invitation: function () {
+            $("#comment-side-hint").hide();
+            $("#comment-register").show();
         }
     }
 

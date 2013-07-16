@@ -229,6 +229,9 @@
     "ratingwindow_comment": {
         "message": "Расскажите о вашем опыте с этим сайтом"
     },
+    "ratingwindow_comment_register": {
+        "message": "Создать аккаунт"
+    },
     "ratingwindow_commenthints": {
         "message": "<p>Будьте точны</p><p>Излагайте факты</p><p>Избегайте оскорбительных фраз</p><p>Не рекламируйте другие сайты</p>"
     },

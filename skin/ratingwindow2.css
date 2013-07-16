@@ -1726,7 +1726,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 #comment-side-hint {
     padding: 10px 0 0 0;
     float: left;
-    width: 135px;
+    width: 130px;
 }
 
 #comment-side-hint p {
@@ -1734,6 +1734,27 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     margin: 0 0 8px;
     font-size: 11px;
     color: #666;
+}
+
+#comment-register {
+    display: none;
+    padding: 10px;
+    float: left;
+    width: 115px;
+    font-size: 12px;
+    border: 1px solid #FC4B56;
+    border-radius: 10px;
+    background-color: #FFEAEA;
+}
+
+#comment-register-link {
+    color: #3073c5;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#comment-register-link:hover {
+    text-decoration: underline;
 }
 
 #comment-bottom-hint {

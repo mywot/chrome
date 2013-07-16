@@ -229,6 +229,12 @@
     "ratingwindow_comment": {
         "message": "Leave a comment to describe your experience with this site"
     },
+    "ratingwindow_comment_regtext": {
+        "message": "You need an account to publish your comment."
+    },
+    "ratingwindow_comment_register": {
+        "message": "Create an account now"
+    },
     "ratingwindow_commenthints": {
         "message": "<p>Be precise</p><p>Give evidence or example</p><p>Comment according to your real experiences</p><p>Do not spam</p>"
     },
