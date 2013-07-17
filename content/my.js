@@ -19,8 +19,8 @@
 */
 
 wot.my = {
-	oncontentloaded: function()
-	{
+	oncontentloaded: function() {
+        // clears cache for the target host when mywot website tells about saved rating
 		try {
 			var clear = document.getElementById("wotsaverating");
 

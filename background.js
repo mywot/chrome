@@ -60,6 +60,7 @@ $.extend(wot, { core: {
 	updatetab: function(id, update_rw)
 	{
 		chrome.tabs.get(id, function(tab) {
+            if (!tab) return;
 			wot.log("core.updatetab: " + id + " = " + tab.url);
 
 			if (wot.api.isregistered()) {
