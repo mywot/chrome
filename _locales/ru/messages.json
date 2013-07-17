@@ -229,6 +229,9 @@
     "ratingwindow_comment": {
         "message": "Расскажите о вашем опыте с этим сайтом"
     },
+    "ratingwindow_comment_placeholder": {
+        "message": " "
+    },
     "ratingwindow_comment_regtext": {
         "message": "Чтобы публиковать комментарии, вам нужен аккаунт."
     },

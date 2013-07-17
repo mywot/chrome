@@ -229,6 +229,9 @@
     "ratingwindow_comment": {
         "message": "Leave a comment to describe your experience with this site"
     },
+    "ratingwindow_comment_placeholder": {
+        "message": "write your comment here..."
+    },
     "ratingwindow_comment_regtext": {
         "message": "You need an account to publish your comment."
     },

@@ -717,6 +717,7 @@ $.extend(wot, { ratingwindow: {
             { selector: ".category-title",          text: wot.i18n("ratingwindow", "categories") },
             { selector: "#change-ratings",          text: wot.i18n("ratingwindow", "rerate_change") },
             { selector: ".comment-title",           text: wot.i18n("ratingwindow", "comment") },
+            { selector: "#user-comment",            placeholder: wot.i18n("ratingwindow", "comment_placeholder") },
             { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
@@ -732,6 +733,8 @@ $.extend(wot, { ratingwindow: {
                     $elem.html(item.html);
                 } else if (item.title) {
                     $elem.attr("title", item.title);
+                } else if (item.placeholder) {
+                    $elem.attr("placeholder", item.placeholder);
                 }
             });
     },
