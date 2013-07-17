@@ -93,7 +93,7 @@
 		"message": "Изменить комментарий"
 	},
 	"ratingwindow_backtoratings": {
-		"message": "Вернуться к оцениванию"
+		"message": "Назад к оцениванию"
 	},
     "ratingwindow_backtoratings_category": {
         "message": "Выбрать причину"
@@ -229,8 +229,17 @@
     "ratingwindow_comment": {
         "message": "Расскажите о вашем опыте с этим сайтом"
     },
+    "ratingwindow_comment_regtext": {
+        "message": "Чтобы публиковать комментарии, вам нужен аккаунт."
+    },
     "ratingwindow_comment_register": {
         "message": "Создать аккаунт"
+    },
+    "ratingwindow_comment_captchatext": {
+        "message": "Введите защитный код в оценочной карте, чтобы опубликовать комментарий"
+    },
+    "ratingwindow_comment_captcha": {
+        "message": "Открыть оценочную карту"
     },
     "ratingwindow_commenthints": {
         "message": "<p>Будьте точны</p><p>Излагайте факты</p><p>Избегайте оскорбительных фраз</p><p>Не рекламируйте другие сайты</p>"

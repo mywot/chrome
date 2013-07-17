@@ -134,6 +134,7 @@ var wot = {
 			rwprofile:  "rw-profile",
 			rwmsg:      "rw-msg",
 			rwcommreg:  "rw-commreg",
+			rwcaptcha:  "rw-captcha",
 			warnviewsc: "warn-viewsc",
 			warnrate:   "warn-rate",
 			popupviewsc: "popup",

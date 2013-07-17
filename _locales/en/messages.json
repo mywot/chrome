@@ -235,6 +235,12 @@
     "ratingwindow_comment_register": {
         "message": "Create an account now"
     },
+    "ratingwindow_comment_captchatext": {
+        "message": "You need to enter captcha on the scorecard to publish your comment."
+    },
+    "ratingwindow_comment_captchalink": {
+        "message": "Open scorecard now"
+    },
     "ratingwindow_commenthints": {
         "message": "<p>Be precise</p><p>Give evidence or example</p><p>Comment according to your real experiences</p><p>Do not spam</p>"
     },

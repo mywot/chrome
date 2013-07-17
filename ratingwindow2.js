@@ -275,21 +275,23 @@ $.extend(wot, { ratingwindow: {
 //                        bg.console.log("SUBMIT COMMENT");
 
                         // If user can't leave a comment for a reason, accept the comment locally, otherwise submit it silently
-                        var keeper_status = (rw.allow_commenting && rw.is_registered) ? wot.keeper.STATUSES.SUBMITTING : wot.keeper.STATUSES.LOCAL;
+                        var keeper_status = (rw.comments.allow_commenting && rw.is_registered) ? wot.keeper.STATUSES.SUBMITTING : wot.keeper.STATUSES.LOCAL;
                         bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, keeper_status);
 
-                        if (rw.allow_commenting && rw.is_registered) {
+                        if (rw.comments.allow_commenting && rw.is_registered) {
                             // TODO: send GA signal about submitting a comment
                             bgwot.api.comments.submit(target, user_comment, user_comment_id, rw._make_votes(votes));
                         }
 
                     } else {
-                        // remove the comment
+                        if (comment_changed) {
+                            // remove the comment
 //                        bg.console.log("REMOVE COMMENT");
-                        bgwot.keeper.remove_comment(target);
-                        if (rw.is_registered) {
-                            bgwot.api.comments.remove(target);
-                            // TODO: send GA signal about removing a comment
+                            bgwot.keeper.remove_comment(target);
+                            if (rw.is_registered) {
+                                bgwot.api.comments.remove(target);
+                                // TODO: send GA signal about removing a comment
+                            }
                         }
                     }
                 }
@@ -304,10 +306,11 @@ $.extend(wot, { ratingwindow: {
 
     /* helpers */
 
-    navigate: function(url, context, keep_opened)
+    navigate: function(url, context, fragment, keep_opened)
     {
         try {
-            var contextedurl = wot.contextedurl(url, context);
+            fragment = fragment ? "#" + fragment : "";
+            var contextedurl = wot.contextedurl(url, context) + fragment;
             chrome.tabs.create({ url: contextedurl, active:!keep_opened },
                 function(tab) {
                     if (!keep_opened) wot.ratingwindow.hide();
@@ -558,7 +561,7 @@ $.extend(wot, { ratingwindow: {
         });
     },
 
-    update_comment: function (cached, local_comment) {
+    update_comment: function (cached, local_comment, captcha_required) {
         wot.log("update_comment()", cached);
 
         var _rw = wot.ratingwindow,
@@ -572,6 +575,7 @@ $.extend(wot, { ratingwindow: {
 
         if (cached && cached.comment) {
             data = cached.comment;
+            _rw.comments.captcha_required = captcha_required || false;
         }
 
         var error_code = data.error_code || 0;
@@ -612,7 +616,7 @@ $.extend(wot, { ratingwindow: {
             }
 
         } else {
-            bg.console.log("no comment to show");
+//            bg.console.log("no comment to show");
 
             _comments.set_comment("");
             $("#rated-votes").removeClass("commented");
@@ -625,10 +629,11 @@ $.extend(wot, { ratingwindow: {
             _rw.comments.show_register_invitation();
 
         } else {
-            if (_rw.comments.is_banned) {
-                // this is considered below
-            } else if (error_code == wot.comments.error_codes.COMMENT_NOT_ALLOWED) { // FIXME: to captcha
+            if (_rw.comments.captcha_required) {
+                _rw.comments.show_captcha_invitation();
 
+            } else if (_rw.comments.is_banned) {
+                // this is considered below
             }
         }
 
@@ -715,7 +720,9 @@ $.extend(wot, { ratingwindow: {
             { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
-            { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") }
+            { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
+            { selector: "#comment-captcha-text",   text: wot.i18n("ratingwindow", "comment_captchatext") },
+            { selector: "#comment-captcha-link",   text: wot.i18n("ratingwindow", "comment_captchalink") }
 
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -1007,6 +1014,14 @@ $.extend(wot, { ratingwindow: {
             wot.ratingwindow.navigate(wurls.signup, wurls.contexts.rwcommreg);
         });
 
+        $("#comment-captcha-link").bind("click", function() {
+            if (wot.ratingwindow.current.target) {
+                wot.ratingwindow.navigate(wot.urls.scorecard +
+                    encodeURIComponent(wot.ratingwindow.current.target + "/rate"),
+                    wurls.contexts.rwcaptcha, "rate");
+            }
+        });
+
         $(window).unload(wot.ratingwindow.on_unload);
 
         _rw.rate_control.init(); // init handlers of rating controls
@@ -1079,10 +1094,6 @@ $.extend(wot, { ratingwindow: {
 //        if (bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
 //            bg.wot.core.set_badge(null, false);   // hide badge
 //        }
-
-//        _rw.modes.auto();
-        // DEBUG ONLY:
-//        _this.modes.rate.activate();
     },
 
     on_comment_button: function (e) {
@@ -1121,7 +1132,7 @@ $.extend(wot, { ratingwindow: {
     },
 
     on_cancel: function () {
-//        console.log("on_cancel()");
+
         var _rw = wot.ratingwindow,
             cached = _rw.getcached(),
             bg = chrome.extension.getBackgroundPage();
@@ -1156,7 +1167,7 @@ $.extend(wot, { ratingwindow: {
         if (_rw.delete_action) {
             _rw.modes.auto();   // switch RW mode according to current state
         } else {
-        _rw.modes.thanks.activate();
+            _rw.modes.thanks.activate();
         }
     },
 
@@ -1936,6 +1947,7 @@ $.extend(wot, { ratingwindow: {
     comments: {
         allow_commenting: true,
         is_banned: false,
+        captcha_required: false,
         MIN_LIMIT: 30,
         MAX_LIMIT: 20000,
         is_changed: false,
@@ -1947,8 +1959,7 @@ $.extend(wot, { ratingwindow: {
         },
 
         get_comment: function (target) {
-            var _this = wot.ratingwindow.comments;
-            var bg = chrome.extension.getBackgroundPage(),
+            var bg = wot.ratingwindow.get_bg(),
                 bgwot = bg.wot;
 
             bg.console.log("RW: wot.ratingwindow.comments.get_comment(target)", target);
@@ -2026,7 +2037,14 @@ $.extend(wot, { ratingwindow: {
 
         show_register_invitation: function () {
             $("#comment-side-hint").hide();
+            $("#user-comment").addClass("warning");
             $("#comment-register").show();
+        },
+
+        show_captcha_invitation: function () {
+            $("#comment-side-hint").hide();
+            $("#user-comment").addClass("warning").attr("disabled", "1");
+            $("#comment-captcha").show();
         }
     }
 

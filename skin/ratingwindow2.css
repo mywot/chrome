@@ -1723,6 +1723,15 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     outline-color: #DDF6FF;
 }
 
+#user-comment.warning {
+    width: 286px;
+}
+
+#user-comment[disabled] {
+    background-color: #F7F7F7;
+    color: #999;
+}
+
 #comment-side-hint {
     padding: 10px 0 0 0;
     float: left;
@@ -1736,24 +1745,32 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     color: #666;
 }
 
-#comment-register {
+#comment-register,
+#comment-captcha {
     display: none;
     padding: 10px;
     float: left;
-    width: 115px;
+    width: 180px;
     font-size: 12px;
-    border: 1px solid #FC4B56;
-    border-radius: 10px;
-    background-color: #FFEAEA;
 }
 
-#comment-register-link {
+#comment-register-text,
+#comment-captcha-text {
+    color: #e75159;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.5em;
+}
+
+#comment-register-link,
+#comment-captcha-link {
     color: #3073c5;
     font-size: 12px;
     cursor: pointer;
 }
 
-#comment-register-link:hover {
+#comment-register-link:hover,
+#comment-captcha-link:hover {
     text-decoration: underline;
 }
 

@@ -21,6 +21,7 @@
 $.extend(wot, { cache: {
 	cache: {},
 	flags: {},
+    captcha_required: false,
 
 	maxage: 30 * 60 * 1000, /* 30min */
 

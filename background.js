@@ -185,14 +185,14 @@ $.extend(wot, { core: {
     update_ratingwindow_comment: function () {
         wot.core.get_ratingwindow(function (tab, view) {
             wot.log("update_ratingwindow_comment()", tab, view);
-            var _rw = view.wot.ratingwindow;
+            var rw = view.wot.ratingwindow;
 
             var target = wot.url.gethostname(tab.url),
                 cached = wot.cache.get(target);
 
             // get locally stored comment if exists
             var local_comment = wot.keeper.get_comment(target);
-            _rw.update_comment(cached, local_comment);
+            rw.update_comment(cached, local_comment, wot.cache.captcha_required);
         });
     },
 

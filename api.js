@@ -1019,7 +1019,7 @@ $.extend(wot, { api: {
                 error_code = (error !== undefined ? error : 0);
             }
 
-            if (error_code) {
+            if (error_code && error_code != wot.comments.error_codes.COMMENT_NOT_FOUND) {
                 console.error("Error is returned:", error_code, error_debug, error);
             }
 
@@ -1045,6 +1045,8 @@ $.extend(wot, { api: {
                     wot.cache.set_comment(target, { status: wot.cachestatus.error, error_code: error_code });
             }
 
+            wot.cache.captcha_required = !!data.captcha;
+
             wot.core.update_ratingwindow_comment();
         },
 
@@ -1061,7 +1063,7 @@ $.extend(wot, { api: {
                 case wot.comments.error_codes.SUCCESS:
                     wot.keeper.remove_by_name(target);  // delete the locally saved comment only on successful submit
                     wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
-                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
+                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target); // don't try to send again
                     break;
 
                 // for these errors we should try again, because there is non-zero possibility of quantum glitches around
@@ -1076,6 +1078,8 @@ $.extend(wot, { api: {
                     wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
                     wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
             }
+
+            wot.cache.captcha_required = !!data.captcha;
 
             wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
         },
