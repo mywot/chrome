@@ -51,12 +51,11 @@ wot.settings = {
 		for (var i = 0; i < inputs.length; ++i) {
 			var attrs = {};
 
-			[ "id", "type" ].forEach(function(item) {
+			[ "id", "value" ].forEach(function(item) {
 				attrs[item] = inputs[i].getAttribute(item);
 			});
 
-			if (!/^wotsearch-/.test(attrs.id) || attrs.type != "checkbox" ||
-					inputs[i].checked) {
+			if (!/^wotsearch-/.test(attrs.id) || attrs.value == 1) {
 				continue;
 			}
 
