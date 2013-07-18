@@ -27,35 +27,10 @@
 	"web_accessible_resources" : [
 		"widgets/surveys.html",
 		"skin/include/popup.css",
-		"skin/include/popup2.css",
 		"skin/include/warning.css",
-		"skin/include/warning2.css",
 		"skin/include/welcometips.css",
-		"skin/fusion/popup-logo.png",
 		"skin/fusion/logo.png",
-		"skin/fusion/accessible/popup-logo.png",
-		"skin/fusion/popup.png",
-		"skin/fusion/28_28/r0.png",
-		"skin/fusion/28_28/r1.png",
-		"skin/fusion/28_28/r2.png",
-		"skin/fusion/28_28/r3.png",
-		"skin/fusion/28_28/r4.png",
-		"skin/fusion/28_28/r5.png",
-		"skin/fusion/28_28/rx.png",
-		"skin/fusion/accessible/28_28/r0.png",
-		"skin/fusion/accessible/28_28/r1.png",
-		"skin/fusion/accessible/28_28/r2.png",
-		"skin/fusion/accessible/28_28/r3.png",
-		"skin/fusion/accessible/28_28/r4.png",
-		"skin/fusion/accessible/28_28/r5.png",
-		"skin/b/i.png",
 		"skin/b/logo.png",
-		"skin/b/r0.png",
-		"skin/b/r1.png",
-		"skin/b/r2.png",
-		"skin/b/r3.png",
-		"skin/b/r4.png",
-		"skin/b/r5.png",
         "skin/b/confidence_150dpi.png",
         "skin/b/donuts_150.png",
         "skin/b/bubl_speech_c_150.png",
@@ -82,12 +57,6 @@
 		"skin/fusion/accessible/16_16/plain/r3.png",
 		"skin/fusion/accessible/16_16/plain/r4.png",
 		"skin/fusion/accessible/16_16/plain/r5.png",
-		"skin/fusion/confidence-0.png",
-		"skin/fusion/confidence-1.png",
-		"skin/fusion/confidence-2.png",
-		"skin/fusion/confidence-3.png",
-		"skin/fusion/confidence-4.png",
-		"skin/fusion/confidence-5.png",
 		"skin/fusion/16_16/plain/r0.png",
 		"skin/fusion/16_16/plain/r1.png",
 		"skin/fusion/16_16/plain/r2.png",
@@ -106,7 +75,7 @@
 	"browser_action": {
 		"default_title": "WOT",
 		"default_icon": "skin/fusion/19_19/default.png",
-		"default_popup": "ratingwindow2.html"
+		"default_popup": "ratingwindow.html"
 	},
 	"content_scripts": [
 		{
@@ -125,9 +94,9 @@
 			"js": [
 				"wot.js",
 				"content/common.js",
-                "content/warning2.js",
+                "content/warning.js",
 				"content/url.js",
-				"content/popup2.js",
+				"content/popup.js",
 				"content/search.js",
 				"content/welcome_tips.js",
 				"content/surveys.js"
@@ -147,7 +116,7 @@
 				"wot.js",
 				"content/common.js",
 				"content/my.js",
-				"content/settings2.js"
+				"content/settings.js"
 			],
 			"run_at": "document_start",
 			"all_frames": true 
