@@ -67,7 +67,7 @@ wot.popup = {
     rule_name:      null,
     show_wtip:      false,
     layer:          null,
-    MAX_CATEGORIES: 5,
+    MAX_CATEGORIES: 5,      // FIXME: WTF is that? why 5?
 
     add: function(parentelem, rule_name)
     {

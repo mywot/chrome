@@ -130,7 +130,7 @@ wot.warning = {
                 this.make_categories_block(categories, options) +
             "</div>"+
             "<div class='wot-openscorecard-wrap'>" +
-                "<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
+                "<span class='wot-openscorecard'>{INFO}</span>" +
             "</div>" +
             "<div id='wot-warn-ratings'>"+
             "</div>" +
@@ -251,10 +251,14 @@ wot.warning = {
 
             var is_blacklisted = blacklists && blacklists.length > 0;
 
-            // preprocess link "Rate the site"
-			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
 			var wt_text_2 = wot.i18n("wt", "warning_text_2") || "";
 			var wt_text = wot.i18n("wt", "warning_text") || "";
+
+            var info_link = is_blacklisted ? wot.i18n("bl", "information") : wot.i18n("warnings", "information");
+            if (info_link.indexOf("<a>") < 0) {
+                info_link = "<a>" + info_link + "</a>";
+            }
+            info_link = info_link.replace("<a>", "<a id='wotinfobutton' class='wot-link'>");
 
 			var replaces = [
 				{
@@ -271,10 +275,7 @@ wot.warning = {
 					to: wot.i18n("lang")
 				}, {
 					from: "INFO",
-					to: is_blacklisted ? wot.i18n("bl", "information") : wot.i18n("warnings", "information")
-				}, {
-					from: "RATETEXT",
-					to: rate_site
+					to: info_link
 				}, {
 					from: "GOTOSITE",
 					to: wot.i18n("warnings", "goto")
@@ -293,9 +294,6 @@ wot.warning = {
 				}, {
 					from: "WT_BUTTON",
 					to: wot.i18n("wt", "warning_ok")
-				}, {
-					from: "REASONTITLE",
-					to: wot.i18n("warnings", "reasontitle")
 				}, {
 					from: "NOREASONTITLE",
 					to: wot.i18n("warnings", "noreasontitle")
@@ -330,7 +328,7 @@ wot.warning = {
 				});
 			});
 
-			var warnclass = "";
+			var warnclass = "", rate_template = wot.i18n("warnings", "ratesite");
 
 			if (this.getheight() < this.minheight) {
 				warnclass = "wotnoratings";
@@ -340,33 +338,30 @@ wot.warning = {
                 replaces.push({ from: "CLASS", to: warnclass });
 
                 var bl_description = blacklists.length == 1 ? wot.i18n("bl", "description") : wot.i18n("bl", "description_pl");
-                replaces.push({
-                    from: "DESC",
-                    to: bl_description
-                });
+                replaces.push({ from: "DESC", to: bl_description });
 
             } else { // if Warning should show reputation reason
 
                 if (reason == wot.warningreasons.reputation) {
                     replaces.push({ from: "CLASS", to: warnclass });
-                    replaces.push({
-                        from: "DESC",
-                        to: wot.i18n("warnings", "reputation")
-                    });
+                    replaces.push({ from: "DESC", to: wot.i18n("warnings", "reputation") });
+                    replaces.push({ from: "REASONTITLE", to: wot.i18n("warnings", "reasontitle") });
                 } else if (reason == wot.warningreasons.rating) {
                     replaces.push({ from: "CLASS", to: "wotnoratings" });
-                    replaces.push({
-                        from: "DESC",
-                        to: wot.i18n("warnings", "rating")
-                    });
+                    replaces.push({ from: "DESC", to: wot.i18n("warnings", "rating") });
+                    replaces.push({ from: "REASONTITLE", to: wot.i18n("warnings", "othersreasontitle") });
+                    rate_template = wot.i18n("warnings", "reratesite");
                 } else {
                     replaces.push({ from: "CLASS", to: warnclass });
-                    replaces.push({
-                        from: "DESC",
-                        to: wot.i18n("warnings", "unknown")
-                    });
+                    replaces.push({ from: "DESC", to: wot.i18n("warnings", "unknown") });
+                    replaces.push({ from: "REASONTITLE", to: "" });
                 }
             }
+
+            // preprocess link "Rate the site"
+            var rate_site = rate_template.replace("<a>", "<a id='wotrate-link' class='wot-link'>");
+
+            replaces.push({ from: "RATETEXT", to: rate_site });
 
 			var body = document.getElementsByTagName("body");
 
@@ -417,11 +412,11 @@ wot.warning = {
 
 			wot.post("warnings", "shown", { type: "overlay", target: data.decodedtarget });   // for counting in stats
 
-			document.getElementById("wotinfobutton").addEventListener("click",
-				function() {
-					var url = wot.urls.scorecard + encodeURIComponent(data.target);
-					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
-				}, false);
+            document.getElementById("wotinfobutton").addEventListener("click",
+                function() {
+                    var url = wot.urls.scorecard + encodeURIComponent(data.target);
+                    window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
+                }, false);
 
 			document.getElementById("wot-btn-leave").addEventListener("click",function(e){
 				wot.post("warnings", "leave_button", {label: wot.warning.exit_mode});
@@ -457,6 +452,7 @@ wot.warning = {
 				function() {
 					var url = wot.urls.scorecard +
 						encodeURIComponent(data.target) + "/rate";
+
 					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
 				}, false);
 

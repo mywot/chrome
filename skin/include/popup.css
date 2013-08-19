@@ -123,28 +123,6 @@
     background-position: 0 0;
 }
 
-/*.wot-rep.accessible {*/
-    /*background-image: url("../fusion/accessible/28_28/r0.png");*/
-/*}*/
-/*.wot-rep.accessible[reputation="rx"] {*/
-    /*background-image: url("../fusion/28_28/rx.png");*/
-/*}*/
-/*.wot-rep.accessible[reputation="r1"] {*/
-    /*background-image: url("../fusion/accessible/28_28/r1.png");*/
-/*}*/
-/*.wot-rep.accessible[reputation="r2"] {*/
-    /*background-image: url("../fusion/accessible/28_28/r2.png");*/
-/*}*/
-/*.wot-rep.accessible[reputation="r3"] {*/
-    /*background-image: url("../fusion/accessible/28_28/r3.png");*/
-/*}*/
-/*.wot-rep.accessible[reputation="r4"] {*/
-    /*background-image: url("../fusion/accessible/28_28/r4.png");*/
-/*}*/
-/*.wot-rep.accessible[reputation="r5"] {*/
-    /*background-image: url("../fusion/accessible/28_28/r5.png");*/
-/*}*/
-
 .wot-cnf {
     height: 42px;
     margin-left: -2px;
@@ -177,7 +155,7 @@
     background-position: 0 -210px;
 }
 
-.rating-legend-wrapper {
+.wot-popup-layer .rating-legend-wrapper {
     /*position: absolute;*/
     background: url("../b/bubl_speech_c_150.png")  top left repeat-x;
     background-size: 1px 24px;
@@ -189,7 +167,7 @@
     display: none; /* don't show bubble speeches for now until we have their new styles */
 }
 
-.rating-legend-wrapper:before {
+.wot-popup-layer .rating-legend-wrapper:before {
     position: absolute;
     content: "";
     height: 24px;
@@ -199,7 +177,7 @@
     background-size: 17px 24px;
 }
 
-.rating-legend-wrapper:after {
+.wot-popup-layer .rating-legend-wrapper:after {
     position: absolute;
     content: "";
     height: 24px;
@@ -210,7 +188,7 @@
     top: 0px;
 }
 
-.rating-legend {
+.wot-popup-layer .rating-legend {
     position: relative;
     height: 24px;
     min-width: 48px;

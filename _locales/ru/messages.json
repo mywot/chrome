@@ -98,17 +98,8 @@
     "ratingwindow_backtoratings_category": {
         "message": "Выбрать причину"
     },
-	"ratingwindow_inpartnership": {
-		"message": "Сотрудничает с"
-	},
 	"ratingwindow_newversion": {
 		"message": "Доступна новая версия, нажмите для обновления"
-	},
-	"ratingwindow_helptext": {
-		"message": ""
-	},
-	"ratingwindow_helplink": {
-		"message": "Добавить комментарий?"
 	},
 	"ratingwindow_invite_rw": {
 		"message": "С помощью этого инструмента вы можете давать оценки сайтам. Кликайте по цветным полоскам, чтобы показать, насколько вы доверяете сайту."
@@ -118,9 +109,6 @@
 	},
 	"warnings_ratesite": {
 		"message": "Доверяете этому сайту? <a>Оцените его</a>"
-	},
-	"warnings_gotosite": {
-		"message": "Открыть сайт, несмотря на предупреждение"
 	},
 	"warnings_reputation": {
 		"message": "У этого сайта плохая репутация"
@@ -178,9 +166,6 @@
 	"wt_rw_text": {
 		"message": "<p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Чтобы поставить свою оценку сайту, кликните по цветной полоске. Ваше участие сделает Интернет безопаснее для всех.</p><p class='wot-c'>Узнать, <a id='wt-learnmore-link'>что такое WOT</a>?</p>"
 	},
-	"wt_rw_ok": {
-		"message": "Показать окно с оценками"
-	},
 	"wt_donut_msg": {
 		"message": "<p class='wot-cb'>Следите за цветными индикаторами!</p></p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Цветные индикаторы рядом с ссылками показывают, каким сайтам можно доверять: зеленый - хорошая репутация, красный - плохая.</p>"
 	},
@@ -197,7 +182,7 @@
 		"message": "Что это?"
 	},
 	"fbl_optout_text": {
-		"message": "Уверены что не хотите выражать своё мнение о сайтах?"
+		"message": "Уверены, что не хотите выражать своё мнение о сайтах?"
 	},
 	"fbl_optout_yes": {
 		"message": "да"
@@ -241,7 +226,7 @@
     "ratingwindow_comment_captchatext": {
         "message": "Введите защитный код в оценочной карте, чтобы опубликовать комментарий"
     },
-    "ratingwindow_comment_captcha": {
+    "ratingwindow_comment_captchalink": {
         "message": "Открыть оценочную карту"
     },
     "ratingwindow_commenthints": {
@@ -384,5 +369,65 @@
     },
     "bl_other": {
         "message": "Иные проблемы"
+    },
+    "warning_button": {
+        "message": "Подробная информация о рейтинге",
+        "description": "imported from firefox add-on"
+    },
+    "warnings_message_rating": {
+        "message": "Вы выставили низкий рейтинг этому веб-сайту.",
+        "description": "imported from firefox add-on"
+    },
+    "warnings_message_reputation": {
+        "message": "У этого сайта плохая репутация.",
+        "description": "imported from firefox add-on"
+    },
+    "messages_offline": {
+        "message": "Отключено, когда браузер находится в автономном режиме.",
+        "description": "imported from firefox add-on"
+    },
+    "messages_disabled": {
+        "message": "Надстройка отключена.",
+        "description": "imported from firefox add-on"
+    },
+    "auto_update_title": {
+        "message": "Обновление WOT",
+        "description": "imported from firefox add-on"
+    },
+    "auto_update_button_yes": {
+        "message": "Обновить сейчас",
+        "description": "imported from firefox add-on"
+    },
+    "description_restart": {
+        "message": "Перезапустите браузер для активизации WOT.",
+        "description": "imported from firefox add-on"
+    },
+    "messages_error_register": {
+        "message": "Не удалось активизировать надстройку.",
+        "description": "imported from firefox add-on"
+    },
+    "warning": {
+        "message": "Предупреждение WOT: %S",
+        "description": "imported from firefox add-on"
+    },
+    "description_uninstall": {
+        "message": "WOT будет удалена после перезапуска.",
+        "description": "imported from firefox add-on"
+    },
+    "warnings_blocked": {
+        "message": "Заблокировано",
+        "description": "imported from firefox add-on"
+    },
+    "auto_update_check": {
+        "message": "Включить автоматические обновления (рекомендуется)",
+        "description": "imported from firefox add-on"
+    },
+    "auto_update_button_no": {
+        "message": "Напомнить позднее",
+        "description": "imported from firefox add-on"
+    },
+    "auto_update_message": {
+        "message": "Доступна новая версия надстройки WOT. Обновить надстройку?",
+        "description": "imported from firefox add-on"
     }
 }

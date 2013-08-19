@@ -442,16 +442,16 @@ $.extend(wot, { ratingwindow: {
         /* content for user (messages / communications) */
         $(".wot-user").hide();
 
-        // TODO: rewrite below
+        // TODO: rewrite below: use activity score stored in Prefs instead.
         var index = 0,
             item = (bg.wot.core.usercontent && bg.wot.core.usercontent.length > 0) ? bg.wot.core.usercontent[0] : {},
             user_header = wot.i18n("activityscore","text"),
-            user_as = "",
+            user_as = 0,
             $_user_text = $("#wot-user-0-text"),
             as_notice = wot.i18n("activityscore", "next");
 
-        if (item.label) {
-            user_as = item.label;
+        if (item.label && !isNaN(item.label)) {
+            user_as = parseInt(item.label); // for better security we use numeric
         }
 
         // insert next level name
@@ -705,10 +705,9 @@ $.extend(wot, { ratingwindow: {
             { selector: "#wot-rating-header-my",    text: wot.i18n("ratingwindow", "myrating") },
             { selector: "#wot-scorecard-visit",     text: wot.i18n("ratingwindow", "viewscorecard") },
             { selector: "#wot-scorecard-comment",   text: wot.i18n("ratingwindow", "addcomment") },
-            { selector: "#wot-partner-text",        text: wot.i18n("ratingwindow", "inpartnership") },
+//            { selector: "#wot-partner-text",        text: wot.i18n("ratingwindow", "inpartnership") },
             { selector: ".wt-rw-header-text",       html: wot.i18n("wt", "rw_text_hdr") },
             { selector: ".wt-rw-body",              html: wot.i18n("wt", "rw_text") },
-            { selector: "#wt-rw-btn-ok",            text: wot.i18n("wt", "rw_ok") },
             { selector: ".btn-delete_label",        text: wot.i18n("buttons", "delete") },
             { selector: "#btn-delete",              title: wot.i18n("buttons", "delete_title") },
             { selector: "#btn-cancel",              text: wot.i18n("buttons", "cancel") },
@@ -1152,6 +1151,8 @@ $.extend(wot, { ratingwindow: {
         });
 
         _rw.cat_selector.init_voted(); // restore previous votes
+
+        // FIXME: this is incorrect call. It must be inside the cycle above
         _rw.rate_control.updateratings(_rw.state);  // restore user's testimonies visually
 
         bg.wot.keeper.remove_comment(_rw.state.target); // remove locally saved comment
@@ -1258,7 +1259,7 @@ $.extend(wot, { ratingwindow: {
 
             if (mode == "unrated") {
                 var cached = _rw.getcached();
-                if (cached.value && cached.value.target) {
+                if (_rw.state.target) {
                     $_ratingarea.attr("disabled", null);
                 } else {
                     $_ratingarea.attr("disabled", "disabled");
