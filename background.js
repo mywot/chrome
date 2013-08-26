@@ -144,8 +144,7 @@ $.extend(wot, { core: {
 				});
 			};
 
-			icon.src = wot.geticon(this.geticon(data), 19,
-							wot.prefs.get("accessible"));
+			icon.src = wot.geticon(this.geticon(data), 19, wot.prefs.get("accessible"));
 		} catch (e) {
 			console.log("core.seticon: failed with " + e + "\n");
 		}

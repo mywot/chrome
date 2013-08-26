@@ -378,14 +378,13 @@ wot.search = {
 			}
 
 			var options = {
-				subtype: this.settings.accessible ? "plain": "mini" // we don't have mini icons-16 for accesible mode yet
+				subtype: "plain"
 			};
 
 			css = this.formatcss(rule.style)
 					.replace(/NAME/g, obj.target)
 					.replace(/IMAGE/g,
-						chrome.extension.getURL(wot.geticon(r, 16,
-								this.settings.accessible, options)));
+						chrome.extension.getURL(wot.geticon(r, 16, this.settings.accessible, options)));
 		}
 
 		return css;
