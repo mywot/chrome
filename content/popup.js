@@ -24,7 +24,7 @@ const WOT_POPUP_HTML =
         '<div id="wot-hostname"></div>' +
         '<div id="wot-r0-stack{ID}" class="wot-stack wot-stack-left">' +
         '<div id="wot-r0-header{ID}" class="wot-header">{POPUPTEXT0}</div>' +
-        '<div id="wot-r0-rep{ID}" class="wot-rep {ACCESSIBLE}"></div>' +
+        '<div id="wot-r0-rep{ID}" class="wot-rep"></div>' +
         '<div id="wot-r0-cnf{ID}" class="wot-cnf"></div>' +
         '<div class="rating-legend-wrapper">' +
             '<div class="rating-legend">{REPTEXT0}</div>' +
@@ -33,7 +33,7 @@ const WOT_POPUP_HTML =
         '</div>' +
         '<div id="wot-r4-stack{ID}" class="wot-stack wot-stack-right">' +
         '<div id="wot-r4-header{ID}" class="wot-header">{POPUPTEXT4}</div>' +
-        '<div id="wot-r4-rep{ID}" class="wot-rep {ACCESSIBLE}"></div>' +
+        '<div id="wot-r4-rep{ID}" class="wot-rep"></div>' +
         '<div id="wot-r4-cnf{ID}" class="wot-cnf"></div>' +
         '<div class="rating-legend-wrapper">' +
         '<div class="rating-legend">{REPTEXT4}</div>' +
@@ -109,21 +109,17 @@ wot.popup = {
             this.rule_name = rule_name;
 
             var layer = document.createElement("div");
+            var accessible_cls = wot.search.settings.accessible ? " wot-popup-layer-accessible" : "";
 
             layer.setAttribute("id", id);
-            layer.setAttribute("class", "wot-popup-layer");
+            layer.setAttribute("class", "wot-popup-layer" + accessible_cls);
             layer.setAttribute("style", "display: none;");
 
-            var accessible = wot.search.settings.accessible ?
-                "accessible" : "";
 
             var replaces = [
                 {
                     from: "ID",
                     to: wot.popup.postfix
-                }, {
-                    from: "ACCESSIBLE",
-                    to: accessible
                 }, {
                     from: "POPUPHEADERTEXT",
                     to: wot.i18n("popup", "headertext")

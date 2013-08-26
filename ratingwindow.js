@@ -907,19 +907,7 @@ $.extend(wot, { ratingwindow: {
         _rw.is_registered = bg.wot.core.is_level("registered");
 
         /* accessibility */
-        // TODO: use only 1 "global" style on the most top element to specify accessible mode for all children elements
-        $("#wot-header-logo, " +
-            "#wot-header-close, " +
-            ".wot-header-link, " +
-            "#hostname-text, " +
-            ".wot-rating-reputation, " +
-            ".wot-rating-slider, " +
-            ".wot-rating-helplink, " +
-            "#wot-scorecard-content, " +
-            ".wot-scorecard-text, " +
-            ".wot-user-text, " +
-            "#wot-message-text")
-            .toggleClass("accessible", bg.wot.prefs.get("accessible"));
+        $("#wot-ratingwindow").toggleClass("accessible", bg.wot.prefs.get("accessible"));
 
         _rw.localize();
 
