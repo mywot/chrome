@@ -173,7 +173,7 @@ $.extend(wot, { cache: {
         var bg = chrome.extension.getBackgroundPage();
 //        bg.console.log("cacheratingstate(name, state, votes_changed)", arguments);
 
-//		try {
+		try {
 			state = state || {};
 
 			var obj = this.get(name);
@@ -215,9 +215,9 @@ $.extend(wot, { cache: {
 
 				return changed;
 			}
-//		} catch (e) {
-//			console.log("cache.cacheratingstate: failed with ", e);
-//		}
+		} catch (e) {
+			console.log("cache.cacheratingstate: failed with ", e);
+		}
 
 		return false;
 	},

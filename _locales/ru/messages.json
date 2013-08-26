@@ -11,23 +11,11 @@
 	"components_0": {
 		"message": "Заслуживает доверие"
 	},
-	"components_1": {
-		"message": "Надежность продавца"
-	},
-	"components_2": {
-		"message": "Конфиденциальность"
-	},
 	"components_4": {
 		"message": "Безопасность для детей"
 	},
 	"components__short_0": {
 		"message": "Заслуж. доверия"
-	},
-	"components__short_1": {
-		"message": "Надежн. продавца"
-	},
-	"components__short_2": {
-		"message": "Конфиденц-ть"
 	},
 	"components__short_4": {
 		"message": "Безоп-ть детей"
@@ -110,6 +98,9 @@
 	"warnings_ratesite": {
 		"message": "Доверяете этому сайту? <a>Оцените его</a>"
 	},
+    "warnings_reratesite": {
+        "message": "<a>Нажмите сюда</a>, чтобы оценить сайт заново"
+    },
 	"warnings_reputation": {
 		"message": "У этого сайта плохая репутация"
 	},
@@ -133,6 +124,9 @@
 	},
     "warnings_reasontitle": {
         "message": "Пользователи определили этот сайт как"
+    },
+    "warnings_othersreasontitle": {
+        "message": "Мнение других пользователей о сайте"
     },
     "warnings_noreasontitle": {
         "message": "Пользователи не определи этот сайт пока что"
@@ -350,7 +344,7 @@
         "message": "По данным сторонних источников этот сайт находится в нескольких чёрных списках"
     },
     "bl_information": {
-        "message": "Что это? Узнать подробности"
+        "message": "WOT использует данные сторонних источников, чтобы предупреждать пользователей о технических угрозах. <a>Подробнее</a>"
     },
     "bl_malware": {
         "message": "Вредоносное ПО"

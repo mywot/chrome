@@ -88,7 +88,6 @@ $.extend(wot, { prefs: {
 			"warning_level_4": 39,
 			"warning_type_4": wot.warningtypes.overlay,
 			"show_application_2": false
-
 		};
 
 		if (wot.env.is_mailru) { // override only for MRU browser

@@ -1061,7 +1061,7 @@ $.extend(wot, { api: {
 
             switch (error_code) {
                 case wot.comments.error_codes.SUCCESS:
-                    wot.keeper.remove_by_name(target);  // delete the locally saved comment only on successful submit
+                    wot.keeper.remove_comment(target);  // delete the locally saved comment only on successful submit
                     wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
                     wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target); // don't try to send again
                     break;
