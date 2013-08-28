@@ -1,134 +1,520 @@
 {
-	"locale": {
-		"message": "zh_TW"
-	},
-	"lang": {
-		"message": "zh-TW"
-	},
-	"ext_description": {
-		"message": "WOT 會根據全世界數百萬用戶的經驗，告訴您哪些是可以信任的網站。WOT 快速又容易上手，而且完全免費。"
-	},
-	"components_0": {
-		"message": "可靠性"
-	},
-	"components_1": {
-		"message": "供應者可信賴性"
-	},
-	"components_2": {
-		"message": "隱私性"
-	},
-	"components_4": {
-		"message": "兒童安全"
-	},
-	"components__short_0": {
-		"message": "可靠性"
-	},
-	"components__short_1": {
-		"message": "供應者可信賴性"
-	},
-	"components__short_2": {
-		"message": "隱私性"
-	},
-	"components__short_4": {
-		"message": "兒童安全"
-	},
-	"reputationlevels_r0": {
-		"message": ""
-	},
-	"reputationlevels_r1": {
-		"message": "非常差"
-	},
-	"reputationlevels_r2": {
-		"message": "不佳"
-	},
-	"reputationlevels_r3": {
-		"message": "不符要求"
-	},
-	"reputationlevels_r4": {
-		"message": "佳"
-	},
-	"reputationlevels_r5": {
-		"message": "極佳"
-	},
-	"messages_initializing": {
-		"message": "初始化 WOT…"
-	},
-	"messages_notready": {
-		"message": "WOT 啟動中…"
-	},
-	"messages_failed": {
-		"message": "評等載入失敗；立刻重試。"
-	},
-	"messages_notavailable": {
-		"message": "無法提供評等。"
-	},
-	"messages_loading": {
-		"message": "評等載入中…"
-	},
-	"ratingwindow_settings": {
-		"message": "設定"
-	},
-	"ratingwindow_guide": {
-		"message": "指南"
-	},
+    "locale": {
+        "message": "zh_TW"
+    }, 
+    "lang": {
+        "message": "zh-TW"
+    }, 
+    "ext_description": {
+        "message": "WOT 會根據全世界數百萬用戶的經驗，告訴您哪些是可以信任的網站。WOT 快速又容易上手，而且完全免費。"
+    }, 
+    "components_0": {
+        "message": "可靠性"
+    }, 
+    "components_4": {
+        "message": "兒童安全"
+    }, 
+    "components__short_0": {
+        "message": "可靠性"
+    }, 
+    "components__short_4": {
+        "message": "兒童安全"
+    }, 
+    "reputationlevels_r0": {
+        "message": "未知", 
+        "description": ""
+    }, 
+    "reputationlevels_r1": {
+        "message": "非常差"
+    }, 
+    "reputationlevels_r2": {
+        "message": "不佳"
+    }, 
+    "reputationlevels_r3": {
+        "message": "不符要求"
+    }, 
+    "reputationlevels_r4": {
+        "message": "佳"
+    }, 
+    "reputationlevels_r5": {
+        "message": "極佳"
+    }, 
+    "messages_initializing": {
+        "message": "初始化 WOT…"
+    }, 
+    "messages_notready": {
+        "message": "WOT 啟動中…"
+    }, 
+    "messages_failed": {
+        "message": "評等載入失敗；立刻重試。"
+    }, 
+    "messages_notavailable": {
+        "message": "無法提供評等。"
+    }, 
+    "messages_loading": {
+        "message": "評等載入中…"
+    }, 
+    "ratingwindow_settings": {
+        "message": "設定"
+    }, 
+    "ratingwindow_guide": {
+        "message": "介紹", 
+        "description": ""
+    }, 
     "ratingwindow_forum": {
         "message": "論壇"
-    },
-	"ratingwindow_wotrating": {
-		"message": "WOT 評等"
-	},
-	"ratingwindow_myrating": {
-		"message": "我的評等"
-	},
-	"ratingwindow_viewscorecard": {
-		"message": "檢視評等詳細內容計分表"
-	},
-	"ratingwindow_addcomment": {
-		"message": "加入您的評語"
-	},
-	"ratingwindow_inpartnership": {
-		"message": "In partnership with"
-	},
-	"ratingwindow_newversion": {
-		"message": "有新版本可供下載 -- 按一下進行更新"
-	},
-	"ratingwindow_helptext": {
-		"message": "您的評等不一致。"
-	},
-	"ratingwindow_helplink": {
-		"message": "要留下評語嗎？"
-	},
-	"warnings_information": {
-		"message": "檢視評等詳細內容與評語"
-	},
-	"warnings_ratesite": {
-		"message": "這個網站是安全的 - <a>我要評等</a>"
-	},
-	"warnings_gotosite": {
-		"message": "忽略警告，前往網站"
-	},
-	"warnings_reputation": {
-		"message": "這個網站聲譽不佳"
-	},
-	"warnings_rating": {
-		"message": "您給了這個網站會觸動警告的不佳評等"
-	},
-	"warnings_unknown": {
-		"message": "這個網站的評等不詳"
-	},
-	"warnings_warning": {
-		"message": "警告!"
-	},
-	"warnings_goto": {
-		"message": "Open the site"
-	},
-	"warnings_leave": {
-		"message": "Leave the site"
-	},
-	"warnings_back": {
-		"message": "Go back"
-	},
-	"contextmenu_open_scorecard": {
-		"message": "Open WOT scorecard"
-	}
+    }, 
+    "ratingwindow_profile": {
+        "message": "我的個人資料", 
+        "description": ""
+    }, 
+    "ratingwindow_wotrating": {
+        "message": "使用者給予的網站聲譽評價", 
+        "description": ""
+    }, 
+    "ratingwindow_myrating": {
+        "message": "我的評等"
+    }, 
+    "ratingwindow_viewscorecard": {
+        "message": "檢視詳細內容及評語", 
+        "description": ""
+    }, 
+    "ratingwindow_addcomment": {
+        "message": "新增評語", 
+        "description": ""
+    }, 
+    "ratingwindow_editcomment": {
+        "message": "編輯評語", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings": {
+        "message": "返回評等", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings_category": {
+        "message": "選擇一個類別", 
+        "description": ""
+    }, 
+    "ratingwindow_newversion": {
+        "message": "有新版本可供下載 -- 按一下進行更新"
+    }, 
+    "ratingwindow_invite_rw": {
+        "message": "您可利用這項工具為網站提供評等，請點擊色條，表達您對網站的信任程度。", 
+        "description": ""
+    }, 
+    "warnings_information": {
+        "message": "檢視詳細內容及評語", 
+        "description": ""
+    }, 
+    "warnings_ratesite": {
+        "message": "如果您信任該網站，請<a>提供評等</a>", 
+        "description": ""
+    }, 
+    "warnings_reratesite": {
+        "message": "如果您想重新評等，請<a>點擊此處</a>", 
+        "description": ""
+    }, 
+    "warnings_reputation": {
+        "message": "這個網站聲譽不佳"
+    }, 
+    "warnings_rating": {
+        "message": "您給了這個網站會觸動警告的不佳評等"
+    }, 
+    "warnings_unknown": {
+        "message": "這個網站的評等不詳"
+    }, 
+    "warnings_warning": {
+        "message": "警告!"
+    }, 
+    "warnings_goto": {
+        "message": "Open the site"
+    }, 
+    "warnings_leave": {
+        "message": "離開", 
+        "description": ""
+    }, 
+    "warnings_back": {
+        "message": "返回", 
+        "description": ""
+    }, 
+    "warnings_reasontitle": {
+        "message": "使用者已辨認出以下問題", 
+        "description": ""
+    }, 
+    "warnings_othersreasontitle": {
+        "message": "其他使用者的意見", 
+        "description": ""
+    }, 
+    "warnings_noreasontitle": {
+        "message": "使用者尚未辨認該網站，只給予評分", 
+        "description": ""
+    }, 
+    "contextmenu_open_scorecard": {
+        "message": "開啟 WOT 記分表", 
+        "description": ""
+    }, 
+    "wt_learnmore_link": {
+        "message": "<a id='wt-learnmore-link'>了解更多</a> 關於 WOT 的資訊。", 
+        "description": ""
+    }, 
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>您已受到保護！</p><p>安全瀏覽工具 Web of Trust（WOT）會依據數百萬使用者的經驗，告訴您哪些是可以信任的網站。</p><p>請點擊瀏覽器工具列上的 {ICO1} 圖示，開始使用 WOT。</p><p>{WT_LEARNMORE}</p>", 
+        "description": ""
+    }, 
+    "wt_intro_0_btn": {
+        "message": "好，我知道了", 
+        "description": ""
+    }, 
+    "wt_warning_text": {
+        "message": "<p class='wot-cb'>小心不值得信任的網站！</p><p>如果您遇到聲譽不佳的網站，安全瀏覽工具 WOT 會提供警告。</p><p>{WT_LEARNMORE}</p><p>如果您不想看到警告，可以將它們關閉。</p>", 
+        "description": ""
+    }, 
+    "wt_warning_turnoff": {
+        "message": "關閉警告", 
+        "description": ""
+    }, 
+    "wt_warning_ok": {
+        "message": "好，我知道了", 
+        "description": ""
+    }, 
+    "wt_rw_text_hdr": {
+        "message": "分享您的經驗！", 
+        "description": ""
+    }, 
+    "wt_rw_text": {
+        "message": "<p>WOT 會依據數百萬使用者的經驗顯示網站聲譽評等。</p><p>請點擊色條，針對該網站提供您的評等，您的評等將幫助其他使用者更安全地瀏覽網站。</p><p class='wot-c'><a id='wt-learnmore-link'>了解更多</a> 關於 WOT 的資訊。</p>", 
+        "description": ""
+    }, 
+    "wt_donut_msg": {
+        "message": "<p class='wot-cb'>遵照紅綠燈的指示！</p></p>安全瀏覽工具 WOT 會依據數百萬使用者的經驗顯示網站聲譽評等。</p><p>網址旁邊的紅綠燈會指引您找到您可以信任的網站：綠燈代表安全，紅燈代表不安全，黃色代表要提高警覺。</p>", 
+        "description": ""
+    }, 
+    "wt_donut_btn": {
+        "message": "好，我知道了", 
+        "description": ""
+    }, 
+    "fbl_hideforever": {
+        "message": "永遠隱藏", 
+        "description": ""
+    }, 
+    "fbl_submit": {
+        "message": "送出", 
+        "description": ""
+    }, 
+    "fbl_whatisthis": {
+        "message": "這是什麼？", 
+        "description": ""
+    }, 
+    "fbl_optout_text": {
+        "message": "如果您希望不再被詢問，請點擊「是」", 
+        "description": ""
+    }, 
+    "fbl_optout_yes": {
+        "message": "是", 
+        "description": ""
+    }, 
+    "fbl_optout_no": {
+        "message": "否", 
+        "description": ""
+    }, 
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://beta.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> 致力於提升數百萬使用者的網路使用安全及品質，您只要在看見這個提示後提供個人意見，就能提供協助。", 
+        "description": ""
+    }, 
+    "fbl_final": {
+        "message": "謝謝您！", 
+        "description": ""
+    }, 
+    "fbl_this_website": {
+        "message": "該網站", 
+        "description": ""
+    }, 
+    "fbl_dismiss": {
+        "message": "解除", 
+        "description": ""
+    }, 
+    "ratingwindow_question0": {
+        "message": "您對該網站的信任程度為何？", 
+        "description": ""
+    }, 
+    "ratingwindow_question4": {
+        "message": "該網站對兒童的適宜程度為何？", 
+        "description": ""
+    }, 
+    "ratingwindow_categories": {
+        "message": "選擇至少一項類別以支持您的評等", 
+        "description": ""
+    }, 
+    "ratingwindow_comment": {
+        "message": "留下評語，描述您使用該網站的經驗", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_placeholder": {
+        "message": "在此留下您的評語…", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_regtext": {
+        "message": "您需要擁有帳戶才能發表評語。", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_register": {
+        "message": "立即建立帳戶", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchatext": {
+        "message": "您需要在計分表上鍵入驗證碼才能發表評語。", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchalink": {
+        "message": "立即開啟計分表", 
+        "description": ""
+    }, 
+    "ratingwindow_commenthints": {
+        "message": "<p>務必精確</p><p>請提供證據或例子</p><p>根據您的真實經驗給予評語</p><p>Do not spam</p>", 
+        "description": ""
+    }, 
+    "ratingwindow_novoted": {
+        "message": "請點擊此處選擇一個類別，以便提供評等理由", 
+        "description": ""
+    }, 
+    "ratingwindow_morecats": {
+        "message": "更多", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_change": {
+        "message": "更改", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_category": {
+        "message": " ", 
+        "description": "TODO: TRANSLATE"
+    }, 
+    "ratingwindow_fulllist": {
+        "message": "顯示完整清單", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_yes": {
+        "message": "是", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_no": {
+        "message": "否", 
+        "description": ""
+    }, 
+    "messages_ready": {
+        "message": "聲譽評等", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r0": {
+        "message": "點擊色條以提供評等", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r1": {
+        "message": "不信任", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r2": {
+        "message": "不信任", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r3": {
+        "message": "可疑", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r4": {
+        "message": "信任", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r5": {
+        "message": "信任", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r0": {
+        "message": "點擊色條以提供評等", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r1": {
+        "message": "不適合", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r2": {
+        "message": "不適合", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r3": {
+        "message": "要注意", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r4": {
+        "message": "適合", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r5": {
+        "message": "適合", 
+        "description": ""
+    }, 
+    "testimony_unrated": {
+        "message": "無意見", 
+        "description": ""
+    }, 
+    "testimony_delete": {
+        "message": "刪除", 
+        "description": ""
+    }, 
+    "buttons_delete": {
+        "message": "刪除評等", 
+        "description": ""
+    }, 
+    "buttons_delete_title": {
+        "message": "刪除我的評等及網站類別", 
+        "description": ""
+    }, 
+    "buttons_cancel": {
+        "message": "取消", 
+        "description": ""
+    }, 
+    "buttons_save": {
+        "message": "儲存", 
+        "description": ""
+    }, 
+    "buttons_ok": {
+        "message": "OK", 
+        "description": ""
+    }, 
+    "popup_headertext": {
+        "message": "點擊以檢視詳細內容", 
+        "description": ""
+    }, 
+    "popup_nocattext": {
+        "message": "分享您對該網站的意見", 
+        "description": ""
+    }, 
+    "ratingwindow_thankyou": {
+        "message": "感謝您分享經驗！", 
+        "description": ""
+    }, 
+    "activityscore_text": {
+        "message": "您目前的活躍等級是", 
+        "description": ""
+    }, 
+    "activityscore_rookie": {
+        "message": "新手", 
+        "description": ""
+    }, 
+    "activityscore_bronze": {
+        "message": "銅", 
+        "description": ""
+    }, 
+    "activityscore_silver": {
+        "message": "銀", 
+        "description": ""
+    }, 
+    "activityscore_gold": {
+        "message": "金", 
+        "description": ""
+    }, 
+    "activityscore_platinum": {
+        "message": "白金", 
+        "description": ""
+    }, 
+    "activityscore_next": {
+        "message": "繼續提供評等以升到 {NEXT_LEVEL}　級！", 
+        "description": ""
+    }, 
+    "bl_description": {
+        "message": "該網站出現在第三方黑名單中", 
+        "description": ""
+    }, 
+    "bl_description_pl": {
+        "message": "該網站出現在第三方黑名單中", 
+        "description": ""
+    }, 
+    "bl_information": {
+        "message": "WOT 會利用第三方黑名單，警告使用者關於病毒及惡意軟體等技術性威脅。<a>Read more</a>", 
+        "description": ""
+    }, 
+    "bl_malware": {
+        "message": "惡意軟體", 
+        "description": ""
+    }, 
+    "bl_phishing": {
+        "message": "網路釣魚", 
+        "description": ""
+    }, 
+    "bl_scam": {
+        "message": "詐騙", 
+        "description": ""
+    }, 
+    "bl_spam": {
+        "message": "垃圾郵件", 
+        "description": ""
+    }, 
+    "bl_tracking": {
+        "message": "追蹤", 
+        "description": ""
+    }, 
+    "bl_other": {
+        "message": "其他理由", 
+        "description": ""
+    }, 
+    "warning_button": {
+        "message": "評等詳細內容", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_rating": {
+        "message": "您給了這個網站不佳的評等。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_reputation": {
+        "message": "這個網站聲譽不佳。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_offline": {
+        "message": "瀏覽器離線時停用。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_disabled": {
+        "message": "您已經關閉附加元件；按一下重新啟用。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_title": {
+        "message": "WOT 更新", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_yes": {
+        "message": "現在就更新", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_restart": {
+        "message": "重新開啟瀏覽器以啟動 WOT。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_error_register": {
+        "message": "附加元件重啟失敗；立刻重試。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warning": {
+        "message": "WOT 警告： %S", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_uninstall": {
+        "message": "WOT 將於重新開啟後解除安裝。", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_blocked": {
+        "message": "已封鎖", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_check": {
+        "message": "啟用自動更新 (建議選項)", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_no": {
+        "message": "稍後再提醒我", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_message": {
+        "message": "有最新版的 WOT 可供下載。 願意更新您的附加元件嗎？", 
+        "description": "imported from firefox add-on"
+    }
 }

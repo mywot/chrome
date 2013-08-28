@@ -1,427 +1,427 @@
 {
-	"locale": {
-		"message": "ru"
-	},
-	"lang": {
-		"message": "ru-RU"
-	},
-	"ext_description": {
-		"message": "Web Of Trust показывает, каким сайтам люди доверяют в интернете."
-	},
-	"components_0": {
-		"message": "Заслуживает доверие"
-	},
-	"components_4": {
-		"message": "Безопасность для детей"
-	},
-	"components__short_0": {
-		"message": "Заслуж. доверия"
-	},
-	"components__short_4": {
-		"message": "Безоп-ть детей"
-	},
-	"reputationlevels_r0": {
+    "locale": {
+        "message": "ru"
+    }, 
+    "lang": {
+        "message": "ru-RU"
+    }, 
+    "ext_description": {
+        "message": "Web Of Trust показывает, каким сайтам люди доверяют в интернете."
+    }, 
+    "components_0": {
+        "message": "Заслуживает доверие"
+    }, 
+    "components_4": {
+        "message": "Безопасность для детей"
+    }, 
+    "components__short_0": {
+        "message": "Заслуж. доверия"
+    }, 
+    "components__short_4": {
+        "message": "Безоп-ть детей"
+    }, 
+    "reputationlevels_r0": {
 		"message": "Неизвестно"
-	},
-	"reputationlevels_r1": {
-		"message": "Очень плохо"
-	},
-	"reputationlevels_r2": {
-		"message": "Плохо"
-	},
-	"reputationlevels_r3": {
-		"message": "Есть сомнения"
-	},
-	"reputationlevels_r4": {
-		"message": "Хорошо"
-	},
-	"reputationlevels_r5": {
-		"message": "Превосходно"
-	},
-	"messages_initializing": {
-		"message": "Инициализация WOT…"
-	},
-	"messages_notready": {
-		"message": "Активация WOT…"
-	},
-	"messages_failed": {
-		"message": "Не удалось загрузить оценки"
-	},
-	"messages_notavailable": {
-		"message": "Оценки недоступны"
-	},
-	"messages_loading": {
-		"message": "Загрузка оценок…"
-	},
-	"ratingwindow_settings": {
-		"message": "Настройки"
-	},
-	"ratingwindow_guide": {
+    }, 
+    "reputationlevels_r1": {
+        "message": "Очень плохо"
+    }, 
+    "reputationlevels_r2": {
+        "message": "Плохо"
+    }, 
+    "reputationlevels_r3": {
+        "message": "Есть сомнения"
+    }, 
+    "reputationlevels_r4": {
+        "message": "Хорошо"
+    }, 
+    "reputationlevels_r5": {
+        "message": "Превосходно"
+    }, 
+    "messages_initializing": {
+        "message": "Инициализация WOT…"
+    }, 
+    "messages_notready": {
+        "message": "Активация WOT…"
+    }, 
+    "messages_failed": {
+        "message": "Не удалось загрузить оценки"
+    }, 
+    "messages_notavailable": {
+        "message": "Оценки недоступны"
+    }, 
+    "messages_loading": {
+        "message": "Загрузка оценок…"
+    }, 
+    "ratingwindow_settings": {
+        "message": "Настройки"
+    }, 
+    "ratingwindow_guide": {
 		"message": "Что это?"
-	},
+    }, 
     "ratingwindow_forum": {
         "message": "Форум"
-    },
+    }, 
     "ratingwindow_profile": {
         "message": "Мой профиль"
-    },
-	"ratingwindow_wotrating": {
+    }, 
+    "ratingwindow_wotrating": {
 		"message": "Репутация этого сайта по мнению пользователей"
-	},
-	"ratingwindow_myrating": {
-		"message": "Моя оценка"
-	},
-	"ratingwindow_viewscorecard": {
+    }, 
+    "ratingwindow_myrating": {
+        "message": "Моя оценка"
+    }, 
+    "ratingwindow_viewscorecard": {
 		"message": "Посмотреть подробности оценок"
-	},
-	"ratingwindow_addcomment": {
+    }, 
+    "ratingwindow_addcomment": {
 		"message": "Добавить комментарий"
-	},
-	"ratingwindow_editcomment": {
-		"message": "Изменить комментарий"
-	},
-	"ratingwindow_backtoratings": {
-		"message": "Назад к оцениванию"
-	},
+    }, 
+    "ratingwindow_editcomment": {
+        "message": "Изменить комментарий"
+    }, 
+    "ratingwindow_backtoratings": {
+        "message": "Назад к оцениванию"
+    }, 
     "ratingwindow_backtoratings_category": {
         "message": "Выбрать причину"
-    },
-	"ratingwindow_newversion": {
-		"message": "Доступна новая версия, нажмите для обновления"
-	},
-	"ratingwindow_invite_rw": {
-		"message": "С помощью этого инструмента вы можете давать оценки сайтам. Кликайте по цветным полоскам, чтобы показать, насколько вы доверяете сайту."
-	},
-	"warnings_information": {
+    }, 
+    "ratingwindow_newversion": {
+        "message": "Доступна новая версия, нажмите для обновления"
+    }, 
+    "ratingwindow_invite_rw": {
+        "message": "С помощью этого инструмента вы можете давать оценки сайтам. Кликайте по цветным полоскам, чтобы показать, насколько вы доверяете сайту."
+    }, 
+    "warnings_information": {
 		"message": "Посмотреть оценки и комментарии"
-	},
-	"warnings_ratesite": {
+    }, 
+    "warnings_ratesite": {
 		"message": "Доверяете этому сайту? <a>Оцените его</a>"
-	},
+    }, 
     "warnings_reratesite": {
         "message": "<a>Нажмите сюда</a>, чтобы оценить сайт заново"
-    },
-	"warnings_reputation": {
-		"message": "У этого сайта плохая репутация"
-	},
-	"warnings_rating": {
-		"message": "Вы дали этому сайту низкую оценку"
-	},
-	"warnings_unknown": {
-		"message": "Репутация этого сайта неизвестна"
-	},
-	"warnings_warning": {
-		"message": "Внимание!"
-	},
-	"warnings_goto": {
-		"message": "Открыть сайт"
-	},
-	"warnings_leave": {
+    }, 
+    "warnings_reputation": {
+        "message": "У этого сайта плохая репутация"
+    }, 
+    "warnings_rating": {
+        "message": "Вы дали этому сайту низкую оценку"
+    }, 
+    "warnings_unknown": {
+        "message": "Репутация этого сайта неизвестна"
+    }, 
+    "warnings_warning": {
+        "message": "Внимание!"
+    }, 
+    "warnings_goto": {
+        "message": "Открыть сайт"
+    }, 
+    "warnings_leave": {
 		"message": "Покинуть сайт"
-	},
-	"warnings_back": {
-		"message": "Назад"
-	},
+    }, 
+    "warnings_back": {
+        "message": "Назад"
+    }, 
     "warnings_reasontitle": {
         "message": "Пользователи определили этот сайт как"
-    },
+    }, 
     "warnings_othersreasontitle": {
         "message": "Мнение других пользователей о сайте"
-    },
+    }, 
     "warnings_noreasontitle": {
         "message": "Пользователи не определи этот сайт пока что"
-    },
-	"contextmenu_open_scorecard": {
-		"message": "Открыть оценочную карту WOT"
-	},
-	"wt_learnmore_link": {
-		"message": "Узнать, <a id='wt-learnmore-link'>что такое WOT</a>?"
-	},
-	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Нажмите кнопку {ICO1} вверху, чтобы начать пользоваться.</p><p>{WT_LEARNMORE}</p>",
-		"description": "This message appears on introduction welcome tip right after the add-on was installed"
-	},
-	"wt_intro_0_btn": {
-		"message": "OK, понятно"
-	},
-	"wt_warning_text": {
-		"message": "<p class='wot-cb'>Берегитесь ненадежных сайтов!</p><p>WOT показывает предупреждение, если вы оказались на сайте с плохой репутацией по мнению пользователей WOT.</p><p>{WT_LEARNMORE}</p><p>Если вы не хотите видеть такие предупреждения, их можно отключить.</p>",
-		"description": "this is a WelcomeTip which is shown when a user sees Warning first time"
-	},
-	"wt_warning_turnoff": {
-		"message": "Отключить предупреждения"
-	},
-	"wt_warning_ok": {
-		"message": "OK, понятно"
-	},
-	"wt_rw_text_hdr": {
-		"message": "Поделитесь своим опытом!"
-	},
-	"wt_rw_text": {
-		"message": "<p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Чтобы поставить свою оценку сайту, кликните по цветной полоске. Ваше участие сделает Интернет безопаснее для всех.</p><p class='wot-c'>Узнать, <a id='wt-learnmore-link'>что такое WOT</a>?</p>"
-	},
-	"wt_donut_msg": {
-		"message": "<p class='wot-cb'>Следите за цветными индикаторами!</p></p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Цветные индикаторы рядом с ссылками показывают, каким сайтам можно доверять: зеленый - хорошая репутация, красный - плохая.</p>"
-	},
-	"wt_donut_btn": {
-		"message": "ОК, понятно"
-	},
-	"fbl_hideforever": {
-		"message": "Больше не спрашивать"
-	},
-	"fbl_submit": {
-		"message": "Отправить"
-	},
-	"fbl_whatisthis": {
-		"message": "Что это?"
-	},
-	"fbl_optout_text": {
-		"message": "Уверены, что не хотите выражать своё мнение о сайтах?"
-	},
-	"fbl_optout_yes": {
-		"message": "да"
-	},
-	"fbl_optout_no": {
-		"message": "нет"
-	},
-	"fbl_whatisthis_text": {
-		"message": "<a href='http://beta.mywot.com/?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> работает над улучшением безопасности и качества Интернета. Вы можете помочь нам, сообщая свое мнение о сайтах."
-	},
-	"fbl_final": {
-		"message": "Спасибо!"
-	},
+    }, 
+    "contextmenu_open_scorecard": {
+        "message": "Открыть оценочную карту WOT"
+    }, 
+    "wt_learnmore_link": {
+        "message": "Узнать, <a id='wt-learnmore-link'>что такое WOT</a>?"
+    }, 
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Дополнительная защита включена!</p><p>WOT показывает, каким сайтам доверяют миллионы пользователей по всему миру.</p><p>Нажмите кнопку {ICO1} вверху, чтобы начать пользоваться.</p><p>{WT_LEARNMORE}</p>", 
+        "description": "This message appears on introduction welcome tip right after the add-on was installed"
+    }, 
+    "wt_intro_0_btn": {
+        "message": "OK, понятно"
+    }, 
+    "wt_warning_text": {
+        "message": "<p class='wot-cb'>Берегитесь ненадежных сайтов!</p><p>WOT показывает предупреждение, если вы оказались на сайте с плохой репутацией по мнению пользователей WOT.</p><p>{WT_LEARNMORE}</p><p>Если вы не хотите видеть такие предупреждения, их можно отключить.</p>", 
+        "description": "this is a WelcomeTip which is shown when a user sees Warning first time"
+    }, 
+    "wt_warning_turnoff": {
+        "message": "Отключить предупреждения"
+    }, 
+    "wt_warning_ok": {
+        "message": "OK, понятно"
+    }, 
+    "wt_rw_text_hdr": {
+        "message": "Поделитесь своим опытом!"
+    }, 
+    "wt_rw_text": {
+        "message": "<p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Чтобы поставить свою оценку сайту, кликните по цветной полоске. Ваше участие сделает Интернет безопаснее для всех.</p><p class='wot-c'>Узнать, <a id='wt-learnmore-link'>что такое WOT</a>?</p>"
+    }, 
+    "wt_donut_msg": {
+        "message": "<p class='wot-cb'>Следите за цветными индикаторами!</p></p>WOT показывает репутацию сайтов на основе опыта миллионов пользователей.</p><p>Цветные индикаторы рядом с ссылками показывают, каким сайтам можно доверять: зеленый - хорошая репутация, красный - плохая.</p>"
+    }, 
+    "wt_donut_btn": {
+        "message": "ОК, понятно"
+    }, 
+    "fbl_hideforever": {
+        "message": "Больше не спрашивать"
+    }, 
+    "fbl_submit": {
+        "message": "Отправить"
+    }, 
+    "fbl_whatisthis": {
+        "message": "Что это?"
+    }, 
+    "fbl_optout_text": {
+        "message": "Уверены, что не хотите выражать своё мнение о сайтах?"
+    }, 
+    "fbl_optout_yes": {
+        "message": "да"
+    }, 
+    "fbl_optout_no": {
+        "message": "нет"
+    }, 
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://beta.mywot.com/?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> работает над улучшением безопасности и качества Интернета. Вы можете помочь нам, сообщая свое мнение о сайтах."
+    }, 
+    "fbl_final": {
+        "message": "Спасибо!"
+    }, 
     "fbl_this_website": {
         "message": "этот сайт"
-    },
+    }, 
     "fbl_dismiss": {
         "message": "пропустить"
-    },
+    }, 
     "ratingwindow_question0": {
         "message": "Насколько вы доверяете этому сайту?"
-    },
+    }, 
     "ratingwindow_question4": {
         "message": "Насколько этот сайт подходит для детей?"
-    },
+    }, 
     "ratingwindow_categories": {
         "message": "Выберите хотя бы одну причину, объясняющую вашу оценку"
-    },
+    }, 
     "ratingwindow_comment": {
         "message": "Расскажите о вашем опыте с этим сайтом"
-    },
+    }, 
     "ratingwindow_comment_placeholder": {
         "message": " "
-    },
+    }, 
     "ratingwindow_comment_regtext": {
         "message": "Чтобы публиковать комментарии, вам нужен аккаунт."
-    },
+    }, 
     "ratingwindow_comment_register": {
         "message": "Создать аккаунт"
-    },
+    }, 
     "ratingwindow_comment_captchatext": {
         "message": "Введите защитный код в оценочной карте, чтобы опубликовать комментарий"
-    },
+    }, 
     "ratingwindow_comment_captchalink": {
         "message": "Открыть оценочную карту"
-    },
+    }, 
     "ratingwindow_commenthints": {
         "message": "<p>Будьте точны</p><p>Излагайте факты</p><p>Избегайте оскорбительных фраз</p><p>Не рекламируйте другие сайты</p>"
-    },
+    }, 
     "ratingwindow_novoted": {
         "message": "Пожалуйста, укажите причину, объясняющую вашу оценку"
-    },
+    }, 
     "ratingwindow_morecats": {
         "message": "ещё"
-    },
+    }, 
     "ratingwindow_rerate_change": {
         "message": "изменить"
-    },
+    }, 
     "ratingwindow_rerate_category": {
         "message": "указать"
-    },
+    }, 
     "ratingwindow_fulllist": {
         "message": "полный список"
-    },
+    }, 
     "ratingwindow_vote_yes": {
         "message": "Да"
-    },
+    }, 
     "ratingwindow_vote_no": {
         "message": "Нет"
-    },
+    }, 
     "messages_ready": {
         "message": "Репутация сайта"
-    },
+    }, 
     "testimony_0_levels_r0": {
         "message": "кликните чтобы оценить"
-    },
+    }, 
     "testimony_0_levels_r1": {
         "message": "не доверяю"
-    },
+    }, 
     "testimony_0_levels_r2": {
         "message": "не доверяю"
-    },
+    }, 
     "testimony_0_levels_r3": {
         "message": "подозрительный сайт"
-    },
+    }, 
     "testimony_0_levels_r4": {
         "message": "доверяю"
-    },
+    }, 
     "testimony_0_levels_r5": {
         "message": "доверяю"
-    },
+    }, 
     "testimony_4_levels_r0": {
         "message": "кликните, чтобы оценить"
-    },
+    }, 
     "testimony_4_levels_r1": {
         "message": "не подходит"
-    },
+    }, 
     "testimony_4_levels_r2": {
         "message": "не подходит"
-    },
+    }, 
     "testimony_4_levels_r3": {
         "message": "неудовлетворительно"
-    },
+    }, 
     "testimony_4_levels_r4": {
         "message": "подходит"
-    },
+    }, 
     "testimony_4_levels_r5": {
         "message": "подходит"
-    },
+    }, 
     "testimony_unrated": {
         "message": "нет мнения"
-    },
+    }, 
     "testimony_delete": {
         "message": "удалить"
-    },
+    }, 
     "buttons_delete": {
         "message": "Удалить оценку"
-    },
+    }, 
     "buttons_delete_title": {
         "message": "Удалить мою оценку этого сайта"
-    },
+    }, 
     "buttons_cancel": {
         "message": "Отмена"
-    },
+    }, 
     "buttons_save": {
         "message": "Сохранить"
-    },
+    }, 
     "buttons_ok": {
         "message": "OK"
-    },
+    }, 
     "popup_headertext": {
         "message": "кликните, чтобы посмотреть подробности"
-    },
+    }, 
     "popup_nocattext": {
         "message": "высказать своё мнение об этом сайте"
-    },
+    }, 
     "ratingwindow_thankyou": {
         "message": "Спасибо за ваше мнение!"
-    },
+    }, 
     "activityscore_text": {
         "message": "Ваша оценка активности – "
-    },
+    }, 
     "activityscore_rookie": {
         "message": "новичок"
-    },
+    }, 
     "activityscore_bronze": {
         "message": "бронзовый"
-    },
+    }, 
     "activityscore_silver": {
         "message": "серебряный"
-    },
+    }, 
     "activityscore_gold": {
         "message": "золотой"
-    },
+    }, 
     "activityscore_platinum": {
         "message": "платиновый"
-    },
+    }, 
     "activityscore_next": {
         "message": "Продолжайте оценивать, чтобы получить {NEXT_LEVEL} уровень!"
-    },
+    }, 
     "bl_description": {
         "message": "По данным стороннего источника этот сайт находится в черном списке"
-    },
+    }, 
     "bl_description_pl": {
         "message": "По данным сторонних источников этот сайт находится в нескольких чёрных списках"
-    },
+    }, 
     "bl_information": {
         "message": "WOT использует данные сторонних источников, чтобы предупреждать пользователей о технических угрозах. <a>Подробнее</a>"
-    },
+    }, 
     "bl_malware": {
         "message": "Вредоносное ПО"
-    },
+    }, 
     "bl_phishing": {
         "message": "Фишинг"
-    },
+    }, 
     "bl_scam": {
         "message": "Мошенничество"
-    },
+    }, 
     "bl_spam": {
         "message": "СПАМ"
-    },
+    }, 
     "bl_tracking": {
         "message": "Онлайн слежение"
-    },
+    }, 
     "bl_other": {
         "message": "Иные проблемы"
-    },
+    }, 
     "warning_button": {
-        "message": "Подробная информация о рейтинге",
+        "message": "Подробная информация о рейтинге", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "warnings_message_rating": {
-        "message": "Вы выставили низкий рейтинг этому веб-сайту.",
+        "message": "Вы выставили низкий рейтинг этому веб-сайту.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "warnings_message_reputation": {
-        "message": "У этого сайта плохая репутация.",
+        "message": "У этого сайта плохая репутация.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "messages_offline": {
-        "message": "Отключено, когда браузер находится в автономном режиме.",
+        "message": "Отключено, когда браузер находится в автономном режиме.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "messages_disabled": {
-        "message": "Надстройка отключена.",
+        "message": "Надстройка отключена.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "auto_update_title": {
-        "message": "Обновление WOT",
+        "message": "Обновление WOT", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "auto_update_button_yes": {
-        "message": "Обновить сейчас",
+        "message": "Обновить сейчас", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "description_restart": {
-        "message": "Перезапустите браузер для активизации WOT.",
+        "message": "Перезапустите браузер для активизации WOT.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "messages_error_register": {
-        "message": "Не удалось активизировать надстройку.",
+        "message": "Не удалось активизировать надстройку.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "warning": {
-        "message": "Предупреждение WOT: %S",
+        "message": "Предупреждение WOT: %S", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "description_uninstall": {
-        "message": "WOT будет удалена после перезапуска.",
+        "message": "WOT будет удалена после перезапуска.", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "warnings_blocked": {
-        "message": "Заблокировано",
+        "message": "Заблокировано", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "auto_update_check": {
-        "message": "Включить автоматические обновления (рекомендуется)",
+        "message": "Включить автоматические обновления (рекомендуется)", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "auto_update_button_no": {
-        "message": "Напомнить позднее",
+        "message": "Напомнить позднее", 
         "description": "imported from firefox add-on"
-    },
+    }, 
     "auto_update_message": {
-        "message": "Доступна новая версия надстройки WOT. Обновить надстройку?",
+        "message": "Доступна новая версия надстройки WOT. Обновить надстройку?", 
         "description": "imported from firefox add-on"
     }
 }
