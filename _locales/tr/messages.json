@@ -299,11 +299,11 @@
         "description": ""
     }, 
     "messages_ready": {
-        "message": "[[[website name]]]'(n)ın İtibarı", 
+        "message": "[[[website name]]]'(n)ın İtibarı",
         "description": ""
     }, 
     "testimony_0_levels_r0": {
-        "message": "derecelendirmek için çubuğa tıklayın", 
+        "message": "derecelendirmek için tıklayın",
         "description": ""
     }, 
     "testimony_0_levels_r1": {
@@ -327,7 +327,7 @@
         "description": ""
     }, 
     "testimony_4_levels_r0": {
-        "message": "derecelendirmek için çubuğa tıklayın", 
+        "message": "derecelendirmek için tıklayın",
         "description": ""
     }, 
     "testimony_4_levels_r1": {

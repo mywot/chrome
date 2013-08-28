@@ -73,7 +73,7 @@
         "description": ""
     }, 
     "ratingwindow_myrating": {
-        "message": "Мій рейтинг"
+        "message": "Мій оцінка"
     }, 
     "ratingwindow_viewscorecard": {
         "message": "Переглянути деталі та коментарі", 
@@ -92,7 +92,7 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Виберіть категорію", 
+        "message": "Виберіть категорію",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -107,7 +107,7 @@
         "description": ""
     }, 
     "warnings_ratesite": {
-        "message": "Якщо ви довіряєте цьому сайт, будь ласка, <a>оцініть його</a>", 
+        "message": "Якщо ви довіряєте цьому сайт, будь ласка,<br/> <a>оцініть його</a>",
         "description": ""
     }, 
     "warnings_reratesite": {
@@ -244,7 +244,7 @@
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Залиште коментар, щоб описати свій досвід від користування цим сайтом.", 
+        "message": "Залиште коментар, щоб описати свій досвід від користування цим сайтом",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
@@ -284,9 +284,8 @@
         "description": ""
     }, 
     "ratingwindow_rerate_category": {
-        "message": " ", 
-        "description": "TODO: TRANSLATE"
-    }, 
+        "message": " "
+    },
     "ratingwindow_fulllist": {
         "message": "показати весь список", 
         "description": ""
@@ -304,11 +303,11 @@
         "description": ""
     }, 
     "testimony_0_levels_r0": {
-        "message": "клік. смужку для оцін.", 
+        "message": "натисніть, щоб оцінити",
         "description": ""
     }, 
     "testimony_0_levels_r1": {
-        "message": "Я не довіряю", 
+        "message": "Я не довіряю",
         "description": ""
     }, 
     "testimony_0_levels_r2": {
@@ -328,7 +327,7 @@
         "description": ""
     }, 
     "testimony_4_levels_r0": {
-        "message": "натисніть на смужку, щоб оцінити", 
+        "message": "натисніть, щоб оцінити",
         "description": ""
     }, 
     "testimony_4_levels_r1": {
