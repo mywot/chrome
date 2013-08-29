@@ -138,14 +138,14 @@
         "message": "<a id='wt-learnmore-link'>Learn more</a> about WOT."
     },
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>You are protected!</p><p>Safe surfing tool Web of Trust (WOT) shows which websites you can trust based on millions of users' experiences.</p><p>Click the icon {ICO1} on your browser toolbar to start using WOT.</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>The new WOT has been added to your browser.</p><p>Start rating websites by clicking on this icon {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": "This message appears on introduction welcome tip right after the add-on was installed"
     },
     "wt_intro_0_btn": {
         "message": "OK, got it"
     },
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Be aware of untrustworthy sites!</p><p>Safe surfing tool WOT shows you a warning if you land on a site that has a bad reputation based on user ratings.</p><p>{WT_LEARNMORE}</p><p>If you don't want to see warnings, you can turn them off.</p>",
+        "message": "<p>WOT warns you if you land on a site with a poor reputation based on other users’ ratings or blacklists from third parties.</p><p>The warning also shows you the reasons behind the poor reputation.</p><p>{WT_LEARNMORE}</p><p>If you don't want to see warnings, you can turn them off.</p>",
         "description": "this is a WelcomeTip which is shown when a user sees Warning first time"
     },
     "wt_warning_turnoff": {
@@ -158,10 +158,10 @@
         "message": "Share your experiences!"
     },
     "wt_rw_text": {
-        "message": "<p>WOT shows website reputations based on experiences from millions of users.</p><p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
+        "message": "<p>WOT rating window shows you the website reputation based on other users’ experiences.</p><p>Now you can rate and comment directly from the updated window.</p><p>Start rating by clicking the colored bars.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
     },
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Follow the traffic lights!</p></p>Safe surfing tool WOT shows website reputations based on experiences from millions of users.</p><p>Traffic lights after web links guide you to find sites that you can trust: green for good, red for bad, yellow as a warning to be cautious.</p>"
+        "message": "<p>WOT shows you website reputations based on other users’ experiences by showing you traffic light-style icons.</p><p>Hover your mouse over the icon to see the reputations and reasons behind them.</p>"
     },
     "wt_donut_btn": {
         "message": "OK, got it"
