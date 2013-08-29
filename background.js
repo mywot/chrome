@@ -798,7 +798,7 @@ $.extend(wot, { core: {
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER, data.target);
-				wot.core.update();
+				wot.core.update(false);
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {
@@ -829,11 +829,11 @@ $.extend(wot, { core: {
 			/* event handlers */
 
 			chrome.tabs.onUpdated.addListener(function(id, obj) {
-				wot.core.updatetab(id);
+				wot.core.updatetab(id, true);
 			});
 
 			chrome.tabs.onSelectionChanged.addListener(function(id, obj) {
-				wot.core.updatetab(id);
+				wot.core.updatetab(id, true);
 			});
 
 			wot.core.createmenu();
@@ -853,7 +853,7 @@ $.extend(wot, { core: {
 			/* initialize */
 
 			wot.api.register(function() {
-				wot.core.update();
+				wot.core.update(true);
 
 				if (wot.api.isregistered()) {
 					wot.core.welcome_user();

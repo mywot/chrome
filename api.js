@@ -252,7 +252,7 @@ $.extend(wot, { api: {
 		if (match && match[1] != id) {
 			this.reload(match[1], function() {
 				wot.api.cookieupdated = 0;
-                wot.core.update();  // load ratings and user's info after syncronization
+                wot.core.update(false);  // load ratings and user's info after syncronization
             });
 		}
 
