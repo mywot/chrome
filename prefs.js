@@ -106,7 +106,8 @@ $.extend(wot, { prefs: {
 			var value;
 
 			try {
-				value = JSON.parse(localStorage.getItem(name));
+                var v = localStorage.getItem(name);
+				value = v !== "undefined" ? JSON.parse(v) : undefined;
 			} catch (e) {
 			}
 
