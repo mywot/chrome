@@ -25,6 +25,10 @@ $.extend(wot, { core: {
 	badge_status: null,
 	first_run: false,       // sesion variable, to know if this launch is the first after installation
 	launch_time: null,      // time when current session was started
+    badge: {
+        type: null,
+        text: ""
+    },
 
 	loadratings: function (hosts, onupdate)
 	{
@@ -231,7 +235,7 @@ $.extend(wot, { core: {
                             this.set_badge(tab.id, wot.badge_types.nocategories);
 
                         } else {
-                            this.set_badge(tab.id, null);
+                            this.set_badge(tab.id, wot.core.badge.type, wot.core.badge.text);
                         }
                     }
                 }
@@ -668,6 +672,28 @@ $.extend(wot, { core: {
 		if (update < wot.firstrunupdate) {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 
+            // Do some actions when the add-on is updated
+            switch (wot.firstrunupdate) {
+                case 2: // = 2 is a launch of WOT 2.0 in September 2013
+
+                    // clear welcometips counters to show them again
+                    var prefs_to_clear = [
+                        "wt_donuts_shown", "wt_donuts_shown_dt", "wt_donuts_ok",
+                        "wt_intro_0_shown", "wt_intro_0_shown_dt", "wt_intro_0_ok",
+                        "wt_rw_shown", "wt_rw_shown_dt", "wt_rw_ok",
+                        "wt_warning_shown", "wt_warning_shown_dt", "wt_warning_ok"
+                    ];
+
+                    for (var p in prefs_to_clear) {
+                        wot.prefs.clear(prefs_to_clear[p]);
+                    }
+
+                    // set badge "NEW"
+                    wot.core.badge.text = "new";
+                    wot.core.badge.type = wot.badge_types.notice;
+                    break;
+            }
+
 			chrome.tabs.create({
 				url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
 					wot.platform + "/" + wot.version
@@ -753,7 +779,7 @@ $.extend(wot, { core: {
 			wot.detect_environment();
 			wot.exp.init();
 
-            wot.exp.is_running("beta-v1"); // init value for "WOT beta" dummy experiment
+//            wot.exp.is_running("beta-v1"); // init value for "WOT beta" dummy experiment
 
 			/* messages */
 

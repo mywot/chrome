@@ -30,6 +30,7 @@ $.extend(wot, { ratingwindow: {
     is_registered: false,   // whether user has an account on mywot.com
     delete_action: false,   // remembers whether user is deleting rating
     prefs: {},  // shortcut for background preferences
+    UPDATE_ROUND: 2,        // = 2 version when we launched WOT 2.0 in September 2013
 
     get_bg: function () {
         // just a shortcut
@@ -669,11 +670,11 @@ $.extend(wot, { ratingwindow: {
         }
     },
 
-    show_welcome_tip: function (type) {
+    show_welcome_tip: function () {
         // use small delay to allow GA script to initialize itself
         window.setTimeout(function(){
 
-            $("#wot-welcometip").addClass(type).fadeIn();
+            $("#wot-welcometip").fadeIn();
 
             // fire the event to GA, providing amount of minutes from installation to opening rating window
             var bg = chrome.extension.getBackgroundPage();
@@ -1038,45 +1039,29 @@ $.extend(wot, { ratingwindow: {
             bg.wot.core.open_mywot(wot.urls.tour_rw, wot.urls.contexts.wt_rw_lm);
         });
 
-        // TODO: uncomment and test after public beta launch:
-//		var is_rtip_neutral = false; // default style for welcome tip = sticker
-//
-//		var tts_wtip = (locale === "ru" || locale === "en") &&
-//						first_opening &&
-//						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
-//						wot.is_defined(["rw_text", "rw_text_hdr", "rw_ok"], "wt");
-//
-//		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
-//
-//		if (tts_wtip && bg.wot.exp) {
-//			// important to run experiment only no Tips were shown before
-//			tts_wtip = bg.wot.exp.is_running("wtip-on");
-//		}
-//
-//        if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
-//
-//		if (tts_wtip) {
-//
-//			var tip_type = "rtip-sticker"; // default style
-//
-//			// Decide what to show: normal rating window or welcome tip?
-//			if (bg.wot.exp) {
-//				is_rtip_neutral = bg.wot.exp.is_running("rtip-neu");
-//				tip_type = is_rtip_neutral ? "rtip-neutral" : "rtip-sticker"; // reference to CSS style
-//			}
-//
-//			// RW is opened first time - show welcome tip
-//			_rw.show_welcome_tip(tip_type);
-//
-//			// set all welcome tip's preferences (== wt was shown)
-//			wt.settings.rw_shown = wt.settings.rw_shown + 1;
-//			wt.settings.rw_shown_dt = new Date();
-//			wt.save_setting("rw_shown");
-//			wt.save_setting("rw_shown_dt");
-//		}
+		var tts_wtip =  (first_opening || wot.firstrunupdate == _rw.UPDATE_ROUND) &&
+						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
+						wot.is_defined(["rw_text", "rw_text_hdr"], "wt");
+
+//		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max || wot.firstrunupdate == _rw.UPDATE_ROUND);
+
+        if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
+
+		if (tts_wtip) {
+			// RW is opened first time - show welcome tip
+			_rw.show_welcome_tip();
+
+			// set all welcome tip's preferences (== wt was shown)
+			wt.settings.rw_shown = wt.settings.rw_shown + 1;
+			wt.settings.rw_shown_dt = new Date();
+			wt.save_setting("rw_shown");
+			wt.save_setting("rw_shown_dt");
+		}
 
         // increment "RatingWindow shown" counter
         _rw.count_window_opened();
+        bg.wot.core.badge.text = "";
+        bg.wot.core.badge.type = null;
 
         // shown RatingWindow means that we shown a message => remove notice badge from the button
         // this was commented on 24.06.2013 to avoid concurrent changing of the badge

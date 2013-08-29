@@ -133,6 +133,11 @@ body {
     font-size: 9pt;
     position: absolute;
     display: none;
+    z-index: 5;
+    right: 0px;
+    margin-top: 0px;
+    min-height: 160px;
+    max-height: 200px;
 }
 
 #wot-welcometip:before {
@@ -164,27 +169,6 @@ body {
 
 .rtip-sticker .wt-rw-body {
     padding: 0 1em;
-}
-
-/* RW WelcomeTip: "Neutral" mode */
-.rtip-neutral {
-    width: 100%;
-    margin: 10px 0px 0px -11px;
-    background-color: #edf0f5;
-    color: #404040;
-    box-shadow: 0 -1px 20px #aaa;
-}
-
-.rtip-neutral .wt-rw-header {
-    position: relative;
-    padding: 0.7em 0 0.4em;
-    text-align: center;
-    font-weight: bold;
-    font-size: 110%;
-}
-
-.rtip-neutral .wt-rw-body {
-    padding: 0 2.5em;
 }
 
 /* RW WelcomeTip: common styles */
