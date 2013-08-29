@@ -482,8 +482,6 @@ $.extend(wot, { ratingwindow: {
             $("#wot-user-0").css("display", "block");
         }
 
-        /* partner */
-        $("#wot-partner").attr("partner", wot.partner || "");
     },
 
     insert_categories: function (cat_list, $_target) {

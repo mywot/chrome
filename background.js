@@ -200,15 +200,16 @@ $.extend(wot, { core: {
 	{
 		try {
 
-            if (!data.target) return;
+            if (!data.target) {
+                wot.core.update_ratingwindow(tab, data);    // update RW with empty data
+                return;
+            }
 
             var cached = data.cached || {};
 
 			if (tab.selected) {
 
 				this.seticon(tab, data); /* update the browser action */
-
-//                console.info("Updated ICON", data);
 
                 var local_comment = wot.keeper.get_comment(data.target);
 
