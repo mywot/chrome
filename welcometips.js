@@ -79,18 +79,21 @@ $.extend(wot, { wt: {
 
 		if (wot.wt.enabled) {
 
-			// Check additional conditions
-			var locale = wot.i18n("locale");
-			if (!(locale === "ru" || locale === "en")) return;
+            // whether super-settings is off, check normal conditions
+            if (!wot.prefs.get("super_wtips")) {
+                // Check additional conditions
+                var locale = wot.i18n("locale");
+                if (!(locale === "ru" || locale === "en")) return;
 
-			// workaround for http://code.google.com/p/chromium/issues/detail?id=53628
-			// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
-			if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
-				"warning_text", "warning_ok", "learnmore_link"], "wt")) return;
+                // workaround for http://code.google.com/p/chromium/issues/detail?id=53628
+                // test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
+                if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
+                                     "warning_text", "warning_ok", "learnmore_link"], "wt")) return;
 
-			if (wot.get_activity_score() >= wot.wt.activity_score_max) return;
+                if (wot.get_activity_score() >= wot.wt.activity_score_max) return;
+            }
 
-			this.load_settings();
+			wot.wt.load_settings();
 
 			// Initialize Intro Tip
 			if (wot.wt.intro.tts_intro0()) {
@@ -256,8 +259,6 @@ $.extend(wot, { wt: {
 
 				 if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
 
-				 if (wot.exp.is_running("wtip-off")) return false;
-
 				 return true;
 			}
 
@@ -307,7 +308,8 @@ $.extend(wot, { wt: {
 				wot.prefs.set("warning_level_" + app.name, 0);
 				wot.prefs.set("warning_type_" + app.name, 0);
 				wot.prefs.set("warning_unknown_" + app.name, false);
-			});
+            });
+            wot.prefs.set("settingsui_warnlevel", "off");
 		}
 	},
 
