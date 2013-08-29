@@ -251,7 +251,7 @@ $.extend(wot, { cache: {
 					normalized = wot.crypto.decrypt(normalized, nonce, index);
 
 					if (/^[\x00-\xFF]*$/.test(normalized)) {
-						obj.normalized = normalized;
+						obj.normalized = wot.url.decodehostname(normalized);
 					}
 				}
 
