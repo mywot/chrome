@@ -150,7 +150,7 @@ var wot = {
 		}
 	},
 
-	firstrunupdate: 1, /* increase to show a page after an update */
+	firstrunupdate: 2, /* increase to show a page after an update */
 
 	cachestatus: {
 		error:	0,
