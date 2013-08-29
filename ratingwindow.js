@@ -269,7 +269,8 @@ $.extend(wot, { ratingwindow: {
                 }
 
             } else { // User clicked Save
-                if ((comment_changed || votes_changed) && has_up_votes) {
+                // TODO: make it so, that if votes were changed and user have seen the comment, then submit the comment
+                if (comment_changed && has_up_votes) {
                     // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
                     if (has_comment) {
 //                        bg.console.log("SUBMIT COMMENT");
