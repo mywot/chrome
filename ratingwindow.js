@@ -1944,7 +1944,7 @@ $.extend(wot, { ratingwindow: {
             var bg = wot.ratingwindow.get_bg(),
                 bgwot = bg.wot;
 
-            bg.console.log("RW: wot.ratingwindow.comments.get_comment(target)", target);
+//            bg.console.log("RW: wot.ratingwindow.comments.get_comment(target)", target);
 
             bgwot.api.comments.get(target);
         },
