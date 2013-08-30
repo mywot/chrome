@@ -668,6 +668,7 @@ $.extend(wot, { core: {
 	{
 		// show update page only if constant wot.firstrunupdate was increased
 		var update = wot.prefs.get("firstrun:update") || 0;
+        var open_update_page = true;
 
 		if (update < wot.firstrunupdate) {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
@@ -691,13 +692,20 @@ $.extend(wot, { core: {
                     // set badge "NEW"
                     wot.core.badge.text = "new";
                     wot.core.badge.type = wot.badge_types.notice;
+
+                    if (wot.env.is_mailru) {
+                        open_update_page = false;   // Don't open UpdatePage for Mail.ru users
+                    }
+
                     break;
             }
 
-			chrome.tabs.create({
-				url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
-					wot.platform + "/" + wot.version
-			});
+			if (open_update_page) {
+                chrome.tabs.create({
+                    url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
+                        wot.platform + "/" + wot.version
+                });
+            }
 		}
 	},
 
