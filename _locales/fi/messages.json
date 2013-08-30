@@ -1,134 +1,519 @@
 {
-	"locale": {
-		"message": "fi"
-	},
-	"lang": {
-		"message": "fi-FI"
-	},
-	"ext_description": {
-		"message": "WOT näyttää, mihin sivustoihin voit luottaa. Arviot perustuvat miljoonien käyttäjien kokemuksiin eri puolilta maailmaa."
-	},
-	"components_0": {
-		"message": "Luotettavuus"
-	},
-	"components_1": {
-		"message": "Asioinnin turvallisuus"
-	},
-	"components_2": {
-		"message": "Tietosuoja"
-	},
-	"components_4": {
-		"message": "Lapsiturvallisuus"
-	},
-	"components__short_0": {
-		"message": "Luotettavuus"
-	},
-	"components__short_1": {
-		"message": "Asioinnin turvall."
-	},
-	"components__short_2": {
-		"message": "Tietosuoja"
-	},
-	"components__short_4": {
-		"message": "Lapsiturvallisuus"
-	},
-	"reputationlevels_r0": {
-		"message": ""
-	},
-	"reputationlevels_r1": {
-		"message": "Erittäin huono"
-	},
-	"reputationlevels_r2": {
-		"message": "Huono"
-	},
-	"reputationlevels_r3": {
-		"message": "Epätyydyttävä"
-	},
-	"reputationlevels_r4": {
-		"message": "Hyvä"
-	},
-	"reputationlevels_r5": {
-		"message": "Erinomainen"
-	},
-	"messages_initializing": {
-		"message": "Alustetaan WOT…"
-	},
-	"messages_notready": {
-		"message": "Otetaan WOT-lisäosa käyttöön…"
-	},
-	"messages_failed": {
-		"message": "Luokitusten lataaminen epäonnistui."
-	},
-	"messages_notavailable": {
-		"message": "Luokitukset eivät ole käytettävissä."
-	},
-	"messages_loading": {
-		"message": "Ladataan luokituksia…"
-	},
-	"ratingwindow_settings": {
-		"message": "Asetukset"
-	},
-	"ratingwindow_guide": {
-		"message": "Opas"
-	},
+    "locale": {
+        "message": "fi"
+    }, 
+    "lang": {
+        "message": "fi-FI"
+    }, 
+    "ext_description": {
+        "message": "WOT näyttää, mihin sivustoihin voit luottaa. Arviot perustuvat miljoonien käyttäjien kokemuksiin eri puolilta maailmaa."
+    }, 
+    "components_0": {
+        "message": "Luotettavuus"
+    }, 
+    "components_4": {
+        "message": "Lapsiturvallisuus"
+    }, 
+    "components__short_0": {
+        "message": "Luotettavuus"
+    }, 
+    "components__short_4": {
+        "message": "Lapsiturvallisuus"
+    }, 
+    "reputationlevels_r0": {
+        "message": "Tuntematon", 
+        "description": ""
+    }, 
+    "reputationlevels_r1": {
+        "message": "Erittäin huono"
+    }, 
+    "reputationlevels_r2": {
+        "message": "Huono"
+    }, 
+    "reputationlevels_r3": {
+        "message": "Epätyydyttävä"
+    }, 
+    "reputationlevels_r4": {
+        "message": "Hyvä"
+    }, 
+    "reputationlevels_r5": {
+        "message": "Erinomainen"
+    }, 
+    "messages_initializing": {
+        "message": "Alustetaan WOT…"
+    }, 
+    "messages_notready": {
+        "message": "Otetaan WOT-lisäosa käyttöön…"
+    }, 
+    "messages_failed": {
+        "message": "Luokitusten lataaminen epäonnistui."
+    }, 
+    "messages_notavailable": {
+        "message": "Luokitukset eivät ole käytettävissä."
+    }, 
+    "messages_loading": {
+        "message": "Ladataan luokituksia…"
+    }, 
+    "ratingwindow_settings": {
+        "message": "Asetukset"
+    }, 
+    "ratingwindow_guide": {
+        "message": "Opastuskierros", 
+        "description": ""
+    }, 
     "ratingwindow_forum": {
         "message": "Foorumi"
-    },
-	"ratingwindow_wotrating": {
-		"message": "WOT-luokitus"
-	},
-	"ratingwindow_myrating": {
-		"message": "Oma luokitus"
-	},
-	"ratingwindow_viewscorecard": {
-		"message": "Näet yksityiskohtaiset tiedot tuloskortista"
-	},
-	"ratingwindow_addcomment": {
-		"message": "Voit myös lisätä oman kommentin"
-	},
-	"ratingwindow_inpartnership": {
-		"message": "Kumppanina"
-	},
-	"ratingwindow_newversion": {
-		"message": "Uusi versio – asenna napsauttamalla tätä"
-	},
-	"ratingwindow_helptext": {
-		"message": ""
-	},
-	"ratingwindow_helplink": {
-		"message": "Haluatko lisätä kommentin?"
-	},
-	"warnings_information": {
-		"message": "Näytä luokitustiedot ja kommentit"
-	},
-	"warnings_ratesite": {
-		"message": "Sivusto on turvallinen, haluan <a>luokitella sen</a>"
-	},
-	"warnings_gotosite": {
-		"message": "Ohita varoitus ja siirry sivustoon"
-	},
-	"warnings_reputation": {
-		"message": "Tällä sivustolla on huono maine käyttäjien<br/>luokitusten perusteella"
-	},
-	"warnings_rating": {
-		"message": "Sivustolle antamasi huono luokitus<br/>laukaisi varoituksen"
-	},
-	"warnings_unknown": {
-		"message": "Tämän sivuston luokitus on tuntematon"
-	},
-	"warnings_warning": {
-		"message": "Varoitus!"
-	},
-	"warnings_goto": {
-		"message": "Siirry sivustoon"
-	},
-	"warnings_leave": {
-		"message": "Poistu sivustolta"
-	},
-	"warnings_back": {
-		"message": "Takaisin"
-	},
-	"contextmenu_open_scorecard": {
-		"message": "Open WOT scorecard"
-	}
+    }, 
+    "ratingwindow_profile": {
+        "message": "Profiilini", 
+        "description": ""
+    }, 
+    "ratingwindow_wotrating": {
+        "message": "Sivuston maine käyttäjien arviointien perusteella", 
+        "description": ""
+    }, 
+    "ratingwindow_myrating": {
+        "message": "Oma luokitus"
+    }, 
+    "ratingwindow_viewscorecard": {
+        "message": "Katso lisätietoja ja kommentteja", 
+        "description": ""
+    }, 
+    "ratingwindow_addcomment": {
+        "message": "Lisää kommentti", 
+        "description": ""
+    }, 
+    "ratingwindow_editcomment": {
+        "message": "Muokkaa kommenttia", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings": {
+        "message": "Takaisin arviointeihin", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings_category": {
+        "message": "Valitse kategoria", 
+        "description": ""
+    }, 
+    "ratingwindow_newversion": {
+        "message": "Uusi versio – asenna napsauttamalla tätä"
+    }, 
+    "ratingwindow_invite_rw": {
+        "message": "Voit arvioida sivustoja tämän työkalun avulla. Klikkaa värillisiä palkkeja ilmaistaksesi, kuinka paljon luotat sivustoon.", 
+        "description": ""
+    }, 
+    "warnings_information": {
+        "message": "Katso lisätietoja ja kommentteja", 
+        "description": ""
+    }, 
+    "warnings_ratesite": {
+        "message": "Jos luotat tähän sivustoon, <a>arvioi se</a>", 
+        "description": ""
+    }, 
+    "warnings_reratesite": {
+        "message": "<a>Klikkaa tästä</a>, jos haluat arvioida sivuston uudestaan", 
+        "description": ""
+    }, 
+    "warnings_reputation": {
+        "message": "Tällä sivustolla on huono maine käyttäjien<br/>luokitusten perusteella"
+    }, 
+    "warnings_rating": {
+        "message": "Sivustolle antamasi huono luokitus<br/>laukaisi varoituksen"
+    }, 
+    "warnings_unknown": {
+        "message": "Tämän sivuston luokitus on tuntematon"
+    }, 
+    "warnings_warning": {
+        "message": "Varoitus!"
+    }, 
+    "warnings_goto": {
+        "message": "Siirry sivustoon"
+    }, 
+    "warnings_leave": {
+        "message": "Poistu", 
+        "description": ""
+    }, 
+    "warnings_back": {
+        "message": "Takaisin"
+    }, 
+    "warnings_reasontitle": {
+        "message": "Käyttäjät ovat tunnistaneet seuraavat ongelmat", 
+        "description": ""
+    }, 
+    "warnings_othersreasontitle": {
+        "message": "Muiden käyttäjien mielipiteet", 
+        "description": ""
+    }, 
+    "warnings_noreasontitle": {
+        "message": "Käyttäjät eivät ole tunnistaneet sivustoa vielä ja ovat vain arvioineet sen", 
+        "description": ""
+    }, 
+    "contextmenu_open_scorecard": {
+        "message": "Avaa WOT-pistetaulukko", 
+        "description": ""
+    }, 
+    "wt_learnmore_link": {
+        "message": "<a id='wt-learnmore-link'>Opi lisää</a> WOTista.", 
+        "description": ""
+    }, 
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Uusi WOT on lisätty selaimellesi.</p><p>Aloita sivustojen arviointi klikkaamalla tätä ikonia {ICO1}.</p><p>{WT_LEARNMORE}</p>",
+        "description": ""
+    }, 
+    "wt_intro_0_btn": {
+        "message": "OK, ymmärretty", 
+        "description": ""
+    }, 
+    "wt_warning_text": {
+        "message": "<p>WOT varoittaa sinua, jos tulet sivustolle, jolla on huono maine muiden käyttäjien kokemuksien perusteella tai joka on kolmannen osapuolen mustalla listalla. Varoitus näyttää sinulle myös huonon maineen syyt.</p><p>{WT_LEARNMORE}</p><p>Jos et halua nähdä varoituksia, voit poistaa ne käytöstä.</p>",
+        "description": ""
+    }, 
+    "wt_warning_turnoff": {
+        "message": "Poista varoitukset käytöstä", 
+        "description": ""
+    }, 
+    "wt_warning_ok": {
+        "message": "OK, ymmärretty", 
+        "description": ""
+    }, 
+    "wt_rw_text_hdr": {
+        "message": "Jaa kokemuksesi!", 
+        "description": ""
+    }, 
+    "wt_rw_text": {
+        "message": "<p>WOT-arviointi ikkuna näyttää sinulle käyttäjien kokemuksiin perustuen maineeltaan parhaimman sivuston. Nyt voi arvostella ja kommentoida suoraan päivitetystä ikkunasta. Aloita arviointi klikkaamalla väritettyjä palkkeja.</p><p class='wot-c'><a id='wt-learnmore-link'>Opi lisää</a> WOTista.</p>",
+        "description": ""
+    }, 
+    "wt_donut_msg": {
+        "message": "<p>WOT näyttää sinulle sivustojen maineen muiden käyttäjien kokemuksiin perustuen liikennevalojen tapaisella ikonilla.</p><p>Liikuta hiirtäsi ikonin päällä nähdäksesi maineen ja syyt maineeseen.</p>",
+        "description": ""
+    }, 
+    "wt_donut_btn": {
+        "message": "OK, ymmärretty", 
+        "description": ""
+    }, 
+    "fbl_hideforever": {
+        "message": "Piilota ikuisesti", 
+        "description": ""
+    }, 
+    "fbl_submit": {
+        "message": "Lähetä", 
+        "description": ""
+    }, 
+    "fbl_whatisthis": {
+        "message": "Mikä tämä on?", 
+        "description": ""
+    }, 
+    "fbl_optout_text": {
+        "message": "Jos haluat, ettei sinulta kysytä kysymyksiä, klikkaa \"kyllä\"", 
+        "description": ""
+    }, 
+    "fbl_optout_yes": {
+        "message": "kyllä", 
+        "description": ""
+    }, 
+    "fbl_optout_no": {
+        "message": "Ei", 
+        "description": ""
+    }, 
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://beta.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> työskentelee parantaakseen verkkosuvistojen turvallisuutta ja laatua miljoonis käyttäjiä varten. Voit auttaa meitä lähettämällä mielipiteesti aina, kun näet tämän kehotteen.", 
+        "description": ""
+    }, 
+    "fbl_final": {
+        "message": "Kiitos!", 
+        "description": ""
+    }, 
+    "fbl_this_website": {
+        "message": "Tämä sivusto", 
+        "description": ""
+    }, 
+    "fbl_dismiss": {
+        "message": "lopeta", 
+        "description": ""
+    }, 
+    "ratingwindow_question0": {
+        "message": "Kuinka paljon luotat sivustoon?", 
+        "description": ""
+    }, 
+    "ratingwindow_question4": {
+        "message": "Sopiiko sivusto lapsille?", 
+        "description": ""
+    }, 
+    "ratingwindow_categories": {
+        "message": "Valitse vähintään yksi kategoria", 
+        "description": ""
+    }, 
+    "ratingwindow_comment": {
+        "message": "Jätä kommentti kuvataksesi kokemustasi tästä sivustosta", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_placeholder": {
+        "message": "Kirjoita kommenttisi tähän...", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_regtext": {
+        "message": "Tarvitset tilin voidaksesi julkaista kommenttisi.", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_register": {
+        "message": "Luo tili nyt", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchatext": {
+        "message": "Voidaksesi julkaista kommenttisi, sinun täytyy syöttä kuvavarmennus tulostaulukolle.", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchalink": {
+        "message": "Avaa tulostaulukko nyt", 
+        "description": ""
+    }, 
+    "ratingwindow_commenthints": {
+        "message": "<p>Ole tarkka</p><p>Anna todisteita tai esimerkki</p><p>Kommentoi todellisten kokemustesi mukaan</p><p>Älä lähetä roskapostia</p>", 
+        "description": ""
+    }, 
+    "ratingwindow_novoted": {
+        "message": "Klikkaa tästä antaaksesi syyn arvostelullesi valitsemalla kategorian.", 
+        "description": ""
+    }, 
+    "ratingwindow_morecats": {
+        "message": "lisää", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_change": {
+        "message": "vaihda", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_category": {
+        "message": " ", 
+        "description": "TODO: TRANSLATE"
+    }, 
+    "ratingwindow_fulllist": {
+        "message": "näytä koko lista", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_yes": {
+        "message": "Kyllä", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_no": {
+        "message": "Ei", 
+        "description": ""
+    }, 
+    "messages_ready": {
+        "message": "Maine", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r0": {
+        "message": "Arvioidaksesi klikkaa palkkia", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r1": {
+        "message": "En luota", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r2": {
+        "message": "En luota", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r3": {
+        "message": "se on epäilyttävä", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r4": {
+        "message": "Luotan", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r5": {
+        "message": "Luotan", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r0": {
+        "message": "Arvioidaksesi klikkaa palkkia", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r1": {
+        "message": "ei sopiva", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r2": {
+        "message": "ei sopiva", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r3": {
+        "message": "ole varovainen", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r4": {
+        "message": "sopiva", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r5": {
+        "message": "sopiva", 
+        "description": ""
+    }, 
+    "testimony_unrated": {
+        "message": "ei mielipidettä", 
+        "description": ""
+    }, 
+    "testimony_delete": {
+        "message": "poista", 
+        "description": ""
+    }, 
+    "buttons_delete": {
+        "message": "Poista arvostelut", 
+        "description": ""
+    }, 
+    "buttons_delete_title": {
+        "message": "Poista arvosteluni ja kategoriani verkkosivulta", 
+        "description": ""
+    }, 
+    "buttons_cancel": {
+        "message": "Peruuta", 
+        "description": ""
+    }, 
+    "buttons_save": {
+        "message": "Tallenna", 
+        "description": ""
+    }, 
+    "buttons_ok": {
+        "message": "OK", 
+        "description": ""
+    }, 
+    "popup_headertext": {
+        "message": "Klikkaa nähdäksesi lisätietoja", 
+        "description": ""
+    }, 
+    "popup_nocattext": {
+        "message": "Jaa mielipiteesi sivustosta", 
+        "description": ""
+    }, 
+    "ratingwindow_thankyou": {
+        "message": "Kiitos, kun jaoit kokemuksesi!", 
+        "description": ""
+    }, 
+    "activityscore_text": {
+        "message": "Aktiviteettituloksesi on nyt", 
+        "description": ""
+    }, 
+    "activityscore_rookie": {
+        "message": "aloittelija", 
+        "description": ""
+    }, 
+    "activityscore_bronze": {
+        "message": "pronssi", 
+        "description": ""
+    }, 
+    "activityscore_silver": {
+        "message": "hopea", 
+        "description": ""
+    }, 
+    "activityscore_gold": {
+        "message": "kulta", 
+        "description": ""
+    }, 
+    "activityscore_platinum": {
+        "message": "platina", 
+        "description": ""
+    }, 
+    "activityscore_next": {
+        "message": "Jatka arvosteluja yltääksesi {NEXT_LEVEL} tasolle!", 
+        "description": ""
+    }, 
+    "bl_description": {
+        "message": "Tämä sivusto on kolmannen osapuolen mustalla listalla", 
+        "description": ""
+    }, 
+    "bl_description_pl": {
+        "message": "Tämä sivusto on kolmannen osapuolen mustalla listalla", 
+        "description": ""
+    }, 
+    "bl_information": {
+        "message": "WOT käyttää kolmannen osapuolen mustia listoja varoittaakseen käyttäjiä teknisistä haitoista, kuten viruksista ja haittaohjelmista. <a>Lue lisää</a>", 
+        "description": ""
+    }, 
+    "bl_malware": {
+        "message": "Haittaohjelma", 
+        "description": ""
+    }, 
+    "bl_phishing": {
+        "message": "Tietojen kalastelu", 
+        "description": ""
+    }, 
+    "bl_scam": {
+        "message": "Huijaus", 
+        "description": ""
+    }, 
+    "bl_spam": {
+        "message": "ROSKAPOSTI", 
+        "description": ""
+    }, 
+    "bl_tracking": {
+        "message": "Seuranta", 
+        "description": ""
+    }, 
+    "bl_other": {
+        "message": "Muut syyt", 
+        "description": ""
+    }, 
+    "warning_button": {
+        "message": "Luokitustiedot", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_rating": {
+        "message": "Olet antanut tälle sivustolle huonon luokituksen.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_reputation": {
+        "message": "Tällä sivustolla on huono maine käyttäjien luokitusten perusteella.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_offline": {
+        "message": "Poistettu käytöstä, kun selain on offline-tilassa.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_disabled": {
+        "message": "Olet poistanut lisäosan käytöstä. Ota se käyttöön napsauttamalla tätä.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_title": {
+        "message": "WOT-päivitys", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_yes": {
+        "message": "Päivitä nyt", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_restart": {
+        "message": "Ota WOT käyttöön käynnistämällä selain uudelleen.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_error_register": {
+        "message": "Lisäosan käyttöönotto epäonnistui.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warning": {
+        "message": "WOT-Varoitus: %S", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_uninstall": {
+        "message": "WOT-asennus poistetaan uudelleenkäynnistyksen jälkeen.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_blocked": {
+        "message": "Estetty", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_check": {
+        "message": "Käytä automaattisia päivityksiä (suositeltu asetus)", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_no": {
+        "message": "Muistuta myöhemmin", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_message": {
+        "message": "WOT-lisäosasta on saatavissa uusi versio. Haluatko päivittää lisäosan?", 
+        "description": "imported from firefox add-on"
+    }
 }

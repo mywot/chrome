@@ -58,10 +58,15 @@ $.extend(wot, { prefs: {
 		warning_unknown_4:		false,
 		ratingwindow_shown:     0,   // how many times RatingWindow was opened
 		activity_score:         0,
+        show_fulllist:          false,  // Whether to show full list of categories on rating window selector
         super_wtips:            false,  // "super" settings for debug purpose: "Show welcome tips always"
         super_fbl:              false,   // "super" settings for debug purpose: "Show FBL always if question is available"
-        super_showtestimonies:  false
-	},
+        super_showtestimonies:  false,
+
+        settingsui_warnlevel:   "normal",   // this is should not be considered by the add-on. Only to render prefs on the settings page
+        settingsui_parental:    false,
+        settingsui_searchlevel: "normal"
+    },
 
 	set: function(name, value)
 	{
@@ -83,7 +88,6 @@ $.extend(wot, { prefs: {
 			"warning_level_4": 39,
 			"warning_type_4": wot.warningtypes.overlay,
 			"show_application_2": false
-
 		};
 
 		if (wot.env.is_mailru) { // override only for MRU browser
@@ -102,7 +106,8 @@ $.extend(wot, { prefs: {
 			var value;
 
 			try {
-				value = JSON.parse(localStorage.getItem(name));
+                var v = localStorage.getItem(name);
+				value = v !== "undefined" ? JSON.parse(v) : undefined;
 			} catch (e) {
 			}
 

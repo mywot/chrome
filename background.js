@@ -25,6 +25,10 @@ $.extend(wot, { core: {
 	badge_status: null,
 	first_run: false,       // sesion variable, to know if this launch is the first after installation
 	launch_time: null,      // time when current session was started
+    badge: {
+        type: null,
+        text: ""
+    },
 
 	loadratings: function (hosts, onupdate)
 	{
@@ -42,13 +46,13 @@ $.extend(wot, { core: {
 		return false;
 	},
 
-	update: function ()
+	update: function (update_rw)
 	{
 		try {
 			chrome.windows.getAll({}, function(windows) {
 				windows.forEach(function(view) {
 					chrome.tabs.getSelected(view.id, function(tab) {
-						wot.core.updatetab(tab.id);
+						wot.core.updatetab(tab.id, update_rw);
 					});
 				});
 			});
@@ -57,9 +61,10 @@ $.extend(wot, { core: {
 		}
 	},
 
-	updatetab: function(id)
+	updatetab: function(id, update_rw)
 	{
 		chrome.tabs.get(id, function(tab) {
+            if (!tab) return;
 			wot.log("core.updatetab: " + id + " = " + tab.url);
 
 			if (wot.api.isregistered()) {
@@ -68,7 +73,7 @@ $.extend(wot, { core: {
 						target: hosts[0],
 						decodedtarget: wot.url.decodehostname(hosts[0]),
 						cached: wot.cache.get(hosts[0]) || { value: {} }
-					});
+					}, update_rw);
 				});
 
 				wot.core.engage_me();
@@ -100,12 +105,13 @@ $.extend(wot, { core: {
 				if (result != "rx") {
 					if (this.unseenmessage()) {
 						result = "message_" + result;
-					} else if (result != "r0" &&
+					}
+                    else if (result != "r0" &&
 								!wot.components.some(function(item) {
 									return (cached.value[item.name] &&
 											cached.value[item.name].t >= 0);
 								})) {
-						result = "new_" + result;
+						result = "new_" + result;   // this adds yellow star on top of the donut
 					}
 				}
 
@@ -142,29 +148,102 @@ $.extend(wot, { core: {
 				});
 			};
 
-			icon.src = wot.geticon(this.geticon(data), 19,
-							wot.prefs.get("accessible"));
+			icon.src = wot.geticon(this.geticon(data), 19, wot.prefs.get("accessible"));
 		} catch (e) {
 			console.log("core.seticon: failed with " + e + "\n");
 		}
 	},
 
-	updatetabstate: function(tab, data)
+    get_ratingwindow: function (callback) {
+//        Enumerates "views" of current tab of current window and if WOT RatingWindow is found,
+//        then call callback and pass selected tab and view found to it.
+//        Callback should be as some_function (tab, view)
+
+        chrome.tabs.query({
+                active: true,           // lookup for active tabs
+                currentWindow: true     // in active windows
+            },
+            function (tabs) {
+                for (var i in tabs) {
+                    var tab = tabs[i];  // now we have active tab to pass it to callback function
+                    var views = chrome.extension.getViews({});
+
+                    for (var i in views) {
+                        if (views[i].wot && views[i].wot.ratingwindow) {
+                            callback(tab, views[i]);
+                        }
+                    }
+                }
+            });
+    },
+
+    update_ratingwindow: function (tab0, data) {
+        // Invokes update() of the Rating Window
+        wot.core.get_ratingwindow(function (tab, view) {
+            if (tab0.id == tab.id) {    // update RW only for the related tab
+                view.wot.ratingwindow.update(tab, data);
+            }
+        });
+    },
+
+    update_ratingwindow_comment: function () {
+        wot.core.get_ratingwindow(function (tab, view) {
+            wot.log("update_ratingwindow_comment()", tab, view);
+            var rw = view.wot.ratingwindow;
+
+            var target = wot.url.gethostname(tab.url),
+                cached = wot.cache.get(target);
+
+            // get locally stored comment if exists
+            var local_comment = wot.keeper.get_comment(target);
+            rw.update_comment(cached, local_comment, wot.cache.captcha_required);
+        });
+    },
+
+	updatetabstate: function(tab, data, update_rw)
 	{
 		try {
+
+            if (!data.target) {
+                wot.core.update_ratingwindow(tab, data);    // update RW with empty data
+                return;
+            }
+
+            var cached = data.cached || {};
+
 			if (tab.selected) {
-				/* update the browser action */
-				this.seticon(tab, data);
 
-				/* update the rating window */
-				var views = chrome.extension.getViews({});
+				this.seticon(tab, data); /* update the browser action */
 
-				for (var i in views) {
-					if (views[i].wot && views[i].wot.ratingwindow) {
-						views[i].wot.ratingwindow.update(tab, data);
-					}
-				}
-			}
+                var local_comment = wot.keeper.get_comment(data.target);
+
+                // First priority: is user's input submitted successfully?
+                if (local_comment && local_comment.comment && local_comment.status === wot.keeper.STATUSES.LOCAL) {
+                    this.toggle_badge(tab.id, wot.badge_types.unsaved_comment);
+
+                } else {
+
+                    // Second: is the website rated by user?
+                    if (!wot.is_rated(cached) && cached.status == wot.cachestatus.ok) {
+                        // turned off intentionally on 25.06.2013 to deploy old style of notification about unrated
+//                        this.toggle_badge(tab.id, wot.badge_types.unrated);
+                    } else {
+                        // Third: are categories selected for the website?
+                        if (cached.status == wot.cachestatus.ok && cached.value &&
+                            cached.value.cats && wot.utils.isEmptyObject(wot.select_voted(cached.value.cats))) {
+                            // categories are not selected
+                            this.set_badge(tab.id, wot.badge_types.nocategories);
+
+                        } else {
+                            this.set_badge(tab.id, wot.core.badge.type, wot.core.badge.text);
+                        }
+                    }
+                }
+
+                /* update the rating window */
+                if (update_rw) wot.core.update_ratingwindow(tab, data);
+
+            }
 
 			/* update content scripts */
 			var warning_type = this.updatetabwarning(tab, data);
@@ -213,7 +292,8 @@ $.extend(wot, { core: {
 			var prefs = [
 				"accessible",
 				"min_confidence_level",
-				"warning_opacity"
+				"warning_opacity",
+                "update:state"
 			];
 
 			wot.components.forEach(function(item) {
@@ -360,6 +440,8 @@ $.extend(wot, { core: {
 	engage_me: function()
 	{   // this is general entry point to "communication with user" activity. Function is called on every tab switch
 
+        return; // this is so for the beta-version to rewrite utilization of badge feature
+
 		var engage_settings = wot.engage_settings,
 			core = wot.core;
 
@@ -395,7 +477,7 @@ $.extend(wot, { core: {
 
 					// put a badge on the add-on's button
 					if(!core.badge_status) {
-						core.set_badge(wot.badge_types.notice);
+						core.set_badge(null, wot.badge_types.notice);
 					}
 
 				}
@@ -417,9 +499,24 @@ $.extend(wot, { core: {
 				wot.prefs.clear("status_level");
 			}
 		} catch (e) {
-			console.log("core.setuserlevel: failed with " + e + "\n");
+			console.error("core.setuserlevel: failed with ", e);
 		}
 	},
+
+    is_level: function (level) {
+        try {
+            var w_key = wot.prefs.get("witness_key"),
+                user_level = wot.prefs.get("status_level");
+
+            if (!user_level && level == null) return true;
+            var h = wot.crypto.bintohex(wot.crypto.sha1.hmacsha1hex(w_key, "level="+level)); // encrypt the string by user's key
+            return (user_level == h);
+
+        } catch (e) {
+            console.error("wot.core.is_level failed", e);
+            return false;   // in case of errors it is safer to assume that user is not registered yet
+        }
+    },
 
 	processrules: function(url, onmatch)
 	{
@@ -474,10 +571,11 @@ $.extend(wot, { core: {
 		chrome.tabs.create({ url: c_url });
 	},
 
-	open_scorecard: function(target, context)
+	open_scorecard: function(target, context, hash)
 	{
 		if(!target) return;
-		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context);
+        hash = hash ? "#" + hash : "";
+		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context) + hash;
 		chrome.tabs.create({ url: url });
 	},
 
@@ -508,8 +606,35 @@ $.extend(wot, { core: {
 		});
 	},
 
-	set_badge: function(type, text)
-	{   /* sets the badge on the BrowserAction icon. If no params are provided, set the "notice" type */
+    toggle_badge: function (tab_id, type, text) {
+        // Makes badge on the donut blink several times
+        var counter = 5,
+            delay = 220,
+            on = true,
+            ticker = null;
+
+        ticker = window.setInterval(function(){
+            if (counter > 0) {
+//                console.log("TICK", counter);
+
+                if (counter % 2 == 0) {
+                    wot.core.set_badge(tab_id, null);
+                } else {
+                    wot.core.set_badge(tab_id, type, text);
+                }
+
+                counter -= 1;
+            } else {
+                if (ticker) {
+                    window.clearInterval(ticker);
+                }
+            }
+        }, delay);
+
+    },
+
+	set_badge: function (tab_id, type, text)
+	{   /* sets the badge on the BrowserAction icon. If no params are provided, clear the badge */
 		var type = type || false,
 			text = text || "", color = "";
 
@@ -517,27 +642,70 @@ $.extend(wot, { core: {
 			type = type || wot.badge_types.notice;
 			text = text || type.text;
 			color = type.color || "#ffffff";
-			chrome.browserAction.setBadgeBackgroundColor({ color: color });
+
+            var obj = {
+                color: color
+            };
+
+            if (tab_id) {
+                obj.tabId = tab_id;
+            }
+
+			chrome.browserAction.setBadgeBackgroundColor(obj);
 			wot.core.badge_status = type;   // remember badge's status to prevent concurrent badges
 		} else {
 			wot.core.badge_status = null;
 		}
 
-		chrome.browserAction.setBadgeText({ text: text });
+		var obj = { text: text };
+        if (tab_id) {
+            obj.tabId = tab_id;
+        }
+        chrome.browserAction.setBadgeText(obj);
 	},
 
 	show_updatepage: function()
 	{
 		// show update page only if constant wot.firstrunupdate was increased
 		var update = wot.prefs.get("firstrun:update") || 0;
+        var open_update_page = true;
 
 		if (update < wot.firstrunupdate) {
 			wot.prefs.set("firstrun:update", wot.firstrunupdate);
 
-			chrome.tabs.create({
-				url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
-					wot.platform + "/" + wot.version
-			});
+            // Do some actions when the add-on is updated
+            switch (wot.firstrunupdate) {
+                case 2: // = 2 is a launch of WOT 2.0 in September 2013
+
+                    // clear welcometips counters to show them again
+                    var prefs_to_clear = [
+                        "wt_donuts_shown", "wt_donuts_shown_dt", "wt_donuts_ok",
+                        "wt_intro_0_shown", "wt_intro_0_shown_dt", "wt_intro_0_ok",
+                        "wt_rw_shown", "wt_rw_shown_dt", "wt_rw_ok",
+                        "wt_warning_shown", "wt_warning_shown_dt", "wt_warning_ok"
+                    ];
+
+                    for (var p in prefs_to_clear) {
+                        wot.prefs.clear(prefs_to_clear[p]);
+                    }
+
+                    // set badge "NEW"
+                    wot.core.badge.text = "new";
+                    wot.core.badge.type = wot.badge_types.notice;
+
+                    if (wot.env.is_mailru) {
+                        open_update_page = false;   // Don't open UpdatePage for Mail.ru users
+                    }
+
+                    break;
+            }
+
+			if (open_update_page) {
+                chrome.tabs.create({
+                    url: wot.urls.update + "/" + wot.i18n("lang") + "/" +
+                        wot.platform + "/" + wot.version
+                });
+            }
 		}
 	},
 
@@ -615,10 +783,11 @@ $.extend(wot, { core: {
 			/* load the manifest for reference */
 			this.loadmanifest();
 			wot.core.launch_time = new Date();
+            wot.cache_locale();
 			wot.detect_environment();
 			wot.exp.init();
 
-            wot.exp.is_running("beta-old"); // init value for "WOT beta" dummy experiment
+//            wot.exp.is_running("beta-v1"); // init value for "WOT beta" dummy experiment
 
 			/* messages */
 
@@ -637,6 +806,7 @@ $.extend(wot, { core: {
 
 						if (obj.status == wot.cachestatus.ok ||
 							obj.status == wot.cachestatus.link) {
+                            obj.value.decodedtarget = wot.url.decodehostname(obj.value.target);
 							ratings[target] = obj.value;
 						}
 					});
@@ -663,7 +833,7 @@ $.extend(wot, { core: {
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER, data.target);
-				wot.core.update();
+				wot.core.update(false);
 			});
 
 			wot.bind("message:warnings:shown", function(port, data) {
@@ -679,22 +849,26 @@ $.extend(wot, { core: {
 				wot.core.open_scorecard(data.target, data.ctx);
 			});
 
+			wot.bind("message:search:ratesite", function(port, data) {
+				wot.core.open_scorecard(data.target, data.ctx, "rate");
+			});
+
 			wot.bind("message:my:update", function(port, data) {
 				port.post("setcookies", {
 					cookies: wot.api.processcookies(data.cookies) || []
 				});
-			});
+            });
 
 			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 
 			/* event handlers */
 
 			chrome.tabs.onUpdated.addListener(function(id, obj) {
-				wot.core.updatetab(id);
+				wot.core.updatetab(id, true);
 			});
 
 			chrome.tabs.onSelectionChanged.addListener(function(id, obj) {
-				wot.core.updatetab(id);
+				wot.core.updatetab(id, true);
 			});
 
 			wot.core.createmenu();
@@ -714,12 +888,13 @@ $.extend(wot, { core: {
 			/* initialize */
 
 			wot.api.register(function() {
-				wot.core.update();
+				wot.core.update(true);
 
 				if (wot.api.isregistered()) {
 					wot.core.welcome_user();
 					wot.api.update();
-					wot.api.processpending();
+					wot.api.processpending();   // submit
+                    wot.api.comments.processpending();
 					wot.wt.init();  // initialize welcome tips engine
 					wot.surveys.init(); // init surveys engine
 				}

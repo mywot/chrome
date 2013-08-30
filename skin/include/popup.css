@@ -1,6 +1,6 @@
 /*
 	popup.css
-	Copyright © 2009-2011  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -19,146 +19,367 @@
 */
 
 .wot-popup-layer {
-	border: 0 ! important;
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	z-index: 2147483647;
-	width: 136px;
-	cursor: default;
-	-webkit-user-select: none;
+    border: 1px solid #e4e4e4 !important;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 2147483647;
+    max-width: 395px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    box-shadow: 4px 4px 6px rgba(189, 189, 189, 0.65);
+    background-color: white;
 }
+
 #wot-logo {
-	background: url("../fusion/popup-logo.png") top left no-repeat;
-	display: block;
-	height: 21px;
-	margin: 0;
-	padding: 0;
+    background: url("../fusion/logo.png") top left no-repeat;
+    margin: 0;
+    text-align: right;
+    color: #A5A4A4;
+    font-size: 11px;
+    padding: 5px 5px;
+    background-position: 6px 6px;
+    background-size: 10%;
 }
-#wot-logo.accessible {
-	background: url("../fusion/accessible/popup-logo.png") top left no-repeat;
+
+.wot-ratings {
+    display: block;
+    margin: 0;
+    padding: 0 5px 0;
+    background-color: #F9F9F9;
+    height: 97px;
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
 }
-#wot-ratings, .wot-ratings {
-	background: url("../fusion/popup.png") bottom left no-repeat;
-	display: block;
-	height: 214px;
-	margin: 0;
-	padding: 0;
+
+#wot-hostname {
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 6px 0;
+    overflow: hidden;
+    font-weight: bold;
+    color: #454545;
 }
+
 .wot-stack {
-	display: block;
-	height: 50px;
-	width: 121px;
-	margin: 0px 0px 0px 2px;
-	padding: 2px 0px 0px 9px;
+    display: table-cell;
+    height: 50px;
+    min-width: 110px;
 }
+
+.wot-stack-left {
+    padding-left: 12px;
+}
+
+.wot-stack-right {
+    padding: 0 15px;
+}
+
 .wot-header {
-	color: #878787;
-	display: block;
-	font-size: 12px;
-	font-weight: normal;
-	line-height: 14px;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	text-align: left;
-	white-space: nowrap;
-	width: 109px;
+    color: #454545;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 14px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 0 7px 0;
+    text-align: left;
+    white-space: nowrap;
 }
+
 .wot-rep {
-	background: url("../fusion/28_28/r0.png") left top no-repeat;
-	display: block;
-	height: 28px;
-	width: 28px;
-	margin: 2px 0px 0px 1px;
-	padding: 0;
-	float: left;
+    background-image: url("../b/donuts_150.png");
+    background-repeat: no-repeat;
+    background-position: 0 -165px;
+    background-size: 35px 198px;
+    height: 33px;
+    width: 35px;
+    margin-left: -4px;
+    margin-top: 7px;
+    padding: 0;
+    float: left;
 }
-.wot-rep[reputation="rx"] {
-	background: url("../fusion/28_28/rx.png") left top no-repeat;
+
+.wot-popup-layer-accessible .wot-rep {
+    background-image: url("../b/accessible/donuts_150.png");
 }
+
 .wot-rep[reputation="r1"] {
-	background: url("../fusion/28_28/r1.png") left top no-repeat;
+    background-position: 0 -132px;
 }
+
 .wot-rep[reputation="r2"] {
-	background: url("../fusion/28_28/r2.png") left top no-repeat;
+    background-position: 0 -99px;
 }
+
 .wot-rep[reputation="r3"] {
-	background: url("../fusion/28_28/r3.png") left top no-repeat;
+    background-position: 0 -66px;
 }
+
 .wot-rep[reputation="r4"] {
-	background: url("../fusion/28_28/r4.png") left top no-repeat;
+    background-position: 0 -33px;
 }
+
 .wot-rep[reputation="r5"] {
-	background: url("../fusion/28_28/r5.png") left top no-repeat;
+    background-position: 0 0;
 }
-.wot-rep.accessible {
-	background: url("../fusion/accessible/28_28/r0.png") left top no-repeat;
-}
-.wot-rep.accessible[reputation="rx"] {
-	background: url("../fusion/28_28/rx.png") left top no-repeat;
-}
-.wot-rep.accessible[reputation="r1"] {
-	background: url("../fusion/accessible/28_28/r1.png") left top no-repeat;
-}
-.wot-rep.accessible[reputation="r2"] {
-	background: url("../fusion/accessible/28_28/r2.png") left top no-repeat;
-}
-.wot-rep.accessible[reputation="r3"] {
-	background: url("../fusion/accessible/28_28/r3.png") left top no-repeat;
-}
-.wot-rep.accessible[reputation="r4"] {
-	background: url("../fusion/accessible/28_28/r4.png") left top no-repeat;
-}
-.wot-rep.accessible[reputation="r5"] {
-	background: url("../fusion/accessible/28_28/r5.png") left top no-repeat;
-}
+
 .wot-cnf {
-	background: url("../fusion/confidence-0.png") right top no-repeat;
-	display: block;
-	height: 18px;
-	width: 51px;
-	margin: 6px 32px 0px 0px;
-	padding: 0;
-	float: right;
+    height: 42px;
+    margin-left: -2px;
+    margin-top: -5px;
+    width: 34px;
+    background: url("../b/confidence_150dpi.png") top left no-repeat;
+    background-size: 33px auto;
+    background-position: 0 -168px;
+    padding: 0;
+    float: left;
 }
+
 .wot-cnf[confidence="c1"] {
-	background: url("../fusion/confidence-1.png") right top no-repeat;
+    background-position: 0 -126px;
 }
+
 .wot-cnf[confidence="c2"] {
-	background: url("../fusion/confidence-2.png") right top no-repeat;
+    background-position: 0 -84px;
 }
+
 .wot-cnf[confidence="c3"] {
-	background: url("../fusion/confidence-3.png") right top no-repeat;
+    background-position: 0 -42px;
 }
+
 .wot-cnf[confidence="c4"] {
-	background: url("../fusion/confidence-4.png") right top no-repeat;
+    background-position: 0 0;
 }
+
 .wot-cnf[confidence="c5"] {
-	background: url("../fusion/confidence-5.png") right top no-repeat;
+    background-position: 0 -210px;
+}
+
+.wot-popup-layer .rating-legend-wrapper {
+    /*position: absolute;*/
+    background: url("../b/bubl_speech_c_150.png")  top left repeat-x;
+    background-size: 1px 24px;
+    height: 24px;
+    margin: 1px 0 auto 14px;
+    float: left;
+    position: relative;
+
+    display: none; /* don't show bubble speeches for now until we have their new styles */
+}
+
+.wot-popup-layer .rating-legend-wrapper:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 17px;
+    margin-left: -17px;
+    background: url("../b/bubl_speech_l_150.png") top left no-repeat;
+    background-size: 17px 24px;
+}
+
+.wot-popup-layer .rating-legend-wrapper:after {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 17px;
+    right: -17px;
+    background: url("../b/bubl_speech_r_150.png") top left no-repeat;
+    background-size: 10px 24px;
+    top: 0px;
+}
+
+.wot-popup-layer .rating-legend {
+    position: relative;
+    height: 24px;
+    min-width: 48px;
+    margin: -2px 0 0;
+    padding: 7px 4px 0 0;
+    color: #454545;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#wot-categories {
+    /* Block of categories */
+    clear: both;
+}
+
+#wot-cat-text {
+    /* This element is for optional text when no categories are identified */
+    font-size: 11px;
+    color: #3073C5;
+    padding: 6px 5px;
+    text-align: center;
+    display: none;
+}
+
+#wot-cat-text:hover {
+    text-decoration: underline;
+}
+
+#wot-cat-list {
+    /* List of categories */
+    display: none;
+    padding: 0 10px 0 40px !important;
+    margin: 6px 0 !important;
+}
+
+.wot-popup-layer .cat-item {
+    font-size: 9pt;
+    color: silver;
+    list-style: none !important;
+    padding: 0.2em 0 !important;
+}
+
+.wot-popup-layer .cat-item:before {
+    width: 1em;
+    height: 1em;
+    border: 1px solid #C0C0C0;
+    background-color: #C0C0C0;
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    margin-left: -1.65em;
+    margin-top: 0;
+}
+
+.c-neutral.cat-item:before {
+    background-color: #707070;
+    background: -webkit-radial-gradient(center, ellipse cover, #9e9c9c 0%, #707070 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #7d7d7d;
+}
+
+.wot-popup-layer-accessible .c-neutral.cat-item:before {
+    background-color: #707070;
+    background: -webkit-radial-gradient(center, ellipse cover, #9B9898 0%, #7E7E7E 100%);
+    border-color: #707070;
+}
+
+.c-questionable.cat-item:before {
+    background-color: #ffd100;
+    background: -webkit-radial-gradient(center, ellipse cover, #f8df68 0%, #f6cd0e 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #f6cd0e;
+}
+
+.wot-popup-layer-accessible .c-questionable.cat-item:before {
+    background-color: #F6CD0E;
+    background: -webkit-radial-gradient(center, ellipse cover, #FEE68A 0%, #F5CC33 100%);
+    border-color: #F6CD0E;
+}
+
+.c-negative.cat-item:before {
+    background-color: #f66d3f;
+    background: -webkit-radial-gradient(center, ellipse cover, #fca080 0%, #f77448 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #f66d3f;
+}
+
+.wot-popup-layer-accessible .c-negative.cat-item:before {
+    background-color: #1F1F1F;
+    background: -webkit-radial-gradient(center, ellipse cover,#939393 0%, #1F1F1F 100%);
+    border-color: #1F1F1F;
+}
+
+.c-positive.cat-item:before {
+    background-color: #68c800;
+    background: -webkit-radial-gradient(center, ellipse cover, #83d561 0%, #6dc14a 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #6dc14a;
+}
+
+.wot-popup-layer-accessible .c-positive.cat-item:before {
+    background-color: #B8B8B8;
+    background: -webkit-radial-gradient(center, ellipse cover, #FDFDFD 0%, #F7F7F7 100%);
+    border-color: #B8B8B8;
+}
+
+/* reset styles */
+.wot-popup-layer .c0,
+.wot-popup-layer .c1,
+.wot-popup-layer .c2,
+.wot-popup-layer .c3,
+.wot-popup-layer .c4,
+.wot-popup-layer .c5 {
+    height: auto;
+}
+
+.wot-popup-layer .c0 {
+    font-size: 11px !important;
+    color: #a7a7a7 !important;
+}
+
+.wot-popup-layer .c0.cat-item:before {
+    width: 4px !important;
+    height: 4px !important;
+    margin-left: -19px !important;
+    margin-top: 4px !important;
+}
+
+.wot-popup-layer .c1 {
+    font-size: 12px;
+    color: #a7a7a7;
+}
+
+.wot-popup-layer .c1.cat-item:before {
+    width: 6px;
+    height: 6px;
+    margin-left: -20px;
+    margin-top: 3px;
+}
+
+.wot-popup-layer .c2,
+.wot-popup-layer .c3 {
+    font-size: 12px;
+    color: #646464;
+}
+
+.wot-popup-layer .c2.cat-item:before,
+.wot-popup-layer .c3.cat-item:before {
+    width: 8px;
+    height: 8px;
+    margin-left: -21px;
+    margin-top: 1px;
+}
+
+.wot-popup-layer .c4,
+.wot-popup-layer .c5 {
+    font-size: 12px;
+    color: #5c5c5c;
+    font-weight: bold;
+}
+
+.wot-popup-layer .c4.cat-item:before,
+.wot-popup-layer .c5.cat-item:before {
+    width: 10px;
+    height: 10px;
+    margin-left: -22px;
 }
 
 /* small hints about user's ratings on the popup */
+
+.wot-corners-wrapper {
+    position: relative;
+}
+
 .wot-pp-tr,
 .wot-pp-cs {
-    position: relative;
+    position: absolute;
     width: 0;
     height: 0;
-    bottom: 7px;
-    left: 1px;
+    bottom: 0;
+    left: 0;
     border: 4px solid transparent;
-    /*border-left-color: red;*/
-    /*border-bottom-color: red;*/
 }
 
 .wot-pp-cs {
-    right: 6px;
+    right: 0;
     left: auto;
     margin-left: auto;
-    bottom: 15px;
-    /*border-left-color: transparent;*/
-    /*border-right-color: red;*/
+    bottom: 0;
 }
 
 .wot-pp-tr[r="r1"] {

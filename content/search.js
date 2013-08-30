@@ -378,14 +378,13 @@ wot.search = {
 			}
 
 			var options = {
-				subtype: this.settings.accessible ? "plain": "mini" // we don't have mini icons-16 for accesible mode yet
+				subtype: "plain"
 			};
 
 			css = this.formatcss(rule.style)
 					.replace(/NAME/g, obj.target)
 					.replace(/IMAGE/g,
-						chrome.extension.getURL(wot.geticon(r, 16,
-								this.settings.accessible, options)));
+						chrome.extension.getURL(wot.geticon(r, 16, this.settings.accessible, options)));
 		}
 
 		return css;
@@ -445,6 +444,7 @@ wot.search = {
 			"ninja_donuts",
 			"ninja_announceshown",
 			"ninja_wave",
+            "update:state",
             "super_showtestimonies"
 		];
 
@@ -491,7 +491,9 @@ wot.search = {
 					wot.utils.attach_style({style: wot.search.formatcss(data.rule.prestyle)}, wot.search.getname("prestyle"), window);
 				}
 
-				if (data.rule.popup && data.rule.popup.match &&
+				wot.init_categories(wot.search.settings);   // init categories
+
+                if (data.rule.popup && data.rule.popup.match &&
 						data.rule.popup.match.length) {
 					var elem = wot.search.findmatchingelement(
 									rule.popup.match[0], window);

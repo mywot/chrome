@@ -21,6 +21,7 @@
 $.extend(wot, { cache: {
 	cache: {},
 	flags: {},
+    captcha_required: false,
 
 	maxage: 30 * 60 * 1000, /* 30min */
 
@@ -47,11 +48,16 @@ $.extend(wot, { cache: {
 	set: function(name, status, value)
 	{
 		try {
-			this.cache[name] = {
-				updated: Date.now(),
-				status: status || wot.cachestatus.error,
-				value: value || {}
-			};
+
+            if (!this.cache[name]) {
+                this.cache[name] = {};
+            }
+
+            $.extend(this.cache[name], {
+                updated: Date.now(),
+                status: status || wot.cachestatus.error,
+                value: value || {}
+            });
 
 			wot.trigger("cache:set", [ name, this.cache[name ] ]);
 			return true;
@@ -61,6 +67,34 @@ $.extend(wot, { cache: {
 
 		return false;
 	},
+
+    set_comment: function (name, comment_data) {
+        wot.log("wot.cache.set_comment(name, comment_data)", name, comment_data);
+
+        if (!this.cache[name]) {
+            this.cache[name] = {}
+        }
+
+        $.extend(this.cache[name], {
+            comment: comment_data
+        });
+    },
+
+    update_comment: function (name, data) {
+        wot.log("wot.cache.update_comment(name, comment_data)", name, data);
+
+        if (this.cache[name] && this.cache[name].comment) {
+            $.extend(this.cache[name].comment, data);
+        } else {
+            wot.log("WARN! wot.cache.update_comment() can't find comment data for ", name);
+        }
+    },
+
+    remove_comment: function (name) {
+        if (this.cache[name] && this.cache[name].comment) {
+            delete this.cache[name].comment;
+        }
+    },
 
 	get: function(name)
 	{
@@ -77,7 +111,7 @@ $.extend(wot, { cache: {
 				}
 			}
 		} catch (e) {
-			console.log("cache.get: failed with ", e);
+			console.log("cache.get: failed with", e);
 		}
 
 		return null;
@@ -92,7 +126,7 @@ $.extend(wot, { cache: {
 				return true;
 			}
 		} catch (e) {
-			console.log("cache.clear: failed with ", e);
+			console.log("cache.clear: failed with", e);
 		}
 
 		return false;
@@ -123,7 +157,7 @@ $.extend(wot, { cache: {
 
 	purge: function()
 	{
-		wot.log("cache.purge\n");
+		wot.log("cache.purge");
 
 		/* clear all expired items by going through them */
 		this.each(function() {});
@@ -133,8 +167,12 @@ $.extend(wot, { cache: {
 			}, this.maxage);
 	},
 
-	cacheratingstate: function(name, state)
+	cacheratingstate: function(name, state, votes_changed)
+    // Detects changes in user's ratings and stores them in local cache. Returns the flag whether the testimonies have been changed.
 	{
+        var bg = chrome.extension.getBackgroundPage();
+//        bg.console.log("cacheratingstate(name, state, votes_changed)", arguments);
+
 		try {
 			state = state || {};
 
@@ -153,6 +191,23 @@ $.extend(wot, { cache: {
 						}
 					}
 				});
+
+//                bg.console.log("testimonies, changed?", changed);
+
+                if (!wot.utils.isEmptyObject(votes_changed)) {
+                    for (var cid in votes_changed) {
+                        if (!obj.value.cats[cid]) {
+                            obj.value.cats[cid] = {
+                                id: cid,
+                                c: 0    // since it wasn't in the cache, then it is not identified (?)
+                            }
+                        }
+                        obj.value.cats[cid].v = votes_changed[cid];
+                    }
+                    changed = true;
+                }
+
+//                bg.console.log("categories, changed?", changed);
 
 				if (changed) {
 					this.set(name, obj.status, obj.value);
@@ -181,7 +236,9 @@ $.extend(wot, { cache: {
 				var index = $(this).attr("index");
 
 				var obj = {
-					target: hosts[index || 0]
+					target: hosts[index || 0],
+                    cats: {},
+                    blacklist: []
 				};
 
 				if (!obj.target) {
@@ -194,7 +251,7 @@ $.extend(wot, { cache: {
 					normalized = wot.crypto.decrypt(normalized, nonce, index);
 
 					if (/^[\x00-\xFF]*$/.test(normalized)) {
-						obj.normalized = normalized;
+						obj.normalized = wot.url.decodehostname(normalized);
 					}
 				}
 
@@ -223,6 +280,35 @@ $.extend(wot, { cache: {
 						obj[name] = data;
 					}
 				});
+
+                // parse site's categories and user's votes
+                $("category", this).each(function() {
+                    var name = $(this).attr("name"),
+                        c = $(this).attr("c"),
+                        vote = $(this).attr("vote"),
+                        inherited = $(this).attr("inherited");  // we don't use this right now
+
+                    if (name) {
+                        obj.cats[name] = {
+                            id: parseInt(name),
+                            c: $.isNumeric(c) ? parseInt(c) : 0,
+                            v: $.isNumeric(vote) ? parseInt(vote) : undefined
+                        };
+                    }
+                });
+
+                // parse blacklisting info
+                $("bl", this).each(function() {
+                    var type = $(this).attr("type"),
+                        time = $(this).attr("time");
+
+                    if (type) {
+                        obj.blacklist.push({
+                            type: type,
+                            time: time
+                        });
+                    }
+                });
 
 				// parse survey's question whether it exists
 				$("question", this).each(function() {

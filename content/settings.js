@@ -1,6 +1,6 @@
 /*
 	content/settings.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -19,9 +19,10 @@
 */
 
 wot.settings = {
-	trigger: /^http(s)?\:\/\/(www\.)?mywot\.com\/([^\/]{2}(-[^\/]+)?\/)?settings\/.+/,
-	forward: /^http(s)?\:\/\/(www\.)?mywot\.com\/([^\/]{2}(-[^\/]+)?\/)?settings(\/([^\/]+))?\/?(\?.+)?$/,
-	match: 6,
+	trigger: /^(http(s)?\:\/\/(.+\.)?mywot\.com)\/([^\/]{2}(-[^\/]+)?\/)?settings\/.+/,
+	forward: /^(http(s)?\:\/\/(.+\.)?mywot\.com)\/([^\/]{2}(-[^\/]+)?\/)?settings(\/([^\/]+))?\/?(\?.+)?$/,
+    base: 1,
+	match: 7,
 
 	addscript: function(js)
 	{
@@ -50,12 +51,11 @@ wot.settings = {
 		for (var i = 0; i < inputs.length; ++i) {
 			var attrs = {};
 
-			[ "id", "type" ].forEach(function(item) {
+			[ "id", "value" ].forEach(function(item) {
 				attrs[item] = inputs[i].getAttribute(item);
 			});
 
-			if (!/^wotsearch-/.test(attrs.id) || attrs.type != "checkbox" ||
-					inputs[i].checked) {
+			if (!/^wotsearch-/.test(attrs.id) || attrs.value == 1) {
 				continue;
 			}
 
@@ -153,17 +153,8 @@ wot.settings = {
 
 	loadsearch: function()
 	{
-		var elem = document.getElementById("wotsearch");
-
-		if (!elem) {
-			return;
-		}
-
-		var preftype = elem.getAttribute("wotpref");
-
-		if (preftype != "input") {
-			return;
-		}
+		// makre sure we are on settings page
+        if (!document.getElementById("search-services")) return;
 
 		wot.prefs.get("search:state", function(name, state) {
 			state = state || {};
@@ -182,32 +173,26 @@ wot.settings = {
 					return 0;
 				});
 
+                var search_rules = [];
+
 				update.search.forEach(function(item) {
 					if (!item.display) {
 						return;
 					}
 
-					var id = "wotsearch-" + item.name;
+                    var id = "wotsearch-"+item.name;
 
-					var input = document.createElement("input");
-					var label = document.createElement("label");
-
-					input.setAttribute("id", id);
-					input.setAttribute("class", "wotsearchpref");
-					input.setAttribute("type", "checkbox");
-					input.setAttribute("wotpref", "bool");
-					input.checked = !state[item.name];
-
-					label.setAttribute("for", id);
-					label.innerText = item.display;
-
-					elem.appendChild(input);
-					elem.appendChild(label);
-					elem.appendChild(document.createElement("br"));
-
-					wot.log("settings.loadsearch: added " + id);
+                    search_rules.push({
+                        id: id,
+                        display: item.display,
+                        name: item.name,
+                        state: !state[item.name]
+                    });
 				});
-			});
+
+                wot.settings.addscript("build_search_rules('"+JSON.stringify(search_rules)+"')");
+
+            });
 		});
 	},
 
@@ -246,21 +231,19 @@ wot.settings = {
 
 	load: function()
 	{
+        // Initializes values on the settings page according to add-on's settings
 		try {
 			wot.settings.loadinputs();
 			wot.settings.loadsearch();
 
-			[ "wotsave", "wotnext" ].forEach(function(id) {
-				var elem = document.getElementById(id);
+            var elem = document.getElementById("wotsave");
 
-				if (elem) {
-					elem.addEventListener("click", function() {
-							wot.settings.save();
-						}, false);
-				}
-			});
-
-			/* TODO: levels */
+            if (elem) {
+                elem.addEventListener("click", function() {
+                    var target_id = elem.getAttribute("target") || null;
+                        wot.settings.save(target_id);
+                    }, false);
+            }
 
 			wot.bind("prefs:ready", function() {
 				wot.settings.addscript("wotsettings_ready();");
@@ -291,7 +274,8 @@ wot.settings = {
 
 				/* make sure we have set up authentication cookies */
 				wot.bind("my:ready", function() {
-					 var loc = wot.urls.settings + "/" +
+                    var base = (match[wot.settings.base] + "/settings") || wot.urls.settings,
+					    loc = base + "/" +
 						wot.i18n("lang") + "/" + wot.platform + "/" + wot.version +
 						(wot.partner ? "/" + wot.partner : "") +
 						(section ? "/" + section : "");

@@ -1,134 +1,519 @@
 {
-	"locale": {
-		"message": "cs"
-	},
-	"lang": {
-		"message": "cs-CZ"
-	},
-	"ext_description": {
-		"message": "Nástroj WOT vám ukáže, kterým stránkám můžete důvěřovat na základě zkušeností miliónů uživatelů po celém světě."
-	},
-	"components_0": {
-		"message": "Důvěryhodnost"
-	},
-	"components_1": {
-		"message": "Spolehlivost poskytovatele"
-	},
-	"components_2": {
-		"message": "Ochrana osobních dat"
-	},
-	"components_4": {
-		"message": "Bezpečnost dětí"
-	},
-	"components__short_0": {
-		"message": "Důvěryhodnost"
-	},
-	"components__short_1": {
-		"message": "Spolehl. poskytov."
-	},
-	"components__short_2": {
-		"message": "Ochrana osob. dat"
-	},
-	"components__short_4": {
-		"message": "Bezpečnost dětí"
-	},
-	"reputationlevels_r0": {
-		"message": ""
-	},
-	"reputationlevels_r1": {
-		"message": "Velmi špatná"
-	},
-	"reputationlevels_r2": {
-		"message": "Špatná"
-	},
-	"reputationlevels_r3": {
-		"message": "Neuspokojivá"
-	},
-	"reputationlevels_r4": {
-		"message": "Dobrá"
-	},
-	"reputationlevels_r5": {
-		"message": "Excelentní"
-	},
-	"messages_initializing": {
-		"message": "Probíhá inicializace WOT…"
-	},
-	"messages_notready": {
-		"message": "Aktivace doplňku WOT…"
-	},
-	"messages_failed": {
-		"message": "Načtení hodnocení se nezdařilo; pokus bude zanedlouho opakován."
-	},
-	"messages_notavailable": {
-		"message": "Hodnocení nejsou dostupná."
-	},
-	"messages_loading": {
-		"message": "Načítání hodnocení…"
-	},
-	"ratingwindow_settings": {
-		"message": "Nastavení"
-	},
-	"ratingwindow_guide": {
-		"message": "Příručka"
-	},
+    "locale": {
+        "message": "cs"
+    }, 
+    "lang": {
+        "message": "cs-CZ"
+    }, 
+    "ext_description": {
+        "message": "Nástroj WOT vám ukáže, kterým stránkám můžete důvěřovat na základě zkušeností miliónů uživatelů po celém světě."
+    }, 
+    "components_0": {
+        "message": "Důvěryhodnost"
+    }, 
+    "components_4": {
+        "message": "Bezpečnost dětí"
+    }, 
+    "components__short_0": {
+        "message": "Důvěryhodnost"
+    }, 
+    "components__short_4": {
+        "message": "Bezpečnost dětí"
+    }, 
+    "reputationlevels_r0": {
+        "message": "Neznámý", 
+        "description": ""
+    }, 
+    "reputationlevels_r1": {
+        "message": "Velmi špatná"
+    }, 
+    "reputationlevels_r2": {
+        "message": "Špatná"
+    }, 
+    "reputationlevels_r3": {
+        "message": "Neuspokojivá"
+    }, 
+    "reputationlevels_r4": {
+        "message": "Dobrá"
+    }, 
+    "reputationlevels_r5": {
+        "message": "Excelentní"
+    }, 
+    "messages_initializing": {
+        "message": "Probíhá inicializace WOT…"
+    }, 
+    "messages_notready": {
+        "message": "Aktivace doplňku WOT…"
+    }, 
+    "messages_failed": {
+        "message": "Načtení hodnocení se nezdařilo; pokus bude zanedlouho opakován."
+    }, 
+    "messages_notavailable": {
+        "message": "Hodnocení nejsou dostupná."
+    }, 
+    "messages_loading": {
+        "message": "Načítání hodnocení…"
+    }, 
+    "ratingwindow_settings": {
+        "message": "Nastavení"
+    }, 
+    "ratingwindow_guide": {
+        "message": "Prohlídka", 
+        "description": ""
+    }, 
     "ratingwindow_forum": {
         "message": "Forum"
-    },
-	"ratingwindow_wotrating": {
-		"message": "Hodnocení WOT"
-	},
-	"ratingwindow_myrating": {
-		"message": "Moje hodnocení"
-	},
-	"ratingwindow_viewscorecard": {
-		"message": "Zobrazit výsledky s detaily hodnocení"
-	},
-	"ratingwindow_addcomment": {
-		"message": "Přidat komentář"
-	},
-	"ratingwindow_inpartnership": {
-		"message": "Ve spolupráci s"
-	},
-	"ratingwindow_newversion": {
-		"message": "K dispozici je nová verze - kliknutím sem proveďte aktualizaci"
-	},
-	"ratingwindow_helptext": {
-		"message": "Váš údaj se liší."
-	},
-	"ratingwindow_helplink": {
-		"message": "Zanechat komentář?"
-	},
-	"warnings_information": {
-		"message": "Zobrazit hodnocení a komentáře"
-	},
-	"warnings_ratesite": {
-		"message": "Tato stránka je bezpečná - Chci <a>ji ohodnotit</a>"
-	},
-	"warnings_gotosite": {
-		"message": "Ignorovat varování a vstoupit na stránku"
-	},
-	"warnings_reputation": {
-		"message": "Reputace této stránky je špatná"
-	},
-	"warnings_rating": {
-		"message": "Dali jste této stránce špatné hodnocení, což spustilo varování"
-	},
-	"warnings_unknown": {
-		"message": "Hodnocení této stránky není známo"
-	},
-	"warnings_warning": {
-		"message": "Varování!"
-	},
-	"warnings_goto": {
-		"message": "Pokračovat"
-	},
-	"warnings_leave": {
-		"message": "Opustit stránku"
-	},
-	"warnings_back": {
-		"message": "Vrátit se zpět"
-	},
-	"contextmenu_open_scorecard": {
-		"message": "Open WOT scorecard"
-	}
+    }, 
+    "ratingwindow_profile": {
+        "message": "Můj profil", 
+        "description": ""
+    }, 
+    "ratingwindow_wotrating": {
+        "message": "Reputace webové stránky založená na hodnocení uživatelů", 
+        "description": ""
+    }, 
+    "ratingwindow_myrating": {
+        "message": "Moje hodnocení"
+    }, 
+    "ratingwindow_viewscorecard": {
+        "message": "Zobrazit detaily a komentáře", 
+        "description": ""
+    }, 
+    "ratingwindow_addcomment": {
+        "message": "Přidat komentář", 
+        "description": ""
+    }, 
+    "ratingwindow_editcomment": {
+        "message": "Upravit komentář", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings": {
+        "message": "Zpět na hodnocení", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings_category": {
+        "message": "Zvolte kategorii", 
+        "description": ""
+    }, 
+    "ratingwindow_newversion": {
+        "message": "K dispozici je nová verze - kliknutím sem proveďte aktualizaci"
+    }, 
+    "ratingwindow_invite_rw": {
+        "message": "Používáním toho nástroje můžete hodnotit webové stránky. Pro vyjádření nakolik důvěřujete webové stránce klikněte na barevné pruhy.", 
+        "description": ""
+    }, 
+    "warnings_information": {
+        "message": "Zobrazit detaily a komentáře", 
+        "description": ""
+    }, 
+    "warnings_ratesite": {
+        "message": "Pokud důvěřujete této stránce, pak ji, prosím, <a>ohodnoťte</a>", 
+        "description": ""
+    }, 
+    "warnings_reratesite": {
+        "message": "<a>Klikněte zde</a>, pokud chcete znovu ohodnotit tuto stránku", 
+        "description": ""
+    }, 
+    "warnings_reputation": {
+        "message": "Reputace této stránky je špatná"
+    }, 
+    "warnings_rating": {
+        "message": "Dali jste této stránce špatné hodnocení, což spustilo varování"
+    }, 
+    "warnings_unknown": {
+        "message": "Hodnocení této stránky není známo"
+    }, 
+    "warnings_warning": {
+        "message": "Varování!"
+    }, 
+    "warnings_goto": {
+        "message": "Pokračovat"
+    }, 
+    "warnings_leave": {
+        "message": "Ukončit", 
+        "description": ""
+    }, 
+    "warnings_back": {
+        "message": "Vrátit se zpět"
+    }, 
+    "warnings_reasontitle": {
+        "message": "Uživatelé identifikovali následující problémy", 
+        "description": ""
+    }, 
+    "warnings_othersreasontitle": {
+        "message": "Názory ostatních uživatelů", 
+        "description": ""
+    }, 
+    "warnings_noreasontitle": {
+        "message": "Uživatelé tuto stránku ještě neidentifikovali a pouze ji ohodnotili.", 
+        "description": ""
+    }, 
+    "contextmenu_open_scorecard": {
+        "message": "Otevřít kartu hodnocení WOT", 
+        "description": ""
+    }, 
+    "wt_learnmore_link": {
+        "message": "<a id='wt-learnmore-link'>Dovězte se více</a> o WOT.", 
+        "description": ""
+    }, 
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' h eight='40px'/><p>Nový WOT byl přidán do Vašeho prohlížeče.</p><p>Začněte hodnotit webové stránky kliknutím na tuto ikonu {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "description": ""
+    }, 
+    "wt_intro_0_btn": {
+        "message": "Ano, rozumím tomu", 
+        "description": ""
+    }, 
+    "wt_warning_text": {
+        "message": "<p>WOT Vás varuje, pokud navštívíte stránku se špatnou reputací na základě hodnocení ostatních uživatelů nebo na základě černých listin třetích osob. Varování také ukáže důvod špatné reputace.</p><p>{WT_LEARNMORE}</p><p>Pokud nechcete vidět tyto varování, pak je můžete vypnout. </p>",
+        "description": ""
+    }, 
+    "wt_warning_turnoff": {
+        "message": "Vypnout varování", 
+        "description": ""
+    }, 
+    "wt_warning_ok": {
+        "message": "Ano, rozumím tomu",
+        "description": ""
+    }, 
+    "wt_rw_text_hdr": {
+        "message": "Sdílejte vaše zkušenosti!", 
+        "description": ""
+    }, 
+    "wt_rw_text": {
+        "message": "<p>Okno WOT hodnocení Vám ukáže reputaci webové stránky na základě zkušeností ostatních uživatelů. Nyní je možné ohodnotit a poskytnout komentář přímo z aktualizovaného okna. Začněte hodnotit kliknutím na barevné pruhy.</p><p class='wot-c'><a id='wt-learnmore-link'>Dovězte se více</a> o WOT.</p>",
+        "description": ""
+    }, 
+    "wt_donut_msg": {
+        "message": "<p>WOT Vám ukazuje reputaci webových stránek na základě zkušeností ostatních uživatelů pomocí ikon ve stylu dopravního semaforu.</p><p>Přejeďte myší přes ikonu k zobrazení reputací a jejich příčin.</p>",
+        "description": ""
+    }, 
+    "wt_donut_btn": {
+        "message": "Ano, rozumím tomu", 
+        "description": ""
+    }, 
+    "fbl_hideforever": {
+        "message": "Trvale skrýt", 
+        "description": ""
+    }, 
+    "fbl_submit": {
+        "message": "Odeslat", 
+        "description": ""
+    }, 
+    "fbl_whatisthis": {
+        "message": "Co to je?", 
+        "description": ""
+    }, 
+    "fbl_optout_text": {
+        "message": "Pokud dáváte přednost tomu, aby vám nebyly kladeny otázky, pak klikněte na \"ano\"", 
+        "description": ""
+    }, 
+    "fbl_optout_yes": {
+        "message": "ano", 
+        "description": ""
+    }, 
+    "fbl_optout_no": {
+        "message": "Ne", 
+        "description": ""
+    }, 
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://beta.mywot.com?utm_source=addon&utm_content=fbl-whatis this' target='_blank'>Web of Trust (WOT)</a> pracuje na propagaci bezpečnosti a kvality pro milióny uživatelů po celém webu. Můžete pomoci tak, že odešlete vaše názor kdykoliv uvidíte tuto výzvu.", 
+        "description": ""
+    }, 
+    "fbl_final": {
+        "message": "Děkujeme!", 
+        "description": ""
+    }, 
+    "fbl_this_website": {
+        "message": "tato webová stránka", 
+        "description": ""
+    }, 
+    "fbl_dismiss": {
+        "message": "odmítnout", 
+        "description": ""
+    }, 
+    "ratingwindow_question0": {
+        "message": "Nakolik věříte této stránce?", 
+        "description": ""
+    }, 
+    "ratingwindow_question4": {
+        "message": "Je stránka vhodná pro děti?", 
+        "description": ""
+    }, 
+    "ratingwindow_categories": {
+        "message": "Zvolte alespoň jednu kategorii pro vaše hodnocení", 
+        "description": ""
+    }, 
+    "ratingwindow_comment": {
+        "message": "Zanechte komentář s popisem vaší zkušenosti s touto webovou stránkou", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_placeholder": {
+        "message": "napište váš komentář zde...", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_regtext": {
+        "message": "Potřebujete účet pro zveřejnění vašeho komentáře.", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_register": {
+        "message": "Vytvořit účet nyní", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchatext": {
+        "message": "Pro zveřejnění vašeho komentáře musíte zadat captcha.", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchalink": {
+        "message": "Otevřít kartu hodnocení nyní", 
+        "description": ""
+    }, 
+    "ratingwindow_commenthints": {
+        "message": "<p>Buďte detailní</p><p>Udejte důkaz nebo příklad</p><p>Komentujte podle vašich skutečných zkušeností</p><p>Nespamujte</p>", 
+        "description": ""
+    }, 
+    "ratingwindow_novoted": {
+        "message": "Klikněte zde pro poskytnutí důvodu pro vašeho hodnocení tak, že vyberete kategorii", 
+        "description": ""
+    }, 
+    "ratingwindow_morecats": {
+        "message": "více", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_change": {
+        "message": "změnit", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_category": {
+        "message": " ", 
+        "description": "TODO: TRANSLATE"
+    }, 
+    "ratingwindow_fulllist": {
+        "message": "zobrazit úplný seznam", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_yes": {
+        "message": "Ano", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_no": {
+        "message": "Ne", 
+        "description": ""
+    }, 
+    "messages_ready": {
+        "message": "Reputace", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r0": {
+        "message": "Klik. na hodnot. pruh", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r1": {
+        "message": "Nedůvěřuji", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r2": {
+        "message": "Nedůvěřuji", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r3": {
+        "message": "je to podezřelé", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r4": {
+        "message": "Důvěřuji", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r5": {
+        "message": "Důvěřuji", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r0": {
+        "message": "Klik. na hodnot. pruh", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r1": {
+        "message": "nevhodné", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r2": {
+        "message": "nevhodné", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r3": {
+        "message": "buďte opatrní", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r4": {
+        "message": "vhodné", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r5": {
+        "message": "vhodné", 
+        "description": ""
+    }, 
+    "testimony_unrated": {
+        "message": "žádný názor", 
+        "description": ""
+    }, 
+    "testimony_delete": {
+        "message": "smazat", 
+        "description": ""
+    }, 
+    "buttons_delete": {
+        "message": "Smazat hodnocení", 
+        "description": ""
+    }, 
+    "buttons_delete_title": {
+        "message": "Smazat mé hodnocení a kategorie pro tuto webovou stránku", 
+        "description": ""
+    }, 
+    "buttons_cancel": {
+        "message": "Storno", 
+        "description": ""
+    }, 
+    "buttons_save": {
+        "message": "Uložit", 
+        "description": ""
+    }, 
+    "buttons_ok": {
+        "message": "OK", 
+        "description": ""
+    }, 
+    "popup_headertext": {
+        "message": "klikněte pro zobrazení detailů", 
+        "description": ""
+    }, 
+    "popup_nocattext": {
+        "message": "sdílejte svůj názor o této stránce", 
+        "description": ""
+    }, 
+    "ratingwindow_thankyou": {
+        "message": "Děkujeme za sdílení vaší zkušenosti!", 
+        "description": ""
+    }, 
+    "activityscore_text": {
+        "message": "Vaše skóre aktivit je nyní", 
+        "description": ""
+    }, 
+    "activityscore_rookie": {
+        "message": "zelenáč", 
+        "description": ""
+    }, 
+    "activityscore_bronze": {
+        "message": "bronzové", 
+        "description": ""
+    }, 
+    "activityscore_silver": {
+        "message": "stříbrné", 
+        "description": ""
+    }, 
+    "activityscore_gold": {
+        "message": "zlaté", 
+        "description": ""
+    }, 
+    "activityscore_platinum": {
+        "message": "platinové", 
+        "description": ""
+    }, 
+    "activityscore_next": {
+        "message": "Pro {NEXT_LEVEL} pokračujte v hodnocení!", 
+        "description": ""
+    }, 
+    "bl_description": {
+        "message": "Tato webová stránka se vyskytuje na černé listině třetí strany", 
+        "description": ""
+    }, 
+    "bl_description_pl": {
+        "message": "Tato webová stránka se vyskytuje na černých listinách třetích stran", 
+        "description": ""
+    }, 
+    "bl_information": {
+        "message": "WOT používá černé listiny třetích stran, aby varoval uživatele před technickými hrozbami jako viry a malware. <a>Čtěte dále</a>", 
+        "description": ""
+    }, 
+    "bl_malware": {
+        "message": "Malware", 
+        "description": ""
+    }, 
+    "bl_phishing": {
+        "message": "Phishing", 
+        "description": ""
+    }, 
+    "bl_scam": {
+        "message": "Podvod", 
+        "description": ""
+    }, 
+    "bl_spam": {
+        "message": "SPAM", 
+        "description": ""
+    }, 
+    "bl_tracking": {
+        "message": "Sledování", 
+        "description": ""
+    }, 
+    "bl_other": {
+        "message": "Jiný důvod", 
+        "description": ""
+    }, 
+    "warning_button": {
+        "message": "Podrobnosti hodnocení", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_rating": {
+        "message": "Dali jste této stránce špatné hodnocení.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_reputation": {
+        "message": "Reputace této stránky je špatná.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_offline": {
+        "message": "Doplněk je při vypnutém prohlížeči deaktivován.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_disabled": {
+        "message": "Zakázali jste doplněk; kliknutím sem jej povolíte.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_title": {
+        "message": "Aktualizace doplňku WOT", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_yes": {
+        "message": "Aktualizovat nyní", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_restart": {
+        "message": "Doplněk WOT aktivujete restartováním prohlížeče.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_error_register": {
+        "message": "Aktivace doplňku se nezdařila; pokus bude zanedlouho opakován.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warning": {
+        "message": "Varování WOT: %S", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_uninstall": {
+        "message": "Doplněk WOT bude odinstalován po restartování.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_blocked": {
+        "message": "Zablokováno", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_check": {
+        "message": "Povolit automatické aktualizace (doporučeno)", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_no": {
+        "message": "Připomenout později", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_message": {
+        "message": "K dispozici je nová verze doplňku WOT. Přejete si doplněk aktualizovat nyní?", 
+        "description": "imported from firefox add-on"
+    }
 }
