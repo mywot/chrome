@@ -1027,7 +1027,6 @@ $.extend(wot, { ratingwindow: {
         // Welcome Tip button "close"
         $(".wt-rw-close").click(function (e){
             wot.ratingwindow.reveal_ratingwindow();
-            wot.ratingwindow.count_window_opened();
 
             wt.settings.rw_ok = true;
             wt.save_setting("rw_ok");
@@ -1374,6 +1373,8 @@ $.extend(wot, { ratingwindow: {
                 _rw.update_submit_button();
                 _rw.comments.update_button("rate", true);
                 _rw.was_in_ratemode = true;
+
+                _rw.reveal_ratingwindow(true);
                 return true;
             }
         },
@@ -1404,6 +1405,7 @@ $.extend(wot, { ratingwindow: {
                 _rw.comments.update_button("comment", true);
                 _rw.update_submit_button();
                 _rw.comments.focus();
+                _rw.reveal_ratingwindow(true);
                 return true;
             }
         },
