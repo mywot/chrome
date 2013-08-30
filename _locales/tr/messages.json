@@ -155,7 +155,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Koruma altındasınız!</p><p>Güvenli gezinme aracı Web of Trust (WOT), milyonlarca kullanıcının deneyimlerine dayanarak hangi webs-sitelerine güvenebileceğinizi gösterir.</p><p> WOT'u kullanmaya başlamak için tarayıcınızın araç çubuğundaki ikona {ICO1} tıklayın.</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Yeni WOT tarayıcınıza eklendi.</p><p>Bu ikona tıklayarak web-sitelerini derecelendirmeye başlayın {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -163,7 +163,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Güvenilmez sitelere karşı dikkatli olun!</p><p>Güvenli gezinme aracı WOT, eğer itibarı kötü olan bir siteye girerseniz kullanıcı derecelendirmelerine dayanarak size bir uyarı gösterir.</p><p>{WT_LEARNMORE}</p><p>Eğer uyarıları görmek istemezseniz, kapatabilirsiniz.</p>", 
+        "message": "<p>WOT, kötü itibarlı bir siteye denk geldiğinizde, diğer kullanıcıların derecelendirmeleri ya da üçüncü taraflardan gelen kara listelere dayanarak, sizi uyarır. Uyarı, size kötü itibarın arkasındaki sebepleri de ayrıca gösterir.</p><p>{WT_LEARNMORE}</p><p>Eğer uyarıları görmek istemezseniz, kapatabilirsiniz.</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -179,11 +179,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT, milyonlarca kullanıcının deneyimlerine dayanarak web-sitelerinin itibarlarını gösterir.</p><p>Site hakkında ne düşündüğünüzü belirtmek için, kendi derecelendirmenizi renkli çubuklara tıklayarak bırakın. Derecelendirmeniz, diğer kullanıcıların daha güvenli biçimde gezinmelerine yardımcı olur.</p><p class='wot-c'>WOT hakkında<a id='wt-learnmore-link'>daha fazlasını öğrenin</a></p>", 
+        "message": "<p>WOT derecelendirme penceresi, diğer kullanıcıların deneyimlerine dayanarak size websitesinin itibarını gösterir. Artık doğrudan güncellenen pencereden derecelendirme ve yorum yapabilirsiniz. Renkli çubuklara tıklayarak derecelendirmeye başlayın.</p><p class='wot-c'>WOT hakkında <a id='wt-learnmore-link'>daha fazlasını öğrenin</a></p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Trafik ışıklarını izleyin!</p></p>Güvenli gezinme aracı WOT, milyonlarca kullanıcının deneyimlerine dayanarak web-sitelerinin itibarlarını gösterir.</p><p>Web bağlantılarının ardındaki trafik ışıkları, güvenebileceğiniz siteler bulmanız için size rehberlik eder: iyi için yeşil, kötü için kırmızı, temkinli olmak için bir uyarı olarak sarı.</p>", 
+        "message": "<p>WOT, diğer kullanıcıların deneyimlerine dayanarak size trafik ışığı biçimindeki ikonlar göstermek yoluyla web-sitesi itibarlarını gösterir.</p><p>İtibarları ve bunların arkasındaki sebepleri görmek için farenizi ikonun üstünde tutun.</p>",
         "description": ""
     }, 
     "wt_donut_btn": {
@@ -299,7 +299,7 @@
         "description": ""
     }, 
     "messages_ready": {
-        "message": "[[[website name]]]'(n)ın İtibarı",
+        "message": "İtibarı",
         "description": ""
     }, 
     "testimony_0_levels_r0": {

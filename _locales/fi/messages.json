@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Olet suojattu!</p><p>Turvallinen surffailutyökalu, Web of Trust (WOT), näyttää, mihin sivustoihin voit miljoonien käyttäjien kokemusten perusteella luottaa.</p><p>Alkaaksesi käyttämään WOTia klikkaa selaimesi työkalurivissä olevaa ikonia {ICO1}.</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Uusi WOT on lisätty selaimellesi.</p><p>Aloita sivustojen arviointi klikkaamalla tätä ikonia {ICO1}.</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Varo epäluotettavia sivustoja!</p><p>Turvallinen surffaustyökalu WOT varoittaa sinua, jos tulet sivustolle, jolla käyttäjäarvostelujen mukaan on huono maine.</p><p>{WT_LEARNMORE}</p><p>Jos et halua nähdä varoituksia, voit poistaa ne käytöstä.</p>", 
+        "message": "<p>WOT varoittaa sinua, jos tulet sivustolle, jolla on huono maine muiden käyttäjien kokemuksien perusteella tai joka on kolmannen osapuolen mustalla listalla. Varoitus näyttää sinulle myös huonon maineen syyt.</p><p>{WT_LEARNMORE}</p><p>Jos et halua nähdä varoituksia, voit poistaa ne käytöstä.</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT näyttää sivustojen maineen perustuen miljoonien käyttäjien kokemuksiin.</p><p>Voit jättää oman arviosi klikkaamalla värillisiä palkkeja, joilla osoitat, mitä mieltä olet sivustosta. Arvostelusi auttaa muita käyttäjiä surffaamaan turvallisesti.</p><p class='wot-c'><a id='wt-learnmore-link'>Opi lisää</a> WOTista.</p>", 
+        "message": "<p>WOT-arviointi ikkuna näyttää sinulle käyttäjien kokemuksiin perustuen maineeltaan parhaimman sivuston. Nyt voi arvostella ja kommentoida suoraan päivitetystä ikkunasta. Aloita arviointi klikkaamalla väritettyjä palkkeja.</p><p class='wot-c'><a id='wt-learnmore-link'>Opi lisää</a> WOTista.</p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Seuraa liikennevaloja!</p></p>Turvallinen surffaustyökalu WOT näyttää sivustojen maineen perustuen miljoonien käyttäjien kokemuksiin.</p><p>Linkkien jälkeen liikennevalot ohjaavat sinut sivustoille, joihin voit luottaa: vihreä hyvälle, punainen pahalle, keltainen on varoitus olla varovaintn.</p>", 
+        "message": "<p>WOT näyttää sinulle sivustojen maineen muiden käyttäjien kokemuksiin perustuen liikennevalojen tapaisella ikonilla.</p><p>Liikuta hiirtäsi ikonin päällä nähdäksesi maineen ja syyt maineeseen.</p>",
         "description": ""
     }, 
     "wt_donut_btn": {

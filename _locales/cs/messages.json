@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' h eight='40px'/><p class='wot-cb'>Jste chráněni!</p><p>Bezpečný nástroj pro surfování Web of Trust (W OT) ukazuje, kterým webovým stránkám můžete důvěřovat na základě zkušeností miliónů uživatelů.</p><p>Klikněte na ikonu {ICO1} na vašem panelu nástrojů v prohlížeči a začněte používat WOT.</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' h eight='40px'/><p>Nový WOT byl přidán do Vašeho prohlížeče.</p><p>Začněte hodnotit webové stránky kliknutím na tuto ikonu {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Buďte informováni o nedůvěryhodných stránkách!</p><p>Bezpečný nástroj pro surfování WOT zobrazuje varování, když se dostanete na stránku, která má špatnou reputaci založenou na hodnocení uživatelů.</p><p>{WT_LEARNMORE}</p><p>Pokud nechcete vidět tyto varování, pak je můžete vypnout. </p>", 
+        "message": "<p>WOT Vás varuje, pokud navštívíte stránku se špatnou reputací na základě hodnocení ostatních uživatelů nebo na základě černých listin třetích osob. Varování také ukáže důvod špatné reputace.</p><p>{WT_LEARNMORE}</p><p>Pokud nechcete vidět tyto varování, pak je můžete vypnout. </p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -173,7 +173,7 @@
         "description": ""
     }, 
     "wt_warning_ok": {
-        "message": "Otevřít hodnocení WOT", 
+        "message": "Ano, rozumím tomu",
         "description": ""
     }, 
     "wt_rw_text_hdr": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT zobrazuje reputaci webové stránky založenou na zkušenostech miliónů uživatelů.</ p><p>Zanechte své vlastní hodnocení tak, že kliknete na barevné pruhy, které indikují, co si myslíte o této stránce. Vaše hodnocení pomáhá ostatním uživatelům surfovat bezpečněji.</p><p class='wot-c'><a id='wt-learnmore-li nk'>Dovězte se více</a> o WOT.</p>", 
+        "message": "<p>Okno WOT hodnocení Vám ukáže reputaci webové stránky na základě zkušeností ostatních uživatelů. Nyní je možné ohodnotit a poskytnout komentář přímo z aktualizovaného okna. Začněte hodnotit kliknutím na barevné pruhy.</p><p class='wot-c'><a id='wt-learnmore-link'>Dovězte se více</a> o WOT.</p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-Sledujte semafory!</p></p>Bezpečný nástroj pro surfování WOT zobrazuje reputaci webové stránky založenou na zkušenostech miliónů uživatelů.</p><p>Semafory po webových odkazech vás povedou k nalezení stránek, kterým můžete důvěřovat: zelená pro dobré, červená pro špatné, žlutá pro varování, abyste byli opatrní.</p>", 
+        "message": "<p>WOT Vám ukazuje reputaci webových stránek na základě zkušeností ostatních uživatelů pomocí ikon ve stylu dopravního semaforu.</p><p>Přejeďte myší přes ikonu k zobrazení reputací a jejich příčin.</p>",
         "description": ""
     }, 
     "wt_donut_btn": {

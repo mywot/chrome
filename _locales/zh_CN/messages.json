@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>您已受保护！</p><p>Web of Trust(WOT) 网络安全浏览工具基于百万用户的经验展示可信的网站。</p><p>点击浏览器工具栏上的图标 {ICO1} 以开始使用 WOT。</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>全新 WOT 已添加至您的浏览器。</p><p>单击此图标开始对网站评级 {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>小心不可信的网站！</p><p>当您访问某网站，而 WOT 网络安全浏览工具的用户对其评价较低时，您会收到访问警告。</p><p>{WT_LEARNMORE}</p><p>如果您不想看到这些警告，您可以关闭此功能。</p>", 
+        "message": "<p>当您要访问的网站，在其他用户处的的声誉评级不佳，或在第三方机构的黑名单中，WOT 将警告您。此警告也将向您显示声誉不佳背后的原因。</p><p>{WT_LEARNMORE}</p><p>如果您不想看到这些警告，您可以关闭此功能。</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT 基于百万用户的评价显示网站的声誉情况。</p><p>根据您对网站的印象点击选择颜色条，留下您的评价吧。您的评价能帮助其他用户更安全地浏览网络。</p><p class='wot-c'><a id='wt-learnmore-link'>了解更多</a> 关于 WTO 的信息。</p>", 
+        "message": "<p>WOT 评级视窗为您显示基于其他用户经验的网站声誉。现在您可直接在已更新的视窗中评级并发表评论。单击彩色横条开始评级。</p><p class='wot-c'><a id='wt-learnmore-link'>了解更多</a> 关于 WTO 的信息。</p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Follow the traffic lights!</p></p>网络安全浏览工具 WOT 基于百万用户的体验展示网站声誉。</p><p>网页地址旁的交通灯式图标会指引您找到可信赖的网站：绿色代表该网站可信，红色代表不可信，黄色代表浏览时要多加小心。</p>", 
+        "message": "<p>WOT 通过显示红绿灯风格的图标，向您展示基于其他用户经验的网站声誉。</p><p>将鼠标悬停在此图标上查看声誉并了解原因。</p>",
         "description": ""
     }, 
     "wt_donut_btn": {

@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>保護されました！</p><p>安全ネットサーフィンツールWeb of Trust (WOT)は数百万のユーザー情報により信頼できるウェブサイトを表示します。</p><p>ブラウザのツールバーのアイコン{ICO1}をクリックしてWOTを起動して下さい。</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>新しいWOTがあなたのブラウザに追加されました。</p><p>このアイコンをクリックしてウェブサイトの評価を始める {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>信頼できないサイトに注意！</p><p>安全ネットサーフィンツールWOTはユーザー評価の不良なサイトを閲覧するときに警告を出します。</p><p>{WT_LEARNMORE}</p><p>警告を表示したくない時はオフにできます。</p>", 
+        "message": "<p>WOTは他のユーザ評価に基づく悪い評判もしくは第三者からブラックリスト扱いにされたページがあると警告を発します。その警告は、悪い評判の理由についてもお示しします。</p><p>{WT_LEARNMORE}</p><p>警告を表示したくない時はオフにできます。</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOTは数百万ユーザーの感想に基づくウェブサイト評価を提供します。</p><p>カラーバーをクリックしてサイトの評価をして下さい。あなたの評価が他のユーザーの安全なネットサーフィンに役立ちます。</p><p class='wot-c'>WOTについて<a id='wt-learnmore-link'>詳細を見る</a></p>", 
+        "message": "<p>WOT評価のウインドウは、他のユーザの経験に基づくウェブサイトの評判を示しています。アップデートされたウインドウから直接、評価やコメントをすることができます。 色の付いたバーをクリックして評価を始めてください。</p><p class='wot-c'>WOTについて<a id='wt-learnmore-link'>詳細を見る</a></p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>信号を守りましょう！</p></p>安全ネットサーフィンツールWOTは、数百万ユーザーの情報に基づくウェブサイトの評価を提供します。</p><p>リンクのあとについている信号で信頼できるサイトが分かります。緑は安心、赤は危険、黄色は注意です。</p>", 
+        "message": "<p>WOTは、信号のようなアイコンを示すことで他のユーザの経験に基づくウェブサイトの評価を示します。</p><p>評判とその理由を見るためにアイコンの上にマウスをさまよわせる。</p>",
         "description": ""
     }, 
     "wt_donut_btn": {

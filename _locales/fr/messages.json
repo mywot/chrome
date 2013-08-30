@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Vous êtes protégé !</p><p>WOT, l'outil de navigation sécurisée, affiche les sites web auxquels vous pouvez faire confiance sur base de l'expérience de millions d'utilisateurs.</p><p>Cliquez sur l'icône {ICO1} de la barre d'outils de votre navigateur pour commencer à utiliser WOT.</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p></p>La nouvelle version de WOT a été ajoutée à votre navigateur. <p>Commencez à évaluer des sites web en cliquant sur cet icône. {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Attention aux sites peu fiables !</p><p>WOT, l'outil de navigation sécurisée, affiche un avertissement si vous atterrissez sur un site qui a une mauvaise réputation selon l'avis des utilisateurs.</p><p>{WT_LEARNMORE}</p><p>Si vous ne voulez pas voir les avertissements, vous pouvez les désactiver.</p>", 
+        "message": "<p>WOT vous prévient si vous naviguez sur un site qui a une mauvaise réputation sur base de l'avis d'autres utilisateurs ou de listes noires de tiers.</p><p>L'avertissement vous montre également la raison derrière cette mauvaise réputation.</p><p>{WT_LEARNMORE}</p><p>Si vous ne voulez pas voir les avertissements, vous pouvez les désactiver.</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT affiche la réputation des sites web en se basant sur l'expérience de millions d'utilisateurs.</p><p>Donnez votre propre avis en cliquant sur la barre colorée afin d'indiquer ce que vous pensez du site. Vous aiderez ainsi d'autres utilisateurs à surfer en toute sécurité.</p><p class='wot-c'><a id='wt-learnmore-link'>En apprendre davantage</a> sur WOT.</p>", 
+        "message": "<p>La fenêtre d'évaluation de WOT vous montre la réputation du site web sur base des avis des utilisateurs.</p><p>Vous pouvez à présent donner votre avis et commenter directement depuis cette fenêtre mise à jour. Commencez à donner votre avis en cliquant sur les barres colorées.</p><p class='wot-c'><a id='wt-learnmore-link'>En apprendre davantage</a> sur WOT.</p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Fiez-vous aux couleurs !</p></p>WOT, l'outil de navigation sécurisée, affiche la réputation des sites web en se basant sur l'expérience de millions d'utilisateurs.</p><p>Les feux de signalisation apparaissent situés à côté de liens vous guident pour trouver des sites auxquels vous pouvez faire confiance : vert pour fiable, rouge pour peu fiable, jaune pour vous conseiller de rester prudent.</p>", 
+        "message": "<p>WOT vous montre la réputation des sites web sur la base de l'avis d'autres utilisateurs en affichant des icônes sous forme de feux de signalisation.</p><p>Déplacez votre souris sur l'icône pour voir les réputations et les raisons derrière celles-ci.</p>",
         "description": ""
     }, 
     "wt_donut_btn": {

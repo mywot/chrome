@@ -156,7 +156,7 @@
         "description": "Abrir o WOT Scorecard"
     },
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Você está protegido!</p><p>A ferramenta de navegação segura Web of Trust (WOT) mostra quais sites você pode confiar com base nas experiências de milhões de usuários. </p><p>Clique no ícone {ICO1} na barra de ferramentas do seu navegador para começar a usar o WOT.</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>O novo WOT foi adicionado ao seu navegador.</p><p>Comece a classificar sites clicando no ícone {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     },
     "wt_intro_0_btn": {
@@ -164,7 +164,7 @@
         "description": ""
     },
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Fique atento aos sites não confiáveis!</p><p>A ferramenta de navegação segura WOT emite um alerta caso você caia em um site que possui má reputação com base na classificação dos usuários. </p><p>{WT_LEARNMORE}</p><p>Se você não deseja visualizar os avisos, é possível desligá-los.</p>",
+        "message": "<p>WOT avisa se você entrar em um site com má reputação com base em avaliações de outros usuários ou listas negras de terceiros. O aviso também mostra as razões por trás da má reputação.</p><p>{WT_LEARNMORE}</p><p>Se você não deseja visualizar os avisos, é possível desligá-los.</p>",
         "description": ""
     },
     "wt_warning_turnoff": {
@@ -180,11 +180,11 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT mostra a reputação dos sites com base nas experiências de milhões de usuários. </p><p> Deixe uma avaliação pessoal clicando nas barras coloridas para indicar sua opinião sobre o site. Sua classificação ajuda outros usuários a navegarem com mais segurança.</p><p class='wot-c'><a id='wt-learnmore-link'>Saiba mais</a> sobre o WOT.</p>",
+        "message": "<p>A janela de avaliação WOT mostra a reputação do site com base em experiências de outros usuários. Agora você pode avaliar e comentar diretamente da janela atualizada. Comece a avaliar clicando nas barras coloridas.</p><p class='wot-c'><a id='wt-learnmore-link'>Saiba mais</a> sobre o WOT.</p>",
         "description": ""
     },
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Siga as luzes do semáforo!</p></p> A ferramenta de navegação segurança WOT mostra a reputação dos sites com base nas experiências de milhões de usuários.</p><p> As luzes do semáforo após os links dos sites lhe ajudam a encontrar sites em que você pode confiar: verde para bom, vermelho para ruim, amarelo indica que é preciso ser cauteloso.</p>",
+        "message": "<p>WOT mostra as reputações de sites com base em experiências de outros usuários, mostrando ícones em estilo de semáforos.</p><p>Passe o mouse sobre o ícone para ver as reputações e razões por trás delas.</p>",
         "description": ""
     },
     "wt_donut_btn": {

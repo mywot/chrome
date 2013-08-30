@@ -156,7 +156,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>Du är skyddad!</p><p>Web of Trust (WOT), verktyget för säker surfning, visar vilka webbsidor du kan lita på baserat på miljontals användares erfarenheter.</p><p>Klicka på ikonen {ICO1} på din webbläsares verktygsfält för att börja använda WOT.</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Nya WOT har lagts till din webbläsare.</p><p>Börja betygsätta webbsidor genom att klicka på denna ikon {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -164,7 +164,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p class='wot-cb'>Var uppmärksam på opålitliga sidor!</p><p>WOT, verktyget för säker surfning, visar en varning om du hamnar på en sida som har dåligt anseende baserat på användarbetyg.</p><p>{WT_LEARNMORE}</p><p>Om du inte vill se varningarna kan du stänga av dem.</p>", 
+        "message": "<p>WOT varnar dig om du hamnar på en sida med dåligt rykte baserat på andra användares betyg eller tredje parters svartlistning. Varningen visar dig även orsakerna bakom det dåliga ryktet.</p><p>{WT_LEARNMORE}</p><p>Om du inte vill se varningarna kan du stänga av dem.</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -176,15 +176,15 @@
         "description": ""
     }, 
     "wt_rw_text_hdr": {
-        "message": "Dela med dig av dina erfarenheter!", 
+        "message": "Dela med dig av dina erfarenheter!",
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT visar webbsidors anseende baserat på miljontals användares erfarenheter.</p><p>Lämna ditt eget betyg genom att klicka på de färgade staplarna för att ange vad du tycker om sidan. Ditt betyg hjälper andra användare att surfa säkrare.</p><p class='wot-c'><a id='wt-learnmore-link'>Lär dig mer</a>om WOT.</p>", 
+        "message": "<p>WOT betygfönster visar dig webbsidans rykte baserat på andra användares erfarenheter.</p><p>Nu kan du betygsätta och kommentera direkt från det uppdaterade fönstret. Börja betygsätta genom att klicka på de färgade skalorna.</p><p class='wot-c'><a id='wt-learnmore-link'>Lär dig mer</a>om WOT.</p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p class='wot-cb'>Följ trafikljusen!</p></p>WOT, verktyget för säker surfning, visar webbsidors anseende baserat på miljontals användares erfarenheter.</p><p>Trafikljus efter webblänkar guidar dig till sidorna som du kan lita på: grönt för bra, rött för dåliga, gult som en uppmaning att vara försiktig.</p>", 
+        "message": "<p>WOT visar dig webbsidors rykten baserat på andra användares erfarenheter genom att visa dig trafikljusliknande ikoner.</p><p>För muspekaren över ikonen för att se ryktena och orsakerna bakom dem.</p>",
         "description": ""
     }, 
     "wt_donut_btn": {
