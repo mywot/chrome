@@ -354,6 +354,10 @@ body {
     color: #6A6A6A;
 }
 
+#voted-categories.wider {
+    width: 530px;
+}
+
 #voted-categories-content {
     border-bottom: 1px dotted transparent;
     cursor: pointer;

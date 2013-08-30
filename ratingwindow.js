@@ -763,6 +763,7 @@ $.extend(wot, { ratingwindow: {
             cat = null,
             $_change = $("#change-ratings"),
             $_voted_content = $("#voted-categories-content"),
+            $_voted_categories = $("#voted-categories"),
             change_link_text = "";
 
         // try to get user's votes from the category selector (if there are any)
@@ -792,6 +793,8 @@ $.extend(wot, { ratingwindow: {
 
         if (up_voted.length > 0) {
 
+            $_voted_categories.removeClass("wider");
+
             up_voted.forEach(function(elem) {
                 $_voted_content.append(elem);
             });
@@ -810,13 +813,14 @@ $.extend(wot, { ratingwindow: {
 
             change_link_text = wot.i18n("ratingwindow", "rerate_change");
         } else {
-            res = wot.i18n("ratingwindow", "novoted");
-            $_voted_content.text(res);
-            change_link_text = wot.i18n("ratingwindow", "rerate_category");
+            $_voted_categories.addClass("wider");
+            $_voted_content.text(wot.i18n("ratingwindow", "novoted"));
+            change_link_text = "";
         }
 
         $("#rated-votes").toggleClass("voted", (up_voted.length > 0));
         $_change.text(change_link_text);
+        $_change.toggle(change_link_text && change_link_text.length > 0);
     },
 
     has_1upvote: function (votes_obj) {
