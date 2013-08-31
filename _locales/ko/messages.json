@@ -237,7 +237,7 @@
         "description": ""
     }, 
     "ratingwindow_question4": {
-        "message": "이 웹사이트가 아이들이 이용하기에 얼마나 적합합니까?", 
+        "message": "이 웹사이트는 아동이 이용하기에 적합합니까?",
         "description": ""
     }, 
     "ratingwindow_categories": {
