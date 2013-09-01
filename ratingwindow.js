@@ -1248,13 +1248,12 @@ $.extend(wot, { ratingwindow: {
         updateratings: function(state)
         {
             /* indicator state */
-            state = state || {};
-
             var _rw = wot.ratingwindow;
+            state = state || {};
 
             /* update each component */
             wot.components.forEach(function(item) {
-                if (state.name != null && state.name != item.name) {
+                if (state.name !== null && state.name != item.name) {
                     return;
                 }
 
@@ -1268,7 +1267,7 @@ $.extend(wot, { ratingwindow: {
                     elems[elem] = $("#wot-rating-" + item.name + "-" + elem);
                 });
 
-                t = (wrs && wrs.t != null) ? wrs.t : t;
+                t = (wrs && wrs.t !== null) ? wrs.t : t;
 
                 if (t >= 0) {
                     /* rating */
