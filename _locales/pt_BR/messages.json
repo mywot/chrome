@@ -259,8 +259,7 @@
         "message": "<p>Seja preciso</p><p>Testemunhe ou dê um exemplo</p><p>Comente conforme sua experiência pessoal</p><p>Não faça spam</p>"
     },
     "ratingwindow_novoted": {
-        "message": "Clique aqui para explicar o motivo de sua classificação selecionando uma categoria",
-        "description": ""
+        "message": "Clique aqui para explicar sua escolha, selecionando uma das opções"
     },
     "ratingwindow_morecats": {
         "message": "mais",
