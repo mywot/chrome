@@ -156,7 +156,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Nya WOT har lagts till din webbläsare.</p><p>Börja betygsätta webbsidor genom att klicka på denna ikon {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Nya WOT har lagts till din webbläsare.</p><p>Börja betygsätta webbsidor genom att klicka på denna ikon {ICO1}</p><p>{WT_LEARNMORE}</p>", 
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -164,7 +164,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p>WOT varnar dig om du hamnar på en sida med dåligt rykte baserat på andra användares betyg eller tredje parters svartlistning. Varningen visar dig även orsakerna bakom det dåliga ryktet.</p><p>{WT_LEARNMORE}</p><p>Om du inte vill se varningarna kan du stänga av dem.</p>",
+        "message": "<p>WOT varnar dig om du hamnar på en sida med dåligt rykte baserat på andra användares betyg eller tredje parters svartlistning. Varningen visar dig även orsakerna bakom det dåliga ryktet.</p><p>{WT_LEARNMORE}</p><p>Om du inte vill se varningarna kan du stänga av dem.</p>", 
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -176,15 +176,15 @@
         "description": ""
     }, 
     "wt_rw_text_hdr": {
-        "message": "Dela med dig av dina erfarenheter!",
+        "message": "Dela med dig av dina erfarenheter!", 
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>WOT betygfönster visar dig webbsidans rykte baserat på andra användares erfarenheter.</p><p>Nu kan du betygsätta och kommentera direkt från det uppdaterade fönstret. Börja betygsätta genom att klicka på de färgade skalorna.</p><p class='wot-c'><a id='wt-learnmore-link'>Lär dig mer</a>om WOT.</p>",
+        "message": "<p>WOT betygfönster visar dig webbsidans rykte baserat på andra användares erfarenheter.</p><p>Nu kan du betygsätta och kommentera direkt från det uppdaterade fönstret. Börja betygsätta genom att klicka på de färgade skalorna.</p><p class='wot-c'><a id='wt-learnmore-link'>Lär dig mer</a>om WOT.</p>", 
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p>WOT visar dig webbsidors rykten baserat på andra användares erfarenheter genom att visa dig trafikljusliknande ikoner.</p><p>För muspekaren över ikonen för att se ryktena och orsakerna bakom dem.</p>",
+        "message": "<p>WOT visar dig webbsidors rykten baserat på andra användares erfarenheter genom att visa dig trafikljusliknande ikoner.</p><p>För muspekaren över ikonen för att se ryktena och orsakerna bakom dem.</p>", 
         "description": ""
     }, 
     "wt_donut_btn": {
@@ -304,7 +304,7 @@
         "description": ""
     }, 
     "testimony_0_levels_r0": {
-        "message": "klicka för att betygsätta",
+        "message": "klicka för att betygsätta", 
         "description": ""
     }, 
     "testimony_0_levels_r1": {
@@ -328,7 +328,7 @@
         "description": ""
     }, 
     "testimony_4_levels_r0": {
-        "message": "klicka för att betygsätta",
+        "message": "klicka för att betygsätta", 
         "description": ""
     }, 
     "testimony_4_levels_r1": {

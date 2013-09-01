@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p></p>La nouvelle version de WOT a été ajoutée à votre navigateur. <p>Commencez à évaluer des sites web en cliquant sur cet icône. {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p></p>La nouvelle version de WOT a été ajoutée à votre navigateur. <p>Commencez à évaluer des sites web en cliquant sur cet icône. {ICO1}</p><p>{WT_LEARNMORE}</p>", 
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p>WOT vous prévient si vous naviguez sur un site qui a une mauvaise réputation sur base de l'avis d'autres utilisateurs ou de listes noires de tiers.</p><p>L'avertissement vous montre également la raison derrière cette mauvaise réputation.</p><p>{WT_LEARNMORE}</p><p>Si vous ne voulez pas voir les avertissements, vous pouvez les désactiver.</p>",
+        "message": "<p>WOT vous prévient si vous naviguez sur un site qui a une mauvaise réputation sur base de l'avis d'autres utilisateurs ou de listes noires de tiers.</p><p>L'avertissement vous montre également la raison derrière cette mauvaise réputation.</p><p>{WT_LEARNMORE}</p><p>Si vous ne voulez pas voir les avertissements, vous pouvez les désactiver.</p>", 
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>La fenêtre d'évaluation de WOT vous montre la réputation du site web sur base des avis des utilisateurs.</p><p>Vous pouvez à présent donner votre avis et commenter directement depuis cette fenêtre mise à jour. Commencez à donner votre avis en cliquant sur les barres colorées.</p><p class='wot-c'><a id='wt-learnmore-link'>En apprendre davantage</a> sur WOT.</p>",
+        "message": "<p>La fenêtre d'évaluation de WOT vous montre la réputation du site web sur base des avis des utilisateurs.</p><p>Vous pouvez à présent donner votre avis et commenter directement depuis cette fenêtre mise à jour. Commencez à donner votre avis en cliquant sur les barres colorées.</p><p class='wot-c'><a id='wt-learnmore-link'>En apprendre davantage</a> sur WOT.</p>", 
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p>WOT vous montre la réputation des sites web sur la base de l'avis d'autres utilisateurs en affichant des icônes sous forme de feux de signalisation.</p><p>Déplacez votre souris sur l'icône pour voir les réputations et les raisons derrière celles-ci.</p>",
+        "message": "<p>WOT vous montre la réputation des sites web sur la base de l'avis d'autres utilisateurs en affichant des icônes sous forme de feux de signalisation.</p><p>Déplacez votre souris sur l'icône pour voir les réputations et les raisons derrière celles-ci.</p>", 
         "description": ""
     }, 
     "wt_donut_btn": {
@@ -305,15 +305,15 @@
         "description": ""
     }, 
     "testimony_0_levels_r0": {
-        "message": "Cliquez pour évaluer",
+        "message": "Cliquez pour évaluer", 
         "description": ""
     }, 
     "testimony_0_levels_r1": {
-        "message": "Pas fiable",
+        "message": "Pas fiable", 
         "description": ""
     }, 
     "testimony_0_levels_r2": {
-        "message": "Pas fiable",
+        "message": "Pas fiable", 
         "description": ""
     }, 
     "testimony_0_levels_r3": {
@@ -321,15 +321,15 @@
         "description": ""
     }, 
     "testimony_0_levels_r4": {
-        "message": "Fiable",
+        "message": "Fiable", 
         "description": ""
     }, 
     "testimony_0_levels_r5": {
-        "message": "Fiable",
+        "message": "Fiable", 
         "description": ""
     }, 
     "testimony_4_levels_r0": {
-        "message": "Cliquez pour évaluer",
+        "message": "Cliquez pour évaluer", 
         "description": ""
     }, 
     "testimony_4_levels_r1": {

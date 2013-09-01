@@ -157,15 +157,15 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Das neue WOT wurde zu Ihrem Browser hinzugefügt.</p><p>Fangen Sie an, Websites zu bewerten, indem Sie auf dieses Symbol klicken {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Das neue WOT wurde zu Ihrem Browser hinzugefügt.</p><p>Fangen Sie an, Websites zu bewerten, indem Sie auf dieses Symbol klicken {ICO1}</p><p>{WT_LEARNMORE}</p>", 
         "description": ""
     }, 
     "wt_intro_0_btn": {
-        "message": "OK, verstanden",
+        "message": "OK, verstanden", 
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p>WOT warnt Sie, wenn Sie auf einer Website mit einer schlechten Reputation landen.</p><p> Die Reputation ergibt sich aus den Bewertungen anderer Nutzer oder den Negativlisten von Drittanbietern.</p><p> Die Warnung zeigt Ihnen auch an, warum eine Website eine schlechte Reputation besitzt.</p><p>{WT_LEARNMORE}</p><p>Wenn Sie keine Warnungen erhalten möchten, können Sie sie deaktivieren.</p>",
+        "message": "<p>WOT warnt Sie, wenn Sie auf einer Website mit einer schlechten Reputation landen.</p><p> Die Reputation ergibt sich aus den Bewertungen anderer Nutzer oder den Negativlisten von Drittanbietern.</p><p> Die Warnung zeigt Ihnen auch an, warum eine Website eine schlechte Reputation besitzt.</p><p>{WT_LEARNMORE}</p><p>Wenn Sie keine Warnungen erhalten möchten, können Sie sie deaktivieren.</p>", 
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -173,7 +173,7 @@
         "description": ""
     }, 
     "wt_warning_ok": {
-        "message": "OK, verstanden",
+        "message": "OK, verstanden", 
         "description": ""
     }, 
     "wt_rw_text_hdr": {
@@ -181,15 +181,15 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>Das WOT-Bewertungsfenster zeigt Ihnen die Reputation einer Website an, die sich aus den Erfahrungen anderer Nutzer ergibt.</p><p>Sie können jetzt direkt von dem aktualisierten Fenster aus die Website bewerten und kommentieren. Fangen Sie an, indem Sie auf die farbigen Leisten klicken.</p><p class='wot-c'><a id='wt-learnmore-link'>Erfahren Sie mehr</a> über WOT.</p>",
+        "message": "<p>Das WOT-Bewertungsfenster zeigt Ihnen die Reputation einer Website an, die sich aus den Erfahrungen anderer Nutzer ergibt.</p><p>Sie können jetzt direkt von dem aktualisierten Fenster aus die Website bewerten und kommentieren. Fangen Sie an, indem Sie auf die farbigen Leisten klicken.</p><p class='wot-c'><a id='wt-learnmore-link'>Erfahren Sie mehr</a> über WOT.</p>", 
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p>WOT zeigt Ihnen mit Ampelsymbolen die Reputationen von Websites an, die sich aus den Erfahrungen anderer Nutzer ergeben.</p><p>Fahren Sie mit Ihrer Maus über das Symbol, um sich die Reputation und die Gründe für die Bewertung anzusehen.</p>",
+        "message": "<p>WOT zeigt Ihnen mit Ampelsymbolen die Reputationen von Websites an, die sich aus den Erfahrungen anderer Nutzer ergeben.</p><p>Fahren Sie mit Ihrer Maus über das Symbol, um sich die Reputation und die Gründe für die Bewertung anzusehen.</p>", 
         "description": ""
     }, 
     "wt_donut_btn": {
-        "message": "OK, verstanden",
+        "message": "OK, verstanden", 
         "description": ""
     }, 
     "fbl_hideforever": {
