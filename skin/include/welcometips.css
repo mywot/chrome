@@ -44,7 +44,7 @@ body {
 }
 
 .wot-wt-introtip:before {
-    background-image: url(chrome-extension://__MSG_@@extension_id__/skin/b/welcometips/wt_intro_top.png);
+    background-image: url("/skin/b/welcometips/wt_intro_top.png");
     background-repeat: no-repeat;
     height: 11px;
     width: 218px;
@@ -122,7 +122,7 @@ body {
 }
 
 #wot-wt-intro-image1 {
-    background-image: url(chrome-extension://__MSG_@@extension_id__/skin/fusion/16_16/plain/r5.png);
+    background-image: url("/skin/fusion/16_16/plain/r5.png");
     background-repeat: no-repeat;
     padding: 0 0 0 16px;
 }
