@@ -373,20 +373,21 @@ $.extend(wot, { ratingwindow: {
 
     updatecontents: function()
     {
-        var bg = chrome.extension.getBackgroundPage();
-        var cached = this.getcached(),
+        var bg = chrome.extension.getBackgroundPage(),
+            _this = wot.ratingwindow,
+            cached = this.getcached(),
             visible_hostname = "",
             rw_title = "";
 
         /* update current rating state */
-        this.updatestate(this.current.target, cached);
+        _this.updatestate(_this.current.target, cached);
         var normalized_target = cached.value.normalized ? cached.value.normalized : this.current.target;
 
         var $_hostname = $("#hostname-text"),
             $_wot_title_text = $("#wot-title-text");
 
         /* target */
-        if (this.current.target && cached.status == wot.cachestatus.ok) {
+        if (_this.current.target && cached.status == wot.cachestatus.ok) {
             visible_hostname = bg.wot.url.decodehostname(normalized_target);
             rw_title = wot.i18n("messages", "ready");
         } else if (cached.status == wot.cachestatus.busy) {
@@ -421,8 +422,10 @@ $.extend(wot, { ratingwindow: {
             $_rep_legend.attr("r", rep_level);
             $_rep_legend.text(wot.get_level_label(item.name, rep_level, false));
 
+            var t = (cachedv && cachedv.t >= 0) ? cachedv.t : -1;
+
+            _this.rate_control.updateratings({ name: item.name, t: t }); // update visual ratingbars
         });
-        this.rate_control.updateratings();
 
         /* message */
 
