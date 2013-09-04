@@ -289,7 +289,7 @@
         "description": "TODO: TRANSLATE"
     }, 
     "ratingwindow_fulllist": {
-        "message": "mostra la lista completa", 
+        "message": "la lista completa",
         "description": ""
     }, 
     "ratingwindow_vote_yes": {
