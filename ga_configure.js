@@ -47,8 +47,19 @@ $.extend(wot, { ga: {
 
 	actions: {
 		RW_TESTIMONY:   "RW_testimony",
+		RW_TESTIMONY_DEL: "RW_testimony_del",
+		RW_COMMENTADDED: "RW_comment_posted",
+		RW_COMMENTREMOVED: "RW_comment_removed",
+		RW_COMMENTKEPT: "RW_comment_kept",      // the comment is kept locally
+
 		RW_BTN_CLOSE:   "RW_btn_close",
 		RW_MSG_CLICKED: "RW_msg_clicked",
+		RW_DELETE:      "RW_delete",
+		RW_DELETEALL:   "RW_delete_all",
+		RW_ADDCOMMENT:  "RW_addcomment",
+		RW_EDITCOMMENT: "RW_editcomment",
+		RW_PICKACAT:    "RW_pickcategory",
+		RW_BTNCANCEL:    "RW_btn_cancel",
 
 		WS_SHOW:        "WS_shown",
 		WS_BTN_ENTER:   "WS_btn_enter",

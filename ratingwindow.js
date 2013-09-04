@@ -253,9 +253,15 @@ $.extend(wot, { ratingwindow: {
 
                 bgwot.api.submit(target, params);
 
+                var submission_mode = unload ? "auto" : "manual";
+
                 // count testimony event
-                // TODO: add either label or number to count voted categories AND/OR whether ratings were deleted
-                bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY);
+                if (is_rated) {
+                    bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY, submission_mode);
+                } else {
+                    bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY_DEL, submission_mode);
+                }
+
             } else {
 //                bg.console.log("No testimonies & votes to submit them. Ignored.");
             }
@@ -267,6 +273,7 @@ $.extend(wot, { ratingwindow: {
 //                    bg.console.log("The comment seems to be changed");
                     // when comment body is changed, we might want to store it locally
                     bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.LOCAL);
+                    bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_COMMENTKEPT);
                 }
 
             } else { // User clicked Save
@@ -281,8 +288,8 @@ $.extend(wot, { ratingwindow: {
                         bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, keeper_status);
 
                         if (rw.comments.allow_commenting && rw.is_registered) {
-                            // TODO: send GA signal about submitting a comment
                             bgwot.api.comments.submit(target, user_comment, user_comment_id, rw._make_votes(votes));
+                            bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_COMMENTADDED);
                         }
 
                     } else {
@@ -292,7 +299,7 @@ $.extend(wot, { ratingwindow: {
                             bgwot.keeper.remove_comment(target);
                             if (rw.is_registered) {
                                 bgwot.api.comments.remove(target);
-                                // TODO: send GA signal about removing a comment
+                                bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_COMMENTREMOVED);
                             }
                         }
                     }
@@ -1083,12 +1090,20 @@ $.extend(wot, { ratingwindow: {
 
         switch (_rw.modes.current_mode) {
             case "rate":
-        if (!_rw.comments.allow_commenting) return;
+                 if (!_rw.comments.allow_commenting) return;
                 _rw.update_uservoted();
-        _rw.modes.comment.activate();
+                _rw.modes.comment.activate();
+
+                // do some stats collection
+                if (_rw.comments.is_commented()) {
+                    wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_EDITCOMMENT);
+                } else {
+                    wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_ADDCOMMENT);
+                }
                 break;
             case "comment":
                 _rw.modes.rate.activate();
+                wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_PICKACAT);
                 break;
         }
     },
@@ -1108,6 +1123,9 @@ $.extend(wot, { ratingwindow: {
         _rw.comments.update_hint();
 
         wot.ratingwindow.finishstate(false);
+
+        wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_DELETEALL);
+
         _rw.modes.auto();   // switch RW mode according to current state
     },
 
@@ -1123,18 +1141,20 @@ $.extend(wot, { ratingwindow: {
             var t = (cached.value[a] && cached.value[a].t !== undefined) ? cached.value[a].t : -1;
             if (_rw.state[a]) {
                 _rw.state[a].t = t;
+                _rw.state[a].name = a;
             } else {
-                _rw.state[a] = { t: t };
+                _rw.state[a] = { t: t, name: a };
             }
+
+            _rw.rate_control.updateratings(_rw.state[a]);  // restore user's testimonies visually
         });
 
         _rw.cat_selector.init_voted(); // restore previous votes
 
-        // FIXME: this is incorrect call. It must be inside the cycle above
-        _rw.rate_control.updateratings(_rw.state);  // restore user's testimonies visually
-
         bg.wot.keeper.remove_comment(_rw.state.target); // remove locally saved comment
         _rw.update_comment(cached, null); // restore comment to server-side version
+
+        wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_BTNCANCEL);
 
         _rw.modes.auto();   // switch RW mode according to current state
     },
