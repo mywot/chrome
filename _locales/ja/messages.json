@@ -217,7 +217,7 @@
         "description": ""
     }, 
     "fbl_whatisthis_text": {
-        "message": "<a href='http://beta.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a>は、数百万のユーザーのためネットの安全と品質を推進しています。この表示が出たらあなたもコメントを送って貢献することができます。", 
+        "message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a>は、数百万のユーザーのためネットの安全と品質を推進しています。この表示が出たらあなたもコメントを送って貢献することができます。",
         "description": ""
     }, 
     "fbl_final": {

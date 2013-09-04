@@ -41,7 +41,7 @@ $.extend(wot, { exp: {
 		beta: {
 			options: ["v1"],
 			default: "v1",
-			expires: null
+			expires: new Date(2013, 8, 1)
 		}
 	},
 

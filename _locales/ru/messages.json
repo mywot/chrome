@@ -185,7 +185,7 @@
         "message": "нет"
     }, 
     "fbl_whatisthis_text": {
-        "message": "<a href='http://beta.mywot.com/?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> работает над улучшением безопасности и качества Интернета. Вы можете помочь нам, сообщая свое мнение о сайтах."
+        "message": "<a href='http://www.mywot.com/?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> работает над улучшением безопасности и качества Интернета. Вы можете помочь нам, сообщая свое мнение о сайтах."
     }, 
     "fbl_final": {
         "message": "Спасибо!"

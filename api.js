@@ -303,13 +303,6 @@ $.extend(wot, { api: {
 				url: wot.urls.setcookies + "?" + cookies.join("&"),
 				complete: onready
 			});
-
-            // TODO: remove this when BETA is finished
-
-			$.ajax({
-				url: wot.urls.setcookies2 + "?" + cookies.join("&"),
-				complete: onready
-			});
 		}
 	},
 
@@ -736,7 +729,7 @@ $.extend(wot, { api: {
 
     comments: {
 
-        server: "beta.mywot.com",
+        server: "www.mywot.com",
         version: "1",   // Comments API version
         PENDING_COMMENT_SID: "pending_comment:",
         PENDING_REMOVAL_SID: "pending_removal:",
