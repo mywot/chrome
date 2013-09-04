@@ -1,6 +1,6 @@
 /*
- wot.js
- Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+ ga_configure.js
+ Copyright © 2012 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -29,8 +29,6 @@ _gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2
 _gaq.push(['_setReferrerOverride', '']);    // clear the referrer in GA cookie. Issue #75 on GH.
 _gaq.push(['_trackPageview']);
 
-
-
 /* This adds logic for counting events to wot object */
 
 $.extend(wot, { ga: {
@@ -49,8 +47,19 @@ $.extend(wot, { ga: {
 
 	actions: {
 		RW_TESTIMONY:   "RW_testimony",
+		RW_TESTIMONY_DEL: "RW_testimony_del",
+		RW_COMMENTADDED: "RW_comment_posted",
+		RW_COMMENTREMOVED: "RW_comment_removed",
+		RW_COMMENTKEPT: "RW_comment_kept",      // the comment is kept locally
+
 		RW_BTN_CLOSE:   "RW_btn_close",
 		RW_MSG_CLICKED: "RW_msg_clicked",
+		RW_DELETE:      "RW_delete",
+		RW_DELETEALL:   "RW_delete_all",
+		RW_ADDCOMMENT:  "RW_addcomment",
+		RW_EDITCOMMENT: "RW_editcomment",
+		RW_PICKACAT:    "RW_pickcategory",
+		RW_BTNCANCEL:    "RW_btn_cancel",
 
 		WS_SHOW:        "WS_shown",
 		WS_BTN_ENTER:   "WS_btn_enter",
@@ -128,8 +137,8 @@ $.extend(wot, { ga: {
 
 		/* CustomVars slots:
 		 *  1. version
-		 *  2. partner = (wot) | mailru
-		 *  3.
+		 *  2. partner = "undefined" | mailru
+		 *  3. registered = yes | no    ; since 24.05.2013
 		 *  4. experiments
 		 *  5. FBL_QID (page level). Was accessible = acc | normal until 28.03.2013
    	     * */
@@ -138,11 +147,12 @@ $.extend(wot, { ga: {
 //		var accessible = wot.env.is_accessible ? "acc" : "normal",
 		var partner = wot.prefs.get("partner") || "undefined";  // set partner
 
+        var is_registered = wot.core.is_level("registered") ? "yes" : "no";
+
 		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
-//		_gaq.push(['_setCustomVar', 5, 'Accessible', accessible, 2]); // scope = 2 (session level)  // disabled from 28.03.2013 to to be substituted by FBL_QID
+		_gaq.push(['_setCustomVar', 3, 'registered', is_registered, 2]); // scope = 2 (session level)
 
 		wot.ga.set_experiments();
-
 	},
 
 	set_experiments: function () {

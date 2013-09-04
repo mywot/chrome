@@ -19,9 +19,11 @@
 */
 
 var wot = {
-	version: 20130523,
-	platform: "opera",      // this is important
-	debug: false,           // when changing this, don't forget to switch ga_id value also!
+	version: 20130904,
+	platform: "opera",
+    locale: "en",           // cached value of the locale
+    lang: "en-US",          // cached value of the lang
+	debug: false,            // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
@@ -38,10 +40,17 @@ var wot = {
 
 	components: [
 		{ name: 0 },
-		{ name: 1 },
-		{ name: 2 },
 		{ name: 4 }
 	],
+
+    cgroups: {}, // Categories' groups and their mapping to colors and TR/CS. Initialized by calling "wot.init_categories(prefs)"
+
+    // Groupings for building category selector in Rating Window. Loaded from API server, update.xml file.
+    grouping: [],
+
+    categories: {}, // is loaded from preferences during launch and updated from server regularly
+
+    category_threshold: 3,  // confidence level to show a category as identified
 
 	reputationlevels: [
 		{ name: "rx", min: -2 },
@@ -62,6 +71,23 @@ var wot = {
 		{ name: "c4", min: 34 },
 		{ name: "c5", min: 45 }
 	],
+
+    // reference: http://www.mywot.com/wiki/Activity_scores
+    activityscore_levels: [
+        { name: "rookie", min: 0 },
+        { name: "bronze", min: 1500 },
+        { name: "silver", min: 3000 },
+        { name: "gold", min: 6000 },
+        { name: "platinum", min: 10000 }
+    ],
+
+    AS_LEVELS: {
+        ROOKIE: 0,
+        BRONZE: 1500,
+        SILVER: 3000,
+        GOLD: 6000,
+        PLATINUM: 10000
+    },
 
 	searchtypes: {
 		optimized: 0,
@@ -88,6 +114,8 @@ var wot = {
 		base:		"http://www.mywot.com/",
 		scorecard:	"http://www.mywot.com/scorecard/",
 		settings:	"http://www.mywot.com/settings",
+        profile:	"http://www.mywot.com/user",
+        signup:     "https://www.mywot.com/signup",
 		welcome:	"http://www.mywot.com/settings/welcome",
 		setcookies:	"http://www.mywot.com/setcookies.php",
 		update:		"http://www.mywot.com/update",
@@ -104,9 +132,12 @@ var wot = {
 			rwviewsc:   "rw-viewsc",
 			rwprofile:  "rw-profile",
 			rwmsg:      "rw-msg",
+			rwcommreg:  "rw-commreg",
+			rwcaptcha:  "rw-captcha",
 			warnviewsc: "warn-viewsc",
 			warnrate:   "warn-rate",
 			popupviewsc: "popup",
+			popuprate:  "popup-rate",
 			popupdonuts: "popup-donuts",
 			fbl_logo:   "fbl-logo",
 			wt_intro:   "wt-intro",
@@ -118,28 +149,82 @@ var wot = {
 		}
 	},
 
-	firstrunupdate: 1, /* increase to show a page after an update */
+	firstrunupdate: 2, /* increase to show a page after an update */
 
 	cachestatus: {
 		error:	0,
 		ok:		1,
 		busy:	2,
 		retry:	3,
-		link:	4
+		link:	4,
+        unsubmitted: 5
 	},
 
 	badge_types: {
+        unsaved_comment: {
+            color: [255, 0, 0, 255],
+            text: "?",
+            type: "unsaved_comment",
+            priority: 1
+        },
 		notice: {   // for system notifications
 			color: [240, 0, 0, 255],
 			text: "1",
-			type: "notice"  // important to compare with current status type
+			type: "notice",  // important to compare with current status type
+            priority: 2
 		},
 		message: { // for messages from another users
 			color: [160, 160, 160, 255],
 			text: "",
-			type: "message"
-		}
+			type: "message",
+            priority: 3
+		},
+        unrated: {
+            color: [255, 235, 0, 255],
+            text: "-",
+            type: "unrated",
+            priority: 4
+        },
+        nocategories: {
+            color: [200, 200, 200, 255],
+            text: "?",
+            type: "nocategories",
+            priority: 5
+        }
 	},
+
+    comments: {
+        error_codes: {
+            "0": "SUCCESS",
+            "1": "NO_ACTION_DEFINED",
+            "2": "IS_BANNED",
+            "3": "AUTHENTICATION_FAILED",
+            "4": "NO_TARGET",
+            "5": "COMMENT_NOT_FOUND",
+            "6": "COMMENT_REMOVAL_FAILED",
+            "7": "COMMENT_NOT_ALLOWED",
+            "8": "NO_COMMENTID",
+            "9": "NO_CATEGORIES_SPECIFIED",
+            "10": "NO_COMMENT_SPECIFIED",
+            "11": "AUTHENTICATION_INVALID_QUERY_PARAMETERS",
+            "12": "AUTHENTICATION_REP_SERVER_ERROR",
+            "13": "NO_QUERY_SPECIFIED",
+            "14": "QUERY_STRING_MISSING",
+            "15": "COMMENT_HAS_BEEN_ALTERED",
+            "16": "COMMENT_TOO_SHORT",
+            "17": "COMMENT_TOO_LONG",
+            "18": "COMMENT_SAVE_FAILED",
+            SUCCESS: 0,
+            NO_ACTION_DEFINED: 1,
+            IS_BANNED: 2,
+            AUTHENTICATION_FAILED: 3,
+            COMMENT_NOT_FOUND: 5,
+            COMMENT_REMOVAL_FAILED: 6,
+            COMMENT_NOT_ALLOWED: 7,
+            AUTHENTICATION_REP_SERVER_ERROR: 12,
+            COMMENT_SAVE_FAILED: 18
+        }
+    },
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
@@ -174,7 +259,7 @@ var wot = {
 	log: function (s)
 	{
 		if (wot.debug) {
-			console.log(s);
+			console.log(s, arguments);
 		}
 	},
 
@@ -373,16 +458,36 @@ var wot = {
 
 	/* reputation and confidence */
 
-	getlevel: function(levels, n)
+	getlevel: function(levels, n, next)
 	{
+        next = next ? next : false;
+
+		var next_level = levels[levels.length - 1];
+
 		for (var i = levels.length - 1; i >= 0; --i) {
 			if (n >= levels[i].min) {
-				return levels[i];
+				return next ? next_level : levels[i];
 			}
+            next_level = levels[i];
 		}
 
 		return levels[1];
 	},
+
+    get_level_label: function (component, rep_level, my) {
+        my = my || false;
+
+        if (my) {
+            return wot.i18n("testimony", component + "_levels_" + rep_level);
+        } else {
+            return wot.i18n("reputationlevels", rep_level);
+        }
+    },
+
+    get_user_level: function (activity_score, next) {
+        activity_score = parseInt(activity_score) || 0;
+        return wot.getlevel(wot.activityscore_levels, activity_score, next);
+    },
 
 	getwarningtypeforcomponent: function(comp, data, prefs)
 	{
@@ -534,6 +639,11 @@ var wot = {
 		wot.env.is_accessible = wot.prefs.get("accessible");
 	},
 
+    cache_locale: function () {
+        wot.lang = wot.i18n("lang");
+        wot.locale = wot.i18n("locale");
+    },
+
 	time_sincefirstrun: function()
 	{
 		// gives time (in seconds) spent from very first run of the addon.
@@ -595,7 +705,207 @@ var wot = {
 			// yay, we are in a content script. Have to use functional-style
 			wot.prefs.get(pref_name, onget);
 		}
-	}
+	},
+
+    // copies and validates categories from saved preferences (actually prefs['update:state'])
+    init_categories: function (_prefs) {
+        try {
+            var update_state = (typeof _prefs.get == "function") ? _prefs.get("update:state") : _prefs["update:state"];
+
+            if (update_state && !wot.utils.isEmptyObject(update_state) &&
+                update_state.categories && update_state.categories.length > 0) {
+
+                // update groupings and groups
+                if(update_state.categories[0].grouping) {
+                    var groupings = update_state.categories[0].grouping;
+                    for (var k=0; k < groupings.length; k++) {
+                        var grp = groupings[k];
+                        grp.tmax = grp.tmax !== undefined ? parseInt(grp.tmax) : undefined;
+                        grp.tmin = grp.tmin !== undefined ? parseInt(grp.tmin) : undefined;
+                        grp.groups = grp.group; // change the name to comply with current implementation
+                        delete grp.group;
+
+                        if (grp.groups) {
+                            for (var n=0; n < grp.groups.length; n++) {
+                                wot.cgroups[grp.groups[n].name] = {
+                                    type: grp.groups[n].type
+                                }
+                            }
+                        }
+                    }
+                    wot.grouping = groupings;
+                }
+
+                // update categories
+                if (update_state.categories[0].category) {
+                    var cats = update_state.categories[0].category;
+                    for (var m=0; m < cats.length; m++) {
+                        cat = cats[m];
+                        if (cat.name && cat.text != null) {
+                            cat.id = parseInt(cat.name);
+                            if (cat.group && wot.cgroups[cat.group] && wot.cgroups[cat.group].type) {
+                                cat.type = wot.cgroups[cat.group].type;
+                            }
+                            cat.cs = (cat.application == "4");  // set CS flag
+                            wot.categories[cat.name] = cat;
+                        }
+                    }
+                }
+            } else {
+                console.warn("No categories are known yet. Not good situation.");
+            }
+        } catch (e) {
+            console.error("init_categories() failed, ", e);
+        }
+    },
+
+    get_category: function (cat_id) {
+        var cid = String(cat_id),
+            cat = {};
+        if (wot.categories && wot.categories[cid]) {
+            cat = wot.categories[cid];
+            cat.id = cid;
+        }
+        return cat;
+    },
+
+    get_category_name: function (cat_id, is_short) {
+        var cat = wot.get_category(cat_id);
+        var text = is_short ? cat.shorttext : cat.text;
+        return text ? text : cat.text;  // if no short name is known, return full name
+    },
+
+    get_category_group_id: function (cat_id) {
+        return wot.get_category(cat_id).group;
+    },
+
+    get_category_css: function (cat_id) {
+        var type = wot.get_category(cat_id).type;
+        return type !== undefined ? "c-" + type : "";
+    },
+
+    rearrange_categories: function (cats_object) {
+        // sorts the categories given as object and return two arrays of category objects ordered by confidence
+        var sort_array = [],
+            cs_array = [];
+
+        if (cats_object) {
+
+            try {
+                // Make the array of objects (categories)
+                for (var key in cats_object) {
+                    var cat = wot.get_category(key);
+                    cats_object[key].id = key;
+                    cats_object[key].cs = cat.cs;
+                    cats_object[key].group = cat.group;
+                    sort_array.push(cats_object[key]);
+                }
+
+                // Sort the array
+                sort_array.sort(function(a, b) {
+                    if (a.c != b.c) {   // try to sort by confidence level
+                        return a.c - b.c
+                    } else {    // otherwise try to sort by group id
+                        if (a.group != b.group) {
+                            return a.group - b.group;
+                        } else {
+                            return a.id > b.id;
+                        }
+                    }
+                });
+                sort_array.reverse();
+            } catch (e) {
+                console.error("Failed to rearrange categories", e);
+            }
+
+            var alltogether = sort_array.slice(0);
+
+            try {
+                // filter out Child Safety cats to other array
+                for (var i=sort_array.length-1; i>=0; i--) {
+                    if (sort_array[i].cs) {
+                        cs_array.push(sort_array.splice(i, 1)[0]);
+                    }
+                }
+                cs_array.reverse();
+            } catch (e) {
+                console.error("Failed to rearrange categories", e);
+            }
+        }
+
+        return {
+            all: alltogether,
+            trustworthy: sort_array,
+            childsafety: cs_array
+        };
+    },
+
+    select_categories: function (g_from, g_to) {
+        var l = [];
+        for(var i in wot.categories) {
+            var c = wot.categories[i];
+            if (((g_from != null && c.group >= g_from) || g_from == null) &&
+                ((g_to != null && c.group <= g_to) || g_to == null)) {
+                l.push(parseInt(i));
+            }
+        }
+        return l;
+    },
+
+    select_identified: function (cat_list) {
+        // Returns categories identified by community (not sorted order)
+        var res = {};
+        for (var i in cat_list) {
+            var cat = cat_list[i];
+            if (cat.c >= wot.category_threshold) res[i] = cat;
+        }
+        return res;
+    },
+
+    select_voted: function (cat_list) {
+        // Returns categories voted by the current user (the state from server/cache)
+
+        var res = {};
+        for (var i in cat_list) {
+            var cat = cat_list[i];
+            if (cat.v != 0 && cat.v !== undefined) res[i] = cat;
+        }
+
+        return res;
+    },
+
+    determ_grouping: function (t0, type) {
+        // Return proper grouping ID for the category selector based on user's testimonies
+
+        var grp = {};
+        for (var gi=0; gi < wot.grouping.length; gi++) {
+            grp = wot.grouping[gi];
+            if ((grp.omnipresent && type === "omnipresent") || (grp.dynamic && type === "dynamic")) return grp;
+            else {
+                if (!grp.omnipresent && !type) { // skip only omnipresent, and if type is not set
+                    var tmin = grp.tmin !== null ? grp.tmin : -1,
+                        tmax = grp.tmax !== null ? grp.tmax : -1;
+                    if ((t0 == -1 && grp.dynamic) || (t0 >= tmin && t0 <= tmax)) {
+                        return grp;
+                    }
+                }
+            }
+        }
+
+        return {};
+	},
+
+    is_rated: function (cached) {
+
+        if (cached && cached.value) {
+            return wot.components.some(function(item) {
+                return (cached.value[item.name] &&
+                    cached.value[item.name].t >= 0);
+            });
+        }
+
+        return false;
+    }
 };
 
 
@@ -719,5 +1029,12 @@ wot.utils = {
 		return str.replace(/[&<>]/g, function(symb) {
 			return tagsToReplace[symb] || symb;
 		});
-	}
+	},
+
+    isEmptyObject: function (obj) {
+    for (var name in obj) {
+        return false;
+    }
+    return true;
+}
 };

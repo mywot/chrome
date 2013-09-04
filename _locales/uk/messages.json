@@ -1,134 +1,517 @@
 {
-	"locale": {
-		"message": "uk"
-	},
-	"lang": {
-		"message": "uk-UA"
-	},
-	"ext_description": {
-		"message": "WOT допомагає знайти надійні сайти на основі досвіду мільйонів користувачів і є одним з найпопулярніших розширень в Chrome."
-	},
-	"components_0": {
-		"message": "Заслуговує довіри"
-	},
-	"components_1": {
-		"message": "Надійність продавця"
-	},
-	"components_2": {
-		"message": "Конфіденційність"
-	},
-	"components_4": {
-		"message": "Безпека для дітей"
-	},
-	"components__short_0": {
-		"message": "Заслуговує довіри"
-	},
-	"components__short_1": {
-		"message": "Надійність продавця"
-	},
-	"components__short_2": {
-		"message": "Приватність"
-	},
-	"components__short_4": {
-		"message": "Безпека для дітей"
-	},
-	"reputationlevels_r0": {
-		"message": ""
-	},
-	"reputationlevels_r1": {
-		"message": "Дуже погано"
-	},
-	"reputationlevels_r2": {
-		"message": "Погано"
-	},
-	"reputationlevels_r3": {
-		"message": "Незадовільно"
-	},
-	"reputationlevels_r4": {
-		"message": "Добре"
-	},
-	"reputationlevels_r5": {
-		"message": "Відмінно"
-	},
-	"messages_initializing": {
-		"message": "Ініціалізація WOT…"
-	},
-	"messages_notready": {
-		"message": "Активація WOT…"
-	},
-	"messages_failed": {
-		"message": "Не вдалося завантажити рейтинги; повторна спроба незабаром."
-	},
-	"messages_notavailable": {
-		"message": "Рейтинги недоступні."
-	},
-	"messages_loading": {
-		"message": "Завантаження рейтингів…"
-	},
-	"ratingwindow_settings": {
-		"message": "Налаштування"
-	},
+    "locale": {
+        "message": "uk"
+    }, 
+    "lang": {
+        "message": "uk-UA"
+    }, 
+    "ext_description": {
+        "message": "WOT допомагає знайти надійні сайти на основі досвіду мільйонів користувачів і є одним з найпопулярніших розширень в Chrome."
+    }, 
+    "components_0": {
+        "message": "Заслуговує довіри"
+    }, 
+    "components_4": {
+        "message": "Безпека для дітей"
+    }, 
+    "components__short_0": {
+        "message": "Заслуговує довіри"
+    }, 
+    "components__short_4": {
+        "message": "Безпека для дітей"
+    }, 
+    "reputationlevels_r0": {
+        "message": "Невідомо", 
+        "description": ""
+    }, 
+    "reputationlevels_r1": {
+        "message": "Дуже погано"
+    }, 
+    "reputationlevels_r2": {
+        "message": "Погано"
+    }, 
+    "reputationlevels_r3": {
+        "message": "Незадовільно"
+    }, 
+    "reputationlevels_r4": {
+        "message": "Добре"
+    }, 
+    "reputationlevels_r5": {
+        "message": "Відмінно"
+    }, 
+    "messages_initializing": {
+        "message": "Ініціалізація WOT…"
+    }, 
+    "messages_notready": {
+        "message": "Активація WOT…"
+    }, 
+    "messages_failed": {
+        "message": "Не вдалося завантажити рейтинги; повторна спроба незабаром."
+    }, 
+    "messages_notavailable": {
+        "message": "Рейтинги недоступні."
+    }, 
+    "messages_loading": {
+        "message": "Завантаження рейтингів…"
+    }, 
+    "ratingwindow_settings": {
+        "message": "Налаштування"
+    }, 
+    "ratingwindow_guide": {
+        "message": "Тур", 
+        "description": ""
+    }, 
     "ratingwindow_forum": {
         "message": "Форум"
-    },
-	"ratingwindow_guide": {
-		"message": "Керівництво"
-	},
-	"ratingwindow_wotrating": {
-		"message": "Рейтинг WOT"
-	},
-	"ratingwindow_myrating": {
-		"message": "Мій рейтинг"
-	},
-	"ratingwindow_viewscorecard": {
-		"message": "Переглянути детальніше про рейтинг"
-	},
-	"ratingwindow_addcomment": {
-		"message": "Додайте свій коментар"
-	},
-	"ratingwindow_inpartnership": {
-		"message": "У партнерстві з"
-	},
-	"ratingwindow_newversion": {
-		"message": "Доступна нова версія - натисніть для оновлення"
-	},
-	"ratingwindow_helptext": {
-		"message": "Ваш рейтинг відрізняється."
-	},
-	"ratingwindow_helplink": {
-		"message": "Залишіть коментар?"
-	},
-	"warnings_information": {
-		"message": "Переглянути рейтинг і коментарі"
-	},
-	"warnings_ratesite": {
-		"message": "Цей сайт є безпечним - Я хочу <a>оцінити його</a>"
-	},
-	"warnings_gotosite": {
-		"message": "Ігнорувати попередження і зайти на сайт"
-	},
-	"warnings_reputation": {
-		"message": "Цей сайт має погану репутацію<br/>на основі рейтингів користувачів"
-	},
-	"warnings_rating": {
-		"message": "Ви дали цьому сайту низький рейтинг"
-	},
-	"warnings_unknown": {
-		"message": "Цей сайт має невідомий рейтинг"
-	},
-	"warnings_warning": {
-		"message": "Попередження!"
-	},
-	"warnings_goto": {
-		"message": "Перейти на сайт"
-	},
-	"warnings_leave": {
-		"message": "Залишити сайт"
-	},
-	"warnings_back": {
-		"message": "Повернутися назад"
-	},
-	"contextmenu_open_scorecard": {
-		"message": "Відкрити оціночну карту WOT"
-	}
+    }, 
+    "ratingwindow_profile": {
+        "message": "Мій обілковий запис", 
+        "description": ""
+    }, 
+    "ratingwindow_wotrating": {
+        "message": "Репутація сайту, що базується на оцінках користувачів", 
+        "description": ""
+    }, 
+    "ratingwindow_myrating": {
+        "message": "Мій оцінка"
+    }, 
+    "ratingwindow_viewscorecard": {
+        "message": "Переглянути деталі та коментарі", 
+        "description": ""
+    }, 
+    "ratingwindow_addcomment": {
+        "message": "Додати коментар", 
+        "description": ""
+    }, 
+    "ratingwindow_editcomment": {
+        "message": "Редагувати коментар", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings": {
+        "message": "Назад до оцінювання", 
+        "description": ""
+    }, 
+    "ratingwindow_backtoratings_category": {
+        "message": "Виберіть категорію", 
+        "description": ""
+    }, 
+    "ratingwindow_newversion": {
+        "message": "Доступна нова версія - натисніть для оновлення"
+    }, 
+    "ratingwindow_invite_rw": {
+        "message": "Ви можете оцінювати вебсайти, використовуючи цей інстурмент. Натискайте на кольорі смужки, щоб виразити свою довіру до сайту.", 
+        "description": ""
+    }, 
+    "warnings_information": {
+        "message": "Переглянути деталі та коментарі", 
+        "description": ""
+    }, 
+    "warnings_ratesite": {
+        "message": "Якщо ви довіряєте цьому сайт, будь ласка,<br/> <a>оцініть його</a>", 
+        "description": ""
+    }, 
+    "warnings_reratesite": {
+        "message": "<a>Натисніть тут</a>, якщо ви хочете дати іншу оцінку сайту.", 
+        "description": ""
+    }, 
+    "warnings_reputation": {
+        "message": "Цей сайт має погану репутацію<br/>на основі рейтингів користувачів"
+    }, 
+    "warnings_rating": {
+        "message": "Ви дали цьому сайту низький рейтинг"
+    }, 
+    "warnings_unknown": {
+        "message": "Цей сайт має невідомий рейтинг"
+    }, 
+    "warnings_warning": {
+        "message": "Попередження!"
+    }, 
+    "warnings_goto": {
+        "message": "Перейти на сайт"
+    }, 
+    "warnings_leave": {
+        "message": "Вихід", 
+        "description": ""
+    }, 
+    "warnings_back": {
+        "message": "Повернутися назад"
+    }, 
+    "warnings_reasontitle": {
+        "message": "Користувачі помітили наступні проблеми", 
+        "description": ""
+    }, 
+    "warnings_othersreasontitle": {
+        "message": "Думки інших користувачів", 
+        "description": ""
+    }, 
+    "warnings_noreasontitle": {
+        "message": "Користувачі ще не виявили цього сайту, тільки оцінили його", 
+        "description": ""
+    }, 
+    "contextmenu_open_scorecard": {
+        "message": "Відкрити оціночну карту WOT"
+    }, 
+    "wt_learnmore_link": {
+        "message": "<a id='wt-learnmore-link'>Дізнатися більше</a> про WOT.", 
+        "description": ""
+    }, 
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Новий WOT було додано до вашого браузера.</p><p>Розпочніть оцінювати сайти, натиснувши на цій іконці {ICO1}</p><p>{WT_LEARNMORE}</p>", 
+        "description": ""
+    }, 
+    "wt_intro_0_btn": {
+        "message": "Добре, зрозумів", 
+        "description": ""
+    }, 
+    "wt_warning_text": {
+        "message": "<p>WOT попереджає вас, якщо ви потрапили на сайт із поганою репутацією, яка базується на рейтингу інших користувачів або чорних списків від третіх осіб. Попередження також показує вам причини такої поганої репутації.</p><p>{WT_LEARNMORE}</p><p>Якщо ви не хочете бачити застереження, ви можете вимкнути їх.</p>", 
+        "description": ""
+    }, 
+    "wt_warning_turnoff": {
+        "message": "Вимкнути застереження", 
+        "description": ""
+    }, 
+    "wt_warning_ok": {
+        "message": "Добре, зрозумів", 
+        "description": ""
+    }, 
+    "wt_rw_text_hdr": {
+        "message": "Поділіться своїм враженням!", 
+        "description": ""
+    }, 
+    "wt_rw_text": {
+        "message": "<p>Вікно рейтингу WOT показує вам репутацію сайту, яка базується на досвіді інших користувачів.</p><p>Тепер ви можете самостійно оцінювати та коментувати безпосередньо із оновленого вікна. Почніть оцінювати, натиснувши на кольорові смужки.</p><p class='wot-c'><a id='wt-learnmore-link'>Дізнатися більше</a> про WOT.</p>", 
+        "description": ""
+    }, 
+    "wt_donut_msg": {
+        "message": "<p>WOT показує вам репутацію сайту, виходячи із досвіду інших користувачів, показуючи вам іконки у вигляді світлофору.</p><p>Щоб побачити репутацію сайту та її подробиці, наведіть курсор мишки на значок.</p>", 
+        "description": ""
+    }, 
+    "wt_donut_btn": {
+        "message": "Добре, зрозумів", 
+        "description": ""
+    }, 
+    "fbl_hideforever": {
+        "message": "Більше не показувати", 
+        "description": ""
+    }, 
+    "fbl_submit": {
+        "message": "Підтвердити", 
+        "description": ""
+    }, 
+    "fbl_whatisthis": {
+        "message": "Що це?", 
+        "description": ""
+    }, 
+    "fbl_optout_text": {
+        "message": "Якщо ви не хочете отримувати запитання, натисніть \"так\"", 
+        "description": ""
+    }, 
+    "fbl_optout_yes": {
+        "message": "так", 
+        "description": ""
+    }, 
+    "fbl_optout_no": {
+        "message": "Ні", 
+        "description": ""
+    }, 
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> працює з метою покращення безпеки і якості по всьому Інтернету для мільйонів користувачів. Ви можете допомогти, висловивши свої думки, коли ви бачите цей текст.",
+        "description": ""
+    }, 
+    "fbl_final": {
+        "message": "Дякую!", 
+        "description": ""
+    }, 
+    "fbl_this_website": {
+        "message": "цей сайт", 
+        "description": ""
+    }, 
+    "fbl_dismiss": {
+        "message": "відмінити", 
+        "description": ""
+    }, 
+    "ratingwindow_question0": {
+        "message": "Наскільки ви довіряєте сайту?", 
+        "description": ""
+    }, 
+    "ratingwindow_question4": {
+        "message": "Cайт підходить для дітей?", 
+        "description": ""
+    }, 
+    "ratingwindow_categories": {
+        "message": "Вибер. принайні одну катег. щоб підтв. оцінку", 
+        "description": ""
+    }, 
+    "ratingwindow_comment": {
+        "message": "Залиште коментар, щоб описати свій досвід від користування цим сайтом", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_placeholder": {
+        "message": "напишіть свій коментра тут…", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_regtext": {
+        "message": "Необхідно мати обліковий запис, щоб опублікувати свій коментар.", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_register": {
+        "message": "Створити обліковий запис", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchatext": {
+        "message": "Вам потрібно ввести число з картинки у поле, щоб опублікувати свій коментар.", 
+        "description": ""
+    }, 
+    "ratingwindow_comment_captchalink": {
+        "message": "Відкрити поле для вводу числа зараз", 
+        "description": ""
+    }, 
+    "ratingwindow_commenthints": {
+        "message": "<p>Будьте точними</p><p>Надайте докази або приклад</p><p>Залиште коментар згідно свого справжнього досвіду від користування</p><p>Не залишайте спам</p>", 
+        "description": ""
+    }, 
+    "ratingwindow_novoted": {
+        "message": "Натисніть тут, щоб надати причину вашої оцінки, вибравши категорію", 
+        "description": ""
+    }, 
+    "ratingwindow_morecats": {
+        "message": "більше", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_change": {
+        "message": "змінити", 
+        "description": ""
+    }, 
+    "ratingwindow_rerate_category": {
+        "message": " "
+    }, 
+    "ratingwindow_fulllist": {
+        "message": "показати весь список", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_yes": {
+        "message": "Так", 
+        "description": ""
+    }, 
+    "ratingwindow_vote_no": {
+        "message": "Ні", 
+        "description": ""
+    }, 
+    "messages_ready": {
+        "message": "Репутація", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r0": {
+        "message": "натисніть, щоб оцінити", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r1": {
+        "message": "Я не довіряю", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r2": {
+        "message": "Я не довіряю", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r3": {
+        "message": "підозрілий", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r4": {
+        "message": "Я довіряю", 
+        "description": ""
+    }, 
+    "testimony_0_levels_r5": {
+        "message": "Я довіряю", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r0": {
+        "message": "натисніть, щоб оцінити", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r1": {
+        "message": "не підходить", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r2": {
+        "message": "не підходить", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r3": {
+        "message": "будьте обачні", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r4": {
+        "message": "підходить", 
+        "description": ""
+    }, 
+    "testimony_4_levels_r5": {
+        "message": "підходить", 
+        "description": ""
+    }, 
+    "testimony_unrated": {
+        "message": "немає думки", 
+        "description": ""
+    }, 
+    "testimony_delete": {
+        "message": "видали", 
+        "description": ""
+    }, 
+    "buttons_delete": {
+        "message": "Видалити оцінки", 
+        "description": ""
+    }, 
+    "buttons_delete_title": {
+        "message": "Видалити мої оцінки та категорії для сайту", 
+        "description": ""
+    }, 
+    "buttons_cancel": {
+        "message": "Відмінити", 
+        "description": ""
+    }, 
+    "buttons_save": {
+        "message": "Зберегти", 
+        "description": ""
+    }, 
+    "buttons_ok": {
+        "message": "ОК", 
+        "description": ""
+    }, 
+    "popup_headertext": {
+        "message": "натисніть, щоб переглянути деталі", 
+        "description": ""
+    }, 
+    "popup_nocattext": {
+        "message": "поділ. своєю думкою про цей сайт", 
+        "description": ""
+    }, 
+    "ratingwindow_thankyou": {
+        "message": "Дякуємо за те, що поділилися досвідом!", 
+        "description": ""
+    }, 
+    "activityscore_text": {
+        "message": "Рівень вашої активності зараз", 
+        "description": ""
+    }, 
+    "activityscore_rookie": {
+        "message": "новобранець", 
+        "description": ""
+    }, 
+    "activityscore_bronze": {
+        "message": "бронзовий", 
+        "description": ""
+    }, 
+    "activityscore_silver": {
+        "message": "срібний", 
+        "description": ""
+    }, 
+    "activityscore_gold": {
+        "message": "золотий", 
+        "description": ""
+    }, 
+    "activityscore_platinum": {
+        "message": "платиновий", 
+        "description": ""
+    }, 
+    "activityscore_next": {
+        "message": "Залиш. оцінки, щоб досяг. {NEXT_LEVEL} рівня!", 
+        "description": ""
+    }, 
+    "bl_description": {
+        "message": "Цей сайт є у чорному списку третіх осіб", 
+        "description": ""
+    }, 
+    "bl_description_pl": {
+        "message": "Цей сайт є у чорному списку третіх осіб", 
+        "description": ""
+    }, 
+    "bl_information": {
+        "message": "WOT використовує чорні списки третіх осіб, шоб застерегти користувачів про технічні небезпеки, як віруси або шкідливі програми. <a>Читати більше</a>", 
+        "description": ""
+    }, 
+    "bl_malware": {
+        "message": "Шкідливі програми", 
+        "description": ""
+    }, 
+    "bl_phishing": {
+        "message": "Фішинг", 
+        "description": ""
+    }, 
+    "bl_scam": {
+        "message": "Шахрайство", 
+        "description": ""
+    }, 
+    "bl_spam": {
+        "message": "СПАМ", 
+        "description": ""
+    }, 
+    "bl_tracking": {
+        "message": "Стеження", 
+        "description": ""
+    }, 
+    "bl_other": {
+        "message": "Інші причини", 
+        "description": ""
+    }, 
+    "warning_button": {
+        "message": "Переглянути детальніше про рейтинг", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_rating": {
+        "message": "Ви дали цьому сайту низький рейтинг.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_message_reputation": {
+        "message": "Цей сайт має погану репутацію на основі рейтингів користувачів.", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_offline": {
+        "message": "Відключено, коли браузер знаходиться в автономному режимі", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_disabled": {
+        "message": "Надбудова відключена", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_title": {
+        "message": "Оновлення WOT", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_yes": {
+        "message": "Оновити зараз", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_restart": {
+        "message": "Перезапустіть браузер для активізації WOT", 
+        "description": "imported from firefox add-on"
+    }, 
+    "messages_error_register": {
+        "message": "Не вдалося активувати надбудову", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warning": {
+        "message": "Попередження: %S", 
+        "description": "imported from firefox add-on"
+    }, 
+    "description_uninstall": {
+        "message": "WOT буде видалено після перезапуску", 
+        "description": "imported from firefox add-on"
+    }, 
+    "warnings_blocked": {
+        "message": "Заблоковано", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_check": {
+        "message": "Включити автоматичне оновлення (рекомендується)", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_button_no": {
+        "message": "Нагадати пізніше", 
+        "description": "imported from firefox add-on"
+    }, 
+    "auto_update_message": {
+        "message": "Доступна нова версія - натисніть для оновлення", 
+        "description": "imported from firefox add-on"
+    }
 }

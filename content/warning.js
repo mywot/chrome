@@ -1,6 +1,6 @@
 /*
 	content/warning.js
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -24,55 +24,124 @@ wot.warning = {
 	wtip_shown_dt: null,    // time when welcome tip was shown (to measure time spent to read it)
 	target: "",
 
-	make_warning: function () {
-		var wot_warning = "<div id='wotcontainer' class='wotcontainer {CLASS} {ACCESSIBLE}'>" +
-			"<div class='wot-logo'></div>" +
-			"<div class='wot-warning'>{WARNING}</div>" +
-			"<div class='wot-title'>{TITLE}</div>" +
-			"<div id='wot-wt-warning-wrapper' style='display: none;'>" +
-				"<div class='wot-wt-warning-content'>" +
-					"<div id='wt-logo' class='wot-wt-logo'>&nbsp;</div>" +
-					"<div>{WT_CONTENT}</div>" +
-					"<div><label><input id='wt-warn-turnoff' type='checkbox' class='wot-checkbox' /> {WT_WARN_TURNOFF}</label></div>" +
-					"<div class='wot-wt-warn-footer'>" +
-						"<div id='wt-warn-ok' class='wot-wt-button wot-wt-warn-button'>{WT_BUTTON}</div>" +
-					"</div>" +
-				"</div>" +
-			"</div>" +
-			"<div class='wot-desc'>{DESC}</div>" +
-			"<div class='wot-openscorecard-wrap'>" +
-				"<span id='wotinfobutton' class='wot-openscorecard wot-link'>{INFO}</span>" +
-			"</div>" +
-			"<div id='wot-warn-ratings'>";
+	make_categories_block: function (categories, options) {
 
-		wot.components.forEach(function (item) {
+        var tmpl = '';
+//        console.log("make_categories_block", categories);
 
-			var c = item.name,
-				S_COMPNAME = "RATINGDESC" + c,
-				S_RATING = "RATING" + c,
-				S_RATING_EXPL = "RATINGEXPL" + c;
+        if (!wot.utils.isEmptyObject(categories)) {
+            var lst = [],
+                ordered_cats = wot.rearrange_categories(categories).all;
+            for (var k in ordered_cats) {
+                var cat = ordered_cats[k], cid = cat.id,
+                    cconf = wot.getlevel(wot.confidencelevels, cat.c).name,
+                    css = wot.get_category_css(cid),
+                    cat_name = wot.get_category_name(cid),
+                    li = "<li class='cat-item " + css + " " + cconf + "'>" + cat_name + "</li>";
+                if (cat_name) {
+                    lst.push(li);
+                }
+            }
 
-			if (wot.warning.settings["show_application_" + c]) {
-				wot_warning += "" +
-					"<div class='wot-component'>" +
-						"<div class='wot-comp-name'>{" + S_COMPNAME + "}</div>" +
-						"<div class='wot-comp-level' r='{" + S_RATING + "}'>{" + S_RATING_EXPL + "}</div>" +
-						"<div class='wot-comp-icon' r='{" + S_RATING + "}'></div>" +
-					"</div>";
-			}
+            tmpl = "<div class='ws-categories-title'>{REASONTITLE}</div>" +
+                "<ul id='ws-categories-list'>" +
+                    lst.join("") +
+                "</ul>";
+        }
 
-		});
+        return tmpl;
 
-		wot_warning +=
-			"</div>" +
-				"<div class='wot-rateit-wrap'>" +
-					"<span>{RATETEXT}</span>" +
-				"</div>" +
-				"<div class='wot-buttons'>" +
-					"<div id='wot-btn-hide' class='wot-button'>{GOTOSITE}</div>" +
-					"<div id='wot-btn-leave' class='wot-button'>{LEAVESITE}</div>" +
-				"</div>" +
-			"</div>";
+    },
+
+    make_blacklists: function(blacklists, options) {
+
+        var bl = blacklists || [],
+            tmpl = "";
+
+        if (bl && bl.length > 0) {
+            tmpl = "<div class='wot-blacklisting-info'>" +
+                        "<div class='wot-blacklist'>" +
+                            "<div class='wot-bl-decoration'>" +
+                                "<div class='wot-comp-icon wot-bl-decoration-donut' r='{RATING0}'></div>" +
+                            "</div>";
+
+            // the blacklist is unordered. We can order it in later versions by time or by risk level.
+            for (var i = 0, bl_type=""; i < 5; i++) {
+                if (bl.length > i) {
+                    bl_type = wot.i18n("bl", bl[i].type);
+                    bl_type = bl_type ? bl_type : wot.i18n("bl", "other");
+
+                    tmpl += "<div class='wot-bl-verdict'>" + bl_type + "</div>"
+                } else {
+                    tmpl += "<div class='wot-bl-verdict empty'></div>";
+                }
+            }
+
+            tmpl += "</div></div>";
+        }
+
+        return tmpl;
+    },
+
+    make_warning: function (categories, blacklists, options) {
+		var wot_warning = "<div id='wotcontainer' class='wotcontainer {CLASS} {ACCESSIBLE} {BL_OR_REP} notranslate'>" +
+            "<div class='wot-logo'></div>" +
+            "<div class='wot-warning'>{WARNING}</div>" +
+            "<div class='wot-title'>{TITLE}</div>" +
+            "<div id='wot-wt-warning-wrapper' style='display: none;'>" +
+                "<div class='wot-wt-warning-content'>" +
+                    "<div id='wt-logo' class='wot-wt-logo'>&nbsp;</div>" +
+                    "<div>{WT_CONTENT}</div>" +
+                    "<div><label><input id='wt-warn-turnoff' type='checkbox' class='wot-checkbox' /> {WT_WARN_TURNOFF}</label></div>" +
+                    "<div class='wot-wt-warn-footer'>" +
+                        "<div id='wt-warn-ok' class='wot-wt-button wot-wt-warn-button'>{WT_BUTTON}</div>" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+            "<div class='wot-desc'>{DESC}</div>" +
+
+            this.make_blacklists(blacklists, options) +
+
+            "<div class='wot-rep-components-wrapper'>" +
+                "<div class='wot-rep-components'>" +
+                    "<div class='wot-component'>" +
+                        "<div class='wot-comp-name'>{RATINGDESC0}</div>" +
+                        "<div class='wot-rep-data'>" +
+                            "<div class='wot-comp-icon' r='{RATING0}'></div>" +
+                            "<div class='wot-comp-conf' c='{CONFIDENCE0}'></div>" +
+                            "<div class='rating-legend-wrapper'>" +
+                            "<div class='rating-legend' r='{RATING0}'>{RATINGEXPL0}</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                    "<div class='wot-component'>" +
+                        "<div class='wot-comp-name'>{RATINGDESC4}</div>" +
+                        "<div class='wot-rep-data'>" +
+                            "<div class='wot-comp-icon' r='{RATING4}'></div>" +
+                            "<div class='wot-comp-conf' c='{CONFIDENCE4}'></div>" +
+                            "<div class='rating-legend-wrapper'>" +
+                                "<div class='rating-legend' r='{RATING4}'>{RATINGEXPL4}</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+            "<div class='ws-categories-area'>" +
+                this.make_categories_block(categories, options) +
+            "</div>"+
+            "<div class='wot-openscorecard-wrap'>" +
+                "<span class='wot-openscorecard'>{INFO}</span>" +
+            "</div>" +
+            "<div id='wot-warn-ratings'>"+
+            "</div>" +
+            "<div class='wot-rateit-wrap'>" +
+                "<span>{RATETEXT}</span>" +
+            "</div>" +
+            "<div class='wot-buttons'>" +
+                "<div id='wot-btn-hide' class='wot-button'>{GOTOSITE}</div>" +
+                "<div id='wot-btn-leave' class='wot-button'>{LEAVESITE}</div>" +
+            "</div>" +
+        "</div>";
 
 		return wot_warning;
 	},
@@ -163,7 +232,7 @@ wot.warning = {
 			our layer... */
 
 		try {
-			if (!data.target || document.getElementById("wotwarning")) {
+			if (!data.target || !data.cached || document.getElementById("wotwarning")) {
 				return;
 			}
 
@@ -174,27 +243,39 @@ wot.warning = {
 
 			this.target = data.target;
 
-			// preprocess link "Rate the site"
-			var rate_site = wot.i18n("warnings", "ratesite").replace("<a>", "<a id='wotrate-link' class='wot-link'>");
+            var normalized_target = (data.cached.value &&
+                data.cached.value.normalized) ? data.cached.value.normalized : data.decodedtarget;
+
+            var blacklists = (data.cached.value && data.cached.value.blacklist) ? data.cached.value.blacklist : [];
+//            blacklists = ["malware", "phishing","shit", "scam", "spam", "spam"];
+
+            var is_blacklisted = blacklists && blacklists.length > 0;
+
 			var wt_text_2 = wot.i18n("wt", "warning_text_2") || "";
 			var wt_text = wot.i18n("wt", "warning_text") || "";
 
+            var info_link = is_blacklisted ? wot.i18n("bl", "information") : wot.i18n("warnings", "information");
+            if (info_link.indexOf("<a>") < 0) {
+                info_link = "<a>" + info_link + "</a>";
+            }
+            info_link = info_link.replace("<a>", "<a id='wotinfobutton' class='wot-link'>");
+
 			var replaces = [
 				{
-				from: "WARNING",
-				to: wot.i18n("warnings", "warning")
-			},			{
+				    from: "WARNING",
+				    to: wot.i18n("warnings", "warning")
+			    }, {
+                    from: "BL_OR_REP",
+                    to: is_blacklisted ? "blacklist": "reputation"
+                }, {
 					from: "TITLE",
-					to: (data.decodedtarget || "").replace(/[<>&="']/g, "")
+					to: (normalized_target || "").replace(/[<>&="']/g, "")
 				}, {
 					from: "LANG",
 					to: wot.i18n("lang")
 				}, {
 					from: "INFO",
-					to: wot.i18n("warnings", "information")
-				}, {
-					from: "RATETEXT",
-					to: rate_site
+					to: info_link
 				}, {
 					from: "GOTOSITE",
 					to: wot.i18n("warnings", "goto")
@@ -213,6 +294,9 @@ wot.warning = {
 				}, {
 					from: "WT_BUTTON",
 					to: wot.i18n("wt", "warning_ok")
+				}, {
+					from: "NOREASONTITLE",
+					to: wot.i18n("warnings", "noreasontitle")
 				}
 			];
 
@@ -223,6 +307,9 @@ wot.warning = {
 				var level = wot.getlevel(wot.reputationlevels,
 								(cachedv && cachedv.r != null) ? cachedv.r : -1);
 
+                var conf_level = wot.getlevel(wot.confidencelevels,
+                    (cachedv && cachedv.c != null) ? cachedv.c : -1);
+
 				replaces.push({
 					from: "RATINGDESC" + item.name,
 					to: wot.i18n("components", item.name)
@@ -231,37 +318,50 @@ wot.warning = {
 					from: "RATING" + item.name,
 					to: level.name
 				});
-				replaces.push({
+                replaces.push({
+                    from: "CONFIDENCE" + item.name,
+                    to: conf_level.name
+                });
+                replaces.push({
 					from: "RATINGEXPL" + item.name,
 					to: wot.i18n("reputationlevels", level.name) || "&nbsp;"
 				});
 			});
 
-			var warnclass = "";
+			var warnclass = "", rate_template = wot.i18n("warnings", "ratesite");
 
 			if (this.getheight() < this.minheight) {
 				warnclass = "wotnoratings";
 			}
 
-			if (reason == wot.warningreasons.reputation) {
-				replaces.push({ from: "CLASS", to: warnclass });
-				replaces.push({
-					from: "DESC",
-					to: wot.i18n("warnings", "reputation")
-				});
-			} else if (reason == wot.warningreasons.rating) {
-				replaces.push({ from: "CLASS", to: "wotnoratings" });
-				replaces.push({
-					from: "DESC",
-					to: wot.i18n("warnings", "rating")
-				});
-			} else {
-				replaces.push({ from: "CLASS", to: warnclass });
-				replaces.push({
-					from: "DESC",
-					to: wot.i18n("warnings", "unknown")
-				});
-			}
+            if (is_blacklisted) { // If warning should show Blacklisted status
+                replaces.push({ from: "CLASS", to: warnclass });
+
+                var bl_description = blacklists.length == 1 ? wot.i18n("bl", "description") : wot.i18n("bl", "description_pl");
+                replaces.push({ from: "DESC", to: bl_description });
+
+            } else { // if Warning should show reputation reason
+
+                if (reason == wot.warningreasons.reputation) {
+                    replaces.push({ from: "CLASS", to: warnclass });
+                    replaces.push({ from: "DESC", to: wot.i18n("warnings", "reputation") });
+                    replaces.push({ from: "REASONTITLE", to: wot.i18n("warnings", "reasontitle") });
+                } else if (reason == wot.warningreasons.rating) {
+                    replaces.push({ from: "CLASS", to: "wotnoratings" });
+                    replaces.push({ from: "DESC", to: wot.i18n("warnings", "rating") });
+                    replaces.push({ from: "REASONTITLE", to: wot.i18n("warnings", "othersreasontitle") });
+                    rate_template = wot.i18n("warnings", "reratesite");
+                } else {
+                    replaces.push({ from: "CLASS", to: warnclass });
+                    replaces.push({ from: "DESC", to: wot.i18n("warnings", "unknown") });
+                    replaces.push({ from: "REASONTITLE", to: "" });
+                }
+            }
+
+            // preprocess link "Rate the site"
+            var rate_site = rate_template.replace("<a>", "<a id='wotrate-link' class='wot-link'>");
+
+            replaces.push({ from: "RATETEXT", to: rate_site });
 
 			var body = document.getElementsByTagName("body");
 
@@ -299,21 +399,24 @@ wot.warning = {
 					this.settings.warning_opacity + " ! important;");
 			}
 
+            var _cats = (data.cached.value && data.cached.value.cats) ? data.cached.value.cats : {},
+                categories = wot.select_identified(_cats);
+
 			wrapper.setAttribute("id", "wotwrapper");
 
 			warning = body[0].appendChild(warning);
 			wrapper = body[0].appendChild(wrapper);
 
-			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(), replaces);
+			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(categories, blacklists, {}), replaces);
 			this.hideobjects(true);
 
 			wot.post("warnings", "shown", { type: "overlay", target: data.decodedtarget });   // for counting in stats
 
-			document.getElementById("wotinfobutton").addEventListener("click",
-				function() {
-					var url = wot.urls.scorecard + encodeURIComponent(data.target);
-					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
-				}, false);
+            document.getElementById("wotinfobutton").addEventListener("click",
+                function() {
+                    var url = wot.urls.scorecard + encodeURIComponent(data.target);
+                    window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
+                }, false);
 
 			document.getElementById("wot-btn-leave").addEventListener("click",function(e){
 				wot.post("warnings", "leave_button", {label: wot.warning.exit_mode});
@@ -349,6 +452,7 @@ wot.warning = {
 				function() {
 					var url = wot.urls.scorecard +
 						encodeURIComponent(data.target) + "/rate";
+
 					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
 				}, false);
 
@@ -435,6 +539,7 @@ wot.warning = {
 		/* wait for status updates and warn if necessary */
 		wot.bind("message:warning:show", function(port, data) {
 			wot.warning.settings = data.settings;
+            wot.init_categories(data.settings);
 			wot.warning.add(data.data, data.type.reason, data.show_wtip);
 		});
 

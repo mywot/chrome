@@ -31,6 +31,7 @@ $.extend(wot, { wt: {
 	enabled: true,              // see also content/welcome_tips.js "enabled: true," line at the beginning
 	intro_shown_sent: null,     // flag to remember that we have sent already message to show the tip
 	activity_score_max: 1500,   // level of AS after which the add-on should not show Tips (see GH #83). 1500 = Bronze
+    UPDATE_ROUND: 2,            // version number of firstrun_update to show tips again
 
 	settings: {
 		intro_0_shown: 0,           // how many times intro0 was shown
@@ -79,18 +80,22 @@ $.extend(wot, { wt: {
 
 		if (wot.wt.enabled) {
 
-			// Check additional conditions
-			var locale = wot.i18n("locale");
-			if (!(locale === "ru" || locale === "en")) return;
+            // whether super-settings is off, check normal conditions
+            if (!wot.prefs.get("super_wtips")) {
+                // Check additional conditions
+//                var locale = wot.i18n("locale");
+//                if (!(locale === "ru" || locale === "en")) return;
 
-			// workaround for http://code.google.com/p/chromium/issues/detail?id=53628
-			// test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
-			if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
-				"warning_text", "warning_ok", "learnmore_link"], "wt")) return;
+                // workaround for http://code.google.com/p/chromium/issues/detail?id=53628
+                // test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
+                if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
+                                     "warning_text", "warning_ok", "learnmore_link"], "wt")) return;
 
-			if (wot.get_activity_score() >= wot.wt.activity_score_max) return;
+                if (wot.get_activity_score() >= wot.wt.activity_score_max &&
+                    wot.wt.UPDATE_ROUND != wot.firstrunupdate) return;
+            }
 
-			this.load_settings();
+			wot.wt.load_settings();
 
 			// Initialize Intro Tip
 			if (wot.wt.intro.tts_intro0()) {
@@ -118,11 +123,8 @@ $.extend(wot, { wt: {
 
             if (wot.prefs.get("super_wtips")) return true;
 
-            var locale = wot.i18n("locale");
-			// Mailru only. RU or EN only.
-			if (!(wot.env.is_mailru && (locale === "ru" || locale === "en"))) {
-				return false;
-			}
+//            var locale = wot.i18n("locale");
+			if (wot.env.is_mailru) return false; // Not for Mailru only.
 
 			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings;
@@ -130,23 +132,22 @@ $.extend(wot, { wt: {
 			if (wt_settings.intro_0_shown < 2 &&
 				!wt_settings.intro_0_ok &&
 				wot.time_since(wot.core.launch_time) <= 10 * wot.DT.MINUTE &&
-				timesincefirstrun <= 15 * wot.DT.DAY ) {
+                (timesincefirstrun <= 15 * wot.DT.DAY || wot.firstrunupdate == wot.wt.UPDATE_ROUND) ) {
 
 				// don't show intro tip first time if the user already has experience with WOT longer than 2 days
-				if (!wt_settings.intro_0_shown && timesincefirstrun > 2 * wot.DT.DAY ) {
-					return false;
-				}
+//				if (!wt_settings.intro_0_shown && timesincefirstrun > 2 * wot.DT.DAY ) {
+//					return false;
+//				}
 
-				// don't show intro tip second time before 10 days after installation
+				// don't show intro tip second time before 7 days after it was shown first time
 				if (wt_settings.intro_0_shown === 1 &&
 					wot.wt.settings.intro_0_shown_dt &&
 					wot.time_since(wot.wt.settings.intro_0_shown_dt) < 7 * wot.DT.DAY ) {
 					return false;
 				}
 
-				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
-
-				if (wot.exp.is_running("wtip-off")) return false;
+				if (wot.get_activity_score() >= wot.wt.activity_score_max &&
+                    wot.firstrunupdate != wot.wt.UPDATE_ROUND) return false;
 
 				return true;
 			}
@@ -166,7 +167,6 @@ $.extend(wot, { wt: {
 					}
 				}, wot.wt.intro.intro_0_showdelay, port);
 			});
-
 		},
 
 		on_show: function (port, data) {
@@ -237,26 +237,19 @@ $.extend(wot, { wt: {
 
             if (wot.prefs.get("super_wtips")) return true;
 
-            var locale = wot.i18n("locale");
-			// RU and EN only.
-			if (!(locale === "ru" || locale === "en")) {
-				return false;
-			}
-
  			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings,
 				 timesince_firstshow = wot.time_since(wt_settings.warning_shown_dt);
 
  			if (wt_settings.warning_shown < 2 && wt_settings.warning_ok !== true &&
-				 timesincefirstrun <= 14 * wot.DT.DAY ) {
+                (timesincefirstrun <= 14 * wot.DT.DAY || wot.firstrunupdate == wot.wt.UPDATE_ROUND) ) {
 
 				 if (wt_settings.warning_shown === 1 && timesince_firstshow <= 7 * wot.DT.DAY) {
 					 return false;
 				 }
 
-				 if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
-
-				 if (wot.exp.is_running("wtip-off")) return false;
+				 if (wot.get_activity_score() >= wot.wt.activity_score_max &&
+                     wot.firstrunupdate != wot.wt.UPDATE_ROUND) return false;
 
 				 return true;
 			}
@@ -307,7 +300,8 @@ $.extend(wot, { wt: {
 				wot.prefs.set("warning_level_" + app.name, 0);
 				wot.prefs.set("warning_type_" + app.name, 0);
 				wot.prefs.set("warning_unknown_" + app.name, false);
-			});
+            });
+            wot.prefs.set("settingsui_warnlevel", "off");
 		}
 	},
 
@@ -354,23 +348,17 @@ $.extend(wot, { wt: {
 
             if (wot.prefs.get("super_wtips")) return true;
 
-			var locale = wot.i18n("locale");
-			// RU or EN only.
-			if (!(locale === "ru" || locale === "en")) {
-				return false;
-			}
-
 			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings;
 
 			if (wt_settings.donuts_shown < 4 &&
 				!wt_settings.donuts_ok &&
-				timesincefirstrun <= 15 * wot.DT.DAY ) {
+                (timesincefirstrun <= 15 * wot.DT.DAY || wot.firstrunupdate == wot.wt.UPDATE_ROUND) ) {
 
 				// don't show donut tip first time if the user already has experience with WOT longer than 5 days
-				if (wt_settings.donuts_shown < 3 && timesincefirstrun > 5 * wot.DT.DAY ) {
-					return false;
-				}
+//				if (wt_settings.donuts_shown < 3 && timesincefirstrun > 5 * wot.DT.DAY ) {
+//					return false;
+//				}
 
 				// don't show donut tip third time before 7 days after installation
 				if (wt_settings.donuts_shown == 2 &&
@@ -379,7 +367,8 @@ $.extend(wot, { wt: {
 					return false;
 				}
 
-				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
+				if (wot.get_activity_score() >= wot.wt.activity_score_max &&
+                    wot.firstrunupdate != wot.wt.UPDATE_ROUND) return false;
 
 				if (wot.exp.is_running("wtip-off")) return false;
 

@@ -1,202 +1,427 @@
 {
-	"locale": {
-		"message": "en"
-	},
-	"lang": {
-		"message": "en-US"
-	},
-	"ext_description": {
-	    "message": "WOT helps you find trustworthy websites based on millions of users’ experiences and is one of Opera’s most popular add-ons."
-	},
-	"components_0": {
-		"message": "Trustworthiness"
-	},
-	"components_1": {
-		"message": "Vendor reliability"
-	},
-	"components_2": {
-		"message": "Privacy"
-	},
-	"components_4": {
-		"message": "Child safety"
-	},
-	"components__short_0": {
-		"message": "Trustworthiness"
-	},
-	"components__short_1": {
-		"message": "Vendor reliability"
-	},
-	"components__short_2": {
-		"message": "Privacy"
-	},
-	"components__short_4": {
-		"message": "Child safety"
-	},
-	"reputationlevels_r0": {
-		"message": ""
-	},
-	"reputationlevels_r1": {
-		"message": "Very poor"
-	},
-	"reputationlevels_r2": {
-		"message": "Poor"
-	},
-	"reputationlevels_r3": {
-		"message": "Unsatisfactory"
-	},
-	"reputationlevels_r4": {
-		"message": "Good"
-	},
-	"reputationlevels_r5": {
-		"message": "Excellent"
-	},
-	"messages_initializing": {
-		"message": "Initializing WOT…"
-	},
-	"messages_notready": {
-		"message": "Activating WOT…"
-	},
-	"messages_failed": {
-		"message": "Failed to load ratings; retrying shortly."
-	},
-	"messages_notavailable": {
-		"message": "Ratings are not available."
-	},
-	"messages_loading": {
-		"message": "Loading ratings…"
-	},
-	"ratingwindow_settings": {
-		"message": "Settings"
-	},
-	"ratingwindow_guide": {
-		"message": "Guide"
-	},
+    "locale": {
+        "message": "en"
+    },
+    "lang": {
+        "message": "en-US"
+    },
+    "ext_description": {
+        "message": "WOT helps you find trustworthy websites based on millions of users’ experiences and is one of Chrome’s most popular add-ons."
+    },
+    "components_0": {
+        "message": "Trustworthiness"
+    },
+    "components_4": {
+        "message": "Child safety"
+    },
+    "components__short_0": {
+        "message": "Trustworthiness"
+    },
+    "components__short_4": {
+        "message": "Child safety"
+    },
+    "reputationlevels_r0": {
+        "message": "Unknown"
+    },
+    "reputationlevels_r1": {
+        "message": "Very poor"
+    },
+    "reputationlevels_r2": {
+        "message": "Poor"
+    },
+    "reputationlevels_r3": {
+        "message": "Unsatisfactory"
+    },
+    "reputationlevels_r4": {
+        "message": "Good"
+    },
+    "reputationlevels_r5": {
+        "message": "Excellent"
+    },
+    "messages_initializing": {
+        "message": "Initializing WOT…"
+    },
+    "messages_notready": {
+        "message": "Activating WOT…"
+    },
+    "messages_failed": {
+        "message": "Failed to load ratings; retrying shortly"
+    },
+    "messages_notavailable": {
+        "message": "Ratings are not available"
+    },
+    "messages_loading": {
+        "message": "Loading ratings…"
+    },
+    "ratingwindow_settings": {
+        "message": "Settings"
+    },
+    "ratingwindow_guide": {
+        "message": "Tour"
+    },
     "ratingwindow_forum": {
         "message": "Forum"
     },
-	"ratingwindow_wotrating": {
-		"message": "WOT rating"
-	},
-	"ratingwindow_myrating": {
-		"message": "My rating"
-	},
-	"ratingwindow_viewscorecard": {
-		"message": "View scorecard for rating details"
-	},
-	"ratingwindow_addcomment": {
-		"message": "Add your comment"
-	},
-	"ratingwindow_inpartnership": {
-		"message": "In partnership with"
-	},
-	"ratingwindow_newversion": {
-		"message": "New version available - click to update"
-	},
-	"ratingwindow_helptext": {
-		"message": "Your rating differs."
-	},
-	"ratingwindow_helplink": {
-		"message": "Leave a comment?"
-	},
-	"ratingwindow_invite_rw": {
-		"message": "You can rate websites using this tool. Click on the colored bars to express how much you trust a website."
-	},
-	"warnings_information": {
-		"message": "View rating details and comments"
-	},
-	"warnings_ratesite": {
-		"message": "This site is safe - I want to <a>rate it</a>"
-	},
-	"warnings_gotosite": {
-		"message": "Ignore warning and go to the site"
-	},
-	"warnings_reputation": {
-		"message": "This site has a poor reputation based on<br/>user ratings"
-	},
-	"warnings_rating": {
-		"message": "You have given this site a poor rating,<br/>which triggered a warning"
-	},
-	"warnings_unknown": {
-		"message": "This site has an unknown rating"
-	},
-	"warnings_warning": {
-		"message": "Warning!"
-	},
-	"warnings_goto": {
-		"message": "Go to the site"
-	},
-	"warnings_leave": {
-		"message": "Leave the site"
-	},
-	"warnings_back": {
-		"message": "Go back"
-	},
-	"contextmenu_open_scorecard": {
-		"message": "Open WOT scorecard"
-	},
-	"wt_learnmore_link": {
-		"message": "<a id='wt-learnmore-link'>Learn more</a> about WOT."
-	},
-	"wt_intro_0_msg": {
-		"message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p class='wot-cb'>You are protected!</p><p>Safe surfing tool Web of Trust (WOT) shows which websites you can trust based on millions of users' experiences.</p><p>Click the icon {ICO1} on your browser toolbar to start using WOT.</p><p>{WT_LEARNMORE}</p>",
-		"description": "This message appears on introduction welcome tip right after the add-on was installed"
-	},
-	"wt_intro_0_btn": {
-		"message": "OK, got it"
-	},
-	"wt_warning_text": {
-		"message": "<p class='wot-cb'>Be aware of untrustworthy sites!</p><p>Safe surfing tool WOT shows you a warning if you land on a site that has a bad reputation based on user ratings.</p><p>{WT_LEARNMORE}</p><p>If you don't want to see warnings, you can turn them off.</p>",
-		"description": "this is a WelcomeTip which is shown when a user sees Warning first time"
-	},
-	"wt_warning_turnoff": {
-		"message": "Turn warnings off"
-	},
-	"wt_warning_ok": {
-		"message": "OK, got it"
-	},
-	"wt_rw_text_hdr": {
-		"message": "Share your experiences!"
-	},
-	"wt_rw_text": {
-		"message": "<p>WOT shows website reputations based on experiences from millions of users.</p><p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
-	},
-	"wt_rw_ok": {
-		"message": "Show me rating window"
-	},
-	"wt_donut_msg": {
-		"message": "<p class='wot-cb'>Follow the traffic lights!</p></p>Safe surfing tool WOT shows website reputations based on experiences from millions of users.</p><p>Traffic lights after web links guide you to find sites that you can trust: green for good, red for bad, yellow as a warning to be cautious.</p>"
-	},
-	"wt_donut_btn": {
-		"message": "OK, got it"
-	},
-	"fbl_hideforever": {
-		"message": "Hide forever"
-	},
-	"fbl_submit": {
-		"message": "Submit"
-	},
-	"fbl_whatisthis": {
-		"message": "What's this?"
-	},
-	"fbl_optout_text": {
-		"message": "If you prefer not to be asked questions, click \"yes\""
-	},
-	"fbl_optout_yes": {
-		"message": "yes"
-	},
-	"fbl_optout_no": {
-		"message": "No"
-	},
-	"fbl_whatisthis_text": {
-		"message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> is working to promote safety and quality across the web for millions of users. You can help by submitting your opinions whenever you see this prompt."
-	},
-	"fbl_final": {
-		"message": "Thank you!"
-	},
-	"fbl_this_website": {
-		"message": "this website"
-	},
+    "ratingwindow_profile": {
+        "message": "My profile"
+    },
+    "ratingwindow_wotrating": {
+        "message": "Website's reputation based on user ratings"
+    },
+    "ratingwindow_myrating": {
+        "message": "My rating"
+    },
+    "ratingwindow_viewscorecard": {
+        "message": "View details and comments"
+    },
+    "ratingwindow_addcomment": {
+        "message": "Add a comment"
+    },
+    "ratingwindow_editcomment": {
+        "message": "Edit the comment"
+    },
+    "ratingwindow_backtoratings": {
+        "message": "Back to ratings"
+    },
+    "ratingwindow_backtoratings_category": {
+        "message": "Pick a category"
+    },
+    "ratingwindow_newversion": {
+        "message": "New version available - click to update"
+    },
+    "ratingwindow_invite_rw": {
+        "message": "You can rate websites using this tool. Click on the colored bars to express how much you trust a website."
+    },
+    "warnings_information": {
+        "message": "View details and comments"
+    },
+    "warnings_ratesite": {
+        "message": "If you trust this site, please <a>rate it</a>"
+    },
+    "warnings_reratesite": {
+        "message": "<a>Click here</a> if you want to re-rate the site"
+    },
+    "warnings_reputation": {
+        "message": "This website has a poor reputation based on<br/>user ratings"
+    },
+    "warnings_rating": {
+        "message": "You have given this site a poor rating,<br/>which triggered a warning"
+    },
+    "warnings_unknown": {
+        "message": "This site has an unknown rating"
+    },
+    "warnings_warning": {
+        "message": "Warning!"
+    },
+    "warnings_goto": {
+        "message": "Go to the site"
+    },
+    "warnings_leave": {
+        "message": "Exit"
+    },
+    "warnings_back": {
+        "message": "Go back"
+    },
+    "warnings_reasontitle": {
+        "message": "Users have identified the following issues"
+    },
+    "warnings_othersreasontitle": {
+        "message": "Other users' opinions"
+    },
+    "warnings_noreasontitle": {
+        "message": "Users have not identified this site yet and only have rated it"
+    },
+    "contextmenu_open_scorecard": {
+        "message": "Open WOT scorecard"
+    },
+    "wt_learnmore_link": {
+        "message": "<a id='wt-learnmore-link'>Learn more</a> about WOT."
+    },
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>The new WOT has been added to your browser.</p><p>Start rating websites by clicking on this icon {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "description": "This message appears on introduction welcome tip right after the add-on was installed"
+    },
+    "wt_intro_0_btn": {
+        "message": "OK, got it"
+    },
+    "wt_warning_text": {
+        "message": "<p>WOT warns you if you land on a site with a poor reputation based on other users’ ratings or blacklists from third parties.</p><p>The warning also shows you the reasons behind the poor reputation.</p><p>{WT_LEARNMORE}</p><p>If you don't want to see warnings, you can turn them off.</p>",
+        "description": "this is a WelcomeTip which is shown when a user sees Warning first time"
+    },
+    "wt_warning_turnoff": {
+        "message": "Turn warnings off"
+    },
+    "wt_warning_ok": {
+        "message": "OK, got it"
+    },
+    "wt_rw_text_hdr": {
+        "message": "Share your experiences!"
+    },
+    "wt_rw_text": {
+        "message": "<p>WOT rating window shows you the website reputation based on other users’ experiences.</p><p>Now you can rate and comment directly from the updated window.</p><p>Start rating by clicking the colored bars.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
+    },
+    "wt_donut_msg": {
+        "message": "<p>WOT shows you website reputations based on other users’ experiences by showing you traffic light-style icons.</p><p>Hover your mouse over the icon to see the reputations and reasons behind them.</p>"
+    },
+    "wt_donut_btn": {
+        "message": "OK, got it"
+    },
+    "fbl_hideforever": {
+        "message": "Hide forever"
+    },
+    "fbl_submit": {
+        "message": "Submit"
+    },
+    "fbl_whatisthis": {
+        "message": "What's this?"
+    },
+    "fbl_optout_text": {
+        "message": "If you prefer not to be asked questions, click \"yes\""
+    },
+    "fbl_optout_yes": {
+        "message": "yes"
+    },
+    "fbl_optout_no": {
+        "message": "No"
+    },
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> is working to promote safety and quality across the web for millions of users. You can help by submitting your opinions whenever you see this prompt."
+    },
+    "fbl_final": {
+        "message": "Thank you!"
+    },
+    "fbl_this_website": {
+        "message": "this website"
+    },
     "fbl_dismiss": {
         "message": "dismiss"
+    },
+    "ratingwindow_question0": {
+        "message": "How much do you trust this site?"
+    },
+    "ratingwindow_question4": {
+        "message": "How suitable is the website for children?"
+    },
+    "ratingwindow_categories": {
+        "message": "Pick at least one category to support your rating"
+    },
+    "ratingwindow_comment": {
+        "message": "Leave a comment to describe your experience with this site"
+    },
+    "ratingwindow_comment_placeholder": {
+        "message": "write your comment here..."
+    },
+    "ratingwindow_comment_regtext": {
+        "message": "You need an account to publish your comment."
+    },
+    "ratingwindow_comment_register": {
+        "message": "Create an account now"
+    },
+    "ratingwindow_comment_captchatext": {
+        "message": "You need to enter captcha on the scorecard to publish your comment."
+    },
+    "ratingwindow_comment_captchalink": {
+        "message": "Open scorecard now"
+    },
+    "ratingwindow_commenthints": {
+        "message": "<p>Be precise</p><p>Give evidence or example</p><p>Comment according to your real experiences</p><p>Do not spam</p>"
+    },
+    "ratingwindow_novoted": {
+        "message": "Click here to provide a reason for your rating by selecting a category"
+    },
+    "ratingwindow_morecats": {
+        "message": "more"
+    },
+    "ratingwindow_rerate_change": {
+        "message": "change"
+    },
+    "ratingwindow_rerate_category": {
+        "message": " "
+    },
+    "ratingwindow_fulllist": {
+        "message": "show full list"
+    },
+    "ratingwindow_vote_yes": {
+        "message": "Yes"
+    },
+    "ratingwindow_vote_no": {
+        "message": "No"
+    },
+    "messages_ready": {
+        "message": "Reputation of"
+    },
+    "testimony_0_levels_r0": {
+        "message": "click the bar to rate"
+    },
+    "testimony_0_levels_r1": {
+        "message": "I don't trust"
+    },
+    "testimony_0_levels_r2": {
+        "message": "I don't trust"
+    },
+    "testimony_0_levels_r3": {
+        "message": "it is suspicious"
+    },
+    "testimony_0_levels_r4": {
+        "message": "I trust"
+    },
+    "testimony_0_levels_r5": {
+        "message": "I trust"
+    },
+    "testimony_4_levels_r0": {
+        "message": "click the bar to rate"
+    },
+    "testimony_4_levels_r1": {
+        "message": "not suitable"
+    },
+    "testimony_4_levels_r2": {
+        "message": "not suitable"
+    },
+    "testimony_4_levels_r3": {
+        "message": "be cautious"
+    },
+    "testimony_4_levels_r4": {
+        "message": "suitable"
+    },
+    "testimony_4_levels_r5": {
+        "message": "suitable"
+    },
+    "testimony_unrated": {
+        "message": "no opinion"
+    },
+    "testimony_delete": {
+        "message": "delete"
+    },
+    "buttons_delete": {
+        "message": "Delete ratings"
+    },
+    "buttons_delete_title": {
+        "message": "Delete my ratings and categories for the website"
+    },
+    "buttons_cancel": {
+        "message": "Cancel"
+    },
+    "buttons_save": {
+        "message": "Save"
+    },
+    "buttons_ok": {
+        "message": "OK"
+    },
+    "popup_headertext": {
+        "message": "click to view details"
+    },
+    "popup_nocattext": {
+        "message": "share your opinion about this website"
+    },
+    "ratingwindow_thankyou": {
+        "message": "Thanks for sharing your experience!"
+    },
+    "activityscore_text": {
+        "message": "Your activity score is now "
+    },
+    "activityscore_rookie": {
+        "message": "rookie"
+    },
+    "activityscore_bronze": {
+        "message": "bronze"
+    },
+    "activityscore_silver": {
+        "message": "silver"
+    },
+    "activityscore_gold": {
+        "message": "gold"
+    },
+    "activityscore_platinum": {
+        "message": "platinum"
+    },
+    "activityscore_next": {
+        "message": "Keep on rating to reach {NEXT_LEVEL} level!"
+    },
+    "bl_description": {
+        "message": "This website appears on a third party blacklist"
+    },
+    "bl_description_pl": {
+        "message": "This website appears on third party blacklists"
+    },
+    "bl_information": {
+        "message": "WOT uses third party blacklists to warn users about technical threats such as viruses and malware. <a>Read more</a>"
+    },
+    "bl_malware": {
+        "message": "Malware"
+    },
+    "bl_phishing": {
+        "message": "Phishing"
+    },
+    "bl_scam": {
+        "message": "Scam"
+    },
+    "bl_spam": {
+        "message": "SPAM"
+    },
+    "bl_tracking": {
+        "message": "Tracking"
+    },
+    "bl_other": {
+        "message": "Other reason"
+    },
+    "warning_button": {
+        "message": "Rating details",
+        "description": "used in Firefox add-on only"
+    },
+    "warnings_message_rating": {
+        "message": "You have given this site a poor rating.",
+        "description": "used in Firefox add-on only"
+    },
+    "warnings_message_reputation": {
+        "message": "This site has a poor reputation based on user ratings.",
+        "description": "used in Firefox add-on only"
+    },
+    "messages_offline": {
+        "message": "Disabled while the browser is offline.",
+        "description": "used in Firefox add-on only"
+    },
+    "messages_disabled": {
+        "message": "You have disabled the add-on; click to enable.",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_title": {
+        "message": "WOT Update",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_button_yes": {
+        "message": "Update now",
+        "description": "used in Firefox add-on only"
+    },
+    "description_restart": {
+        "message": "Restart the browser to activate WOT.",
+        "description": "used in Firefox add-on only"
+    },
+    "messages_error_register": {
+        "message": "Failed to activate the add-on; retrying shortly.",
+        "description": "used in Firefox add-on only"
+    },
+    "warning": {
+        "message": "WOT Warning: %S",
+        "description": "used in Firefox add-on only"
+    },
+    "description_uninstall": {
+        "message": "WOT will be uninstalled after restart.",
+        "description": "used in Firefox add-on only"
+    },
+    "warnings_blocked": {
+        "message": "Blocked",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_check": {
+        "message": "Enable automatic updates (recommended)",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_button_no": {
+        "message": "Remind me later",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_message": {
+        "message": "A new version of WOT is available. Would you like to update your add-on?",
+        "description": "used in Firefox add-on only"
     }
 }

@@ -38,11 +38,11 @@ $.extend(wot, { exp: {
 			default: "on",
 			expires: new Date(2013, 3, 30)
 		},
-        beta: {
-            options: ["old"],
-            default: "old",
-            expires: null
-        }
+		beta: {
+			options: ["v1"],
+			default: "v1",
+			expires: new Date(2013, 8, 1)
+		}
 	},
 
 	is_running: function (exp_var) {
