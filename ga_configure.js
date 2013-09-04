@@ -1,6 +1,6 @@
 /*
- wot.js
- Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+ ga_configure.js
+ Copyright © 2012 - 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 

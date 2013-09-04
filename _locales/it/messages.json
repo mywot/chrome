@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Il nuovo WOT è stato aggiunto al tuo browser.</p><p>Inizia a valutare i siti Web facendo clic su questa icona {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Il nuovo WOT è stato aggiunto al tuo browser.</p><p>Inizia a valutare i siti Web facendo clic su questa icona {ICO1}</p><p>{WT_LEARNMORE}</p>", 
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p>WOT ti avverte quando visiti un sito con una scarsa reputazione in base alle esperienze degli altri utenti o alle liste nere di terze parti. L'avviso indica anche le ragioni della scarsa reputazione.</p><p>{WT_LEARNMORE}</p><p>Se non desideri visualizzare gli avvisi, puoi disattivarli.</p>",
+        "message": "<p>WOT ti avverte quando visiti un sito con una scarsa reputazione in base alle esperienze degli altri utenti o alle liste nere di terze parti. L'avviso indica anche le ragioni della scarsa reputazione.</p><p>{WT_LEARNMORE}</p><p>Se non desideri visualizzare gli avvisi, puoi disattivarli.</p>", 
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>La finestra di valutazione di WOT ti mostra la reputazione del sito Web in base alle esperienze degli altri utenti. Ora puoi valutare e commentare direttamente dalla finestra aggiornata. Inizia a valutare facendo clic sulle barre colorate.</p><p class='wot-c'><a id='wt-learnmore-link'>Ulteriori informazioni</a> su WOT.</p>",
+        "message": "<p>La finestra di valutazione di WOT ti mostra la reputazione del sito Web in base alle esperienze degli altri utenti. Ora puoi valutare e commentare direttamente dalla finestra aggiornata. Inizia a valutare facendo clic sulle barre colorate.</p><p class='wot-c'><a id='wt-learnmore-link'>Ulteriori informazioni</a> su WOT.</p>", 
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p>WOT ti mostra le reputazioni dei siti Web in base alle esperienze degli altri utenti mostrandoti delle icone simili a un semaforo.</p><p>Posiziona il puntatore del mouse sull'icona per vedere le reputazioni e le ragioni per cui sono state date.</p>",
+        "message": "<p>WOT ti mostra le reputazioni dei siti Web in base alle esperienze degli altri utenti mostrandoti delle icone simili a un semaforo.</p><p>Posiziona il puntatore del mouse sull'icona per vedere le reputazioni e le ragioni per cui sono state date.</p>", 
         "description": ""
     }, 
     "wt_donut_btn": {
@@ -289,7 +289,7 @@
         "description": "TODO: TRANSLATE"
     }, 
     "ratingwindow_fulllist": {
-        "message": "mostra la lista completa", 
+        "message": "la lista completa",
         "description": ""
     }, 
     "ratingwindow_vote_yes": {

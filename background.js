@@ -313,7 +313,7 @@ $.extend(wot, { core: {
 
 			var show_wtip = wot.wt.warning.tts();
 
-			if (type && type.type === wot.warningtypes.overlay) {
+			if (type && type.type >= wot.warningtypes.overlay) {
 				var port = chrome.tabs.connect(tab.id, { name: "warning" });
 
 				if (port) {

@@ -157,7 +157,7 @@
         "description": ""
     }, 
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Nowy WOT został dodany do Twojej przeglądarki.</p><p>Zacznij oceniać strony klikając na tę ikonę {ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>Nowy WOT został dodany do Twojej przeglądarki.</p><p>Zacznij oceniać strony klikając na tę ikonę {ICO1}</p><p>{WT_LEARNMORE}</p>", 
         "description": ""
     }, 
     "wt_intro_0_btn": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p>WOT ostrzeże Cię, jeśli znajdziesz się na stronie o niskiej reputacji, korzystając z ocen innych użytkowników lub czarnych list od osób trzecich. Ostrzeżenie pokaże również przyczynę niskiej reputacji.</p><p>{WT_LEARNMORE}</p><p>Jeśli nie chcesz widzieć ostrzeżeń, możesz je wyłączyć.</p>",
+        "message": "<p>WOT ostrzeże Cię, jeśli znajdziesz się na stronie o niskiej reputacji, korzystając z ocen innych użytkowników lub czarnych list od osób trzecich. Ostrzeżenie pokaże również przyczynę niskiej reputacji.</p><p>{WT_LEARNMORE}</p><p>Jeśli nie chcesz widzieć ostrzeżeń, możesz je wyłączyć.</p>", 
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -181,11 +181,11 @@
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>Okno oceny WOT pokazuje reputację strony na podstawie doświadczeń innych użytkowników. Teraz możesz oceniać i komentować bezpośrednio z zaktualizowanego okna. Rozpocznij ocenianie, klikając w kolorowe paski.</p><p class='wot-c'><a id='wt-learnmore-link'>Dowiedz się więcej</a> o WOT.</p>",
+        "message": "<p>Okno oceny WOT pokazuje reputację strony na podstawie doświadczeń innych użytkowników. Teraz możesz oceniać i komentować bezpośrednio z zaktualizowanego okna. Rozpocznij ocenianie, klikając w kolorowe paski.</p><p class='wot-c'><a id='wt-learnmore-link'>Dowiedz się więcej</a> o WOT.</p>", 
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p>WOT pokazuje reputację stron na podstawie doświadczeń innych użytkowników, wyświetlając ikony przypominające sygnalizację świetlną.</p><p>Umieść kursor myszy nad ikoną, aby zobaczyć reputację i jej uzasadnienie.</p>",
+        "message": "<p>WOT pokazuje reputację stron na podstawie doświadczeń innych użytkowników, wyświetlając ikony przypominające sygnalizację świetlną.</p><p>Umieść kursor myszy nad ikoną, aby zobaczyć reputację i jej uzasadnienie.</p>", 
         "description": ""
     }, 
     "wt_donut_btn": {
