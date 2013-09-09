@@ -64,6 +64,7 @@ $.extend(wot, { ratingwindow: {
         if (this.state.target != target) {
             this.finishstate(false);
             this.state = { target: target, down: -1 };
+            this.comments.set_comment("");  // reset comment field
         }
 
         console.log("state 2", this.state);
@@ -87,6 +88,7 @@ $.extend(wot, { ratingwindow: {
 
         /* remember previous state */
         this.state = $.extend(state, this.state);
+        this.cat_selector.init_voted(); // re-build user votes
     },
 
     setstate: function (component, t) {
