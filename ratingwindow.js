@@ -66,7 +66,10 @@ $.extend(wot, { ratingwindow: {
             this.state = { target: target, down: -1 };
         }
 
-        var state = {};
+        console.log("state 2", this.state);
+        var state = {
+            target: target
+        };
 
         /* add existing ratings to state */
         if (data && data.status == wot.cachestatus.ok) {
@@ -76,23 +79,20 @@ $.extend(wot, { ratingwindow: {
 
                 if (datav && datav.t >= 0) {
                     state[item.name] = { t: datav.t };
+                } else {
+                    state[item.name] = { t: -1 };
                 }
             });
         }
 
         /* remember previous state */
-        this.state = $.extend(this.state, state);
+        this.state = $.extend(state, this.state);
     },
 
     setstate: function (component, t) {
         // This only changes the user's testimonies' state
-        var new_value = {};
-        if (t >= 0) {
-            new_value = { t: parseInt(t) };
-        } else {
-            new_value = { t: -1 };
-        }
-
+        var new_value = { name: component };
+        new_value.t = t >= 0 ? parseInt(t) : -1;
         this.state[component] = new_value;
         this.update_catsel_state();
     },
@@ -204,8 +204,8 @@ $.extend(wot, { ratingwindow: {
                 bgwot.prefs.set("last_message", bg.wot.core.usermessage.id);
             }
 
-            if (rw.state.target) {
-                target = rw.state.target;
+            if (rw.current.target) {
+                target = rw.current.target;
                 cached = rw.getcached();
                 is_rated = rw.is_rated(rw.state);
                 changed_votes = rw.cat_difference(is_rated);
@@ -242,8 +242,7 @@ $.extend(wot, { ratingwindow: {
 
                 wot.components.forEach(function(item) {
                     if (rw.state[item.name]) {
-                        params["testimony_" + item.name] =
-                            rw.state[item.name].t;
+                        params["testimony_" + item.name] = rw.state[item.name].t;
                     }
                 });
 
@@ -386,8 +385,6 @@ $.extend(wot, { ratingwindow: {
             visible_hostname = "",
             rw_title = "";
 
-        /* update current rating state */
-        _this.updatestate(_this.current.target, cached);
         var normalized_target = cached.value.normalized ? cached.value.normalized : this.current.target;
 
         var $_hostname = $("#hostname-text"),
@@ -548,7 +545,11 @@ $.extend(wot, { ratingwindow: {
                 var _rw = wot.ratingwindow;
                 try {
                     if (tab.id == target.id) {
+
                         // TODO: check whether target is changed. If not, then don't update
+                        /* update current rating state */
+                        _rw.updatestate(data.target, data.cached); //_rw.getcached()
+
                         _rw.current = data || {};
                         _rw.updatecontents();
                         _rw.update_categories();
