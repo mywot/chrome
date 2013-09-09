@@ -41,14 +41,11 @@ $.extend(wot, { ratingwindow: {
         var ratings = wot.ratingwindow.getcached().value,
             is_rated = false;
 
-//        console.log("is_rated()", state, ratings);
-
         state = state ? state : ratings;
 
         // Detect if the website is rated by user, to activate proper mode
         wot.components.forEach(function (i) {
             var name = i.name;
-//            console.log(name, state[name]);
             if (state[name] && state[name].t >= 0) {
                 is_rated = true;
                 return false;
@@ -64,9 +61,9 @@ $.extend(wot, { ratingwindow: {
         if (this.state.target != target) {
             this.finishstate(false);
             this.state = { target: target, down: -1 };
+            this.comments.set_comment("");  // reset comment field
         }
 
-        console.log("state 2", this.state);
         var state = {
             target: target
         };
@@ -87,6 +84,7 @@ $.extend(wot, { ratingwindow: {
 
         /* remember previous state */
         this.state = $.extend(state, this.state);
+        this.cat_selector.init_voted(); // re-build user votes
     },
 
     setstate: function (component, t) {
