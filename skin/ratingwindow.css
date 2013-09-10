@@ -92,7 +92,7 @@ body {
 
 /* Always visible */
 #main-area {
-    min-height: 182px;
+    min-height: 184px;
     padding: 4px 10px;
     margin: 0 -11px;
 }
@@ -1719,6 +1719,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #thanks-area {
     display: none;
+    min-height: 194px;
 }
 
 .thanks-text {
