@@ -63,6 +63,7 @@
     direction: ltr; /* fixes issue #64 */
     float: none; /* fixes #90 */
     height: auto; /* fixes #99 */
+    display: block !important; /* fixes #148 */
 }
 
 .wotcontainer * {
