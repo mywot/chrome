@@ -864,6 +864,8 @@ $.extend(wot, { ratingwindow: {
             // if there is a comment, it must be valid, otherwise disallow the submit
             if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
                 passed = true;
+            } else if (testimonies == 0 && !has_comment) {
+                passed = true;
             }
         } else {
             if (testimonies == 0 && has_comment == false) {
