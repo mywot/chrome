@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "사용을 중지하셨습니다. '실행' 을 클릭하십시오.", 
+        "message": "사용을 중지하셨습니다",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

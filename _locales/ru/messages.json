@@ -381,7 +381,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Надстройка отключена.", 
+        "message": "Расширение отключено",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

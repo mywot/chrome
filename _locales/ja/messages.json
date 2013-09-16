@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "アドオンが無効化されました。有効にするにはクリックしてください。", 
+        "message": "アドオンが無効化されました",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

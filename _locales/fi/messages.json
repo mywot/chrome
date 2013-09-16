@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Olet poistanut lisäosan käytöstä. Ota se käyttöön napsauttamalla tätä.", 
+        "message": "Olet poistanut lisäosan käytöstä",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {
