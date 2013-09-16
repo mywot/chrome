@@ -361,11 +361,11 @@
         "description": ""
     }, 
     "buttons_delete": {
-        "message": "Cancella le valutazioni", 
+        "message": "Rimuovi valutazioni",
         "description": ""
     }, 
     "buttons_delete_title": {
-        "message": "Cancella le mie valutazioni e categorie per il sito", 
+        "message": "Rimuovi le mie valutazioni e categorie per il sito",
         "description": ""
     }, 
     "buttons_cancel": {
