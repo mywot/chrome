@@ -266,7 +266,7 @@ $.extend(wot, { ratingwindow: {
             if (unload) {  // RW was closed by browser (not by clicking "Save")
 //                bg.console.log("RW triggered finish state during Unload");
 
-                if ((comment_changed)) {
+                if (comment_changed) {
 //                    bg.console.log("The comment seems to be changed");
                     // when comment body is changed, we might want to store it locally
                     bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.LOCAL);
@@ -863,6 +863,8 @@ $.extend(wot, { ratingwindow: {
         if (has_1upvote) {
             // if there is a comment, it must be valid, otherwise disallow the submit
             if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
+                passed = true;
+            } else if (testimonies == 0 && !has_comment) {
                 passed = true;
             }
         } else {

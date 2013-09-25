@@ -456,7 +456,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Você desabilitou o complemento.", 
+        "message": "Você desabilitou o complemento",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

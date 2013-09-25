@@ -474,7 +474,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "您已經關閉附加元件；按一下重新啟用。", 
+        "message": "您已經關閉附加元件",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

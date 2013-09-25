@@ -471,7 +471,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Eklentileri devre dışı bıraktınız; etkinleştirmek için tıklayın.", 
+        "message": "Eklentileri devre dışı bıraktınız",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

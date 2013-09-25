@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Zakázali jste doplněk; kliknutím sem jej povolíte.", 
+        "message": "Zakázali jste doplněk",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

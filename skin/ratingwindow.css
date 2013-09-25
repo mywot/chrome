@@ -92,7 +92,7 @@ body {
 
 /* Always visible */
 #main-area {
-    min-height: 182px;
+    min-height: 184px;
     padding: 4px 10px;
     margin: 0 -11px;
 }
@@ -1623,6 +1623,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 #commenting-area {
     display: none;  /* is shown from JS when needed */
     margin: auto 19px;
+    min-height: 225px;
 }
 
 .comment-title {
@@ -1635,7 +1636,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 #user-comment {
-    height: 115px;
+    height: 126px;
     width: 350px;
     /*margin-right: 10px;*/
     padding: 8px;
@@ -1719,6 +1720,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #thanks-area {
     display: none;
+    min-height: 194px;
 }
 
 .thanks-text {

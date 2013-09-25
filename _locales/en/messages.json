@@ -381,7 +381,7 @@
         "description": "used in Firefox add-on only"
     },
     "messages_disabled": {
-        "message": "You have disabled the add-on; click to enable.",
+        "message": "You have disabled the add-on",
         "description": "used in Firefox add-on only"
     },
     "auto_update_title": {
