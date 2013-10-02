@@ -541,8 +541,10 @@ $.extend(wot, { ratingwindow: {
     {
         chrome.windows.getCurrent(function(obj) {
             chrome.tabs.getSelected(obj.id, function(tab) {
-                var _rw = wot.ratingwindow;
                 try {
+                    var _rw = wot.ratingwindow,
+                        bg = _rw.get_bg();
+
                     if (tab.id == target.id) {
 
                         // TODO: check whether target is changed. If not, then don't update
@@ -557,12 +559,15 @@ $.extend(wot, { ratingwindow: {
                             // ask server if there is my comment for the website
                             _rw.comments.get_comment(data.target);
                         } else {
-                            var bg = chrome.extension.getBackgroundPage();
                             bg.wot.core.update_ratingwindow_comment(); // don't allow unregistered addons to comment
                         }
 
                         _rw.modes.reset();
                         _rw.modes.auto();
+
+                        if (!data.target) {
+                            bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_NOTARGET);
+                        }
                     }
                 } catch (e) {
                     console.log("ratingwindow.update: failed with ", e);

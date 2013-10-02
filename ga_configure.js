@@ -46,6 +46,7 @@ $.extend(wot, { ga: {
 	},
 
 	actions: {
+		RW_NOTARGET:   "RW_notarget",
 		RW_TESTIMONY:   "RW_testimony",
 		RW_TESTIMONY_DEL: "RW_testimony_del",
 		RW_COMMENTADDED: "RW_comment_posted",
