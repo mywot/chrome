@@ -1517,11 +1517,14 @@ body {
 
 .category-selector .category[voted="1"] .cat-vote-left,
 .category-selector .category[voted="-1"] .cat-vote-right {
-    border: 1px solid #c7ddef;
-    background: #eaf2fa;
+    /*border: 1px solid #c7ddef;*/
+    border: 1px solid #7a7a7a;
+    /*background: #eaf2fa;*/
+    background: #7a7a7a;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 4px;
+    color: #ffffff;
 }
 
 .category-selector .cat-vote-del {
