@@ -231,9 +231,22 @@ $.extend(wot, { core: {
                         // Third: are categories selected for the website?
                         if (cached.status == wot.cachestatus.ok && cached.value &&
                             cached.value.cats && wot.utils.isEmptyObject(wot.select_voted(cached.value.cats))) {
-                            // categories are not selected
-                            this.set_badge(tab.id, wot.badge_types.nocategories);
 
+                            // now check whether other conditions are met:
+                            var lev = wot.reputationlevels.slice(-2, -1)[0].min;    // yellow/green border
+                            wot.components.forEach(function(app) {
+                                var app_id = app.name,
+                                    t = cached.value[app_id] ? cached.value[app_id].t : -1,
+                                    r = cached.value[app_id] ? cached.value[app_id].r : -1;
+
+                                // 1. Is the testimony below green?
+                                // 2. Is user's testimony opposite to current reputation?
+                                if ((t >= 0 && t < lev) || (t >= lev && r >= 0 && r < lev)) {
+                                    // Indicate that the user's input is incomplete
+                                    wot.core.set_badge(tab.id, wot.badge_types.nocategories);
+                                    return false;   // stop the loop and exit
+                                }
+                            });
                         } else {
                             this.set_badge(tab.id, wot.core.badge.type, wot.core.badge.text);
                         }
