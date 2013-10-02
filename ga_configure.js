@@ -59,7 +59,8 @@ $.extend(wot, { ga: {
 		RW_ADDCOMMENT:  "RW_addcomment",
 		RW_EDITCOMMENT: "RW_editcomment",
 		RW_PICKACAT:    "RW_pickcategory",
-		RW_BTNCANCEL:    "RW_btn_cancel",
+		RW_BTNCANCEL:   "RW_btn_cancel",
+		RW_PROFILELNK:  "RW_profilelnk",
 
 		WS_SHOW:        "WS_shown",
 		WS_BTN_ENTER:   "WS_btn_enter",

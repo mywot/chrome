@@ -154,6 +154,13 @@ body {
     cursor: pointer;
 }
 
+.unregistered #wot-header-link-profile {
+    color: #727272;
+    background-color: #E7F1FF;
+    border-radius: 5px;
+    padding: 2px 0.6em 0;
+}
+
 #wot-header-close {
     position: absolute;
     top: -1px;

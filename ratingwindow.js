@@ -402,6 +402,8 @@ $.extend(wot, { ratingwindow: {
         $_hostname.text(visible_hostname);
         $_wot_title_text.text(rw_title);
 
+        $("#wot-ratingwindow").toggleClass("unregistered", !_this.is_registered);
+
         /* reputations */
         /* ratings */
 
@@ -950,6 +952,8 @@ $.extend(wot, { ratingwindow: {
         });
 
         $("#wot-header-link-profile").bind("click", function() {
+            bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_PROFILELNK,
+                _rw.is_registered ? "registered" : "unregistered");
             wot.ratingwindow.navigate(wurls.profile, wurls.contexts.rwprofile);
         });
 
