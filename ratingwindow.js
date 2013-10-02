@@ -30,7 +30,6 @@ $.extend(wot, { ratingwindow: {
     is_registered: false,   // whether user has an account on mywot.com
     delete_action: false,   // remembers whether user is deleting rating
     prefs: {},  // shortcut for background preferences
-    UPDATE_ROUND: 2,        // = 2 version when we launched WOT 2.0 in September 2013
 
     get_bg: function () {
         // just a shortcut
@@ -1053,11 +1052,11 @@ $.extend(wot, { ratingwindow: {
             bg.wot.core.open_mywot(wot.urls.tour_rw, wot.urls.contexts.wt_rw_lm);
         });
 
-		var tts_wtip =  (first_opening || wot.firstrunupdate == _rw.UPDATE_ROUND) &&
+		var tts_wtip =  first_opening &&
 						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
 						wot.is_defined(["rw_text", "rw_text_hdr"], "wt");
 
-//		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max || wot.firstrunupdate == _rw.UPDATE_ROUND);
+		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
 
         if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
 

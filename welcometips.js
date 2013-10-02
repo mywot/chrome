@@ -31,7 +31,6 @@ $.extend(wot, { wt: {
 	enabled: true,              // see also content/welcome_tips.js "enabled: true," line at the beginning
 	intro_shown_sent: null,     // flag to remember that we have sent already message to show the tip
 	activity_score_max: 1500,   // level of AS after which the add-on should not show Tips (see GH #83). 1500 = Bronze
-    UPDATE_ROUND: 2,            // version number of firstrun_update to show tips again
 
 	settings: {
 		intro_0_shown: 0,           // how many times intro0 was shown
@@ -91,8 +90,7 @@ $.extend(wot, { wt: {
                 if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
                                      "warning_text", "warning_ok", "learnmore_link"], "wt")) return;
 
-                if (wot.get_activity_score() >= wot.wt.activity_score_max &&
-                    wot.wt.UPDATE_ROUND != wot.firstrunupdate) return;
+                if (wot.get_activity_score() >= wot.wt.activity_score_max) return;
             }
 
 			wot.wt.load_settings();
@@ -132,12 +130,12 @@ $.extend(wot, { wt: {
 			if (wt_settings.intro_0_shown < 2 &&
 				!wt_settings.intro_0_ok &&
 				wot.time_since(wot.core.launch_time) <= 10 * wot.DT.MINUTE &&
-                (timesincefirstrun <= 15 * wot.DT.DAY || wot.firstrunupdate == wot.wt.UPDATE_ROUND) ) {
+                timesincefirstrun <= 15 * wot.DT.DAY ) {
 
 				// don't show intro tip first time if the user already has experience with WOT longer than 2 days
-//				if (!wt_settings.intro_0_shown && timesincefirstrun > 2 * wot.DT.DAY ) {
-//					return false;
-//				}
+				if (!wt_settings.intro_0_shown && timesincefirstrun > 2 * wot.DT.DAY ) {
+					return false;
+				}
 
 				// don't show intro tip second time before 7 days after it was shown first time
 				if (wt_settings.intro_0_shown === 1 &&
@@ -146,8 +144,7 @@ $.extend(wot, { wt: {
 					return false;
 				}
 
-				if (wot.get_activity_score() >= wot.wt.activity_score_max &&
-                    wot.firstrunupdate != wot.wt.UPDATE_ROUND) return false;
+				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
 
 				return true;
 			}
@@ -242,14 +239,13 @@ $.extend(wot, { wt: {
 				 timesince_firstshow = wot.time_since(wt_settings.warning_shown_dt);
 
  			if (wt_settings.warning_shown < 2 && wt_settings.warning_ok !== true &&
-                (timesincefirstrun <= 14 * wot.DT.DAY || wot.firstrunupdate == wot.wt.UPDATE_ROUND) ) {
+                timesincefirstrun <= 14 * wot.DT.DAY ) {
 
 				 if (wt_settings.warning_shown === 1 && timesince_firstshow <= 7 * wot.DT.DAY) {
 					 return false;
 				 }
 
-				 if (wot.get_activity_score() >= wot.wt.activity_score_max &&
-                     wot.firstrunupdate != wot.wt.UPDATE_ROUND) return false;
+				 if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
 
 				 return true;
 			}
@@ -353,12 +349,12 @@ $.extend(wot, { wt: {
 
 			if (wt_settings.donuts_shown < 4 &&
 				!wt_settings.donuts_ok &&
-                (timesincefirstrun <= 15 * wot.DT.DAY || wot.firstrunupdate == wot.wt.UPDATE_ROUND) ) {
+                timesincefirstrun <= 15 * wot.DT.DAY ) {
 
 				// don't show donut tip first time if the user already has experience with WOT longer than 5 days
-//				if (wt_settings.donuts_shown < 3 && timesincefirstrun > 5 * wot.DT.DAY ) {
-//					return false;
-//				}
+				if (wt_settings.donuts_shown < 3 && timesincefirstrun > 5 * wot.DT.DAY ) {
+					return false;
+				}
 
 				// don't show donut tip third time before 7 days after installation
 				if (wt_settings.donuts_shown == 2 &&
@@ -367,11 +363,7 @@ $.extend(wot, { wt: {
 					return false;
 				}
 
-				if (wot.get_activity_score() >= wot.wt.activity_score_max &&
-                    wot.firstrunupdate != wot.wt.UPDATE_ROUND) return false;
-
-				if (wot.exp.is_running("wtip-off")) return false;
-
+				if (wot.get_activity_score() >= wot.wt.activity_score_max) return false;
 				return true;
 			}
 
