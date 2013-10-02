@@ -1414,6 +1414,10 @@ body {
     background: linear-gradient(to bottom, #ffffff 0%, #ebebeb 100%); /* W3C */
 }
 
+.category-selector li.invisible {
+    display: none;
+}
+
 .category-selector li .group-title {
     display: block;
     clear: both;
@@ -1578,7 +1582,7 @@ body {
     background-clip: padding-box;
 }
 
-.category-selector li:last-of-type {
+.category-selector li:not(.invisible):last-of-type {
     -webkit-border-radius: 0 0 0 6px;
     border-radius: 0 0 0 6px;
     -webkit-background-clip: padding-box;

@@ -1524,18 +1524,20 @@ $.extend(wot, { ratingwindow: {
             // cycle through grouping to create main sections
             for (var gi = 0; gi < wot.grouping.length; gi++) {
                 var grp = wot.grouping[gi];
-                if (!grp.omnipresent && grp.text && grp.groups) {
+                if (!grp.omnipresent && grp.text) {
                     var $_li = _this._build_grouping(grp.text, grp.name);
 
                     var $_popover = $("<div></div>").addClass("popover");   // container for a list of categories
 
                     // Iterate over list of groups in the grouping (section)
-                    for(var a = 0; a < grp.groups.length; a++) {
-                        var g = grp.groups[a], // g.name == id, g.type == css style
-                            g_id = parseInt(g.name);
+                    if (grp.groups && grp.groups.length) {
+                        for(var a = 0; a < grp.groups.length; a++) {
+                            var g = grp.groups[a], // g.name == id, g.type == css style
+                                g_id = parseInt(g.name);
 
-                        cats = wot.select_categories(g_id, g_id);   // list if categories' IDs
-                        _rw.cat_selector._build_from_list(cats, $_popover, false);
+                            cats = wot.select_categories(g_id, g_id);   // list if categories' IDs
+                            _rw.cat_selector._build_from_list(cats, $_popover, false);
+                        }
                     }
 
                     $_li.append($_popover);
@@ -1601,7 +1603,6 @@ $.extend(wot, { ratingwindow: {
 
                         var $_cat_vote = $("<div></div>").addClass("cat-vote");
 
-                        // TODO: use translations for strings
                         $("<div></div>").text(textvote_yes).addClass("cat-vote-left").appendTo($_cat_vote);
                         $("<div></div>").text(textvote_no).addClass("cat-vote-right").appendTo($_cat_vote);
 
@@ -1616,7 +1617,6 @@ $.extend(wot, { ratingwindow: {
                         console.warn("Can't find category", cat_list[ci]);
                     }
                 }
-
             }
             return cat_list.length;
         },
@@ -1624,7 +1624,8 @@ $.extend(wot, { ratingwindow: {
         set_state: function (state, identified) {
             // Sets the category selector into proper state taking into account user's ratings and currently identified categories.
             var _rw = wot.ratingwindow,
-                _this = _rw.cat_selector;
+                _this = _rw.cat_selector,
+                $_popover = null;
 
             if (!_this.inited) return;  // do nothing when I'm not ready yet
 
@@ -1667,7 +1668,7 @@ $.extend(wot, { ratingwindow: {
             /* now omni_to_show[] contains all cats for the given testimony and we need to make filtered lists
             for every section in the selector.         */
             for (var j = 0; j < wot.grouping.length; j++) {
-                if (wot.grouping[j].omnipresent) continue;  // skip omni grouping for obvious reason
+                if (wot.grouping[j].omnipresent || wot.grouping[j].dynamic) continue;  // skip omni grouping for obvious reason
                 var section_id = wot.grouping[j].name;
                 omni_per_section[section_id] = omni_to_show.filter(function (elem, i , arr) {
                     var cat = wot.get_category(elem);
@@ -1683,9 +1684,10 @@ $.extend(wot, { ratingwindow: {
             var cached = _rw.getcached(),
                 cats_object = cached.value.cats,
                 dyn_cats = [],
-                dyn_grp = wot.determ_grouping(null, "dynamic"); // find the dynamic group to identify "popover" DOM element
+                dyn_grp = wot.determ_grouping(null, "dynamic"), // find the dynamic group to identify "popover" DOM element
+                filtered_dynamic = [];
 
-            if (dyn_grp.groups) {
+            if (dyn_grp.groups && dyn_grp.groups.length) {
                 for (var i= 0, gid; i < dyn_grp.groups.length; i++) {
                     gid = parseInt(dyn_grp.groups[i].name);
                     dyn_cats = dyn_cats.concat(wot.select_categories(gid, gid));
@@ -1696,20 +1698,22 @@ $.extend(wot, { ratingwindow: {
                 var cats = wot.rearrange_categories(cats_object);   // list of categories' IDs
                 // filter out categories that are in the omni-area already
                 // and that are only voted but not identified by community
-                var filtered_dynamic = cats.trustworthy.concat(cats.childsafety).filter(function(elem){
+                filtered_dynamic = cats.trustworthy.concat(cats.childsafety).filter(function(elem){
                     var cat_id = parseInt(elem.id);
-                    var fltr = !(omni_to_show.indexOf(cat_id) >= 0);
-                    fltr = fltr && elem.c;  // Identified cats have "c" attribute's value greater than than zero;
+                    var fltr = elem.c;  // Identified cats have "c" attribute's value greater than zero;
                     fltr = fltr && !(dyn_cats.indexOf(cat_id) >= 0); // drop categories that are already in dyn_cats
                     return fltr;
                 });
 
                 filtered_dynamic = dyn_cats.concat(filtered_dynamic);
-
-                var $_popover = $("li[grp-name="+dyn_grp.name+"] .popover", _this.$_cat_selector).first();
-                $(".category", $_popover).detach(); // remove all previous categories from the popover
-                _rw.cat_selector._build_from_list(filtered_dynamic, $_popover, false); // fill the popover with categories
             }
+
+            $_popover = $("li[grp-name="+dyn_grp.name+"] .popover", _this.$_cat_selector).first();
+            $(".category", $_popover).detach(); // remove all previous categories from the popover
+            _rw.cat_selector._build_from_list(filtered_dynamic, $_popover, false); // fill the popover with categories
+
+            // Toggle visibility of the dynamic grouping based on presence of categories there
+            $("li[grp-name="+dyn_grp.name+"]", _this.$_cat_selector).toggleClass("invisible", !filtered_dynamic.length);
 
             // 4. Append finally Omni Categories
             $(".category-selector .popover .omni").detach();    // remove all previous omni groups from all popovers
@@ -1717,7 +1721,7 @@ $.extend(wot, { ratingwindow: {
             // Create and attach omni categories to _all_ popovers (groupings)
             for (var si in omni_per_section) {
                 if (omni_per_section[si]) {
-                    var $_popover = $(".category-selector li[grp-name=" + si + "] .popover");
+                    $_popover = $(".category-selector li[grp-name=" + si + "] .popover");
                     _this._build_from_list(omni_per_section[si], $_popover, true);
                 }
             }
