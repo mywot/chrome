@@ -844,7 +844,14 @@ $.extend(wot, { api: {
         },
 
         get: function(target) {
+
             var _this = wot.api.comments;
+
+            if (!target) {
+                _this.on_get_comment_response({});
+                return;
+            }
+
             wot.log("wot.api.comments.get(target)", target);
 
             _this.call("get",
