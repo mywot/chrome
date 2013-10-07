@@ -760,6 +760,7 @@ $.extend(wot, { ratingwindow: {
             $_hand = $('<div class="category-hand"><div class="hand-icon"></div></div>'),
             $_cat_text = $('<div class="category-text"></div>');
 
+	    $_cat_wrapper.addClass(vote == 1 ? "hand-up" : "hand-down");
         $_hand.addClass(vote == 1 ? "hand-up" : "hand-down");
         $_hand.attr("title", wot.i18n("ratingwindow", vote == 1 ? "vote_yes" : "vote_no"));
         $_cat_text.attr("title", cat_name);
@@ -1541,7 +1542,7 @@ $.extend(wot, { ratingwindow: {
                                 g_id = parseInt(g.name);
 
                             cats = wot.select_categories(g_id, g_id);   // list if categories' IDs
-                            _rw.cat_selector._build_from_list(cats, $_popover, false);
+                            _rw.cat_selector._build_from_list(cats, $_popover, false, false);
                         }
                     }
 
@@ -1570,7 +1571,7 @@ $.extend(wot, { ratingwindow: {
             return $_li;
         },
 
-        _build_from_list: function (cat_list, $_target_popover, omni) {
+        _build_from_list: function (cat_list, $_target_popover, omni, dynamic) {
             /* Makes HTML elements of categories with all controls and inserts them into Popover wrapper */
             var _this = wot.ratingwindow.cat_selector;
             var textvote_yes = wot.i18n("ratingwindow", "vote_yes"),
@@ -1592,29 +1593,33 @@ $.extend(wot, { ratingwindow: {
                     if (!wot.utils.isEmptyObject(cat)) {
                         var $_po_cat = $("<div></div>").addClass("category"); // container for a category
                         $_po_cat.attr("data-cat", cat.id);
-                        if (omni) {
-                            $_po_cat.addClass("omni");
-                        }
+                        $_po_cat.toggleClass("omni", omni);
+						$_po_cat.toggleClass("dynamic", dynamic);
 
                         if (cat.fullonly) {
                             $_po_cat.addClass("fullonly");
                             $_po_cat.toggleClass("invisible", _this.short_list);
                         }
 
+	                    var $_cat_vote = $("<div></div>").addClass("cat-vote");
+	                    if (dynamic) {
+		                    // here we show "I disagree" button on the right side
+		                    $("<div></div>").text(textvote_no).addClass("cat-vote-right").appendTo($_cat_vote);
+	                    } else {
+		                    // In "normal" sections we show checkboxes only, on the left side
+		                    $("<div></div>").addClass("cat-vote-left").appendTo($_cat_vote);
+	                    }
+
+//	                    $("<div></div>").addClass("delete-icon")
+//		                    .appendTo($("<div></div>").addClass("cat-vote-del").appendTo($_cat_vote));
+
+	                    $_cat_vote.appendTo($_po_cat);
+
+
                         $("<div></div>")    // the category line
                             .text(wot.get_category_name(cat.id, true))
                             .addClass("cat-name")
                             .appendTo($_po_cat);
-
-                        var $_cat_vote = $("<div></div>").addClass("cat-vote");
-
-                        $("<div></div>").text(textvote_yes).addClass("cat-vote-left").appendTo($_cat_vote);
-                        $("<div></div>").text(textvote_no).addClass("cat-vote-right").appendTo($_cat_vote);
-
-                        $("<div></div>").addClass("delete-icon")
-                            .appendTo($("<div></div>").addClass("cat-vote-del").appendTo($_cat_vote));
-
-                        $_cat_vote.appendTo($_po_cat);
 
                         $_target_popover.append($_po_cat);
 
@@ -1715,7 +1720,7 @@ $.extend(wot, { ratingwindow: {
 
             $_popover = $("li[grp-name="+dyn_grp.name+"] .popover", _this.$_cat_selector).first();
             $(".category", $_popover).detach(); // remove all previous categories from the popover
-            _rw.cat_selector._build_from_list(filtered_dynamic, $_popover, false); // fill the popover with categories
+            _rw.cat_selector._build_from_list(filtered_dynamic, $_popover, false, true); // fill the dynamic popover with categories
 
             // Toggle visibility of the dynamic grouping based on presence of categories there
             $("li[grp-name="+dyn_grp.name+"]", _this.$_cat_selector).toggleClass("invisible", !filtered_dynamic.length);
@@ -1727,7 +1732,7 @@ $.extend(wot, { ratingwindow: {
             for (var si in omni_per_section) {
                 if (omni_per_section[si]) {
                     $_popover = $(".category-selector li[grp-name=" + si + "] .popover");
-                    _this._build_from_list(omni_per_section[si], $_popover, true);
+                    _this._build_from_list(omni_per_section[si], $_popover, true, false);
                 }
             }
 
@@ -1920,12 +1925,21 @@ $.extend(wot, { ratingwindow: {
             selected_elem.removeClass("maintainHover");
         },
 
-        _calc_vote_result: function (vs, vy, vn, vd, vc) {
-            // Calculates the resulted vote depending on what was clicked and current vote state
-            if (vd == 1) return 0; // if "delete" is clicked
+        _calc_vote_result: function (vs, vy, vn, dynamic, vc) {
+            // Calculates the resulting vote depending on what was clicked and current vote state
             var fy = vy * Math.min(vy, vy - vs);
             var fn = vn * Math.max(-1, -vn - vs);
-            var fc = vc * ((vs + 2) % 3 - 1);
+	        var fc = 0;
+
+	        if (vc) {
+		        if (dynamic) {
+			        fc = vs < 0 ? 0 : -1;
+		        } else {
+			        fc = vs != 1 ? 1 : 0;
+		        }
+	        }
+
+//            var fc = vc * ((vs + 2) % 3 - 1);
             return fy + fn + fc;
         },
 
@@ -1943,7 +1957,7 @@ $.extend(wot, { ratingwindow: {
             var vy = $_clicked.hasClass("cat-vote-left") ? 1 : 0;      // clicked Yes
             var vn = $_clicked.hasClass("cat-vote-right") ? 1 : 0;     // clicked No
             var vc = $_clicked.hasClass("category") ? 1 : 0;          // Clicked Category line
-            var vd = $_clicked.hasClass("cat-vote-del") ? 1 : 0;       // Clicked "delete" vote
+            var vd = $_clicked.closest(".category").hasClass("dynamic") ? 1 : 0;       // Clicked "delete" vote
             var vs = currently_voted ? parseInt(currently_voted) : 0; // current vote state for the clicked category
             var new_vote = _this._calc_vote_result(vs, vy, vn, vd, vc);
 

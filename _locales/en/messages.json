@@ -245,7 +245,7 @@
         "message": "Yes"
     },
     "ratingwindow_vote_no": {
-        "message": "No"
+        "message": "I disagree"
     },
     "messages_ready": {
         "message": "Reputation of"

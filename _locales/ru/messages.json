@@ -245,7 +245,7 @@
         "message": "Да"
     }, 
     "ratingwindow_vote_no": {
-        "message": "Нет"
+        "message": "Не согласен"
     }, 
     "messages_ready": {
         "message": "Репутация сайта"
