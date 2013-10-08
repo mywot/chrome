@@ -83,7 +83,7 @@ $.extend(wot, { ratingwindow: {
 
         /* remember previous state */
         this.state = $.extend(state, this.state);
-        this.cat_selector.init_voted(); // re-build user votes
+        this.cat_selector.init_voted(data.value.cats); // re-build user votes with new data
     },
 
     setstate: function (component, t) {
@@ -1867,12 +1867,18 @@ $.extend(wot, { ratingwindow: {
             _this.update_categories_visibility();
         },
 
-        init_voted: function () {
+        init_voted: function (cats) {
             var _rw = wot.ratingwindow,
-                _this = _rw.cat_selector;
+                _this = _rw.cat_selector,
+	            cached = {},
+	            cats_object = {};
 
-            var cached = _rw.getcached(),
-                cats_object = (cached && cached.value && cached.value.cats) ? cached.value.cats : {};
+            if (!cats || wot.utils.isEmptyObject(cats)) {
+	            cached = _rw.getcached();
+	            cats_object = (cached && cached.value && cached.value.cats) ? cached.value.cats : {};
+            } else {
+	            cats_object = cats;
+            }
 
             _this.votes = wot.select_voted(cats_object);
             _this.markup_voted();
