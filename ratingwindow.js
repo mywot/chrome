@@ -56,11 +56,13 @@ $.extend(wot, { ratingwindow: {
 
     updatestate: function(target, data)
     {
+        var was_target_changed = false;
         /* initialize on target change */
         if (this.state.target != target) {
             this.finishstate(false);
             this.state = { target: target, down: -1 };
             this.comments.set_comment("");  // reset comment field
+	        was_target_changed = true;
         }
 
         var state = {
@@ -84,6 +86,7 @@ $.extend(wot, { ratingwindow: {
         /* remember previous state */
         this.state = $.extend(state, this.state);
         this.cat_selector.init_voted(data.value.cats); // re-build user votes with new data
+	    return was_target_changed;
     },
 
     setstate: function (component, t) {
@@ -547,9 +550,8 @@ $.extend(wot, { ratingwindow: {
 
                     if (tab.id == target.id) {
 
-                        // TODO: check whether target is changed. If not, then don't update
                         /* update current rating state */
-                        _rw.updatestate(data.target, data.cached); //_rw.getcached()
+                        var target_changed = _rw.updatestate(data.target, data.cached); //_rw.getcached()
 
                         _rw.current = data || {};
                         _rw.updatecontents();
@@ -557,13 +559,18 @@ $.extend(wot, { ratingwindow: {
 
                         if (_rw.is_registered) {
                             // ask server if there is my comment for the website
-                            _rw.comments.get_comment(data.target);
+	                        if (target_changed) {   // no need to reask comment on every "iframe loaded" event
+		                        _rw.comments.get_comment(data.target);
+	                        }
+
                         } else {
                             bg.wot.core.update_ratingwindow_comment(); // don't allow unregistered addons to comment
                         }
 
-                        _rw.modes.reset();
-                        _rw.modes.auto();
+                        if (target_changed) {
+	                        _rw.modes.reset();
+	                        _rw.modes.auto();
+                        }
 
                         if (!data.target) {
                             bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_NOTARGET);
