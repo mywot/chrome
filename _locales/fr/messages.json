@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Non", 
+        "message": "Je ne suis pas d'accord",
         "description": ""
     }, 
     "messages_ready": {

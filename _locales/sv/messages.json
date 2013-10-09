@@ -296,7 +296,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Nej", 
+        "message": "Håller inte med",
         "description": ""
     }, 
     "messages_ready": {

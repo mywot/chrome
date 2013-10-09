@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Nein", 
+        "message": "Ich stimme nicht zu",
         "description": ""
     }, 
     "messages_ready": {

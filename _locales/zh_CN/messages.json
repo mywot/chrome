@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "否", 
+        "message": "我不同意",
         "description": ""
     }, 
     "messages_ready": {
