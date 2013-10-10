@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "基于用户评价的网站声誉", 
+        "message": "WOT用户说",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "回到评价", 
+        "message": "后退至理由列表",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "选择分类", 
+        "message": "选择一个理由",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "选择至少一个分类支持您的评价", 
+        "message": "至少提供一个理由",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "留下您访问该网站的体验评价", 
+        "message": "发表评论",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "在这里填写评论……", 
+        "message": "在这里描述你的经验…",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "点击这里选择一个分类以说明您作出评价的原因", 
+        "message": "点击这里提供理由",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "我不同意",
+        "message": "我不认同",
         "description": ""
     }, 
     "messages_ready": {

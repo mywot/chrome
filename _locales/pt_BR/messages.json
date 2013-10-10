@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Reputação do site com base nas classificações dos usuários", 
+        "message": "Usuários do WOT dizem",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Voltar às avaliações", 
+        "message": "Retorne para motivos",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Escolher uma categoria", 
+        "message": "Escolha um motivo",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -235,13 +235,13 @@
         "message": "Quão adequado é este site para crianças?"
     }, 
     "ratingwindow_categories": {
-        "message": "Escolha ao menos uma categoria para apoiar sua classificação"
+        "message": "Informe ao menos um motivo"
     }, 
     "ratingwindow_comment": {
-        "message": "Deixe um comentário para descrever sua experiência neste site"
+        "message": "Deixe um comentário"
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "Escreva seu comentário aqui..."
+        "message": "Descreva sua experiência aqui..."
     }, 
     "ratingwindow_comment_regtext": {
         "message": "Você precisa de uma conta para publicar seu comentário"
@@ -259,7 +259,7 @@
         "message": "<p>Seja preciso</p><p>Testemunhe ou dê um exemplo</p><p>Comente conforme sua experiência pessoal</p><p>Não faça spam</p>"
     }, 
     "ratingwindow_novoted": {
-        "message": "Clique aqui para explicar sua escolha, selecionando uma das opções"
+        "message": "Clique aqui para informar motivos"
     }, 
     "ratingwindow_morecats": {
         "message": "mais", 
@@ -281,7 +281,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Discordo",
+        "message": "Eu discordo",
         "description": ""
     }, 
     "messages_ready": {

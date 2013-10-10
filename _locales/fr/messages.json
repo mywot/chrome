@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Réputation du site web sur base des avis des utilisateurs", 
+        "message": "Les utilisateurs de WOT disent",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Revenir aux avis", 
+        "message": "Retour aux motifs",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Choisir une catégorie", 
+        "message": "Choisissez un motif",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Choisissez au moins une catégorie associée à votre avis", 
+        "message": "Donnez au moins un motif",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Laissez un commentaire pour décrire votre expérience avec ce site", 
+        "message": "Laissez un commentaire",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "écrivez votre commentaire ici...", 
+        "message": "Décrivez votre expérience ici...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Cliquez ici pour associer une raison à votre évaluation en choisissant une catégorie", 
+        "message": "Cliquez ici pour donner des motifs",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Je ne suis pas d'accord",
+        "message": "Je désapprouve",
         "description": ""
     }, 
     "messages_ready": {

@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Reputazione del sito web in base alle valutazioni degli utenti", 
+        "message": "Cosa dicono gli utenti di WOT",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Torna alle valutazioni", 
+        "message": "Torna ai motivi",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Seleziona una categoria", 
+        "message": "Scegli un motivo",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Scegli almeno una categoria per sostenere il tuo voto", 
+        "message": "Fornisci almeno un motivo",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Lascia un commento per descrivere la tua esperienza con questo sito", 
+        "message": "Lascia un commento",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "scrivi il tuo commento qui...", 
+        "message": "Descrivi qui la tua esperienza...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Clicca qui per fornire una ragione del tuo voto selezionando una categoria", 
+        "message": "Clicca qui per fornire i motivi",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Non condivido",
+        "message": "Dissento",
         "description": ""
     }, 
     "messages_ready": {
