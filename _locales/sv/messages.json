@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Webbsidans anseende baserat på användarbetyg", 
+        "message": "WOT användarna säger",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Tillbaka till betygen", 
+        "message": "Tillbaka till orsaker",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Välj en kategori", 
+        "message": "Välj en orsak",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -240,15 +240,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Välj minst en kategori för att stödja ditt betyg", 
+        "message": "Ange minst en orsak",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Lämna en kommentar och beskriv din erfarenhet av den här sidan", 
+        "message": "Skriv en kommentar",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "skriv din kommentar här...", 
+        "message": "Beskriv din erfarenhet här...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -272,7 +272,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Klicka här för att ange ett skäl till ditt betyg genom att välja en kategori", 
+        "message": "Klicka här för att ange orsaker",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -296,7 +296,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Nej", 
+        "message": "Instämmer inte",
         "description": ""
     }, 
     "messages_ready": {
@@ -472,7 +472,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Du har inaktiverat tilläggsprogrammet.", 
+        "message": "Du har inaktiverat tilläggsprogrammet",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

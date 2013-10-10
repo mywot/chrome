@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Репутація сайту, що базується на оцінках користувачів", 
+        "message": "Користувачі WOT говорять",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Назад до оцінювання", 
+        "message": "Назад до причини",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Виберіть категорію", 
+        "message": "Виберіть причину",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -240,15 +240,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Вибер. принайні одну катег. щоб підтв. оцінку", 
+        "message": "Надайте хоча би одну причину",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Залиште коментар, щоб описати свій досвід від користування цим сайтом", 
+        "message": "Залишити коментар",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "напишіть свій коментра тут…", 
+        "message": "Опишіть свій досвід тут…",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -272,7 +272,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Натисніть тут, щоб надати причину вашої оцінки, вибравши категорію", 
+        "message": "Щоб вказати причину, натисніть тут",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -295,7 +295,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Ні", 
+        "message": "Я не згоден",
         "description": ""
     }, 
     "messages_ready": {

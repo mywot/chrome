@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Reputace webové stránky založená na hodnocení uživatelů", 
+        "message": "Uživatelé WOT říkají",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Zpět na hodnocení", 
+        "message": "Zpět na důvody",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Zvolte kategorii", 
+        "message": "Vybrat důvod",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Zvolte alespoň jednu kategorii pro vaše hodnocení", 
+        "message": "Udejte alespoň jeden důvod",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Zanechte komentář s popisem vaší zkušenosti s touto webovou stránkou", 
+        "message": "Zanechat komentář",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "napište váš komentář zde...", 
+        "message": "Tady popište svou zkušenost...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Klikněte zde pro poskytnutí důvodu pro vašeho hodnocení tak, že vyberete kategorii", 
+        "message": "Kliknutím sem můžete udat důvody",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Ne", 
+        "message": "Nesouhlasím",
         "description": ""
     }, 
     "messages_ready": {
@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Zakázali jste doplněk; kliknutím sem jej povolíte.", 
+        "message": "Zakázali jste doplněk",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

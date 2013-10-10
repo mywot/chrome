@@ -30,7 +30,6 @@ $.extend(wot, { ratingwindow: {
     is_registered: false,   // whether user has an account on mywot.com
     delete_action: false,   // remembers whether user is deleting rating
     prefs: {},  // shortcut for background preferences
-    UPDATE_ROUND: 2,        // = 2 version when we launched WOT 2.0 in September 2013
 
     get_bg: function () {
         // just a shortcut
@@ -57,11 +56,13 @@ $.extend(wot, { ratingwindow: {
 
     updatestate: function(target, data)
     {
+        var was_target_changed = false;
         /* initialize on target change */
         if (this.state.target != target) {
             this.finishstate(false);
             this.state = { target: target, down: -1 };
             this.comments.set_comment("");  // reset comment field
+	        was_target_changed = true;
         }
 
         var state = {
@@ -84,7 +85,8 @@ $.extend(wot, { ratingwindow: {
 
         /* remember previous state */
         this.state = $.extend(state, this.state);
-        this.cat_selector.init_voted(); // re-build user votes
+        this.cat_selector.init_voted(data.value.cats); // re-build user votes with new data
+	    return was_target_changed;
     },
 
     setstate: function (component, t) {
@@ -266,7 +268,7 @@ $.extend(wot, { ratingwindow: {
             if (unload) {  // RW was closed by browser (not by clicking "Save")
 //                bg.console.log("RW triggered finish state during Unload");
 
-                if ((comment_changed)) {
+                if (comment_changed) {
 //                    bg.console.log("The comment seems to be changed");
                     // when comment body is changed, we might want to store it locally
                     bgwot.keeper.save_comment(target, user_comment, user_comment_id, votes, wot.keeper.STATUSES.LOCAL);
@@ -402,6 +404,8 @@ $.extend(wot, { ratingwindow: {
 
         $_hostname.text(visible_hostname);
         $_wot_title_text.text(rw_title);
+
+        $("#wot-ratingwindow").toggleClass("unregistered", !_this.is_registered);
 
         /* reputations */
         /* ratings */
@@ -540,13 +544,14 @@ $.extend(wot, { ratingwindow: {
     {
         chrome.windows.getCurrent(function(obj) {
             chrome.tabs.getSelected(obj.id, function(tab) {
-                var _rw = wot.ratingwindow;
                 try {
+                    var _rw = wot.ratingwindow,
+                        bg = _rw.get_bg();
+
                     if (tab.id == target.id) {
 
-                        // TODO: check whether target is changed. If not, then don't update
                         /* update current rating state */
-                        _rw.updatestate(data.target, data.cached); //_rw.getcached()
+                        var target_changed = _rw.updatestate(data.target, data.cached); //_rw.getcached()
 
                         _rw.current = data || {};
                         _rw.updatecontents();
@@ -554,14 +559,22 @@ $.extend(wot, { ratingwindow: {
 
                         if (_rw.is_registered) {
                             // ask server if there is my comment for the website
-                            _rw.comments.get_comment(data.target);
+	                        if (target_changed) {   // no need to reask comment on every "iframe loaded" event
+		                        _rw.comments.get_comment(data.target);
+	                        }
+
                         } else {
-                            var bg = chrome.extension.getBackgroundPage();
                             bg.wot.core.update_ratingwindow_comment(); // don't allow unregistered addons to comment
                         }
 
-                        _rw.modes.reset();
-                        _rw.modes.auto();
+                        if (target_changed) {
+	                        _rw.modes.reset();
+	                        _rw.modes.auto();
+                        }
+
+                        if (!data.target) {
+                            bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_NOTARGET);
+                        }
                     }
                 } catch (e) {
                     console.log("ratingwindow.update: failed with ", e);
@@ -754,6 +767,7 @@ $.extend(wot, { ratingwindow: {
             $_hand = $('<div class="category-hand"><div class="hand-icon"></div></div>'),
             $_cat_text = $('<div class="category-text"></div>');
 
+	    $_cat_wrapper.addClass(vote == 1 ? "hand-up" : "hand-down");
         $_hand.addClass(vote == 1 ? "hand-up" : "hand-down");
         $_hand.attr("title", wot.i18n("ratingwindow", vote == 1 ? "vote_yes" : "vote_no"));
         $_cat_text.attr("title", cat_name);
@@ -864,6 +878,8 @@ $.extend(wot, { ratingwindow: {
             // if there is a comment, it must be valid, otherwise disallow the submit
             if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
                 passed = true;
+            } else if (testimonies == 0 && !has_comment) {
+                passed = true;
             }
         } else {
             if (testimonies == 0 && has_comment == false) {
@@ -949,6 +965,8 @@ $.extend(wot, { ratingwindow: {
         });
 
         $("#wot-header-link-profile").bind("click", function() {
+            bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_PROFILELNK,
+                _rw.is_registered ? "registered" : "unregistered");
             wot.ratingwindow.navigate(wurls.profile, wurls.contexts.rwprofile);
         });
 
@@ -1051,11 +1069,11 @@ $.extend(wot, { ratingwindow: {
             bg.wot.core.open_mywot(wot.urls.tour_rw, wot.urls.contexts.wt_rw_lm);
         });
 
-		var tts_wtip =  (first_opening || wot.firstrunupdate == _rw.UPDATE_ROUND) &&
+		var tts_wtip =  first_opening &&
 						!(wt.settings.rw_ok || wt.settings.rw_shown > 0) &&
 						wot.is_defined(["rw_text", "rw_text_hdr"], "wt");
 
-//		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max || wot.firstrunupdate == _rw.UPDATE_ROUND);
+		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
 
         if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
 
@@ -1519,18 +1537,20 @@ $.extend(wot, { ratingwindow: {
             // cycle through grouping to create main sections
             for (var gi = 0; gi < wot.grouping.length; gi++) {
                 var grp = wot.grouping[gi];
-                if (!grp.omnipresent && grp.text && grp.groups) {
+                if (!grp.omnipresent && grp.text) {
                     var $_li = _this._build_grouping(grp.text, grp.name);
 
                     var $_popover = $("<div></div>").addClass("popover");   // container for a list of categories
 
                     // Iterate over list of groups in the grouping (section)
-                    for(var a = 0; a < grp.groups.length; a++) {
-                        var g = grp.groups[a], // g.name == id, g.type == css style
-                            g_id = parseInt(g.name);
+                    if (grp.groups && grp.groups.length) {
+                        for(var a = 0; a < grp.groups.length; a++) {
+                            var g = grp.groups[a], // g.name == id, g.type == css style
+                                g_id = parseInt(g.name);
 
-                        cats = wot.select_categories(g_id, g_id);   // list if categories' IDs
-                        _rw.cat_selector._build_from_list(cats, $_popover, false);
+                            cats = wot.select_categories(g_id, g_id);   // list if categories' IDs
+                            _rw.cat_selector._build_from_list(cats, $_popover, false, false);
+                        }
                     }
 
                     $_li.append($_popover);
@@ -1558,7 +1578,7 @@ $.extend(wot, { ratingwindow: {
             return $_li;
         },
 
-        _build_from_list: function (cat_list, $_target_popover, omni) {
+        _build_from_list: function (cat_list, $_target_popover, omni, dynamic) {
             /* Makes HTML elements of categories with all controls and inserts them into Popover wrapper */
             var _this = wot.ratingwindow.cat_selector;
             var textvote_yes = wot.i18n("ratingwindow", "vote_yes"),
@@ -1580,30 +1600,33 @@ $.extend(wot, { ratingwindow: {
                     if (!wot.utils.isEmptyObject(cat)) {
                         var $_po_cat = $("<div></div>").addClass("category"); // container for a category
                         $_po_cat.attr("data-cat", cat.id);
-                        if (omni) {
-                            $_po_cat.addClass("omni");
-                        }
+                        $_po_cat.toggleClass("omni", omni);
+						$_po_cat.toggleClass("dynamic", dynamic);
 
                         if (cat.fullonly) {
                             $_po_cat.addClass("fullonly");
                             $_po_cat.toggleClass("invisible", _this.short_list);
                         }
 
+	                    var $_cat_vote = $("<div></div>").addClass("cat-vote");
+	                    if (dynamic) {
+		                    // here we show "I disagree" button on the right side
+		                    $("<div></div>").text(textvote_no).addClass("cat-vote-right").appendTo($_cat_vote);
+	                    } else {
+		                    // In "normal" sections we show checkboxes only, on the left side
+		                    $("<div></div>").addClass("cat-vote-left").appendTo($_cat_vote);
+	                    }
+
+//	                    $("<div></div>").addClass("delete-icon")
+//		                    .appendTo($("<div></div>").addClass("cat-vote-del").appendTo($_cat_vote));
+
+	                    $_cat_vote.appendTo($_po_cat);
+
+
                         $("<div></div>")    // the category line
                             .text(wot.get_category_name(cat.id, true))
                             .addClass("cat-name")
                             .appendTo($_po_cat);
-
-                        var $_cat_vote = $("<div></div>").addClass("cat-vote");
-
-                        // TODO: use translations for strings
-                        $("<div></div>").text(textvote_yes).addClass("cat-vote-left").appendTo($_cat_vote);
-                        $("<div></div>").text(textvote_no).addClass("cat-vote-right").appendTo($_cat_vote);
-
-                        $("<div></div>").addClass("delete-icon")
-                            .appendTo($("<div></div>").addClass("cat-vote-del").appendTo($_cat_vote));
-
-                        $_cat_vote.appendTo($_po_cat);
 
                         $_target_popover.append($_po_cat);
 
@@ -1611,7 +1634,6 @@ $.extend(wot, { ratingwindow: {
                         console.warn("Can't find category", cat_list[ci]);
                     }
                 }
-
             }
             return cat_list.length;
         },
@@ -1619,7 +1641,8 @@ $.extend(wot, { ratingwindow: {
         set_state: function (state, identified) {
             // Sets the category selector into proper state taking into account user's ratings and currently identified categories.
             var _rw = wot.ratingwindow,
-                _this = _rw.cat_selector;
+                _this = _rw.cat_selector,
+                $_popover = null;
 
             if (!_this.inited) return;  // do nothing when I'm not ready yet
 
@@ -1662,7 +1685,7 @@ $.extend(wot, { ratingwindow: {
             /* now omni_to_show[] contains all cats for the given testimony and we need to make filtered lists
             for every section in the selector.         */
             for (var j = 0; j < wot.grouping.length; j++) {
-                if (wot.grouping[j].omnipresent) continue;  // skip omni grouping for obvious reason
+                if (wot.grouping[j].omnipresent || wot.grouping[j].dynamic) continue;  // skip omni grouping for obvious reason
                 var section_id = wot.grouping[j].name;
                 omni_per_section[section_id] = omni_to_show.filter(function (elem, i , arr) {
                     var cat = wot.get_category(elem);
@@ -1678,9 +1701,10 @@ $.extend(wot, { ratingwindow: {
             var cached = _rw.getcached(),
                 cats_object = cached.value.cats,
                 dyn_cats = [],
-                dyn_grp = wot.determ_grouping(null, "dynamic"); // find the dynamic group to identify "popover" DOM element
+                dyn_grp = wot.determ_grouping(null, "dynamic"), // find the dynamic group to identify "popover" DOM element
+                filtered_dynamic = [];
 
-            if (dyn_grp.groups) {
+            if (dyn_grp.groups && dyn_grp.groups.length) {
                 for (var i= 0, gid; i < dyn_grp.groups.length; i++) {
                     gid = parseInt(dyn_grp.groups[i].name);
                     dyn_cats = dyn_cats.concat(wot.select_categories(gid, gid));
@@ -1691,20 +1715,22 @@ $.extend(wot, { ratingwindow: {
                 var cats = wot.rearrange_categories(cats_object);   // list of categories' IDs
                 // filter out categories that are in the omni-area already
                 // and that are only voted but not identified by community
-                var filtered_dynamic = cats.trustworthy.concat(cats.childsafety).filter(function(elem){
+                filtered_dynamic = cats.trustworthy.concat(cats.childsafety).filter(function(elem){
                     var cat_id = parseInt(elem.id);
-                    var fltr = !(omni_to_show.indexOf(cat_id) >= 0);
-                    fltr = fltr && elem.c;  // Identified cats have "c" attribute's value greater than than zero;
+                    var fltr = elem.c;  // Identified cats have "c" attribute's value greater than zero;
                     fltr = fltr && !(dyn_cats.indexOf(cat_id) >= 0); // drop categories that are already in dyn_cats
                     return fltr;
                 });
 
                 filtered_dynamic = dyn_cats.concat(filtered_dynamic);
-
-                var $_popover = $("li[grp-name="+dyn_grp.name+"] .popover", _this.$_cat_selector).first();
-                $(".category", $_popover).detach(); // remove all previous categories from the popover
-                _rw.cat_selector._build_from_list(filtered_dynamic, $_popover, false); // fill the popover with categories
             }
+
+            $_popover = $("li[grp-name="+dyn_grp.name+"] .popover", _this.$_cat_selector).first();
+            $(".category", $_popover).detach(); // remove all previous categories from the popover
+            _rw.cat_selector._build_from_list(filtered_dynamic, $_popover, false, true); // fill the dynamic popover with categories
+
+            // Toggle visibility of the dynamic grouping based on presence of categories there
+            $("li[grp-name="+dyn_grp.name+"]", _this.$_cat_selector).toggleClass("invisible", !filtered_dynamic.length);
 
             // 4. Append finally Omni Categories
             $(".category-selector .popover .omni").detach();    // remove all previous omni groups from all popovers
@@ -1712,8 +1738,8 @@ $.extend(wot, { ratingwindow: {
             // Create and attach omni categories to _all_ popovers (groupings)
             for (var si in omni_per_section) {
                 if (omni_per_section[si]) {
-                    var $_popover = $(".category-selector li[grp-name=" + si + "] .popover");
-                    _this._build_from_list(omni_per_section[si], $_popover, true);
+                    $_popover = $(".category-selector li[grp-name=" + si + "] .popover");
+                    _this._build_from_list(omni_per_section[si], $_popover, true, false);
                 }
             }
 
@@ -1848,12 +1874,18 @@ $.extend(wot, { ratingwindow: {
             _this.update_categories_visibility();
         },
 
-        init_voted: function () {
+        init_voted: function (cats) {
             var _rw = wot.ratingwindow,
-                _this = _rw.cat_selector;
+                _this = _rw.cat_selector,
+	            cached = {},
+	            cats_object = {};
 
-            var cached = _rw.getcached(),
-                cats_object = (cached && cached.value && cached.value.cats) ? cached.value.cats : {};
+            if (!cats || wot.utils.isEmptyObject(cats)) {
+	            cached = _rw.getcached();
+	            cats_object = (cached && cached.value && cached.value.cats) ? cached.value.cats : {};
+            } else {
+	            cats_object = cats;
+            }
 
             _this.votes = wot.select_voted(cats_object);
             _this.markup_voted();
@@ -1906,12 +1938,21 @@ $.extend(wot, { ratingwindow: {
             selected_elem.removeClass("maintainHover");
         },
 
-        _calc_vote_result: function (vs, vy, vn, vd, vc) {
-            // Calculates the resulted vote depending on what was clicked and current vote state
-            if (vd == 1) return 0; // if "delete" is clicked
+        _calc_vote_result: function (vs, vy, vn, dynamic, vc) {
+            // Calculates the resulting vote depending on what was clicked and current vote state
             var fy = vy * Math.min(vy, vy - vs);
             var fn = vn * Math.max(-1, -vn - vs);
-            var fc = vc * ((vs + 2) % 3 - 1);
+	        var fc = 0;
+
+	        if (vc) {
+		        if (dynamic) {
+			        fc = vs < 0 ? 0 : -1;
+		        } else {
+			        fc = vs != 1 ? 1 : 0;
+		        }
+	        }
+
+//            var fc = vc * ((vs + 2) % 3 - 1);
             return fy + fn + fc;
         },
 
@@ -1929,7 +1970,7 @@ $.extend(wot, { ratingwindow: {
             var vy = $_clicked.hasClass("cat-vote-left") ? 1 : 0;      // clicked Yes
             var vn = $_clicked.hasClass("cat-vote-right") ? 1 : 0;     // clicked No
             var vc = $_clicked.hasClass("category") ? 1 : 0;          // Clicked Category line
-            var vd = $_clicked.hasClass("cat-vote-del") ? 1 : 0;       // Clicked "delete" vote
+            var vd = $_clicked.closest(".category").hasClass("dynamic") ? 1 : 0;       // Clicked "delete" vote
             var vs = currently_voted ? parseInt(currently_voted) : 0; // current vote state for the clicked category
             var new_vote = _this._calc_vote_result(vs, vy, vn, vd, vc);
 

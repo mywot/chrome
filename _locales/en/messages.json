@@ -66,7 +66,7 @@
         "message": "My profile"
     },
     "ratingwindow_wotrating": {
-        "message": "Website's reputation based on user ratings"
+        "message": "WOT users say"
     },
     "ratingwindow_myrating": {
         "message": "My rating"
@@ -81,10 +81,10 @@
         "message": "Edit the comment"
     },
     "ratingwindow_backtoratings": {
-        "message": "Back to ratings"
+        "message": "Back to reasons"
     },
     "ratingwindow_backtoratings_category": {
-        "message": "Pick a category"
+        "message": "Pick a reason"
     },
     "ratingwindow_newversion": {
         "message": "New version available - click to update"
@@ -203,13 +203,13 @@
         "message": "How suitable is the website for children?"
     },
     "ratingwindow_categories": {
-        "message": "Pick at least one category to support your rating"
+        "message": "Provide at least one reason"
     },
     "ratingwindow_comment": {
-        "message": "Leave a comment to describe your experience with this site"
+        "message": "Leave a comment"
     },
     "ratingwindow_comment_placeholder": {
-        "message": "write your comment here..."
+        "message": "Describe your experience here..."
     },
     "ratingwindow_comment_regtext": {
         "message": "You need an account to publish your comment."
@@ -227,7 +227,7 @@
         "message": "<p>Be precise</p><p>Give evidence or example</p><p>Comment according to your real experiences</p><p>Do not spam</p>"
     },
     "ratingwindow_novoted": {
-        "message": "Click here to provide a reason for your rating by selecting a category"
+        "message": "Click here to provide reasons"
     },
     "ratingwindow_morecats": {
         "message": "more"
@@ -245,7 +245,7 @@
         "message": "Yes"
     },
     "ratingwindow_vote_no": {
-        "message": "No"
+        "message": "I disagree"
     },
     "messages_ready": {
         "message": "Reputation of"
@@ -381,7 +381,7 @@
         "description": "used in Firefox add-on only"
     },
     "messages_disabled": {
-        "message": "You have disabled the add-on; click to enable.",
+        "message": "You have disabled the add-on",
         "description": "used in Firefox add-on only"
     },
     "auto_update_title": {

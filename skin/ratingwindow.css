@@ -92,7 +92,7 @@ body {
 
 /* Always visible */
 #main-area {
-    min-height: 182px;
+    min-height: 184px;
     padding: 4px 10px;
     margin: 0 -11px;
 }
@@ -152,6 +152,13 @@ body {
 .wot-header-link:hover {
     color: #3073c5;
     cursor: pointer;
+}
+
+.unregistered #wot-header-link-profile {
+    color: #727272;
+    background-color: #E7F1FF;
+    border-radius: 5px;
+    padding: 2px 0.6em 0;
 }
 
 #wot-header-close {
@@ -403,6 +410,11 @@ body {
     cursor: pointer;
 }
 
+/* For Up votes no need to show thumbs up */
+#voted-categories-content .votedcategory.hand-up .category-text {
+    width: 72px;
+}
+
 #voted-categories-content .more-categories {
     font-size: 11px;
     color: #808080;
@@ -421,10 +433,12 @@ body {
 
 .category-hand.hand-up {
     background-color: #FCFCFC;
+    display: none;
 }
 
 .category-hand.hand-down {
-    background-color: #A3A3A3;
+    /*background-color: #A3A3A3;*/
+    background-color: #7DA6DB;
 }
 
 .hand-up .hand-icon,
@@ -1407,6 +1421,10 @@ body {
     background: linear-gradient(to bottom, #ffffff 0%, #ebebeb 100%); /* W3C */
 }
 
+.category-selector li.invisible {
+    display: none;
+}
+
 .category-selector li .group-title {
     display: block;
     clear: both;
@@ -1443,7 +1461,8 @@ body {
     line-height: 15px;
 }
 
-.category-selector .category:hover {
+.category-selector .category:hover,
+.category-selector .category:hover .cat-vote-right {
     background: #ebebeb;
     cursor: pointer;
 }
@@ -1462,41 +1481,60 @@ body {
     color: #747474;
 }
 
-.category-selector .cat-vote {
+.category-selector .dynamic .cat-vote {
     position: absolute;
     right: 0;
     top: 0;
 }
 
-.category-selector .cat-vote-left,
+.category-selector .cat-vote-left {
+    display: inline;
+    float: left;
+    margin: -1px 0px 0 0;
+    padding: 0px 2px;
+    border: 0px solid transparent;
+    font-size: 10px;
+    background-image: url("b/checkbox.png");
+    background-position: 0 0;
+    background-repeat:no-repeat;
+    width: 16px;
+    height: 16px;
+}
+
 .category-selector .cat-vote-right {
     display: inline;
     float: left;
-    margin: 2px 0px 0 0;
+    margin: 2px 2px 0 0;
     padding: 1px 5px 0;
     border: 1px solid transparent;
     text-transform: uppercase;
     font-size: 10px;
+    background-color: white;
 }
 
-.category-selector .cat-vote-left:after {
-    padding-left: 3px;
-    position: absolute;
-    color: silver;
-    content: "|";
-}
+/*.category-selector .cat-vote-left:after {*/
+    /*padding-left: 3px;*/
+    /*position: absolute;*/
+    /*color: silver;*/
+    /*content: "|";*/
+/*}*/
 
 /* when yes/no is hovered, hide the vertical pipe-separator */
-.category-selector .cat-vote:hover .cat-vote-left:after,
-.category-selector .category[voted] .cat-vote-left:after {
-    content: "";
+/*.category-selector .cat-vote:hover .cat-vote-left:after,*/
+/*.category-selector .category[voted] .cat-vote-left:after {*/
+    /*content: "";*/
+/*}*/
+
+.category-selector .cat-vote-left:hover {
 }
 
-.category-selector .cat-vote-left:hover,
-.category-selector .cat-vote-right:hover {
-    /*width: 23px;*/
-    /*height: 18px;*/
-    border: 1px solid #ccc;
+/* Checkbox in voted state */
+.category-selector .category[voted="1"] .cat-vote-left {
+    background-position: 0 -15px;
+}
+
+.category-selector .category .cat-vote-right:hover {
+    border: 1px solid #74B1FF;
     background-color: white;
     color: #319de7;
     -webkit-border-radius: 6px;
@@ -1504,59 +1542,16 @@ body {
     border-radius: 4px;
 }
 
-.category-selector .category[voted="1"] .cat-vote-left,
-.category-selector .category[voted="-1"] .cat-vote-right {
-    border: 1px solid #c7ddef;
-    background: #eaf2fa;
+/* "I disagree" in voted state */
+.category-selector .category[voted="-1"] .cat-vote-right,
+.category-selector .category[voted="-1"] .cat-vote-right:hover {
+    border: 1px solid white;
+    background: #2C7FE9 !important;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 4px;
+    color: #ffffff !important;
 }
-
-.category-selector .cat-vote-del {
-    display: inline;
-    float: left;
-    visibility: hidden;
-    height: 20px;
-}
-
-.category-selector .category[voted] .cat-vote-del {
-    visibility: visible;
-}
-
-.category-selector .delete-icon {
-    position: relative;
-    width: 12px;
-    height: 12px;
-    background-color: #f0efef;
-    margin: 3px 3px 0 3px;
-    cursor: pointer;
-    border: 1px solid #dadada;
-    border-radius: 50%;
-}
-
-/* Cross inside the "delete" icon */
-.category-selector .delete-icon:after,
-.category-selector .delete-icon:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    z-index: 10;
-    left: 5px;
-    width: 2px;
-    height: 10px;
-    margin-top: -5px;
-    background: #a5a5a5;
-}
-
-.category-selector .delete-icon:before {
-    -webkit-transform: rotate(45deg);
-}
-
-.category-selector .delete-icon:after {
-    -webkit-transform: rotate(135deg);
-}
-
 
 .category-selector .category-breakline {
     height: 1px;
@@ -1571,7 +1566,7 @@ body {
     background-clip: padding-box;
 }
 
-.category-selector li:last-of-type {
+.category-selector li:not(.invisible):last-of-type {
     -webkit-border-radius: 0 0 0 6px;
     border-radius: 0 0 0 6px;
     -webkit-background-clip: padding-box;
@@ -1623,6 +1618,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 #commenting-area {
     display: none;  /* is shown from JS when needed */
     margin: auto 19px;
+    min-height: 225px;
 }
 
 .comment-title {
@@ -1635,7 +1631,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 #user-comment {
-    height: 115px;
+    height: 126px;
     width: 350px;
     /*margin-right: 10px;*/
     padding: 8px;
@@ -1719,6 +1715,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #thanks-area {
     display: none;
+    min-height: 194px;
 }
 
 .thanks-text {

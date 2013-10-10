@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20130909,
+	version: 20131010,
 	platform: "opera",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -885,7 +885,7 @@ var wot = {
                 if (!grp.omnipresent && !type) { // skip only omnipresent, and if type is not set
                     var tmin = grp.tmin !== null ? grp.tmin : -1,
                         tmax = grp.tmax !== null ? grp.tmax : -1;
-                    if ((t0 == -1 && grp.dynamic) || (t0 >= tmin && t0 <= tmax)) {
+                    if (t0 == -1 || (t0 >= tmin && t0 <= tmax)) {
                         return grp;
                     }
                 }

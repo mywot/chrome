@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Kullanıcı derecelendirmelerine göre web-sitesinin itibarı", 
+        "message": "WOT kullanıcıları diyor ki",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Derecelendirmelere geri dön", 
+        "message": "Nedenelere geri dön",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Bir kategori seçin", 
+        "message": "Neden seç",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -239,15 +239,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Derecelendirmenizi desteklemek için en az bir kategori seçin", 
+        "message": "En az bir neden belirt",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Bu siteye ilişkin deneyiminizi betimlemek için bir yorum bırakın", 
+        "message": "Yorum yap",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "yorumunuzu buraya yazın…", 
+        "message": "Burada deneyimini açıkla…",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -271,7 +271,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Bir kategori seçerek derecelendirmenize bir gerekçe sunmak için buraya tıklayın", 
+        "message": "Neden belirtmek için buraya tıkla",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -295,7 +295,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Hayır", 
+        "message": "Kabul etmiyorum",
         "description": ""
     }, 
     "messages_ready": {
@@ -471,7 +471,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Eklentileri devre dışı bıraktınız; etkinleştirmek için tıklayın.", 
+        "message": "Eklentileri devre dışı bıraktınız",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

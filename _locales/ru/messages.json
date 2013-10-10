@@ -66,7 +66,7 @@
         "message": "Мой профиль"
     }, 
     "ratingwindow_wotrating": {
-		"message": "Репутация этого сайта по мнению пользователей"
+		"message": "Пользователи WOT говорят"
     }, 
     "ratingwindow_myrating": {
         "message": "Моя оценка"
@@ -203,13 +203,13 @@
         "message": "Насколько этот сайт подходит для детей?"
     }, 
     "ratingwindow_categories": {
-        "message": "Выберите хотя бы одну причину, объясняющую вашу оценку"
+        "message": "Укажите хотя бы одну причину"
     }, 
     "ratingwindow_comment": {
-        "message": "Расскажите о вашем опыте с этим сайтом"
+        "message": "Написать комментарий"
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": " "
+        "message": "Опишите ваш опыт здесь..."
     }, 
     "ratingwindow_comment_regtext": {
         "message": "Чтобы публиковать комментарии, вам нужен аккаунт."
@@ -227,7 +227,7 @@
         "message": "<p>Будьте точны</p><p>Излагайте факты</p><p>Избегайте оскорбительных фраз</p><p>Не рекламируйте другие сайты</p>"
     }, 
     "ratingwindow_novoted": {
-        "message": "Пожалуйста, укажите причину, объясняющую вашу оценку"
+        "message": "Укажите причину"
     }, 
     "ratingwindow_morecats": {
         "message": "ещё"
@@ -245,7 +245,7 @@
         "message": "Да"
     }, 
     "ratingwindow_vote_no": {
-        "message": "Нет"
+        "message": "Не согласен"
     }, 
     "messages_ready": {
         "message": "Репутация сайта"
@@ -381,7 +381,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Надстройка отключена.", 
+        "message": "Расширение отключено",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

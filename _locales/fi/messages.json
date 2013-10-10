@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Sivuston maine käyttäjien arviointien perusteella", 
+        "message": "WOT-käyttäjien arvio",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Takaisin arviointeihin", 
+        "message": "Takaisin perusteluihin",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Valitse kategoria", 
+        "message": "Perustele",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Valitse vähintään yksi kategoria", 
+        "message": "Perustele valitsemalla ainakin yksi",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Jätä kommentti kuvataksesi kokemustasi tästä sivustosta", 
+        "message": "Jätä kommentti",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "Kirjoita kommenttisi tähän...", 
+        "message": "Kuvaile kokemuksiasi...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Klikkaa tästä antaaksesi syyn arvostelullesi valitsemalla kategorian.", 
+        "message": "Klikkaa ja perustele valintasi",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Ei", 
+        "message": "Olen eri mieltä",
         "description": ""
     }, 
     "messages_ready": {
@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Olet poistanut lisäosan käytöstä. Ota se käyttöön napsauttamalla tätä.", 
+        "message": "Olet poistanut lisäosan käytöstä",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

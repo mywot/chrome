@@ -262,8 +262,7 @@ $.extend(wot, { api: {
 		var setcookies = [
 			"accessible=" + (wot.prefs.get("accessible") ? "true" : "false"),
             "version=" + wot.version,
-			"partner=" 	  + (wot.partner || ""),
-            "beta=1"        // TODO: remove this after releasing the final WOT 2.0 version
+			"partner=" 	  + (wot.partner || "")
 		];
 
 		if (this.cookieupdated > 0 &&
@@ -845,7 +844,14 @@ $.extend(wot, { api: {
         },
 
         get: function(target) {
+
             var _this = wot.api.comments;
+
+            if (!target) {
+                _this.on_get_comment_response({});
+                return;
+            }
+
             wot.log("wot.api.comments.get(target)", target);
 
             _this.call("get",

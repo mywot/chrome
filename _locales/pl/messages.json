@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "Nie", 
+        "message": "Nie zgadzam się",
         "description": ""
     }, 
     "messages_ready": {
@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Dodatek został wyłączony; kliknij, aby go włączyć.", 
+        "message": "Dodatek został wyłączony",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

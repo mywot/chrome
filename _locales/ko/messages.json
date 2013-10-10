@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "사용자 평가에 따른 웹사이트 평가", 
+        "message": "WOT 사용자 리뷰",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "평가하기로 돌아가기", 
+        "message": "이유로 돌아가기",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "범주 고르기", 
+        "message": "이유 선택",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "평가를 위해 최소 하나의 범주를 고르시오", 
+        "message": "적어도 한 가지 이유를 제시하시기 바랍니다",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "이 사이트를 이용한 경험을 설명하기 위해 댓글을 남기십시오", 
+        "message": "댓글 남기기",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "여기에 댓글을 작성하십시오…", 
+        "message": "본 프로그램에 대한 님의 경험을 적어 주시기 바랍니다…",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "여기를 클릭해 범주를 선택해서 평가에 대한 근거를 남겨주십시오", 
+        "message": "여기를 클릭하여 이유를 제시할 수 있습니다",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "아니오", 
+        "message": "동의하지 않습니다",
         "description": ""
     }, 
     "messages_ready": {
@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "사용을 중지하셨습니다. '실행' 을 클릭하십시오.", 
+        "message": "사용을 중지하셨습니다",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

@@ -46,6 +46,7 @@ $.extend(wot, { ga: {
 	},
 
 	actions: {
+		RW_NOTARGET:   "RW_notarget",
 		RW_TESTIMONY:   "RW_testimony",
 		RW_TESTIMONY_DEL: "RW_testimony_del",
 		RW_COMMENTADDED: "RW_comment_posted",
@@ -59,7 +60,8 @@ $.extend(wot, { ga: {
 		RW_ADDCOMMENT:  "RW_addcomment",
 		RW_EDITCOMMENT: "RW_editcomment",
 		RW_PICKACAT:    "RW_pickcategory",
-		RW_BTNCANCEL:    "RW_btn_cancel",
+		RW_BTNCANCEL:   "RW_btn_cancel",
+		RW_PROFILELNK:  "RW_profilelnk",
 
 		WS_SHOW:        "WS_shown",
 		WS_BTN_ENTER:   "WS_btn_enter",

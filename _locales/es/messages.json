@@ -69,7 +69,7 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Reputación de sitios web basada en la puntuación de los usuarios", 
+        "message": "Lo que dicen los usuarios de WOT",
         "description": ""
     }, 
     "ratingwindow_myrating": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Volver a puntuaciones", 
+        "message": "Volver a razones",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Escoger una categoría", 
+        "message": "Elija una razón",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -241,15 +241,15 @@
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Elige al menos una categoría", 
+        "message": "Dé al menos una razón",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Deja un comentario para describir tu experiencia con este sitio", 
+        "message": "Dejar un comentario",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "escribe aquí tu comentario...", 
+        "message": "Describa su experiencia aquí...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Haz clic aquí para dar un motivo para tu puntuación eligiendo una categoría.", 
+        "message": "Haga clic aquí para dar razones",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "No", 
+        "message": "En desacuerdo",
         "description": ""
     }, 
     "messages_ready": {
@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Ha desactivado el complemento.", 
+        "message": "Ha desactivado el complemento",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {

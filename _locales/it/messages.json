@@ -69,14 +69,14 @@
         "description": ""
     }, 
     "ratingwindow_wotrating": {
-        "message": "Reputazione del sito web in base alle valutazioni degli utenti", 
+        "message": "Cosa dicono gli utenti di WOT",
         "description": ""
     }, 
     "ratingwindow_myrating": {
         "message": "Valutazione personale"
     }, 
     "ratingwindow_viewscorecard": {
-        "message": "Visualizza i dettagli e i commenti", 
+        "message": "Visualizza dettagli e commenti",
         "description": ""
     }, 
     "ratingwindow_addcomment": {
@@ -88,11 +88,11 @@
         "description": ""
     }, 
     "ratingwindow_backtoratings": {
-        "message": "Torna alle valutazioni", 
+        "message": "Torna ai motivi",
         "description": ""
     }, 
     "ratingwindow_backtoratings_category": {
-        "message": "Seleziona una categoria", 
+        "message": "Scegli un motivo",
         "description": ""
     }, 
     "ratingwindow_newversion": {
@@ -103,7 +103,7 @@
         "description": ""
     }, 
     "warnings_information": {
-        "message": "Visualizza i dettagli e i commenti", 
+        "message": "Visualizza dettagli e commenti",
         "description": ""
     }, 
     "warnings_ratesite": {
@@ -141,11 +141,11 @@
         "description": ""
     }, 
     "warnings_othersreasontitle": {
-        "message": "Le opinioni di altri utenti", 
+        "message": "Opinioni di altri utenti",
         "description": ""
     }, 
     "warnings_noreasontitle": {
-        "message": "Gli utenti non hanno ancora identificato questo sito e lo hanno valutato soltanto", 
+        "message": "Gli utenti non hanno ancora classificato questo sito e lo hanno soltanto valutato",
         "description": ""
     }, 
     "contextmenu_open_scorecard": {
@@ -165,7 +165,7 @@
         "description": ""
     }, 
     "wt_warning_text": {
-        "message": "<p>WOT ti avverte quando visiti un sito con una scarsa reputazione in base alle esperienze degli altri utenti o alle liste nere di terze parti. L'avviso indica anche le ragioni della scarsa reputazione.</p><p>{WT_LEARNMORE}</p><p>Se non desideri visualizzare gli avvisi, puoi disattivarli.</p>", 
+        "message": "<p>WOT ti avverte quando visiti un sito con una scarsa reputazione in base all'esperienza di altri utenti o alle liste nere di terze parti. L'avviso indica anche le ragioni della scarsa reputazione.</p><p>{WT_LEARNMORE}</p><p>Se non desideri visualizzare gli avvisi, puoi disattivarli.</p>",
         "description": ""
     }, 
     "wt_warning_turnoff": {
@@ -177,15 +177,15 @@
         "description": ""
     }, 
     "wt_rw_text_hdr": {
-        "message": "Condividi le tue esperienze!", 
+        "message": "Condividi la tua esperienza!",
         "description": ""
     }, 
     "wt_rw_text": {
-        "message": "<p>La finestra di valutazione di WOT ti mostra la reputazione del sito Web in base alle esperienze degli altri utenti. Ora puoi valutare e commentare direttamente dalla finestra aggiornata. Inizia a valutare facendo clic sulle barre colorate.</p><p class='wot-c'><a id='wt-learnmore-link'>Ulteriori informazioni</a> su WOT.</p>", 
+        "message": "<p>La finestra di valutazione di WOT ti mostra la reputazione del sito Web in base all'esperienza di altri utenti. Ora puoi valutare e commentare direttamente dalla finestra aggiornata. Inizia a valutare facendo clic sulle barre colorate.</p><p class='wot-c'><a id='wt-learnmore-link'>Ulteriori informazioni</a> su WOT.</p>",
         "description": ""
     }, 
     "wt_donut_msg": {
-        "message": "<p>WOT ti mostra le reputazioni dei siti Web in base alle esperienze degli altri utenti mostrandoti delle icone simili a un semaforo.</p><p>Posiziona il puntatore del mouse sull'icona per vedere le reputazioni e le ragioni per cui sono state date.</p>", 
+        "message": "<p>WOT ti mostra le reputazioni dei siti Web in base all'esperienza di altri utenti mostrandoti delle icone simili a un semaforo.</p><p>Posiziona il puntatore del mouse sull'icona per vedere le reputazioni e le ragioni per cui sono state date.</p>",
         "description": ""
     }, 
     "wt_donut_btn": {
@@ -237,19 +237,19 @@
         "description": ""
     }, 
     "ratingwindow_question4": {
-        "message": "Quanto è adatto il sito per i bambini?", 
+        "message": "Quanto questo sito è adatto ai bambini?",
         "description": ""
     }, 
     "ratingwindow_categories": {
-        "message": "Scegli almeno una categoria per sostenere il tuo voto", 
+        "message": "Fornisci almeno un motivo",
         "description": ""
     }, 
     "ratingwindow_comment": {
-        "message": "Lascia un commento per descrivere la tua esperienza con questo sito", 
+        "message": "Lascia un commento",
         "description": ""
     }, 
     "ratingwindow_comment_placeholder": {
-        "message": "scrivi il tuo commento qui...", 
+        "message": "Descrivi qui la tua esperienza...",
         "description": ""
     }, 
     "ratingwindow_comment_regtext": {
@@ -273,7 +273,7 @@
         "description": ""
     }, 
     "ratingwindow_novoted": {
-        "message": "Clicca qui per fornire una ragione del tuo voto selezionando una categoria", 
+        "message": "Clicca qui per fornire i motivi",
         "description": ""
     }, 
     "ratingwindow_morecats": {
@@ -289,7 +289,7 @@
         "description": "TODO: TRANSLATE"
     }, 
     "ratingwindow_fulllist": {
-        "message": "la lista completa",
+        "message": "lista completa",
         "description": ""
     }, 
     "ratingwindow_vote_yes": {
@@ -297,7 +297,7 @@
         "description": ""
     }, 
     "ratingwindow_vote_no": {
-        "message": "No", 
+        "message": "Dissento",
         "description": ""
     }, 
     "messages_ready": {
@@ -361,11 +361,11 @@
         "description": ""
     }, 
     "buttons_delete": {
-        "message": "Cancella le valutazioni", 
+        "message": "Rimuovi valutazioni",
         "description": ""
     }, 
     "buttons_delete_title": {
-        "message": "Cancella le mie valutazioni e categorie per il sito", 
+        "message": "Rimuovi le mie valutazioni e categorie per il sito",
         "description": ""
     }, 
     "buttons_cancel": {
@@ -421,15 +421,15 @@
         "description": ""
     }, 
     "bl_description": {
-        "message": "Questo sito web appare su una lista nera di terze parti", 
+        "message": "Questo sito web appare in una lista nera di terze parti",
         "description": ""
     }, 
     "bl_description_pl": {
-        "message": "Questo sito web appare sulle liste nere di terze parti", 
+        "message": "Questo sito web appare in liste nere di terze parti",
         "description": ""
     }, 
     "bl_information": {
-        "message": "WOT utilizza liste nere di terze parti per mettere in guardia gli utenti circa le minacce tecniche come virus e malware. <a>Leggi tutto</a>", 
+        "message": "WOT utilizza liste nere di terze parti per mettere in guardia gli utenti su minacce come virus e malware. <a>Leggi tutto</a>",
         "description": ""
     }, 
     "bl_malware": {
@@ -457,7 +457,7 @@
         "description": ""
     }, 
     "warning_button": {
-        "message": "Dettagli sulle valutazioni", 
+        "message": "Dettagli sulla valutazione",
         "description": "imported from firefox add-on"
     }, 
     "warnings_message_rating": {
@@ -473,7 +473,7 @@
         "description": "imported from firefox add-on"
     }, 
     "messages_disabled": {
-        "message": "Componente aggiuntivo disattivato.", 
+        "message": "Componente aggiuntivo disattivato",
         "description": "imported from firefox add-on"
     }, 
     "auto_update_title": {
