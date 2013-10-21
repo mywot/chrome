@@ -750,7 +750,8 @@ $.extend(wot, { core: {
 //				wot.core.set_badge(wot.badge_types.notice); // set icon's badge to "notice"
 			} else {
 				/* use the welcome page to set the cookies on the first run */
-				chrome.tabs.create({ url: wot.urls.welcome });
+				var open_in_bg = !wot.env.is_yandex;    // for Yandex browser open the WP in background
+				chrome.tabs.create({ url: wot.urls.welcome, active: open_in_bg });
 			}
 			wot.prefs.set("firstrun:welcome", true);
 

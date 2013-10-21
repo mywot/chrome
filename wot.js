@@ -631,6 +631,8 @@ var wot = {
 		if(wot.env.is_mailru) {
 			// set param to label requests
 			wot.partner = "mailru";
+		} else if (wot.env.is_yandex) {
+			wot.partner = "yandex";
 		}
 
 		if(!readonly) wot.prefs.set("partner", wot.partner);
