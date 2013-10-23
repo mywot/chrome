@@ -19,15 +19,15 @@
 */
 
 var wot = {
-	version: 20131021,
+	version: 20131023,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
-	debug: true,            // when changing this, don't forget to switch ga_id value also!
+	debug: false,            // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
-	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
