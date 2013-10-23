@@ -23,11 +23,11 @@ var wot = {
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
-	debug: false,            // when changing this, don't forget to switch ga_id value also!
+	debug: true,            // when changing this, don't forget to switch ga_id value also!
 	default_component: 0,
 	enable_surveys: true,   // Feedback loop engine
 
-	ga_id: "UA-2412412-8", // test: UA-35564069-1 , live: UA-2412412-8
+	ga_id: "UA-35564069-1", // test: UA-35564069-1 , live: UA-2412412-8
 
 	// environment (browser, etc)
 	env: {
@@ -327,6 +327,27 @@ var wot = {
 
 	connections: {},
 
+	get_onConnect: function () {
+		// this is the compatibility function to support messaging in Chrome 18-25 and Chrome 26+
+		// http://stackoverflow.com/questions/15718066/chrome-runtime-sendmessage-not-working-as-expected/15718294#15718294
+		return chrome.runtime && chrome.runtime.sendMessage ?
+			chrome.runtime.onConnect : chrome.extension.onConnect;
+	},
+
+	get_connect: function () {
+		// this is the compatibility function to support messaging in Chrome 18-25 and Chrome 26+
+		// http://stackoverflow.com/questions/15718066/chrome-runtime-sendmessage-not-working-as-expected/15718294#15718294
+		return chrome.runtime && chrome.runtime.sendMessage ?
+			chrome.runtime.connect : chrome.extension.connect;
+	},
+
+	get_runtime: function () {
+		// this is the compatibility function to support messaging in Chrome 18-25 and Chrome 26+
+		// http://stackoverflow.com/questions/15718066/chrome-runtime-sendmessage-not-working-as-expected/15718294#15718294
+		return chrome.runtime && chrome.runtime.sendMessage ?
+			chrome.runtime : chrome.extension;
+	},
+
 	triggeronmessage: function(port)
 	{
 		port.onMessage.addListener(function(data) {
@@ -345,7 +366,7 @@ var wot = {
 			names = [ names ];
 		}
 
-		chrome.extension.onConnect.addListener(function(port) {
+		wot.get_onConnect().addListener(function(port) {
 			if (names.indexOf(port.name) >= 0) {
 				wot.triggeronmessage(port);
 				wot.connections[port.name] = port;
@@ -361,7 +382,7 @@ var wot = {
 			return port;
 		}
 
-		port = chrome.extension.connect({ name: name });
+		port = wot.get_connect().call(wot.get_runtime(), { name: name });
 
 		if (port) {
 			this.triggeronmessage(port);
@@ -380,11 +401,9 @@ var wot = {
 			data.message = name + ":" + message;
 			this.log("post: posting " + data.message + "\n");
 			port.postMessage(data);
+		} else {
+			console.warn("Can't find port to send message", name, message, data);
 		}
-	},
-
-	is_allowed_sender: function(sender_id) {
-		return wot.allowed_senders[sender_id] || wot.debug; // allow known senders or any in
 	},
 
 	/* i18n */

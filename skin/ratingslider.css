@@ -1,0 +1,296 @@
+/*
+	ratingslider.css
+	Copyright © 2013  WOT Services Oy <info@mywot.com>
+
+	This file is part of WOT.
+
+	WOT is free software: you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	WOT is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+	License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with WOT. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+.wot-rating {
+    position: absolute;
+    height: 60px;
+    margin-left: 16px;
+    margin-right: 0;
+    width: 240px;
+    -webkit-user-select: none;
+    top: 42px;
+}
+
+/* Child Safety rating control */
+#wot-rating-4 {
+    left: 278px;
+}
+
+.wot-rating-data {
+    display: block;
+}
+
+.wot-rating-testimony {
+    display: block;
+    float: left;
+    height: 16px;
+    margin-left: 6px;
+    margin-top: 2px;
+    position: relative;
+}
+
+#ratings-area:not([disabled=disabled]) .wot-rating:hover .wot-rating-data[r=r0] .wot-rating-help,
+#ratings-area:not([disabled=disabled]) .wot-rating.hover .wot-rating-data[r=r0] .wot-rating-help {
+    display: none;
+}
+
+.wot-rating-data[r] .wot-rating-help {
+    opacity: 1;
+}
+
+.rating-bound-left,
+.rating-bound-right {
+    position: absolute;
+}
+
+.rating-bound-left {
+    left: 0;
+}
+
+.rating-bound-right {
+    right: 0;
+}
+
+.wot-rating-stack {
+    display: block;
+    height: 34px;
+    padding-left: 0;
+    width: 204px;
+    z-index: 5;
+    cursor: pointer;
+}
+
+
+.wot-rating-bounds {
+    position: relative;
+    font-size: 11px;
+    height: 16px;
+    margin: 4px 48px -6px 2px;
+    color: #919191;
+    opacity: 0;
+    display: none;
+    -webkit-transition: opacity 5.5s;
+}
+
+/* show boundary labels only when rating bars are enabled */
+#ratings-area:not([disabled=disabled]) .wot-rating:hover .wot-rating-data[r=r0] .wot-rating-bounds,
+#ratings-area:not([disabled=disabled]) .wot-rating.hover .wot-rating-data[r=r0] .wot-rating-bounds {
+    opacity: 1;
+    display: block;
+}
+
+
+#ratings-area[disabled=disabled] .wot-rating-stack {
+    cursor: default;
+}
+
+.wot-rating-slider {
+    background-image: url("b/slider.png");
+    background-repeat: no-repeat;
+    background-size: auto 216px;
+    background-position: 0 -180px;
+    display: block;
+    height: 30px;
+    margin-top: 3px;
+    width: 172px;
+    cursor: pointer;
+}
+
+#wot-ratingwindow.accessible .wot-rating-slider {
+    background-image: url("b/accessible/slider.png");
+}
+
+#ratings-area[disabled=disabled] .wot-rating-slider {
+    cursor: default;
+}
+
+.wot-rating-stack[r="r1"] .wot-rating-slider {
+    background-position: 0 -144px;
+}
+
+.wot-rating-stack[r="r2"] .wot-rating-slider {
+    background-position: 0 -108px;
+}
+
+.wot-rating-stack[r="r3"] .wot-rating-slider {
+    background-position: 0 -72px;
+}
+
+.wot-rating-stack[r="r4"] .wot-rating-slider {
+    background-position: 0 -36px;
+}
+
+.wot-rating-stack[r="r5"] .wot-rating-slider {
+    background-position: 0 0;
+}
+
+.wot-rating-indicator {
+    display: block;
+    height: 30px;
+    margin-left: -8px;
+    margin-top: -22px;
+    width: 21px;
+    float: left;
+    position: relative;
+    background-image: url("b/slider_handle.png");
+    background-repeat: no-repeat;
+    background-size: 21px auto;
+    z-index: 5;
+    left: 166px;
+}
+
+#wot-ratingwindow.accessible .wot-rating-indicator {
+    background-image: url("b/accessible/slider_handle.png");
+}
+
+.wot-rating-stack .wot-rating-indicator {
+    background-position: 0 -140px;
+}
+
+.wot-rating-stack.testimony[r="r1"] .wot-rating-indicator {
+    background-position: 0 -112px;
+}
+
+.wot-rating-stack.testimony[r="r2"] .wot-rating-indicator {
+    background-position: 0 -84px;
+}
+
+.wot-rating-stack.testimony[r="r3"] .wot-rating-indicator {
+    background-position: 0 -56px;
+}
+
+.wot-rating-stack.testimony[r="r4"] .wot-rating-indicator {
+    background-position: 0 -28px;
+}
+
+.wot-rating-stack.testimony[r="r5"] .wot-rating-indicator {
+    background-position: 0 0;
+}
+
+.wot-rating-help {
+    display: block;
+
+    margin-bottom: -6px;
+    margin-left: 2px;
+    margin-right: 0;
+    margin-top: 4px;
+    width: 154px;
+    -webkit-transition: opacity 2.5s linear 2s;
+}
+
+.wot-rating-data:not([r]) .wot-rating-help {
+    opacity: 0;
+}
+
+.wot-rating-helptext,
+.wot-rating-helplink {
+    height: 16px;
+    margin-top: 3px;
+    font-size: 11px;
+    text-align: left;
+    color: #878787;
+}
+
+.wot-rating-helptext[r=r1] {
+    color: #dd2e31;
+    text-align: left;
+}
+
+.wot-rating-helptext[r=r2] {
+    color: #e25533;
+    text-align: left;
+}
+
+.wot-rating-helptext[r=r3] {
+    color: #de7c1b;
+    text-align: center;
+}
+
+.wot-rating-helptext[r=r4] {
+    color: #5bab28;
+    text-align: right;
+}
+
+.wot-rating-helptext[r=r5] {
+    color: #3b9013;
+    text-align: right;
+}
+
+#ratings-area[disabled=disabled] .wot-rating-helptext {
+    visibility: hidden;
+}
+
+.wot-rating-helplink {
+    display: none;
+}
+.wot-rating-helplink.comment {
+    color: #3073c5;
+    cursor: pointer;
+    display: block;
+}
+#wot-ratingwindow.accessible .wot-rating-helplink.comment {
+    color: #333;
+    text-decoration: underline;
+}
+
+.rating-delete {
+    margin-left: 160px;
+    margin-top: 20px;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.rating-delete-icon {
+    position: relative;
+    background: url("b/delete-testimony.png") top left no-repeat;
+    background-size: auto 18px;
+    background-position: -34px 0;
+    width: 18px;
+    height: 18px;
+    margin: -2px 0 0 0;
+}
+
+/* Cross inside the "delete" icon */
+.delete .rating-delete-icon {
+    background-position: 0 0;
+}
+
+.rating-delete.delete .rating-delete-icon,
+.rating-delete.delete .rating-deletelabel {
+    cursor: pointer;
+}
+
+.rating-deletelabel {
+    font-size: 10px;
+    color: #808080;
+    margin: 4px auto 0;
+    text-align: center;
+    height: 1.4em;
+    white-space: nowrap;
+}
+
+.rating-delete.delete:hover .rating-deletelabel {
+    color: red;
+}
+
+.rating-delete.delete:hover .rating-delete-icon {
+    background-position: -17px 0;
+}

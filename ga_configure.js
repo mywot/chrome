@@ -87,6 +87,7 @@ $.extend(wot, { ga: {
 
 		FBL_shown:              "FBL_shown",
 		FBL_submit:             "FBL_submit",
+		FBL_TESTIMONY:          "FBL_testimony",
 		FBL_closed:             "FBL_closed",
 		FBL_dismiss:            "FBL_dismiss",
 		FBL_optout_shown:       "FBL_optout_shown",
@@ -142,7 +143,7 @@ $.extend(wot, { ga: {
 		 *  2. partner = "undefined" | mailru
 		 *  3. registered = yes | no    ; since 24.05.2013
 		 *  4. experiments
-		 *  5. FBL_QID (page level). Was accessible = acc | normal until 28.03.2013
+		 *  5. NONE //// FBL_QID (page level). Was accessible = acc | normal until 28.03.2013
    	     * */
 
 		// let's measure how many "accessible" users do we have on Chrome
@@ -168,7 +169,7 @@ $.extend(wot, { ga: {
 	},
 
     set_fbl_question: function (question_id) {
-        _gaq.push(['_setCustomVar', 5, 'FBL_QID', String(question_id), 3]); // scope = 3 (page level)
+//        _gaq.push(['_setCustomVar', 5, 'FBL_QID', String(question_id), 3]); // scope = 3 (page level)
     }
 
 }});

@@ -28,7 +28,7 @@ $.extend(wot, { surveys: {
 
 	FLAGS: {
 		none:       0,  // a user didn't make any input yet
-		submited:   1,  // a user has given the answer
+		submitted:   1,  // a user has given the answer
 		closed:     2,  // a user has closed the survey dialog without givin the answer
 		optedout:   3   // a user has clicked "Hide forever"
 	},
@@ -59,6 +59,10 @@ $.extend(wot, { surveys: {
 
 		this.last_time_asked = wot.prefs.get(wot.surveys.PREFNAMES.lasttime);
 		this.load_asked();
+	},
+
+	bind_events: function () {
+		if (!wot.enable_surveys) return;    // check global enabler flag
 
 		wot.bind("message:surveyswidget:shown", wot.surveys.on_show);
 		wot.bind("message:surveyswidget:optout", wot.surveys.on_optout);
@@ -83,20 +87,37 @@ $.extend(wot, { surveys: {
 
 			var is_tts = wot.surveys.is_tts(target, cached, tab.url, question);
 
-			var senddata = {
-				target: target,
-				decodedtarget: data.decodedtarget,
-				question: question,
-				stats: null
-			};
-
 			if (is_tts) {
+
+				var cached_rep = {};
+				wot.components.forEach(function(i) {
+					var app = i.name;
+					if (cached.value[app]) {
+						cached_rep[app] = $.extend(true, {}, cached.value[app]);
+					}
+				});
+
+				var senddata = {
+					target: target,
+					decodedtarget: data.decodedtarget,
+					question: question,
+					stats: null,
+					reputation: cached_rep
+				};
 				senddata.stats = _this.count_stats();
 				wot.surveys.send_show(tab, senddata);
 			}
 		} catch (e) {
 			console.error("wot.surveys.update() failed in BG.", e);
 		}
+	},
+
+
+	is_rated: function (target, app) {
+		// returns user's testimony for trustworthiness
+		app = app || 0;
+		var cached = wot.cache.get(target);
+		return cached && cached.value && cached.value[app] && cached.value[app].t >= 0;
 	},
 
 	is_tts: function (target, cache, url, question) {
@@ -106,12 +127,17 @@ $.extend(wot, { surveys: {
 
 		try {
 
-			if(!(question && question.id !== undefined && question.text && question.choices)) {
+			if(!(question && question.type == "submit")) {
 				// no question was given for the current website - do nothing
 				return false;
 			}
 
             if (_this.is_super_fbl()) return true; // forced to enable FBL if "super" is on and a question is available
+
+			// Check if the target is already rated by the user
+			if (_this.is_rated(target, 0)) {
+				return false;
+			}
 
 			// on special domains we should always show the survey if there is a special password given (for testing purposes)
 			// e.g. try this url http://api.mywot.com/test.html#surveymewot
@@ -144,15 +170,15 @@ $.extend(wot, { surveys: {
 			}
 
 			// check whether we already have asked the user about current website
-			if (_this.asked[target] && _this.asked[target][question.id]) {
+			if (_this.asked[target] && _this.asked[target][question.type]) {
 				// here we could test also if user just closed the survey last time without providing any info
 				// (in case if we want to be more annoying)
-				var asked_data = _this.asked[target][question.id];
+				var asked_data = _this.asked[target][question.type];
 				var asked_time = wot.time_since(asked_data.time),
 					status = asked_data.status,
 					count = asked_data.count;
 
-				if (status !== _this.FLAGS.submited && 	count < _this.site_max_reask_tries &&
+				if (status !== _this.FLAGS.submitted && 	count < _this.site_max_reask_tries &&
 					asked_time > _this.site_calm_period) {
 
 					result = result && true;    // redundant line
@@ -166,7 +192,7 @@ $.extend(wot, { surveys: {
 					result = false;
 				}
 
-				if (status === _this.FLAGS.submited) {
+				if (status === _this.FLAGS.submitted) {
 					global_calm = false;    // mute sending GA event about global_calm_period if the user provided the feedback
 				}
 			}
@@ -206,7 +232,7 @@ $.extend(wot, { surveys: {
 
 								impressions = impressions + count;
 
-								if (status === _this.FLAGS.submited) {
+								if (status === _this.FLAGS.submitted) {
 									++submissions;
 								}
 							}
@@ -265,8 +291,8 @@ $.extend(wot, { surveys: {
 
 	on_submit: function (port, data) {
 		var _this = wot.surveys;
-		_this.save_asked_status(data, _this.FLAGS.submited);
-		_this.report(data.url, data.question_id, data.answer);
+		_this.save_asked_status(data, _this.FLAGS.submitted);
+		_this.report(data.target, data.question_type, data.testimony0);
 
 		// wait for a moment to show there final screen (thank you!)
 		window.setTimeout(function(){
@@ -283,7 +309,7 @@ $.extend(wot, { surveys: {
 		wot.surveys.asked = wot.prefs.get(wot.surveys.PREFNAMES.asked) || {};
 	},
 
-	remember_asked: function(target, question_id, status) {
+	remember_asked: function(target, question_type, status) {
 		var _this = wot.surveys;
 
 		try {
@@ -293,8 +319,8 @@ $.extend(wot, { surveys: {
 			var count = 0;
 
 			if (_this.asked[target]) {
-				if (_this.asked[target][question_id]) {
-					count = _this.asked[target][question_id]['count'] || 0;
+				if (_this.asked[target][question_type]) {
+					count = _this.asked[target][question_type]['count'] || 0;
 				}
 			} else {
 				_this.asked[target] = {};
@@ -306,7 +332,7 @@ $.extend(wot, { surveys: {
 				count: count + ((status === _this.FLAGS.none) ? 1 : 0)  //count only "shown" events
 			};
 
-			_this.asked[target][question_id] = asked_data;    // keep in runtime variable
+			_this.asked[target][question_type] = asked_data;    // keep in runtime variable
 
 		} catch (e) {
 			console.error("remember_asked() failed with", e);
@@ -316,8 +342,8 @@ $.extend(wot, { surveys: {
 	save_asked_status: function (data, status) {
 		var _this = wot.surveys;
 		try {
-			if (data && data.target && data.question_id) {
-				_this.remember_asked(data.target, data.question_id, status);
+			if (data && data.target && data.question_type) {
+				_this.remember_asked(data.target, data.question_type, status);
 
 				wot.prefs.set(_this.PREFNAMES.asked, _this.asked);
 				_this.last_time_asked = new Date();
@@ -348,9 +374,48 @@ $.extend(wot, { surveys: {
 		_this.send_close(port.port.sender.tab);
 	},
 
-	report: function (url, question_id, answer) {
-		// this func reports to wot server about the option user has chosen: answer id, or optout or close action
-		wot.api.feedback(question_id, answer, url);
+	report: function (target, question_type, testimony0) {
+
+		if (question_type != "submit") {
+			console.warn("Unsupported question type appeared in surveys.report()");
+			return;
+		}
+
+		var cached = wot.cache.get(target),
+			state = {};
+
+		// copy current reputation state from cache to state var
+		wot.components.forEach(function(item){
+			var app = item.name;
+			if (cached.value && cached.value[app]) {
+				state[app] = {};
+				$.extend(true, state[app], cached.value[app]);
+			}
+		});
+
+		$.extend(true, state, { "0": { t: testimony0 } });  // override testimonies with data from feedback prompt
+
+		var testimonies_changed = wot.cache.cacheratingstate(target, state, {});
+
+		if (testimonies_changed) {
+
+			// don't show warning screen immediately after rating and set "expire to" flag
+			var warned_expire = (new Date()).getTime() + wot.expire_warned_after;
+			wot.cache.setflags(target, {warned: true, warned_expire: warned_expire });
+
+			/* submit new ratings */
+			var params = {
+				testimony_0: testimony0
+			};
+
+			wot.api.submit(target, params);
+
+			// count testimony event
+			var testimony_level = wot.getlevel(wot.reputationlevels, testimony0).name;
+			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_TESTIMONY, String(testimony_level));
+
+			wot.core.update(false);
+		}
 	},
 
 	reset_settings: function () {

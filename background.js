@@ -871,6 +871,10 @@ $.extend(wot, { core: {
 				});
             });
 
+			if (wot.surveys && wot.surveys.bind_events) {
+				wot.surveys.bind_events();
+			}
+
 			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 
 			/* event handlers */

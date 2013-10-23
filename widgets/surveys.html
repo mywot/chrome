@@ -8,6 +8,7 @@
         <script src="/content/common.js"type="text/javascript"></script>
         <script src="/ga_configure.js" type="text/javascript"></script>
 
+        <link rel="stylesheet" href="/skin/ratingslider.css" type="text/css"/>
         <link rel="stylesheet" href="/skin/b/surveys/surveys.widgets.css" type="text/css"/>
     </head>
     <body>
@@ -20,18 +21,30 @@
                     <div class="close-button"></div>
                     <div class="surveys-question"></div>
                     <div class="surveys-answer">
-                        <div class="surveys-slider">
-                            <div class="surveys-slider-bounds">
-                                <div class="surveys-slider-left-bound"></div>
-                                <div class="surveys-slider-right-bound"></div>
-                            </div>
-                            <div class="ticks-container">
-                                <div class="zero-tick">
-                                    <div class="zero-tick-mark"></div>
+
+                        <!-- rating 0 / Trustworthiness -->
+                        <div id="wot-rating-0" class="wot-rating">
+                            <div id="wot-rating-0-data" class="wot-rating-data" component="0">
+                                <div id="wot-rating-0-testimony" class="wot-rating-testimony">
+                                    <div id="wot-rating-0-help" class="wot-rating-help">
+                                        <div id="wot-rating-0-helptext" class="wot-rating-helptext"></div>
+                                        <div id="wot-rating-0-helplink" class="wot-rating-helplink"></div>
+                                    </div>
+                                    <div class="wot-rating-bounds">
+                                        <div id="wot-rating-0-boundleft" class="rating-bound-left"></div>
+                                        <div id="wot-rating-0-boundright" class="rating-bound-right"></div>
+                                    </div>
+                                    <div id="wot-rating-0-stack" class="wot-rating-stack" component="0">
+                                        <div id="wot-rating-0-slider" class="wot-rating-slider"></div>
+                                        <div id="wot-rating-0-indicator" class="wot-rating-indicator"></div>
+                                    </div>
+                                    <div id="wot-rating-0-delete" class="rating-delete">
+                                        <div id="wot-rating-0-deleteicon" class="rating-delete-icon"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="slider"></div>
                         </div>
+
                         <div class="surveys-slider-label-wrapper">
                             <div class="surveys-slider-label"></div>
                         </div>
