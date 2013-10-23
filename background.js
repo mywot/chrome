@@ -875,6 +875,10 @@ $.extend(wot, { core: {
 				wot.surveys.bind_events();
 			}
 
+			if (wot.wt && wot.wt.bind_events) {
+				wot.wt.bind_events();
+			}
+
 			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 
 			/* event handlers */
