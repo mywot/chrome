@@ -56,12 +56,13 @@ $.extend(wot, { ratingwindow: {
 
     updatestate: function(target, data)
     {
-        var was_target_changed = false;
+        var _this = wot.ratingwindow,
+	        was_target_changed = false;
         /* initialize on target change */
-        if (this.state.target != target) {
-            this.finishstate(false);
-            this.state = { target: target, down: -1 };
-            this.comments.set_comment("");  // reset comment field
+        if (_this.state.target != target) {
+	        _this.finishstate(false);
+	        _this.state = { target: target, down: -1 };
+	        _this.comments.set_comment("");  // reset comment field
 	        was_target_changed = true;
         }
 
@@ -84,8 +85,8 @@ $.extend(wot, { ratingwindow: {
         }
 
         /* remember previous state */
-        this.state = $.extend(state, this.state);
-        this.cat_selector.init_voted(data.value.cats); // re-build user votes with new data
+	    _this.state = $.extend(state, _this.state);
+	    _this.cat_selector.init_voted(data.value.cats); // re-build user votes with new data
 	    return was_target_changed;
     },
 
