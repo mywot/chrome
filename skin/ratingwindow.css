@@ -387,7 +387,7 @@ body {
     float: left;
     font-size: 11px;
     color: #515151;
-    padding-left: 5px;
+    padding-left: 7px;
     line-height: 15px;
     width: 52px;
     white-space: nowrap;
@@ -398,7 +398,7 @@ body {
 
 /* For Up votes no need to show thumbs up */
 #voted-categories-content .votedcategory.hand-up .category-text {
-    width: 72px;
+    width: 58px;
 }
 
 #voted-categories-content .more-categories {
@@ -419,15 +419,35 @@ body {
 
 .category-hand.hand-up {
     background-color: #FCFCFC;
-    display: none;
+    width: 0;
+    /*display: none;*/
+}
+
+.category-hand.hand-up.c-negative {
+    background-color: #f77448;
+}
+
+.category-hand.hand-up.c-questionable {
+    background-color: #f6cd0e;
+}
+
+.category-hand.hand-up.c-positive {
+    background-color: #6dc14a;
+}
+
+.category-hand.hand-up.c-neutral {
+    background-color: #FCFCFC;
 }
 
 .category-hand.hand-down {
-    /*background-color: #A3A3A3;*/
     background-color: #7DA6DB;
 }
 
-.hand-up .hand-icon,
+.hand-up .hand-icon {
+    width: 12px;
+    height: 14px;
+}
+
 .hand-down .hand-icon {
     background-image: url(../skin/b/thumbs.png);
     background-repeat: no-repeat;

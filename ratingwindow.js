@@ -770,6 +770,9 @@ $.extend(wot, { ratingwindow: {
 
 	    $_cat_wrapper.addClass(vote == 1 ? "hand-up" : "hand-down");
         $_hand.addClass(vote == 1 ? "hand-up" : "hand-down");
+        if (vote == 1) {
+	        $_hand.addClass(wot.get_category_css(category.id));
+        }
         $_hand.attr("title", wot.i18n("ratingwindow", vote == 1 ? "vote_yes" : "vote_no"));
         $_cat_text.attr("title", cat_name);
         $_cat_text.text(cat_name);
