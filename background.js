@@ -854,6 +854,21 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:search:popup_shown", function(port, data) {
+				var cached = wot.cache.get(data.target),
+					action = wot.ga.actions.D_POPUP_TARGET_R0;
+
+				if (cached && cached.value && cached.value[0]) {
+					var _map = {
+							"r0": wot.ga.actions.D_POPUP_TARGET_R0,
+							"r1": wot.ga.actions.D_POPUP_TARGET_R1R2,
+							"r2": wot.ga.actions.D_POPUP_TARGET_R1R2,
+							"r3": wot.ga.actions.D_POPUP_TARGET_R3,
+							"r4": wot.ga.actions.D_POPUP_TARGET_R4,
+							"r5": wot.ga.actions.D_POPUP_TARGET_R5
+						},
+						action = _map[wot.getlevel(wot.reputationlevels, cached.value[0].r).name]; // redefine the action
+				}
+				wot.ga.fire_event(wot.ga.categories.INJ, action, data.norm_target);
 				wot.ga.fire_event(wot.ga.categories.INJ, wot.ga.actions.D_POPUP_SHOWN, data.label);
 			});
 

@@ -52,6 +52,11 @@ const WOT_POPUP_HTML =
 
 wot.popup = {
     cache:			{},
+	target:         null,   // DOM node?
+	norm_target_name: "",   // String: normalized target name
+	target_name:    "",     // String: target name
+	reported:       {},
+	report_limit:   500,
     version:		0,
     offsety:		-15,
     offsetx:		0,
@@ -168,6 +173,8 @@ wot.popup = {
             this.offsetheight = 0;
 
             var normalized_target = cached.value.normalized ? cached.value.normalized : cached.value.decodedtarget;
+	        wot.popup.target_name = cached.value.target;
+	        wot.popup.norm_target_name = normalized_target;
 
             var hostname_elem = document.getElementById("wot-hostname");
             if (hostname_elem && normalized_target) {
@@ -179,13 +186,10 @@ wot.popup = {
                 var cachedv = cached.value[item.name];
 
                 var r = (cachedv && cachedv.r != null) ? cachedv.r : -1;
-
-                var elem = document.getElementById("wot-r" + item.name +
-                    "-rep" + wot.popup.postfix);
+                var elem = document.getElementById("wot-r" + item.name + "-rep" + wot.popup.postfix);
 
                 if (elem) {
-                    elem.setAttribute("reputation",
-                        wot.getlevel(wot.reputationlevels, r).name);
+                    elem.setAttribute("reputation", wot.getlevel(wot.reputationlevels, r).name);
                 }
 
                 var c = (cachedv && cachedv.c != null) ? cachedv.c : -1;
@@ -331,7 +335,7 @@ wot.popup = {
                 layer.style.left = posx + "px";
                 layer.style.display = "block";
 
-                wot.post("search", "popup_shown", { label: wot.popup.rule_name });
+	            wot.popup.report_show(wot.popup.rule_name, wot.popup.target_name, wot.popup.norm_target_name);
 
                 wot.log("popup.delayedshow: x = " + posx + ", y = " +
                     posy + ", version = " + version);
@@ -431,7 +435,7 @@ wot.popup = {
                 if (layer.style.display != "none") {
                     layer.style.top  = pos.posy + "px";
                     layer.style.left = pos.posx + "px";
-                    wot.post("search", "popup_shown", { label: wot.popup.rule_name });
+	                wot.popup.report_show(wot.popup.rule_name, wot.popup.target_name, wot.popup.norm_target_name);
                 } else {
                     this.delayedshow(layer, pos.posy, pos.posx);
                 }
@@ -442,6 +446,26 @@ wot.popup = {
             console.error("popup.show: failed with " + e);
         }
     },
+
+	report_show: function (rule_name, target, norm_target_name) {
+
+		var _this = wot.popup,
+			id = norm_target_name + "@" + rule_name,
+			stat = _this.reported[id];
+
+		if (!stat || !stat.lasttime) {
+			stat = {
+				lasttime: 0
+			}
+		}
+
+		// Don't send signal to GA too often. Wait for "report_limit" milliseconds and ignore any triggers in between.
+		if (Date.now() - stat.lasttime >= wot.popup.report_limit) {
+			wot.post("search", "popup_shown", { label: rule_name, target: target, norm_target: norm_target_name });
+			stat.lasttime = Date.now();
+			_this.reported[id] = stat;
+		}
+	},
 
     delayedhide: function(layer)
     {

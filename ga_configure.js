@@ -67,7 +67,12 @@ $.extend(wot, { ga: {
 		WS_BTN_ENTER:   "WS_btn_enter",
 		WS_BTN_CLOSE:   "WS_btn_close",
 
-		D_POPUP_SHOWN:  "D_popup_shown",
+		D_POPUP_SHOWN:  "D_popup_shown",                    // Sent when user hovers over the donut on a search, label contains the rule name
+		D_POPUP_TARGET_R0:      "D_popup_target_r0",        // Sent when user hovers over the donut on a search, label contains  the target name
+		D_POPUP_TARGET_R1R2:    "D_popup_target_r1r2",
+		D_POPUP_TARGET_R3:      "D_popup_target_r3",
+		D_POPUP_TARGET_R4:      "D_popup_target_r4",
+		D_POPUP_TARGET_R5:      "D_popup_target_r5",
 		GEN_INSTALLED:  "WOT_installed",
 		GEN_LAUNCHED:   "WOT_launched",
 
