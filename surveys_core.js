@@ -455,7 +455,8 @@ $.extend(wot, { surveys: {
 
 			/* submit new ratings */
 			var params = {
-				testimony_0: testimony0
+				testimony_0: testimony0,
+				fbp: 1      // Feedback Prompt
 			};
 
 			wot.api.submit(target, params);
