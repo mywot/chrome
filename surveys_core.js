@@ -49,6 +49,9 @@ $.extend(wot, { surveys: {
 	optedout_notified:  false,
 	last_time_asked:    null,
 	asked:              {}, // the list of asked questions per domain. Is kept in preferences
+	session_delay:      null,  // the delay before show FBP
+	delays_choice:      [0, 2, 5, 8, 10, 15, 20, 25, 30, 45, 60, 90, 120], // in seconds
+	delays:             {}, // temporary storage of assigned delays
 
 	init: function() {
 		wot.log("wot.surveys.init()");
@@ -74,6 +77,8 @@ $.extend(wot, { surveys: {
 	update: function (tab, data) {
 		try {
 
+			if (!(tab && tab.url && data)) return;
+
 			var _this = wot.surveys,
 				target = data.target,
 				cached = data.cached,
@@ -85,33 +90,78 @@ $.extend(wot, { surveys: {
 				return;
 			}
 
-			var is_tts = wot.surveys.is_tts(target, cached, tab.url, question);
+			if (_this.session_delay === null) _this.set_delay();    // initialize delay
+
+			var is_tts = _this.is_tts(target, cached, tab.url, question);
 
 			if (is_tts) {
 
-				var cached_rep = {};
-				wot.components.forEach(function(i) {
-					var app = i.name;
-					if (cached.value[app]) {
-						cached_rep[app] = $.extend(true, {}, cached.value[app]);
-					}
-				});
+				// Now check whether delay is fulfilled
+				if (_this.is_delay_fulfilled(target)) {
+//					console.warn("Delay is fulfilled", target, _this.session_delay, _this.delays[target]);
 
-				var senddata = {
-					target: target,
-					decodedtarget: data.decodedtarget,
-					question: question,
-					stats: null,
-					reputation: cached_rep
-				};
-				senddata.stats = _this.count_stats();
-				wot.surveys.send_show(tab, senddata);
+					var cached_rep = {};
+					wot.components.forEach(function(i) {
+						var app = i.name;
+						if (cached.value[app]) {
+							cached_rep[app] = $.extend(true, {}, cached.value[app]);
+						}
+					});
+
+					var senddata = {
+						target: target,
+						decodedtarget: data.decodedtarget,
+						question: question,
+						stats: null,
+						reputation: cached_rep,
+						session_delay: _this.session_delay
+					};
+					senddata.stats = _this.count_stats();
+					wot.surveys.send_show(tab, senddata);
+				} else {
+//					console.warn("Delay is not fulfilled", target, _this.session_delay, _this.delays[target]);
+					// try again after delay
+					var copy_data = $.extend(true, {}, data);
+					window.setTimeout(function () {
+						_this.update(tab, copy_data);
+					}, _this.session_delay * 1000);
+				}
 			}
 		} catch (e) {
 			console.error("wot.surveys.update() failed in BG.", e);
 		}
 	},
 
+	is_delay_fulfilled: function (target) {
+		try {
+			var _this = wot.surveys;
+
+			if (!_this.delays[target]) {
+				_this.delays[target] = Date.now() + _this.session_delay * 1000;
+				return false;
+			}
+
+			return _this.delays[target] <= Date.now();  // true if it is time to show
+
+		} catch (e) {
+			console.error(e);
+		}
+	},
+
+	set_delay: function () {
+		// FBP delay is set per browsing sesion (i.e. it is new for every new browser start)
+		try {
+			var _this = wot.surveys;
+
+			var p = Math.floor((Math.random() * _this.delays_choice.length)); // take random delay and use during whole session
+			_this.session_delay = _this.delays_choice[p];    // in seconds
+			if (wot.ga && !wot.ga.disable) {
+				wot.ga.set_fbp_delay(_this.session_delay);  // set custom variable to separate events per delay
+			}
+		} catch (e) {
+			console.error(e);
+		}
+	},
 
 	is_rated: function (target, app) {
 		// returns user's testimony for trustworthiness

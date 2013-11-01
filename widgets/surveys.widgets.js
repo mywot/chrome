@@ -347,7 +347,7 @@ var surveys = {
 
 			// report after short delay to make sure GA code is inited
 			setTimeout(function () {
-                wot.ga.set_fbl_question(surveys.question.id);
+				wot.ga.set_fbp_delay(data.session_delay);
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_shown, _this.target);
 			}, 500);
 

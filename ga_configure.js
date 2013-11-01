@@ -144,11 +144,11 @@ $.extend(wot, { ga: {
 		// Finalize setting up GA environment after wot.core is initialized fully
 
 		/* CustomVars slots:
-		 *  1. version
-		 *  2. partner = "undefined" | mailru
-		 *  3. registered = yes | no    ; since 24.05.2013
-		 *  4. experiments
-		 *  5. NONE //// FBL_QID (page level). Was accessible = acc | normal until 28.03.2013
+		 *  1. version (session level)
+		 *  2. partner = "undefined" | mailru (session level)
+		 *  3. registered = yes | no    ; since 24.05.2013 (session level)
+		 *  4. experiments (visitor level)
+		 *  5. FBP Delay for current session (session level). Was accessible = acc | normal until 28.03.2013
    	     * */
 
 		// let's measure how many "accessible" users do we have on Chrome
@@ -173,8 +173,8 @@ $.extend(wot, { ga: {
 		}
 	},
 
-    set_fbl_question: function (question_id) {
-//        _gaq.push(['_setCustomVar', 5, 'FBL_QID', String(question_id), 3]); // scope = 3 (page level)
+    set_fbp_delay: function (delay) {
+        _gaq.push(['_setCustomVar', 5, 'FBP_DELAY', String(delay), 2]); // scope = 2 (session level)
     }
 
 }});
