@@ -34,7 +34,6 @@ var wot = {
 		is_mailru: false,
 		is_yandex: false,
 		is_rambler: false,
-
 		is_accessible: false
 	},
 
@@ -49,6 +48,10 @@ var wot = {
     grouping: [],
 
     categories: {}, // is loaded from preferences during launch and updated from server regularly
+
+	cat_combinations: {},   // is loaded at the same time as categories
+
+	cat_combinations_prio: [],
 
     category_threshold: 3,  // confidence level to show a category as identified
 
@@ -772,6 +775,33 @@ var wot = {
                         }
                     }
                 }
+
+                // update categories' combinations
+                if (update_state.categories[0].combinations) {
+                    var lst = update_state.categories[0].combinations;
+	                for (var c = 0; c < lst.length; c++) {
+		                var cat1 = lst[c].cat1,
+			                cat2 = lst[c].cat2,
+			                state = String(lst[c].s).toLowerCase();
+
+		                if (!wot.cat_combinations[cat1]) {
+			                wot.cat_combinations[cat1] = {};
+		                }
+
+		                wot.cat_combinations[cat1][cat2] = state;
+	                }
+                }
+
+	            // update cat-combinations warnings priority
+	            if (update_state.categories[0].combinations_priority) {
+		            wot.cat_combinations_prio = [];
+		            lst = update_state.categories[0].combinations_priority;
+		            for (var cp = 0; cp < lst.length; cp++) {
+			            wot.cat_combinations_prio.push(String(lst[cp].priority).toLowerCase());
+		            }
+	            }
+
+
             } else {
                 console.warn("No categories are known yet. Not good situation.");
             }
