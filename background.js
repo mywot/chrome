@@ -777,18 +777,19 @@ $.extend(wot, { core: {
 		var min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
 		wot.prefs.set("min_confidence_level", min_level);
 
-		try {
-			// Use timeout before reporting launch event to GA, to give GA a chance to be inited
-			window.setTimeout(function () {
-				// report how long in days this add-on is staying installed
-				var time_sincefirstrun = wot.time_sincefirstrun();
-				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED,
-					String(Math.floor(time_sincefirstrun / wot.DT.DAY)));
-
-			}, 5000);
-		} catch (e) {
-			// do nothing here
-		}
+		// This GA reporting is disabled due to exceeding limits (10M/day)
+//		try {
+//			// Use timeout before reporting launch event to GA, to give GA a chance to be inited
+//			window.setTimeout(function () {
+//				// report how long in days this add-on is staying installed
+//				var time_sincefirstrun = wot.time_sincefirstrun();
+//				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED,
+//					String(Math.floor(time_sincefirstrun / wot.DT.DAY)));
+//
+//			}, 5000);
+//		} catch (e) {
+//			// do nothing here
+//		}
 	},
 
 	onload: function()
