@@ -34,6 +34,7 @@ var wot = {
 		is_mailru: false,
 		is_yandex: false,
 		is_rambler: false,
+
 		is_accessible: false
 	},
 
@@ -424,7 +425,7 @@ var wot = {
 		}
 
 		var result = chrome.i18n.getMessage(msg);
-	   
+
 		if (result == null) {
 			result = this.debug ? "!?" : "";
 		}

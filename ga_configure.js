@@ -24,6 +24,8 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', wot.ga_id]);
+_gaq.push(["_setSampleRate", "90"]);    // to decrease amount of signals sent to GA
+
 // provide version number to GA
 _gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2 (session level)
 _gaq.push(['_setReferrerOverride', '']);    // clear the referrer in GA cookie. Issue #75 on GH.
@@ -74,7 +76,7 @@ $.extend(wot, { ga: {
 		D_POPUP_TARGET_R4:      "D_popup_target_r4",
 		D_POPUP_TARGET_R5:      "D_popup_target_r5",
 		GEN_INSTALLED:  "WOT_installed",
-		GEN_LAUNCHED:   "WOT_launched",
+//		GEN_LAUNCHED:   "WOT_launched",     // removed due to exceeding GA limits
 
 		WT_INTRO_0_SHOWN: "WT_Intro0_shown",
 		WT_INTRO_0_LEARN: "WT_Intro0_learnmore",
