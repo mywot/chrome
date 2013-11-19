@@ -74,6 +74,34 @@ $.extend(wot, { wt: {
 		return wot.prefs.set("wt_" + name, value);
 	},
 
+	bind_events: function () {
+
+		// Warning Tip
+		wot.bind("message:wtb:wtip_shown", wot.wt.warning.on_show);
+		wot.bind("message:wtb:wtip_ok", wot.wt.warning.on_ok);
+		wot.bind("message:wtb:wtip_info", wot.wt.warning.on_learnmore);
+
+		// Intro Tip
+		wot.bind("message:wtb:ready", function (port, data) {
+
+			window.setTimeout(function (port){
+				// react only if all conditions are stil met
+				if (wot.wt.intro.tts_intro0()) {
+					wot.wt.intro.show_intro0(port.port.sender.tab);
+				}
+			}, wot.wt.intro.intro_0_showdelay, port);
+		});
+
+		wot.bind("message:wtb:tip_shown", wot.wt.intro.on_show);
+		wot.bind("message:wtb:clicked", wot.wt.intro.on_click);
+
+		// Donut Tip
+		wot.bind("message:wtb:dtip_shown", wot.wt.donuts.on_show);
+		wot.bind("message:wtb:dtip_ok", wot.wt.donuts.on_ok);
+		wot.bind("message:wtb:dtip_info", wot.wt.donuts.on_learnmore);
+
+	},
+
 	init: function () {
 		wot.log("wot.wt.init()");
 
@@ -82,9 +110,6 @@ $.extend(wot, { wt: {
             // whether super-settings is off, check normal conditions
             if (!wot.prefs.get("super_wtips")) {
                 // Check additional conditions
-//                var locale = wot.i18n("locale");
-//                if (!(locale === "ru" || locale === "en")) return;
-
                 // workaround for http://code.google.com/p/chromium/issues/detail?id=53628
                 // test if locale strings are available (due to bug in Chrome, it is possible to get "undefined")
                 if (!wot.is_defined(["intro_0_msg", "intro_0_btn", "donut_msg", "donut_btn",
@@ -94,21 +119,6 @@ $.extend(wot, { wt: {
             }
 
 			wot.wt.load_settings();
-
-			// Initialize Intro Tip
-			if (wot.wt.intro.tts_intro0()) {
-				wot.wt.intro.init_intro0();
-			}
-
-			// Initialize Tip for Warning screen
-			if (wot.wt.warning.tts()) {
-				wot.wt.warning.init();
-			}
-
-			// Init Donuts Tip
-			if (wot.wt.donuts.tts()) {
-				wot.wt.donuts.init();
-			}
 		}
 	},
 
@@ -154,16 +164,6 @@ $.extend(wot, { wt: {
 
 		init_intro0: function () {
 			wot.log("wot.wt.init_intro0()");
-
-			wot.bind("message:wtb:ready", function (port, data) {
-
-				window.setTimeout(function (port){
-					// react only if all conditions are stil met
-					if (wot.wt.intro.tts_intro0()) {
-						wot.wt.intro.show_intro0(port.port.sender.tab);
-					}
-				}, wot.wt.intro.intro_0_showdelay, port);
-			});
 		},
 
 		on_show: function (port, data) {
@@ -204,9 +204,6 @@ $.extend(wot, { wt: {
 				}
 				wot.wt.intro_shown_sent = new Date();
 
-				wot.bind("message:wtb:tip_shown", wot.wt.intro.on_show);
-				wot.bind("message:wtb:clicked", wot.wt.intro.on_click);
-
 				var port = chrome.tabs.connect(tab.id, {name: "wt"});
 				port.postMessage({ message: "wt:show_intro_0" });
 			} catch (e) {
@@ -216,12 +213,6 @@ $.extend(wot, { wt: {
 	},
 
 	warning: {
-		init: function () {
-			wot.bind("message:wtb:wtip_shown", wot.wt.warning.on_show);
-			wot.bind("message:wtb:wtip_ok", wot.wt.warning.on_ok);
-			wot.bind("message:wtb:wtip_info", wot.wt.warning.on_learnmore);
-		},
-
 		tts: function () {
 			/* Conditions to show warning welcome tip:
 			 *
@@ -304,12 +295,6 @@ $.extend(wot, { wt: {
 	donuts: {
 
 		was_triggered: false,
-
-		init: function () {
-			wot.bind("message:wtb:dtip_shown", wot.wt.donuts.on_show);
-			wot.bind("message:wtb:dtip_ok", wot.wt.donuts.on_ok);
-			wot.bind("message:wtb:dtip_info", wot.wt.donuts.on_learnmore);
-		},
 
 		on_show: function (port, data) {
 			if (data.times === 0) {

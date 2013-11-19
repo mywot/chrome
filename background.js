@@ -750,7 +750,8 @@ $.extend(wot, { core: {
 //				wot.core.set_badge(wot.badge_types.notice); // set icon's badge to "notice"
 			} else {
 				/* use the welcome page to set the cookies on the first run */
-				chrome.tabs.create({ url: wot.urls.welcome });
+				var open_in_bg = !wot.env.is_yandex;    // for Yandex browser open the WP in background
+				chrome.tabs.create({ url: wot.urls.welcome, active: open_in_bg });
 			}
 			wot.prefs.set("firstrun:welcome", true);
 
@@ -776,18 +777,19 @@ $.extend(wot, { core: {
 		var min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
 		wot.prefs.set("min_confidence_level", min_level);
 
-		try {
-			// Use timeout before reporting launch event to GA, to give GA a chance to be inited
-			window.setTimeout(function () {
-				// report how long in days this add-on is staying installed
-				var time_sincefirstrun = wot.time_sincefirstrun();
-				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED,
-					String(Math.floor(time_sincefirstrun / wot.DT.DAY)));
-
-			}, 5000);
-		} catch (e) {
-			// do nothing here
-		}
+		// This GA reporting is disabled due to exceeding limits (10M/day)
+//		try {
+//			// Use timeout before reporting launch event to GA, to give GA a chance to be inited
+//			window.setTimeout(function () {
+//				// report how long in days this add-on is staying installed
+//				var time_sincefirstrun = wot.time_sincefirstrun();
+//				wot.ga.fire_event(wot.ga.categories.GEN, wot.ga.actions.GEN_LAUNCHED,
+//					String(Math.floor(time_sincefirstrun / wot.DT.DAY)));
+//
+//			}, 5000);
+//		} catch (e) {
+//			// do nothing here
+//		}
 	},
 
 	onload: function()
@@ -853,6 +855,21 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:search:popup_shown", function(port, data) {
+				var cached = wot.cache.get(data.target),
+					action = wot.ga.actions.D_POPUP_TARGET_R0;
+
+				if (cached && cached.value && cached.value[0]) {
+					var _map = {
+							"r0": wot.ga.actions.D_POPUP_TARGET_R0,
+							"r1": wot.ga.actions.D_POPUP_TARGET_R1R2,
+							"r2": wot.ga.actions.D_POPUP_TARGET_R1R2,
+							"r3": wot.ga.actions.D_POPUP_TARGET_R3,
+							"r4": wot.ga.actions.D_POPUP_TARGET_R4,
+							"r5": wot.ga.actions.D_POPUP_TARGET_R5
+						},
+						action = _map[wot.getlevel(wot.reputationlevels, cached.value[0].r).name]; // redefine the action
+				}
+				wot.ga.fire_event(wot.ga.categories.INJ, action, data.norm_target);
 				wot.ga.fire_event(wot.ga.categories.INJ, wot.ga.actions.D_POPUP_SHOWN, data.label);
 			});
 
@@ -869,6 +886,14 @@ $.extend(wot, { core: {
 					cookies: wot.api.processcookies(data.cookies) || []
 				});
             });
+
+			if (wot.surveys && wot.surveys.bind_events) {
+				wot.surveys.bind_events();
+			}
+
+			if (wot.wt && wot.wt.bind_events) {
+				wot.wt.bind_events();
+			}
 
 			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
 

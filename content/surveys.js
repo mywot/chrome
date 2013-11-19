@@ -25,8 +25,8 @@ wot.surveys = {
 	wrapper: null,
 	pheight: 400,
 	pwidth: 392,
-	px: 10,
-	py: 10,
+	px: 0,
+	py: 50,
 
 	pre_init: function() {
 		if (!wot.enable_surveys || window !== window.top) return;   // don't run in frames. Ever.
@@ -64,22 +64,16 @@ wot.surveys = {
 
 			var wr = wot.surveys.wrapper;
 			var style = wr.getAttribute("style");
-			wr.setAttribute("style", style + "visibility: hidden;");
+			wr.setAttribute("style", style + "visibility: hidden;");    // hide first
 
-			// wait a bit to allow GA script to send event to the servers
+			// wait a bit to allow GA script to send event to the servers and then remove the element from DOM
 			setTimeout(function(){
-				if(wot.surveys.wrapper) {
+				if(wot.surveys.wrapper && wot.surveys.wrapper.parentNode) {
 					wot.surveys.wrapper.parentNode.removeChild(wot.surveys.wrapper);
 				}
 			}, 2000);
 
-
 		}
-	},
-
-	build: function (replaces) {
-
-		return wot.utils.processhtml(html, replaces);
 	},
 
 	inject_iframe: function (data) {
@@ -105,10 +99,12 @@ wot.surveys = {
 
 		wrapper.setAttribute("scrolling", "no");
 
+		var px = (window.innerWidth - _this.pwidth) / 2 + _this.px;
+
 		wrapper.setAttribute("style",
 			"position: fixed; " +
 			"top: " + _this.py + "px; " +
-			"left: "+ _this.px +"px;" +
+			"left: "+ px +"px;" +
 			"width: "+ _this.pwidth +"px; " +
 			"height: "+ _this.pheight +"px; " +
 			"z-index: 2147483647; " +
@@ -119,11 +115,7 @@ wot.surveys = {
 		wrapper.setAttribute("name", encoded_data);  // transfer question's data via "name" property of iframe
 
 		wot.utils.attach_element(wrapper); // attach iframe wrapper to DOM
-	},
-
-    on_contentload: function(e) {
-//        console.log("frame content loaded", e);
-    }
+	}
 };
 
 wot.surveys.pre_init();

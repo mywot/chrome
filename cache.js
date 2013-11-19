@@ -170,9 +170,6 @@ $.extend(wot, { cache: {
 	cacheratingstate: function(name, state, votes_changed)
     // Detects changes in user's ratings and stores them in local cache. Returns the flag whether the testimonies have been changed.
 	{
-        var bg = chrome.extension.getBackgroundPage();
-//        bg.console.log("cacheratingstate(name, state, votes_changed)", arguments);
-
 		try {
 			state = state || {};
 
@@ -313,29 +310,20 @@ $.extend(wot, { cache: {
 				// parse survey's question whether it exists
 				$("question", this).each(function() {
 					// "this" here contains <question> tag's content
-					var question_id = parseInt($("questionId", this).text(), 10);
-					var question_text = $("questionText", this).text().trim();
-                    var dismiss_text = $("dismiss", this).text();
-					var choices = [];
+					var question_type = $(this).attr("type");
 
-					$("choiceText", this).each(function() {
-						// "this" here contains <choiceText> tag's content
-						var choice_value = parseInt($(this).attr("value"), 10);
-						var choice_text = $(this).text().trim();
-
-						choices.push({ value: choice_value, text: choice_text });
-					});
-
-					if (question_id !== undefined && question_text && choices.length > 0) {
+					if (question_type !== undefined) {
 						obj.question = {
-							id: question_id,
-							text: question_text,
-							choices: choices,
-                            dismiss_text: dismiss_text
+							type: question_type
 						};
 					}
 					return false;   // process only first element whether there are several
 				});
+
+				// FIXME: remove this debug code
+//				obj.question = {
+//					type: "submit"
+//				};
 
 				wot.cache.set(obj.target, status, obj);
 				++processed;

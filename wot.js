@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20131010,
+	version: 20131118,
 	platform: "opera",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -49,6 +49,10 @@ var wot = {
     grouping: [],
 
     categories: {}, // is loaded from preferences during launch and updated from server regularly
+
+	cat_combinations: {},   // is loaded at the same time as categories
+
+	cat_combinations_prio: [],
 
     category_threshold: 3,  // confidence level to show a category as identified
 
@@ -327,6 +331,27 @@ var wot = {
 
 	connections: {},
 
+	get_onConnect: function () {
+		// this is the compatibility function to support messaging in Chrome 18-25 and Chrome 26+
+		// http://stackoverflow.com/questions/15718066/chrome-runtime-sendmessage-not-working-as-expected/15718294#15718294
+		return chrome.runtime && chrome.runtime.sendMessage ?
+			chrome.runtime.onConnect : chrome.extension.onConnect;
+	},
+
+	get_connect: function () {
+		// this is the compatibility function to support messaging in Chrome 18-25 and Chrome 26+
+		// http://stackoverflow.com/questions/15718066/chrome-runtime-sendmessage-not-working-as-expected/15718294#15718294
+		return chrome.runtime && chrome.runtime.sendMessage ?
+			chrome.runtime.connect : chrome.extension.connect;
+	},
+
+	get_runtime: function () {
+		// this is the compatibility function to support messaging in Chrome 18-25 and Chrome 26+
+		// http://stackoverflow.com/questions/15718066/chrome-runtime-sendmessage-not-working-as-expected/15718294#15718294
+		return chrome.runtime && chrome.runtime.sendMessage ?
+			chrome.runtime : chrome.extension;
+	},
+
 	triggeronmessage: function(port)
 	{
 		port.onMessage.addListener(function(data) {
@@ -345,7 +370,7 @@ var wot = {
 			names = [ names ];
 		}
 
-		chrome.extension.onConnect.addListener(function(port) {
+		wot.get_onConnect().addListener(function(port) {
 			if (names.indexOf(port.name) >= 0) {
 				wot.triggeronmessage(port);
 				wot.connections[port.name] = port;
@@ -361,7 +386,7 @@ var wot = {
 			return port;
 		}
 
-		port = chrome.extension.connect({ name: name });
+		port = wot.get_connect().call(wot.get_runtime(), { name: name });
 
 		if (port) {
 			this.triggeronmessage(port);
@@ -380,11 +405,9 @@ var wot = {
 			data.message = name + ":" + message;
 			this.log("post: posting " + data.message + "\n");
 			port.postMessage(data);
+		} else {
+			console.warn("Can't find port to send message", name, message, data);
 		}
-	},
-
-	is_allowed_sender: function(sender_id) {
-		return wot.allowed_senders[sender_id] || wot.debug; // allow known senders or any in
 	},
 
 	/* i18n */
@@ -402,7 +425,7 @@ var wot = {
 		}
 
 		var result = chrome.i18n.getMessage(msg);
-	   
+
 		if (result == null) {
 			result = this.debug ? "!?" : "";
 		}
@@ -631,6 +654,8 @@ var wot = {
 		if(wot.env.is_mailru) {
 			// set param to label requests
 			wot.partner = "mailru";
+		} else if (wot.env.is_yandex) {
+			wot.partner = "yandex";
 		}
 
 		if(!readonly) wot.prefs.set("partner", wot.partner);
@@ -751,6 +776,42 @@ var wot = {
                         }
                     }
                 }
+
+                // update categories' combinations
+                if (update_state.categories[0].conflict && update_state.categories[0].conflict.length > 0) {
+				wot.cat_combinations_prio = ["6a"]; // 6A case is the first one by default
+				var lst = update_state.categories[0].conflict;
+	                for (var c = 0; c < lst.length; c++) {
+				    var conflict = lst[c],
+				        rule = conflict.rule;
+
+				    if (conflict.voted && conflict.voted.length > 0) {
+				        wot.cat_combinations_prio.push(rule.toLowerCase());
+
+				        for (var j = 0; j < conflict.voted.length; j++) {
+				            var voted = conflict.voted[j];
+				            var group = voted && voted.group ? voted.group : "",
+				                ccats = group.split(",");   // categories coflict group may have more than two categories, but we use only first two for now
+
+				            if (ccats && ccats.length > 1) {
+
+				                if (!wot.cat_combinations[ccats[0]]) {
+					                wot.cat_combinations[ccats[0]] = {};
+	                }
+
+				                if (!wot.cat_combinations[ccats[1]]) {
+					                wot.cat_combinations[ccats[1]] = {};
+                }
+
+				                // remember first two categories conflict (+transpositioned state)
+				                wot.cat_combinations[ccats[0]][ccats[1]] = rule;
+				                wot.cat_combinations[ccats[1]][ccats[0]] = rule;
+				            }
+				        }
+				    }
+		            }
+	            }
+
             } else {
                 console.warn("No categories are known yet. Not good situation.");
             }

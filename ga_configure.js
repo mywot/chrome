@@ -24,6 +24,8 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', wot.ga_id]);
+_gaq.push(["_setSampleRate", "90"]);    // to decrease amount of signals sent to GA
+
 // provide version number to GA
 _gaq.push(['_setCustomVar', 1, 'Version', String(wot.version), 2]); // scope = 2 (session level)
 _gaq.push(['_setReferrerOverride', '']);    // clear the referrer in GA cookie. Issue #75 on GH.
@@ -67,9 +69,14 @@ $.extend(wot, { ga: {
 		WS_BTN_ENTER:   "WS_btn_enter",
 		WS_BTN_CLOSE:   "WS_btn_close",
 
-		D_POPUP_SHOWN:  "D_popup_shown",
+		D_POPUP_SHOWN:  "D_popup_shown",                    // Sent when user hovers over the donut on a search, label contains the rule name
+		D_POPUP_TARGET_R0:      "D_popup_target_r0",        // Sent when user hovers over the donut on a search, label contains  the target name
+		D_POPUP_TARGET_R1R2:    "D_popup_target_r1r2",
+		D_POPUP_TARGET_R3:      "D_popup_target_r3",
+		D_POPUP_TARGET_R4:      "D_popup_target_r4",
+		D_POPUP_TARGET_R5:      "D_popup_target_r5",
 		GEN_INSTALLED:  "WOT_installed",
-		GEN_LAUNCHED:   "WOT_launched",
+//		GEN_LAUNCHED:   "WOT_launched",     // removed due to exceeding GA limits
 
 		WT_INTRO_0_SHOWN: "WT_Intro0_shown",
 		WT_INTRO_0_LEARN: "WT_Intro0_learnmore",
@@ -87,6 +94,7 @@ $.extend(wot, { ga: {
 
 		FBL_shown:              "FBL_shown",
 		FBL_submit:             "FBL_submit",
+		FBL_TESTIMONY:          "FBL_testimony",
 		FBL_closed:             "FBL_closed",
 		FBL_dismiss:            "FBL_dismiss",
 		FBL_optout_shown:       "FBL_optout_shown",
@@ -138,11 +146,11 @@ $.extend(wot, { ga: {
 		// Finalize setting up GA environment after wot.core is initialized fully
 
 		/* CustomVars slots:
-		 *  1. version
-		 *  2. partner = "undefined" | mailru
-		 *  3. registered = yes | no    ; since 24.05.2013
-		 *  4. experiments
-		 *  5. FBL_QID (page level). Was accessible = acc | normal until 28.03.2013
+		 *  1. version (session level)
+		 *  2. partner = "undefined" | mailru (session level)
+		 *  3. registered = yes | no    ; since 24.05.2013 (session level)
+		 *  4. experiments (visitor level)
+		 *  5. FBP Delay for current session (session level). Was accessible = acc | normal until 28.03.2013
    	     * */
 
 		// let's measure how many "accessible" users do we have on Chrome
@@ -167,8 +175,8 @@ $.extend(wot, { ga: {
 		}
 	},
 
-    set_fbl_question: function (question_id) {
-        _gaq.push(['_setCustomVar', 5, 'FBL_QID', String(question_id), 3]); // scope = 3 (page level)
+    set_fbp_delay: function (delay) {
+        _gaq.push(['_setCustomVar', 5, 'FBP_DELAY', String(delay), 2]); // scope = 2 (session level)
     }
 
 }});

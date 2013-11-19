@@ -423,5 +423,26 @@
     "auto_update_message": {
         "message": "A new version of WOT is available. Would you like to update your add-on?",
         "description": "used in Firefox add-on only"
-    }
+    },
+	"ratingwindow_check_1a": {
+		"message": "Other users may not understand why you selected 'good site' if you also had severe negative things to say."
+	},
+	"ratingwindow_check_1b": {
+		"message": "Other users may not think that a site designed for children should have such negative characteristics."
+	},
+	"ratingwindow_check_2a": {
+		"message": "Other users may not consider your review credible, because you selected several unrelated negative things."
+	},
+	"ratingwindow_check_3a": {
+		"message": "Other users may question if all negative statements on content and site functionality are true."
+	},
+	"ratingwindow_check_4a": {
+		"message": "Other users may not consider your review credible, because you selected several unrelated things."
+	},
+	"ratingwindow_check_5a": {
+		"message": "'Other' category should be used only if no other options applies, and then explained in written comments."
+	},
+	"ratingwindow_check_6a": {
+		"message": "Too many categories may result in people questioning the credibility of your review."
+	}
 }

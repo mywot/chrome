@@ -20,21 +20,35 @@
 
 var surveys = {
 
-	question: {},
 	target: "",
 	decodedtarget: "",
+	question: {},
+	state: {},
+	current: {},
+	reputation: {}, // reputation data including user testimonies
+	sliderwidth: 154,
+	slider_shift: -4,       // ajustment
 	url: "",
 	answer_value: null,
 	current_idx: 0,
 	submit_enabled: false,
 
+	update_submit_button: function () {
+
+		var _this = surveys,
+			$submit = $(".surveys-submit");
+
+		_this.submit_enabled = _this.get_opinion(0) >= 0;
+		$submit.toggleClass("enabled", _this.submit_enabled);
+	},
+
 	report: function (msg, data) {
 		var _this = surveys;
 		if (typeof(data) === "object") {
-			data.question_id = _this.question.id;
-			data.url = _this.url;
+			data.question_type = _this.question.type;
 			data.target = _this.target;
 		}
+
 		wot.post("surveyswidget", msg, data);
 	},
 
@@ -54,6 +68,15 @@ var surveys = {
 		return res;
 	},
 
+	get_opinion: function (app) {
+		// returns user's testimony for trustworthiness
+		app = app || 0;
+
+		return surveys.state &&
+			surveys.state[app] &&
+			surveys.state[app].t >= 0 ? surveys.state[app].t : -1;
+	},
+
 	stats: {
 		cache: {},
 
@@ -68,190 +91,86 @@ var surveys = {
 		}
 	},
 
-	slider: {
+	getcached: function()
+	{
+		var _rw = surveys;
+		if (_rw.current.target && _rw.current.cached &&
+			_rw.current.cached.status == wot.cachestatus.ok) {
+			return _rw.current.cached;
+		}
+		return { value: {} };
+	},
 
-		options_map: {},
-		options: [],
-		max_tick_width: 45,
-		$slider: null,
+	getrating: function(e, stack)
+	{
+		var _this = surveys;
+			noopinion_threshold = 102;
+		try {
+			if (_this.reputation) {
+				var slider = $(".wot-rating-slider", stack);
 
-		prepare_values: function (options) {
-			// makes an array of values for the slider and map them to original options
+				/* rating from slider position */
+				var position = 100 * (_this.slider_shift + e.clientX - slider.offset().left) /
+					_this.sliderwidth;
 
-			var _this = surveys.slider,
-				cnt = 1;
+				if (e.type == "mouseleave") position = noopinion_threshold + 1;
 
-			_this.options = [0]; // add default value
-			_this.options_map[0] = {value: null, text: " "};
-
-			for(var i in options) {
-				_this.options.push(cnt);
-				_this.options_map[cnt] = options[i];
-				cnt++;
-			}
-
-			return _this.options;
-		},
-
-		get_label_by_index: function(index) {
-			var _this = surveys.slider,
-				map = _this.options_map;
-
-			return (map[index] && map[index]['text'] !== undefined) ? map[index]['text'] : "";
-		},
-
-		get_value_by_index: function(index) {
-			var _this = surveys.slider,
-				map = _this.options_map;
-
-			return (map[index] && map[index]['value'] !== undefined) ? map[index]['value'] : "";
-		},
-
-
-		set_value_label: function (label, is_permanent) {
-			var $label = $(".surveys-slider-label");
-			$label.toggleClass("selected", is_permanent);
-			$label.toggleClass("isset", (label.trim().length > 0)); // don't show decoration if no text is in the label
-			$label.text(label);
-		},
-
-		update_slider_state: function (idx) {
-			var _this = surveys.slider,
-				label = _this.get_label_by_index(idx),
-				value = _this.get_value_by_index(idx);
-
-			surveys.current_idx = idx;
-			surveys.answer_value = value;
-			_this.set_value_label(label, true);
-
-			// modify appearance of the handle in "zero" position
-			$(".zero-tick").toggleClass("selected", (idx == 0));
-
-			$(".slider-tick").removeClass("selected");
-
-			if (idx > 0) {
-				$(".slider-tick:nth-child(" + (idx+1) + ")").addClass("selected");
-			}
-
-			surveys.submit_enabled = !!idx;
-			surveys.ui.update_submit_status();
-		},
-
-		on_slider_change: function (event, ui) {
-			var _this = surveys.slider;
-			_this.update_slider_state(ui.value);
-		},
-
-		on_slide: function(event, ui) {
-			var _this = surveys.slider;
-			_this.update_slider_state(ui.value);
-		},
-
-		on_slide_stop: function(event, ui) {
-			var _this = surveys;
-			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_slidered, _this.target);
-		},
-
-		update_hover_status: function(idx, is_hovered) {
-			var _this = surveys.slider,
-				value_to_show = is_hovered ? idx : surveys.current_idx,
-				label = _this.get_label_by_index(value_to_show);
-
-			_this.set_value_label(label, !is_hovered);
-
-			if (idx > 0) {
-				$(".slider-tick:nth-child(" + (idx+1) + ")").toggleClass("hovered", is_hovered);
-			} else {
-				$(".zero-tick").toggleClass("hovered", is_hovered);
-			}
-		},
-
-		get_idx: function (element) {
-			return $(element).index();
-		},
-
-		on_enter: function (event) {
-			var _this = surveys.slider;
-			_this.update_hover_status(_this.get_idx(event.currentTarget), true);
-		},
-
-		on_leave: function (event) {
-			var _this = surveys.slider;
-			_this.update_hover_status(_this.get_idx(event.currentTarget), false);
-		},
-
-		on_click: function (event) {
-			var _this = surveys.slider;
-			_this.$slider.slider("value", _this.get_idx(event.currentTarget));
-			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_directclick, surveys.target);
-		},
-
-		build_slider: function() {
-			var _this =             surveys.slider,
-				$slider =           _this.$slider,
-				items_count =       _this.options.length,
-				tick_ws,
-				$tick_container =   $(".ticks-container");
-
-			var tick_width = Math.round(($slider.width() - items_count) / (items_count - 1));   // take into account border width also
-
-			tick_ws = String(tick_width) + "px";
-
-			// create ticks only if there are more than 3 options. 2 options are represented by edge-values of the slider
-			// and one additional option is a default value ("undefined")
-			if (items_count > 1) {
-				for(var i=0; i < items_count - 1; i++) {
-					$tick_container.append("<div class='slider-tick'/>");
+				/* sanitize the rating value */
+				if (position < 0) {
+					position = 0;
+				} else if (position >= 100 && position <= noopinion_threshold) {
+					position = 100;
+				} else if (position > noopinion_threshold) {
+					position = -1;
+				} else {
+					position = position.toFixed();
 				}
+
+				return position;
 			}
+		} catch (e) {
+			console.error("ratingwindow.getrating: failed with ", e);
+		}
 
-			var $ticks = $(".slider-tick"),
-				$zerotick = $(".zero-tick");
+		return -1;
+	},
 
-			// add ticks to the slider's scale, and make other facelift to imitate a slider with "undefined default value"
-			$ticks.css("width", tick_ws);
-			var parent_offset = $(".surveys-slider").offset();
-			var ticks_offset = $slider.offset().left - parent_offset.left,
-				tick_cont_left = ticks_offset - tick_width/2;
-			$tick_container.css("left", tick_cont_left + "px");
-			$zerotick.css("width", tick_width);
+	updatestate: function(target, data)
+	{
+		var state = {
+			target: target
+		};
 
-			_this.update_slider_state(0);
+		/* add existing ratings to state */
+		if (data) {
+			wot.components.forEach(function(item) {
 
-			// put bounds' labels
-			$(".surveys-slider-bounds").css({
-				left: tick_cont_left + tick_width + "px",
-				width: $tick_container.width() - tick_width
-			});
-			$(".surveys-slider-left-bound").text(_this.get_label_by_index(1));//.css("left", tick_ws);
-			$(".surveys-slider-right-bound").text(_this.get_label_by_index(items_count - 1));
+				var datav = data[item.name];
 
-			// handle hovering over ticks
-			$ticks.mouseenter(_this.on_enter).mouseleave(_this.on_leave);
-			$zerotick.mouseenter(_this.on_enter).mouseleave(_this.on_leave);
-
-			// handle clicks to ticks
-			$ticks.click(_this.on_click);
-			$zerotick.click(_this.on_click);
-
-		},
-
-		init_slider: function () {
-			var _this = surveys.slider,
-				items_count = _this.options.length;
-
-			_this.$slider = $("#slider");   // bind Slider control to div
-			_this.$slider.slider({
-				min: 0,
-				max: items_count - 1,
-				step: 1,
-				animate: "fast",
-				change: _this.on_slider_change,
-				slide: _this.on_slide,
-				stop: _this.on_slide_stop,
-				create: surveys.slider.build_slider // build the rest after slider is created
+				if (datav && datav.t >= 0) {
+					state[item.name] = { t: datav.t };
+				} else {
+					state[item.name] = { t: -1 };
+				}
 			});
 		}
+
+		/* remember previous state */
+		this.state = $.extend(state, this.state);
+	},
+
+	setstate: function (component, t) {
+		// This only changes the user's testimonies' state
+		var new_value = { name: component };
+		new_value.t = t >= 0 ? parseInt(t) : -1;
+		this.state[component] = new_value;
+	},
+
+	delete_testimony: function(component) {
+		var _rw = surveys;
+		_rw.setstate(component, -1);
+		_rw.state.down = -1;
+		_rw.rate_control.updateratings({ name: component, t: -1 });
 	},
 
 	ui: {
@@ -368,10 +287,12 @@ var surveys = {
 		},
 
 		on_submit: function (e) {
-			var _this = surveys;
-			if (_this.answer_value !== null) {
+			var _this = surveys,
+				testimony0 = _this.get_opinion(0);
 
-				_this.report("submit", { answer: _this.answer_value });
+			if (testimony0 >= 0) {
+
+				_this.report("submit", { testimony0: testimony0});
 
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_submit, _this.target);
 
@@ -394,7 +315,7 @@ var surveys = {
             var visible_host = _this.decodedtarget.length < 35 ? _this.decodedtarget : (wot.i18n("fbl", "this_website") || "this website");
 
 			// sanitize the questions (to avoid XSS with addon) and replace placeholder %site% with target name
-			var text = wot.utils.htmlescape(_this.question.text).replace(/%site%/,
+			var text = wot.i18n("ratingwindow", "question0").replace(/%site%/,
 				"<span class='domainname'>" + visible_host + "</span>");
 
             if (text.length > 100) {
@@ -402,19 +323,7 @@ var surveys = {
             }
 
             $question.html(text);  // should be safe since we sanitized the question
-
-            if (_this.question.dismiss_text) {
-                $(".action-dismiss").text(_this.question.dismiss_text);
-            }
-            $(".surveys-action").toggleClass("hidden", !_this.question.dismiss_text);
-		},
-
-		update_submit_status: function () {
-			var $submit = $(".surveys-submit");
-
-			$submit.toggleClass("enabled", surveys.submit_enabled);
 		}
-
 	},
 
 	init: function () {
@@ -423,20 +332,22 @@ var surveys = {
 		if (data) {
 			_this.decodedtarget = data.decodedtarget || "";
 			_this.target = data.target || "";
+			_this.reputation = data.reputation || {};
 			_this.question = data.question ? data.question : {};
 			_this.url = data.url;
 			_this.stats.cache = data.stats || {};
 
 			_this.ui.localize();
 			_this.ui.update_texts();
-			_this.slider.prepare_values(_this.question.choices);
 
-			_this.slider.init_slider();
+			// init rating slider
+			_this.updatestate(_this.target, _this.reputation);
+			_this.rate_control.init();
 			_this.report("shown", {});
 
 			// report after short delay to make sure GA code is inited
 			setTimeout(function () {
-                wot.ga.set_fbl_question(surveys.question.id);
+				wot.ga.set_fbp_delay(data.session_delay);
 				wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_shown, _this.target);
 			}, 500);
 
@@ -456,6 +367,138 @@ var surveys = {
 			_this.ui.hide_bottom_section();
 			wot.ga.fire_event(wot.ga.categories.FBL, wot.ga.actions.FBL_bottom_close);
 		});
+	},
+
+	rate_control: {
+
+		init: function() {
+			var _this = surveys.rate_control;
+
+			// Rating control events handlers
+			$(".wot-rating-stack").bind({
+				mousedown: _this.on_mousedown,
+				mouseup: _this.on_mouseup,
+				mousemove: _this.on_mousemove,
+				mouseleave: _this.on_mousemove
+			});
+
+			$(".rating-delete-icon, .rating-deletelabel").bind("click", _this.on_remove);
+
+			_this.updateratings({ name: 0, t: -1 });
+		},
+
+		on_mousemove: function (e) {
+			var _rw = surveys;
+
+//            if (_rw.state.down == -1) return;
+			var c = $(this).attr("component");
+			var t = _rw.getrating(e, this);
+
+			if (_rw.state.down == c) {
+				_rw.setstate(c, t);
+			} else {
+				_rw.state.down = -1;
+			}
+
+			_rw.rate_control.updateratings({ name: c, t: t });
+		},
+
+		on_mousedown: function (e) {
+			var _rw = surveys;
+
+			var c = $(this).attr("component");
+			var t = _rw.getrating(e, this);
+			_rw.state.down = c;
+			_rw.setstate(c, t);
+			_rw.rate_control.updateratings({ name: c, t: t });
+
+			// there is a nasty issue in Chrome & jQuery: when dragging an object, the cursor has "text select" form.
+			e.originalEvent.preventDefault(); // http://stackoverflow.com/a/9743380/954197
+		},
+
+		on_mouseup: function (e) {
+			var _rw = surveys;
+			_rw.state.down = -1;  // no component is being rating right now
+		},
+
+		on_remove: function (e) {
+			var _rw = surveys;
+
+			if ($(this).closest(".rating-delete").hasClass("delete")) {
+				var c = parseInt($(this).closest(".wot-rating-data").attr("component"));
+
+				// TODO: show the warning that categories will be deleted also (?)
+				_rw.delete_testimony(c);
+			}
+		},
+
+		updateratings: function(state)
+		{
+			/* indicator state */
+			var _rw = surveys;
+			state = state || {};
+
+			/* update each component */
+			wot.components.forEach(function(item) {
+				if (state.name !== null && state.name != item.name) {
+					return;
+				}
+
+				var elems = {},
+					rep = wot.getlevel(wot.reputationlevels, -1).name,
+					t = -1,
+					wrs = _rw.state[item.name];
+
+				["stack", "slider", "indicator", "deleteicon", "deletelabel",
+					"helptext", "helplink", "data"].forEach(function(elem) {
+						elems[elem] = $("#wot-rating-" + item.name + "-" + elem);
+					});
+
+				t = (wrs && wrs.t !== null) ? wrs.t : t;
+
+				if (t >= 0) {
+					/* rating */
+					rep = wot.getlevel(wot.reputationlevels, t).name;
+					elems.indicator.css("left", (t * _rw.sliderwidth / 100).toFixed() + "px");
+					elems.stack.addClass("testimony").removeClass("hover");
+					elems.deletelabel.text(wot.i18n("testimony", "delete"));
+					elems.deleteicon.closest(".rating-delete").removeClass("unrated");
+					elems.deleteicon.closest(".rating-delete").addClass("delete");
+
+				} else if (state.name != null && state.t >= 0) {
+					/* temporary indicator position */
+					rep = wot.getlevel(wot.reputationlevels, state.t).name;
+//                    elems.indicator.css("left", (state.t * _rw.sliderwidth / 100).toFixed() + "px");
+					elems.stack.removeClass("testimony").addClass("hover");
+
+				} else {
+					elems.indicator.css("left", "");    // reset the x-position
+					elems.stack.removeClass("testimony").removeClass("hover");
+					elems.deletelabel.text(wot.i18n("testimony", "unrated"));
+					elems.deleteicon.closest(".rating-delete").addClass("unrated");
+					elems.deleteicon.closest(".rating-delete").removeClass("delete");
+				}
+
+				if (rep) {
+					elems.stack.attr("r", rep);
+					if (state.down != -1) {
+						elems.indicator.attr("r", rep);
+						elems.data.attr("r", rep);
+					}
+				}
+
+				var helptext = wot.get_level_label(item.name, rep, true);
+
+				if (helptext.length) {
+					elems.helptext.text(helptext).show();
+					elems.helptext.attr("r", rep);
+				} else {
+					elems.helptext.hide();
+				}
+			});
+
+			_rw.update_submit_button();
+		}
 	}
 };
 
