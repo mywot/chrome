@@ -92,7 +92,7 @@ $.extend(wot, { core: {
 			}
 
 			var cached = data.cached || {};
-		
+
 			if (cached.status == wot.cachestatus.ok) {
 				/* reputation */
 				var def_comp = cached.value[wot.default_component];
@@ -121,7 +121,7 @@ $.extend(wot, { core: {
 			} else if (cached.status == wot.cachestatus.error) {
 				return "error";
 			}
-			
+
 			return "default";
 		} catch (e) {
 			console.log("core.geticon: failed with " + e);
@@ -301,7 +301,7 @@ $.extend(wot, { core: {
 				if (warned) warning.reason = wot.warningreasons.skipped;
 				return warning; /* don't change the current status */
 			}
-			
+
 			var prefs = [
 				"accessible",
 				"min_confidence_level",
@@ -895,7 +895,11 @@ $.extend(wot, { core: {
 				wot.wt.bind_events();
 			}
 
-			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
+			if (wot.ads && wot.ads.bind_events) {
+				wot.ads.bind_events();
+			}
+
+			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget", "ads" ]);
 
 			/* event handlers */
 
@@ -929,10 +933,11 @@ $.extend(wot, { core: {
 				if (wot.api.isregistered()) {
 					wot.core.welcome_user();
 					wot.api.update();
-					wot.api.processpending();   // submit
+					wot.api.processpending();       // submit
                     wot.api.comments.processpending();
-					wot.wt.init();  // initialize welcome tips engine
-					wot.surveys.init(); // init surveys engine
+					wot.wt.init();                  // initialize welcome tips engine
+					wot.surveys.init();             // init surveys engine
+					if (wot.ads) wot.ads.init();    // init ads engine
 				}
 			});
 

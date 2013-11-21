@@ -543,7 +543,7 @@ wot.warning = {
 			wot.warning.add(data.data, data.type.reason, data.show_wtip);
 		});
 
-		wot.listen(["warning", "wt", "surveys"]);
+		wot.listen(["warning", "wt", "surveys", "ads"]);
 	}
 };
 

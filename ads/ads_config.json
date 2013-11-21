@@ -1,0 +1,13 @@
+{
+	"config_version":           "20131119-1",
+	"activityscore_limit":      "10001",
+	"relaxed_secs":             "1209600",
+	"wait_global_secs":         "120",
+	"wait_ad_per_site_secs":    "60",
+	"max_impressions_per_site": "3",
+	"show_delay_secs":          "5",
+	"fade_delay_secs":          "20",
+	"frame_width":              "320",
+	"frame_height":             "200",
+	"css":                      "right: 40px; bottom: 40px; position: fixed; border-radius: 6px; border: 2px solid rgba(128, 128, 128, 0.5); visibility: hidden; box-shadow: 2px 2px 18px #000; z-index: 2147483647;"
+}

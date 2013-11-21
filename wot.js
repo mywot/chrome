@@ -1093,9 +1093,37 @@ wot.utils = {
 	},
 
     isEmptyObject: function (obj) {
-    for (var name in obj) {
-        return false;
-    }
-    return true;
-}
+	    for (var name in obj) {
+	        return false;
+	    }
+	    return true;
+	},
+
+	query_param: function(obj, prefix) {
+		var str = [];
+		for(var p in obj) {
+			var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+			str.push(typeof v == "object" ?
+				wot.utils.query_param(v, k) :
+				encodeURIComponent(k) + "=" + encodeURIComponent(v));
+		}
+		return str.join("&");
+	},
+
+	getParams: function (query) {
+		var params = {};
+		if (location.search) {
+			var parts = query.split('&');
+
+			parts.forEach(function (part) {
+				var pair = part.split('=');
+				pair[0] = decodeURIComponent(pair[0]);
+				pair[1] = decodeURIComponent(pair[1]);
+				params[pair[0]] = (pair[1] !== 'undefined') ?
+					pair[1] : true;
+			});
+		}
+		return params;
+	}
+
 };

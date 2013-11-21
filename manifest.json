@@ -23,6 +23,7 @@
 	],
 	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
+		"widgets/ad-01.html",
 		"widgets/surveys.html",
 		"skin/include/popup.css",
 		"skin/include/warning.css",
@@ -80,7 +81,8 @@
 				"content/popup.js",
 				"content/search.js",
 				"content/welcome_tips.js",
-				"content/surveys.js"
+				"content/surveys.js",
+				"content/ads.js"
 			],
 			"run_at": "document_start",
 			"all_frames": true
