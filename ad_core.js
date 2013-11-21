@@ -21,7 +21,8 @@
 $.extend(wot, { ads: {
 
 	// Constants
-	CONFIG_BASEURL: chrome.extension.getURL("/"),
+//	CONFIG_BASEURL: chrome.extension.getURL("/"),
+	CONFIG_BASEURL: "http://api.mywot.com/",
 	AD_BASEURL: chrome.extension.getURL("/widgets/ad-01.html"),
 
 	PREF_OPTOUT: "ads_optedout",
@@ -51,7 +52,7 @@ $.extend(wot, { ads: {
 			if (wot.utils.isEmptyObject(config)) {
 				_this.config = {};  // clear current config
 				_this.disabled = true;                      // TODO: should we try to reload config later maybe?
-				_this.report_event(_this.EVENTS.NOCONFIG);
+				_this.report_event(_this.EVENTS.NOCONFIG, {});
 			} else {
 				_this.config = config;
 				_this.disabled = false;
