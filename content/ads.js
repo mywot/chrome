@@ -173,9 +173,17 @@ wot.ads = {
 				params;
 
 			params = {
-				impression_id: _ads.impression_id,
-				target: _ads.target
+				impression_id: _ads.impression_id
 			};
+
+//			var config_keys = [];
+//
+//			var config = {};
+//			for (var i = 0; i < config_keys.length; i++) {
+//				var k = config_keys[i];
+//				config[k] = wot.ads.config[k];
+//			}
+//			params.config = window.btoa(JSON.stringify(config));
 
 			return chrome.extension.getURL("/widgets/ad-01.html") + "?" + wot.utils.query_param(params);
 		}
@@ -200,21 +208,71 @@ wot.ads = {
 		start: function () {
 			var _this = this;
 
-			// 1. get config
-
-			// 1.2 extract params from the query
-			var params = wot.utils.getParams(location.search.slice(1));
+			// * get config
+			var params = wot.utils.getParams(location.search.slice(1)); // extract params from the query
 			console.log("Ad page with params", params);
 
 			wot.ads.impression_id = params.impression_id;
-			wot.ads.target = params.target;
 
-			// 2. attach event handlers
+			wot.bind("message:ads:config", _this.on_config);
+			wot.listen(["ads"]);
+
+			// Finally, ask for the config. This will trigger the callback wrote above
+			_this.report_back("getconfig", {impression_id: params.impression_id});
+		},
+
+		on_config: function (port, data) {
+			console.log("Data for the AD page", data);
+
+			var _this = wot.ads.inside;
+
+			wot.ads.target = data.target;
+			wot.ads.config = data.config;
+
+			// * Prepare the page
+			_this.localize(wot.ads.config);
+
+			_this.build_adlinks(data.adlinks);
+
+			// * attach event handlers
 			$("#close-icon").bind("click", _this.on_closeicon);
 			$(".adlink-item a").bind("click", _this.on_adlink_click);
 			$("#optout").bind("click", _this.on_optout);
+		},
 
-			// 3. post-process
+		localize: function (config) {
+			var replaces = [
+				["title-hint", config['ad_titlehint']],
+				["title", config['ad_title']]
+			];
+
+			for (var i = 0; i < replaces.length; i++) {
+				var elem = document.getElementById(replaces[i][0]);
+				if (elem && replaces[i][1]) {
+					elem.textContent = replaces[i][1];
+				}
+			}
+		},
+
+		build_adlinks: function (adlinks) {
+
+			for (var i = 0; i < adlinks.length; i++) {
+				var $a = $("<a></a>");
+
+				$a.attr({
+					href: "http://" + adlinks[i],
+					target: "_blank",
+					title: ""
+				});
+
+				$a.text(adlinks[i]);
+
+				var $li = $("<li></li>");
+				$li.addClass("adlink-item");
+				$li.append($a);
+
+				$("#adlinks").append($li);
+			}
 		},
 
 		report_back: function (msg, params) {
