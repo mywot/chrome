@@ -147,10 +147,11 @@ $.extend(wot, { ads: {
 		wot.prefs.set(wot.ads.PREF_LASTTIME, Date.now());   // remember last time of ad is shown
 
 		// remember the last time when
-		if (!_this.per_website[targethostname]) _this.per_website[targethostname] = {};
+		if (!_this.per_website[targethostname]) _this.per_website[targethostname] = { times: 0 };
 
 		$.extend(_this.per_website[targethostname], {
-			lasttime: Date.now()
+			lasttime: Date.now(),
+			times: _this.per_website[targethostname].times + 1
 		});
 
 		if (impression) {
@@ -362,6 +363,7 @@ $.extend(wot, { ads: {
 				positive = false;
 			}
 		}
+		console.log("Tested max number of times. Proceed?", positive);
 
 		// Check current target
 		positive = positive && !(targets.indexOf(targethostname) < 0);
