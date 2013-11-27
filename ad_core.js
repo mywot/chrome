@@ -191,6 +191,7 @@ $.extend(wot, { ads: {
 		if (impression) {
 			impression.clicked = Date.now();
 			impression.clicked_position = data.link_position;
+			impression.clicked_href = data.href;
 			_this.report_event("click", impression);
 		}
 	},
