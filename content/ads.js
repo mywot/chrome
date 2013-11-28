@@ -76,12 +76,17 @@ wot.ads = {
 	// Methods related to JS that runs in the target website page
 	wrapper: {
 
+		pre_right: 0,       // position of the frame. Is configured by the config.
+
 		get_frame_style: function () {
 			var _ads = wot.ads,
 				_this = this,
 				style = "" +
 					"{CSS};" +
-					"width: {WIDTH}px; height: {HEIGHT}px;";
+					"width: {WIDTH}px; height: {HEIGHT}px;" +
+					"right: -{WIDTH}px";  // we need this to overwrite the {CSS} to get the sliding effect
+
+			_this.pre_right = - Number(_ads.config.frame_width * (100 - _ads.config.pre_visible) / 100).toFixed();
 
 			replaces = [
 				{ from: "CSS", to: _ads.config.css || ""},
@@ -126,7 +131,19 @@ wot.ads = {
 
 			var frame = document.getElementById(_ads.ad_frame_id);
 			if (frame) {
-				frame.style.visibility = "visible";
+				frame.style.visibility = "visible";     // make it visible
+
+				frame.style.right = String(_this.pre_right) + "px"; // slide it from the right side
+
+				// on hover, slide it in full width
+				frame.addEventListener("mouseenter", function(e) {
+					this.style.right = "0px";
+				});
+
+				// when not hovered, slide it back
+				frame.addEventListener("mouseleave", function(e) {
+					this.style.right = String(_this.pre_right) + "px";
+				});
 
 				wot.post("ads", "shown", {
 					target: _ads.target,

@@ -1,5 +1,5 @@
 {
-	"config_version":           "20131119-1",
+	"config_version":           "20131128-1",
 	"activityscore_limit":      "10001",
 	"relaxed_secs":             "1209600",
 	"locales":                  ["en"],
@@ -7,12 +7,13 @@
 	"wait_ad_per_site_secs":    "5",
 	"max_impressions_per_site": "3",
 	"show_delay_secs":          "2",
-	"fade_delay_secs":          "40",
+	"fade_delay_secs":          "0",
+	"pre_visible":              "100",
 	"frame_width":              "320",
 	"frame_height":             "200",
-	"css":                      "right: 40px; bottom: 40px; position: fixed; border-radius: 6px; border: 2px solid rgba(128, 128, 128, 0.5); visibility: hidden; box-shadow: 2px 2px 18px #000; z-index: 2147483647;",
+	"css":                      "right: 0px; -webkit-transition: right 0.6s; bottom: 40px; position: fixed; border-radius: 0px; border: 1px solid rgba(128, 128, 128, 0.5); visibility: hidden; box-shadow: 2px 2px 18px #000; z-index: 2147483647;",
 	"adlinks_number":           "3",
 	"adlinks_method":           "random",
-	"ad_titlehint":             "featured ads",
+	"ad_titlehint":             "featured",
 	"ad_title":                 "Alternatives from WOT Community"
 }

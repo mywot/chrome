@@ -21,7 +21,7 @@
 		"http://api.mywot.com/*",
 		"https://api.mywot.com/*"
 	],
-	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
+	"content_security_policy": "style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
 		"widgets/ad-01.html",
 		"widgets/surveys.html",
@@ -58,9 +58,6 @@
 		"skin/fusion/16_16/plain/r5.png",
 		"skin/fusion/16_16/plain/rx.png"
 	],
-	"externally_connectable": {
-		"matches": ["*://*.mywot.com/*"]
-	},
 	"browser_action": {
 		"default_title": "WOT",
 		"default_icon": "skin/fusion/19_19/default.png",
