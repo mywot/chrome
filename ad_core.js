@@ -70,7 +70,6 @@ $.extend(wot, { ads: {
 		"wheelbase.co.uk",
 		"islabikes.com",
 		"velonews.com",
-		"evanscycles.co.uk",
 		"chainreactioncycles.co.uk",
 		"rosebikes.de",
 		"roseversand.com",
@@ -82,7 +81,7 @@ $.extend(wot, { ads: {
 		"wiggle.co.uk",
 		"bike24.de",
 		"fun-corner.de",
-		"evanscycles.co.uk",
+		"evanscycles.com",
 		"roseversand.com"
 	],
 
