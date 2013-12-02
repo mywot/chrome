@@ -3,8 +3,8 @@
 	"activityscore_limit":      "10001",
 	"relaxed_secs":             "1209600",
 	"locales":                  ["en"],
-	"wait_global_secs":         "10",
-	"wait_ad_per_site_secs":    "5",
+	"wait_global_secs":         "5",
+	"wait_ad_per_site_secs":    "1",
 	"max_impressions_per_site": "3",
 	"show_delay_secs":          "2",
 	"fade_delay_secs":          "0",
@@ -15,5 +15,5 @@
 	"adlinks_number":           "3",
 	"adlinks_method":           "random",
 	"ad_titlehint":             "featured",
-	"ad_title":                 "Alternatives from WOT Community"
+	"ad_title":                 "Alternatives from Web of Trust"
 }
