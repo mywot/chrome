@@ -1,7 +1,7 @@
 {
 	"config_version":           "20131202-1",
 	"activityscore_limit":      "10001",
-	"relaxed_secs":             "1209600",
+	"relaxed_secs":             "0",
 	"locales":                  ["en"],
 	"wait_global_secs":         "5",
 	"wait_ad_per_site_secs":    "1",
