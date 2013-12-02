@@ -21,8 +21,8 @@
 $.extend(wot, { ads: {
 
 	// Constants
-	CONFIG_BASEURL: chrome.extension.getURL("/"),
-//	CONFIG_BASEURL: "http://api.mywot.com/",
+//	CONFIG_BASEURL: chrome.extension.getURL("/"),
+	CONFIG_BASEURL: "http://api.mywot.com/",
 	AD_BASEURL: chrome.extension.getURL("/widgets/ad-01.html"),
 
 	PREF_OPTOUT: "ads_optedout",
@@ -148,7 +148,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_ad_shown: function (port, data) {
-		console.log("on_ad_shown()", port, data);
+//		console.log("on_ad_shown()", port, data);
 
 		var _this = wot.ads;
 		var impression = _this.get_impression(data),
@@ -174,7 +174,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_ad_hidden: function (port, data) {
-		console.log("on_ad_hidden()", port, data);
+//		console.log("on_ad_hidden()", port, data);
 		var _this = wot.ads;
 		var impression = _this.get_impression(data);
 
@@ -185,7 +185,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_ad_close: function (port, data) {
-		console.log("on_ad_close()", port, data);
+//		console.log("on_ad_close()", port, data);
 		var _this = wot.ads;
 		_this.send_close(port.port.sender.tab);
 		var impression = _this.get_impression(data);
@@ -196,7 +196,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_ad_clicked: function (port, data) {
-		console.log("on_ad_clicked()", port, data);
+//		console.log("on_ad_clicked()", port, data);
 		var _this = wot.ads;
 		var impression = _this.get_impression(data);
 		if (impression) {
@@ -208,7 +208,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_optout: function (port, data) {
-		console.log("on_optout()", port, data);
+//		console.log("on_optout()", port, data);
 		var _this = wot.ads;
 		var impression = _this.get_impression(data);
 		if (impression) {
@@ -221,7 +221,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_wrapper_ready: function (port, data) {
-		console.log("on_wrapper_ready()", data);
+//		console.log("on_wrapper_ready()", data);
 
 		var _this = wot.ads,
 			target = data.target,
@@ -249,7 +249,7 @@ $.extend(wot, { ads: {
 
 	on_getconfig: function (port, data) {
 		// Sends adlinks information and configuration to the ad frame
-		console.log("on_getconfig()", port, data);
+//		console.log("on_getconfig()", port, data);
 
 		var impression = wot.ads.get_impression(data.impression_id);    // determ the target by impression_id
 
@@ -270,7 +270,7 @@ $.extend(wot, { ads: {
 	},
 
 	on_adhover: function (port, data) {
-		console.log("on_adhover()", port, data);
+//		console.log("on_adhover()", port, data);
 
 		var _this = wot.ads;
 		var impression = _this.get_impression(data);
@@ -334,6 +334,10 @@ $.extend(wot, { ads: {
 		var targets = _this.ADTARGETS;
 		var positive = true;
 
+		// Check current target
+		positive = positive && !(targets.indexOf(targethostname) < 0);
+		console.log("Tested Target. Proceed?", positive);
+
 		if (!wot.prefs.get("super_noadsthreshold")) {   // when super-settings is enabled, no threshold checks are made
 
 			// Check locale
@@ -396,10 +400,6 @@ $.extend(wot, { ads: {
 		} else {
 			console.warn("!!! super_noadsthreshold is enabled. No thresholds and checks are applied.");
 		}
-
-		// Check current target
-		positive = positive && !(targets.indexOf(targethostname) < 0);
-		console.log("Tested Target. Proceed?", positive);
 
 		return positive;
 	},

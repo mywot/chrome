@@ -638,7 +638,7 @@ $.extend(wot, { api: {
 			},
 			function(result)      // on success
 			{
-				console.log("EVENTS sent:", event, data);
+//				console.log("EVENTS sent:", event, data);
 			});
 	},
 
