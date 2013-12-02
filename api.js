@@ -636,7 +636,7 @@ $.extend(wot, { api: {
 //					wot.api.retry("query", [ target, onupdate ]);
 				}
 			},
-			function(data)      // on success
+			function(result)      // on success
 			{
 				console.log("EVENTS sent:", event, data);
 			});

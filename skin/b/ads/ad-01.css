@@ -25,54 +25,23 @@ body:hover {
 
 .close-icon {
     position: absolute;
-    top: 18px;
+    top: 20px;
     right: 18px;
     height: 14px;
     width: 14px;
-    background-color: #FFF;
-    margin: 0 0 0 1px;
-    border-radius: 3px;
-    border: 1px solid #B9B9B9;
+    background-image: url("/skin/b/ads/close_icon.png");
+    background-repeat: no-repeat;
     cursor: pointer;
 }
 
 .close-icon:hover {
-    background-color: rgba(255, 97, 84, 0.77);
-    border: 1px solid rgba(255, 97, 84, 0.77);
+    background-image: url("/skin/b/ads/close_icon_hover.png");
 }
-
-/* Cross inside the "close" icon */
-.close-icon:after,
-.close-icon:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    z-index: 4;
-    left: 6px;
-    width: 2px;
-    height: 12px;
-    margin-top: -6px;
-    background: #A2A2A2;
-}
-
-.close-icon:hover:after,
-.close-icon:hover::before {
-    background: #ffffff;
-}
-
-.close-icon:before {
-    -webkit-transform: rotate(45deg);
-}
-
-.close-icon:after {
-    -webkit-transform: rotate(135deg);
-}
-
 
 .title-hint {
     position: absolute;
     right: 48px;
-    top: 18px;
+    top: 16px;
     color: #9B9B9B;
     font-variant: small-caps;
     font-size: 14px;

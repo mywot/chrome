@@ -86,6 +86,7 @@ wot.ads = {
 					"width: {WIDTH}px; height: {HEIGHT}px;" +
 					"right: -{WIDTH}px";  // we need this to overwrite the {CSS} to get the sliding effect
 
+			// how far to the outside of the screen the frame should be positioned in the beginning
 			_this.pre_right = - Number(_ads.config.frame_width * (100 - _ads.config.pre_visible) / 100).toFixed();
 
 			replaces = [
@@ -137,6 +138,13 @@ wot.ads = {
 
 				// on hover, slide it in full width
 				frame.addEventListener("mouseenter", function(e) {
+
+					// once user interacted with frame, don't hide it completely
+					if (_this.fadeout_timer) {
+						window.clearTimeout(_this.fadeout_timer);
+						_this.fadeout_timer = null;
+					}
+
 					this.style.right = "0px";
 				});
 
@@ -153,7 +161,7 @@ wot.ads = {
 
 				var fade_delay = Number(_ads.config.fade_delay_secs || 0);
 				if (fade_delay) {
-					window.setTimeout(_this.hide_ad, fade_delay * 1000);
+					_this.fadeout_timer = window.setTimeout(_this.hide_ad, fade_delay * 1000);
 				}
 			}
 		},
@@ -210,6 +218,7 @@ wot.ads = {
 	inside: {
 
 		AD_BASEURL: /^.*widgets\/ad-01\.html/i,
+		ad_hover_counter: 0,
 
 		test_ads_url: function (url) {
 			console.log("Ads.inside:test_ads_url()", url);
@@ -255,6 +264,7 @@ wot.ads = {
 			$("#close-icon").bind("click", _this.on_closeicon);
 			$(".adlink-item a").bind("click", _this.on_adlink_click);
 			$("#optout").bind("click", _this.on_optout);
+			$("body").bind("mouseenter", _this.on_ad_hover);
 		},
 
 		localize: function (config) {
@@ -317,6 +327,13 @@ wot.ads = {
 				href: $adlink.attr("href"),
 				link_position: link_position
 			});
+		},
+
+		on_ad_hover: function (event) {
+			var _this = wot.ads.inside;
+
+			_this.ad_hover_counter++;
+			_this.report_back("adhover", { count: _this.ad_hover_counter });
 		},
 
 		on_optout: function (event) {

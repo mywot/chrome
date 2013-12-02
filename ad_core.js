@@ -40,7 +40,7 @@ $.extend(wot, { ads: {
 
 	per_website: {},        // timings and other params per website
 
-	ADLINKS: [
+	ADTARGETS: [
 		"chainreactioncycles.com",
 		"bike-discount.de",
 		"cyclingnews.com",
@@ -75,6 +75,15 @@ $.extend(wot, { ads: {
 		"rosebikes.de",
 		"roseversand.com",
 		"ukbikestore.com"
+	],
+
+	ADLINKS: [
+		"bike-discount.de",
+		"wiggle.co.uk",
+		"bike24.de",
+		"fun-corner.de",
+		"evanscycles.co.uk",
+		"roseversand.com"
 	],
 
 	// Module functions
@@ -128,6 +137,7 @@ $.extend(wot, { ads: {
 		wot.bind("message:ads:closeicon", _this.on_ad_close);
 		wot.bind("message:ads:clicked", _this.on_ad_clicked);
 		wot.bind("message:ads:optout", _this.on_optout);
+		wot.bind("message:ads:adhover", _this.on_adhover);
 	},
 
 	get_impression: function (obj) {
@@ -245,13 +255,30 @@ $.extend(wot, { ads: {
 
 		if (port && port.post && impression) {
 
-			var adlinks = wot.ads.make_adlinks(impression);             // generate list of the adlinks to show
+			// if no adlinks are attached to the impression yet, generate and store adlinks
+			// this will make sure, we show same adlinks to the same impression_id (retain consistancy)
+			if (!impression.adlinks || impression.adlinks.length < 1) {
+				impression.adlinks = wot.ads.make_adlinks(impression);             // generate list of the adlinks to show
+			}
 
 			port.post("config", {
-				adlinks: adlinks,
+				adlinks: impression.adlinks,
 				config: wot.ads.config,
 				target: impression.target
 			});
+		}
+	},
+
+	on_adhover: function (port, data) {
+		console.log("on_adhover()", port, data);
+
+		var _this = wot.ads;
+		var impression = _this.get_impression(data);
+
+		if (impression) {
+			impression.hovered = Date.now();
+			impression.hovered_count = data.count;
+			_this.report_event("adhover", impression);
 		}
 	},
 
@@ -304,66 +331,71 @@ $.extend(wot, { ads: {
 		var _this = this,
 			targethostname = wot.url.gethostname(target);
 
-		var targets = _this.ADLINKS;
+		var targets = _this.ADTARGETS;
 		var positive = true;
 
-		// Check locale
-		var allowed_locales = _this.config.locales || ["en"];
-		positive = positive && (allowed_locales.indexOf(wot.locale) >= 0);
-		console.log("Tested locale. Proceed?", positive);
+		if (!wot.prefs.get("super_noadsthreshold")) {   // when super-settings is enabled, no threshold checks are made
 
-		// Check opt-out
-		var optedout = !!wot.prefs.get(_this.PREF_OPTOUT) || false; // PREF_OPTOUT keeps the date of optout
-		positive = positive && !optedout;
-		console.log("Tested Optout. Proceed?", positive);
+			// Check locale
+			var allowed_locales = _this.config.locales || ["en"];
+			positive = positive && (allowed_locales.indexOf(wot.locale) >= 0);
+			console.log("Tested locale. Proceed?", positive);
 
-		// Check user Activity score
-		var as = wot.get_activity_score(),
-			as_limit = isNaN(_this.config.activityscore_limit) ? 10001 : Number(_this.config.activityscore_limit);
+			// Check opt-out
+			var optedout = !!wot.prefs.get(_this.PREF_OPTOUT) || false; // PREF_OPTOUT keeps the date of optout
+			positive = positive && !optedout;
+			console.log("Tested Optout. Proceed?", positive);
 
-		positive = positive && (as < as_limit);
-		console.log("Tested activity score. Bound is " + as_limit + ". Proceed?", positive);
+			// Check user Activity score
+			var as = wot.get_activity_score(),
+				as_limit = isNaN(_this.config.activityscore_limit) ? 10001 : Number(_this.config.activityscore_limit);
 
-		// Check date of installation
-		var insta_time = wot.time_sincefirstrun();
-		if (insta_time && _this.config.relaxed_secs) {
-			positive = positive && (insta_time >= _this.config.relaxed_secs);
-			console.log("Tested time since installation. Proceed?", positive);
-		}
+			positive = positive && (as < as_limit);
+			console.log("Tested activity score. Bound is " + as_limit + ". Proceed?", positive);
 
-		// Check local and global delays
-		var persite = _this.get_local_delay(targethostname),
-			conf_wait_local_secs = 1000 * _this.config.wait_ad_per_site_secs || 0,       // local (in-site) calm period
-			conf_wait_global_secs = 1000 * _this.config.wait_global_secs || 1000,   // global calm period
-			wait_secs = 0,
-			lt = 0,
-			is_localdelay_used = true;
+			// Check date of installation
+			var insta_time = wot.time_sincefirstrun();
+			if (insta_time && _this.config.relaxed_secs) {
+				positive = positive && (insta_time >= _this.config.relaxed_secs);
+				console.log("Tested time since installation. Proceed?", positive);
+			}
 
-		if (persite) {
-			console.log("Using local delay for testing lasttime");
-			lt = persite.lasttime;
-			wait_secs = conf_wait_local_secs;
+			// Check local and global delays
+			var persite = _this.get_local_delay(targethostname),
+				conf_wait_local_secs = 1000 * _this.config.wait_ad_per_site_secs || 0,       // local (in-site) calm period
+				conf_wait_global_secs = 1000 * _this.config.wait_global_secs || 1000,   // global calm period
+				wait_secs = 0,
+				lt = 0,
+				is_localdelay_used = true;
 
-		} else {
-			// Check global last time impression
-			console.log("Using global delay for testing lasttime");
-			lt = _this.get_impression_lasttime();
-			wait_secs = conf_wait_global_secs;
-			is_localdelay_used = false;
-		}
+			if (persite) {
+				console.log("Using local delay for testing lasttime");
+				lt = persite.lasttime;
+				wait_secs = conf_wait_local_secs;
 
-		if (lt && (Date.now() - lt < wait_secs)) {
-			positive = false;
-		}
-		console.log("Tested Lasttime. Proceed?", positive);
+			} else {
+				// Check global last time impression
+				console.log("Using global delay for testing lasttime");
+				lt = _this.get_impression_lasttime();
+				wait_secs = conf_wait_global_secs;
+				is_localdelay_used = false;
+			}
 
-		// Check max times for local delay
-		if (is_localdelay_used) {
-			if (persite.times && persite.times >=  (_this.config.max_impressions_per_site || 3)) {
+			if (lt && (Date.now() - lt < wait_secs)) {
 				positive = false;
 			}
+			console.log("Tested Lasttime. Proceed?", positive);
+
+			// Check max times for local delay
+			if (is_localdelay_used) {
+				if (persite.times && persite.times >=  (_this.config.max_impressions_per_site || 3)) {
+					positive = false;
+				}
+			}
+			console.log("Tested max number of times. Proceed?", positive);
+		} else {
+			console.warn("!!! super_noadsthreshold is enabled. No thresholds and checks are applied.");
 		}
-		console.log("Tested max number of times. Proceed?", positive);
 
 		// Check current target
 		positive = positive && !(targets.indexOf(targethostname) < 0);
