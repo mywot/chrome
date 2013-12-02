@@ -1,5 +1,5 @@
 {
-	"config_version":           "20131128-1",
+	"config_version":           "20131202-1",
 	"activityscore_limit":      "10001",
 	"relaxed_secs":             "1209600",
 	"locales":                  ["en"],
