@@ -1,5 +1,5 @@
 /*
- ads_core.js
+ featured_core.js
  Copyright © 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
@@ -18,18 +18,19 @@
  along with WOT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$.extend(wot, { ads: {
+$.extend(wot, { featured: {
 
 	// Constants
 //	CONFIG_BASEURL: chrome.extension.getURL("/"),
-	CONFIG_BASEURL: "http://api.mywot.com/",
-	AD_BASEURL: chrome.extension.getURL("/widgets/ad-01.html"),
+	CONFIG_BASEURL: "https://api.mywot.com/",
+	FT_BASEURL: chrome.extension.getURL("/widgets/featured-01.html"),
 
 	PREF_OPTOUT: "ads_optedout",
 	PREF_LASTTIME: "ads_lasttime",
 
 	EVENTS: {
-		NOCONFIG: "noconfig"
+		NOCONFIG: "noconfig",
+		SHOWN: "shown"
 	},
 
 	// Module variables
@@ -97,8 +98,8 @@ $.extend(wot, { ads: {
 			platform: wot.platform
 		};
 
-		$.getJSON(_this.CONFIG_BASEURL + "ads/ads_config.json", params, function (config) {
-			console.log("Ads config", config);
+		$.getJSON(_this.CONFIG_BASEURL + "featured/config.json", params, function (config) {
+//			console.log("Ads config", config);
 
 			if (wot.utils.isEmptyObject(config)) {
 				_this.config = {};  // clear current config
@@ -141,7 +142,7 @@ $.extend(wot, { ads: {
 
 	get_impression: function (obj) {
 		var impression_id = obj && obj.impression_id ? obj.impression_id : obj,
-			_this = wot.ads;
+			_this = wot.featured;
 
 		return _this.impressions[impression_id] ? _this.impressions[impression_id] : null;
 	},
@@ -149,11 +150,11 @@ $.extend(wot, { ads: {
 	on_ad_shown: function (port, data) {
 //		console.log("on_ad_shown()", port, data);
 
-		var _this = wot.ads;
+		var _this = wot.featured;
 		var impression = _this.get_impression(data),
 			targethostname = impression.targethostname;
 
-		wot.prefs.set(wot.ads.PREF_LASTTIME, Date.now());   // remember last time of ad is shown
+		wot.prefs.set(wot.featured.PREF_LASTTIME, Date.now());   // remember last time of ad is shown
 
 		// remember the last time when
 		if (!_this.per_website[targethostname]) _this.per_website[targethostname] = { times: 0 };
@@ -166,7 +167,7 @@ $.extend(wot, { ads: {
 		if (impression) {
 			impression.shown = true;
 			impression.showntime = Date.now();
-			_this.report_event("shown", impression);
+			_this.report_event(_this.EVENTS.SHOWN, impression);
 		} else {
 			console.warn("Unknown impression?");
 		}
@@ -174,7 +175,7 @@ $.extend(wot, { ads: {
 
 	on_ad_hidden: function (port, data) {
 //		console.log("on_ad_hidden()", port, data);
-		var _this = wot.ads;
+		var _this = wot.featured;
 		var impression = _this.get_impression(data);
 
 		if (impression) {
@@ -185,7 +186,7 @@ $.extend(wot, { ads: {
 
 	on_ad_close: function (port, data) {
 //		console.log("on_ad_close()", port, data);
-		var _this = wot.ads;
+		var _this = wot.featured;
 		_this.send_close(port.port.sender.tab);
 		var impression = _this.get_impression(data);
 		if (impression) {
@@ -196,7 +197,7 @@ $.extend(wot, { ads: {
 
 	on_ad_clicked: function (port, data) {
 //		console.log("on_ad_clicked()", port, data);
-		var _this = wot.ads;
+		var _this = wot.featured;
 		var impression = _this.get_impression(data);
 		if (impression) {
 			impression.clicked = Date.now();
@@ -208,7 +209,7 @@ $.extend(wot, { ads: {
 
 	on_optout: function (port, data) {
 //		console.log("on_optout()", port, data);
-		var _this = wot.ads;
+		var _this = wot.featured;
 		var impression = _this.get_impression(data);
 		if (impression) {
 			impression.optedout = Date.now();
@@ -222,7 +223,7 @@ $.extend(wot, { ads: {
 	on_wrapper_ready: function (port, data) {
 //		console.log("on_wrapper_ready()", data);
 
-		var _this = wot.ads,
+		var _this = wot.featured,
 			target = data.target,
 			positive = _this.tts(target);
 
@@ -250,19 +251,19 @@ $.extend(wot, { ads: {
 		// Sends adlinks information and configuration to the ad frame
 //		console.log("on_getconfig()", port, data);
 
-		var impression = wot.ads.get_impression(data.impression_id);    // determ the target by impression_id
+		var impression = wot.featured.get_impression(data.impression_id);    // determ the target by impression_id
 
 		if (port && port.post && impression) {
 
 			// if no adlinks are attached to the impression yet, generate and store adlinks
 			// this will make sure, we show same adlinks to the same impression_id (retain consistancy)
 			if (!impression.adlinks || impression.adlinks.length < 1) {
-				impression.adlinks = wot.ads.make_adlinks(impression);             // generate list of the adlinks to show
+				impression.adlinks = wot.featured.make_adlinks(impression);             // generate list of the adlinks to show
 			}
 
 			port.post("config", {
 				adlinks: impression.adlinks,
-				config: wot.ads.config,
+				config: wot.featured.config,
 				target: impression.target
 			});
 		}
@@ -271,7 +272,7 @@ $.extend(wot, { ads: {
 	on_adhover: function (port, data) {
 //		console.log("on_adhover()", port, data);
 
-		var _this = wot.ads;
+		var _this = wot.featured;
 		var impression = _this.get_impression(data);
 
 		if (impression) {
@@ -329,6 +330,11 @@ $.extend(wot, { ads: {
 
 		var _this = this,
 			targethostname = wot.url.gethostname(target);
+
+		if (_this.disabled) {
+			console.warn("Featured func is disabled for some reason");
+			return false;
+		}
 
 		var targets = _this.ADTARGETS;
 		var positive = true;
@@ -415,7 +421,7 @@ $.extend(wot, { ads: {
 	},
 
 	get_impression_lasttime: function () {
-		return Number(wot.prefs.get(wot.ads.PREF_LASTTIME)) || 0;
+		return Number(wot.prefs.get(wot.featured.PREF_LASTTIME)) || 0;
 	},
 
 	report_event: function (event, data) {
@@ -423,7 +429,7 @@ $.extend(wot, { ads: {
 		var copy = $.extend(true, {}, data);    // make a deep copy to modify it. To avoid race conditions when diff events are sent at the same time
 		copy.category = "ad";   // always = "ad" for ads' events
 		copy.type = event;
-		copy.config_version = wot.ads.config.config_version;
+		copy.config_version = wot.featured.config.config_version;
 
 		console.log("Report event", event, copy);
 
@@ -452,7 +458,7 @@ $.extend(wot, { ads: {
 	},
 
 	send_close: function (tab) {
-		wot.ads.connect_and_send(tab, "ads:closecommand", { type: "optout" });
+		wot.featured.connect_and_send(tab, "ads:closecommand", { type: "optout" });
 	}
 
 }});

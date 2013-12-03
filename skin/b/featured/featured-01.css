@@ -29,13 +29,13 @@ body:hover {
     right: 18px;
     height: 14px;
     width: 14px;
-    background-image: url("/skin/b/ads/close_icon.png");
+    background-image: url("/skin/b/featured/close_icon.png");
     background-repeat: no-repeat;
     cursor: pointer;
 }
 
 .close-icon:hover {
-    background-image: url("/skin/b/ads/close_icon_hover.png");
+    background-image: url("/skin/b/featured/close_icon_hover.png");
 }
 
 .title-hint {

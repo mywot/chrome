@@ -1,5 +1,5 @@
 /*
- content/ads.js
+ content/featured.js
  Copyright © 2013  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
@@ -18,15 +18,15 @@
  along with WOT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-wot.ads = {
+wot.featured = {
 
 	config: {},                             // config is inited in onload() by the message from backgound page
 	impression_id: null,                    // Unique ID of the impression for the user
 	target: null,                           // URL where placeholder is injected
-	ad_frame_id: "wot-ad",
+	frame_id: "wot-featured",
 
 	onload: function () {
-		console.log("Ads:onload()", window.location);
+//		console.log("Featured:onload()", window.location);
 
 		try {
 			var _this = this;
@@ -37,9 +37,9 @@ wot.ads = {
 			} else {
 				document.addEventListener("DOMContentLoaded", function (e) {
 					// workaround for the bug http://code.google.com/p/chromium/issues/detail?id=107505
-					// need to check whether wot.ads still available since another content script can erase it
+					// need to check whether wot.featured still available since another content script can erase it
 					// because of the bug. This workaround might be removed after mail.ru started to use newer build than 17
-					if (wot.ads) wot.ads.on_dom_loaded(); // normally here shouldn't be the condition, but read the comment above
+					if (wot.featured) wot.featured.on_dom_loaded(); // normally here shouldn't be the condition, but read the comment above
 				}, false);
 			}
 
@@ -51,23 +51,23 @@ wot.ads = {
 	on_dom_loaded: function () {
 
 		var _this = this;
-		wot.ads.target = window.location.href;
+		wot.featured.target = window.location.href;
 
 		if (window === window.top) {        // we are in the main frame. Use wrapper.* methods then.
 			/* wait for status updates and warn if necessary */
 			wot.bind("message:ads:inject", function(port, data) {
 				if (!wot.utils.isEmptyObject(data.config)) {
-					wot.ads.config = data.config;
-					wot.ads.impression_id = data.impression_id;
-					wot.ads.wrapper.inject();
+					wot.featured.config = data.config;
+					wot.featured.impression_id = data.impression_id;
+					wot.featured.wrapper.inject();
 				}
 			});
 
-			wot.post("ads", "ready", { target: wot.ads.target });
+			wot.post("ads", "ready", { target: wot.featured.target });
 
 		} else {
 			if (_this.inside.test_ads_url(_this.target)) {
-				// Oh wow, we are running inside WOT ads frame
+				// Oh wow, we are running inside WOT featured content frame
 				_this.inside.start();
 			}
 		}
@@ -79,7 +79,7 @@ wot.ads = {
 		pre_right: 0,       // position of the frame. Is configured by the config.
 
 		get_frame_style: function () {
-			var _ads = wot.ads,
+			var _ftrd = wot.featured,
 				_this = this,
 				style = "" +
 					"{CSS};" +
@@ -87,12 +87,12 @@ wot.ads = {
 					"right: -{WIDTH}px";  // we need this to overwrite the {CSS} to get the sliding effect
 
 			// how far to the outside of the screen the frame should be positioned in the beginning
-			_this.pre_right = - Number(_ads.config.frame_width * (100 - _ads.config.pre_visible) / 100).toFixed();
+			_this.pre_right = - Number(_ftrd.config.frame_width * (100 - _ftrd.config.pre_visible) / 100).toFixed();
 
 			replaces = [
-				{ from: "CSS", to: _ads.config.css || ""},
-				{ from: "WIDTH", to: _ads.config.frame_width || 0},
-				{ from: "HEIGHT", to: _ads.config.frame_height || 0}
+				{ from: "CSS", to: _ftrd.config.css || ""},
+				{ from: "WIDTH", to: _ftrd.config.frame_width || 0},
+				{ from: "HEIGHT", to: _ftrd.config.frame_height || 0}
 			];
 
 			style = wot.utils.processhtml(style, replaces);
@@ -101,36 +101,36 @@ wot.ads = {
 		},
 
 		inject: function () {
-			// the frame for the ad is injected only when BG page tells to do that.
-			console.log("Ads.wrapper:inject()");
+			// the frame for the Featured is injected only when BG page tells to do that.
+//			console.log("Featured.wrapper:inject()");
 
-			var _ads = wot.ads,
+			var _ftrd = wot.featured,
 				_this = this;
 
-			if (wot.utils.isEmptyObject(wot.ads.config)) {
-				console.warn("Empty config while trying to add Ads frame");
+			if (wot.utils.isEmptyObject(wot.featured.config)) {
+				console.warn("Empty config while trying to add Featured frame");
 				return;
 			}
 
-			var frame = wot.utils.get_or_create_element(_ads.ad_frame_id, "iframe");
+			var frame = wot.utils.get_or_create_element(_ftrd.frame_id, "iframe");
 			frame.setAttribute("style", _this.get_frame_style());
 			frame.setAttribute("frameborder", "0");
 			frame.setAttribute("src", _this.get_ad_src());
 
 			var node = wot.utils.attach_element(frame);
 			if (node) { // if injection was successful
-				var show_delay = Number(1000 * _ads.config.show_delay_secs || 0);   // delay before showing the frame
+				var show_delay = Number(1000 * _ftrd.config.show_delay_secs || 0);   // delay before showing the frame
 				window.setTimeout(_this.show_ad, show_delay);
 			}
 
-			wot.bind("message:ads:closecommand", wot.ads.wrapper.on_closecommand);
+			wot.bind("message:ads:closecommand", wot.featured.wrapper.on_closecommand);
 		},
 
 		show_ad: function () {
-			var _ads = wot.ads,
-				_this = _ads.wrapper;
+			var _ftrd = wot.featured,
+				_this = _ftrd.wrapper;
 
-			var frame = document.getElementById(_ads.ad_frame_id);
+			var frame = document.getElementById(_ftrd.frame_id);
 			if (frame) {
 				frame.style.visibility = "visible";     // make it visible
 
@@ -154,12 +154,12 @@ wot.ads = {
 				});
 
 				wot.post("ads", "shown", {
-					target: _ads.target,
-					config_version: _ads.config.config_version,
-					impression_id: _ads.impression_id
+					target: _ftrd.target,
+					config_version: _ftrd.config.config_version,
+					impression_id: _ftrd.impression_id
 				});
 
-				var fade_delay = Number(_ads.config.fade_delay_secs || 0);
+				var fade_delay = Number(_ftrd.config.fade_delay_secs || 0);
 				if (fade_delay) {
 					_this.fadeout_timer = window.setTimeout(_this.hide_ad, fade_delay * 1000);
 				}
@@ -167,68 +167,54 @@ wot.ads = {
 		},
 
 		hide_ad: function (method, port) {
-			var _ads = wot.ads,
-				_this = _ads.wrapper;
+			var _f = wot.featured;
 
 			method = method || "auto";
 
-			var frame = document.getElementById(_ads.ad_frame_id);
+			var frame = document.getElementById(_f.frame_id);
 			if (frame) {
 				frame.style.visibility = "hidden";
 
 				wot.post("ads", "hidden", {
 					location: window.location.href,
-					config_version: _ads.config.config_version,
+					config_version: _f.config.config_version,
 					method: method
 				}, port);
 			}
 		},
 
 		on_closecommand: function(port, data) {
-			// Removes ad frame from DOM
-			console.log("on_closecommand()");
-			wot.ads.wrapper.hide_ad("close", port.port);
+			// Removes featured frame from DOM
+//			console.log("on_closecommand()");
+			wot.featured.wrapper.hide_ad("close", port.port);
 		},
 
 
 		get_ad_src: function () {
-			// make the URL to WOT Ad
-			var _ads = wot.ads,
-				_this = this,
+			// make the URL to WOT featured content
+			var _ftrd = wot.featured,
 				params;
 
 			params = {
-				impression_id: _ads.impression_id
+				impression_id: _ftrd.impression_id
 			};
 
-//			var config_keys = [];
-//
-//			var config = {};
-//			for (var i = 0; i < config_keys.length; i++) {
-//				var k = config_keys[i];
-//				config[k] = wot.ads.config[k];
-//			}
-//			params.config = window.btoa(JSON.stringify(config));
-
-			return chrome.extension.getURL("/widgets/ad-01.html") + "?" + wot.utils.query_param(params);
+			return chrome.extension.getURL("/widgets/featured-01.html") + "?" + wot.utils.query_param(params);
 		}
 	},
 
 	// Methods related to JS that runs in the Ads frame
 	inside: {
 
-		AD_BASEURL: /^.*widgets\/ad-01\.html/i,
+		FT_BASEURL: /^.*widgets\/featured-01\.html/i,
 		ad_hover_counter: 0,
 
 		test_ads_url: function (url) {
-			console.log("Ads.inside:test_ads_url()", url);
+//			console.log("Featured.inside:test_ads_url()", url);
+			var _this = this;
+//			console.log(_this.FT_BASEURL.test(url));
 
-			var _ads = wot.ads,
-				_this = this;
-
-			console.log(_this.AD_BASEURL.test(url));
-
-			return _this.AD_BASEURL.test(url);    // TODO: make real check whether the script is loaded for the ads page
+			return _this.FT_BASEURL.test(url);    // TODO: make real check whether the script is loaded for the Featured page
 		},
 
 		start: function () {
@@ -236,9 +222,9 @@ wot.ads = {
 
 			// * get config
 			var params = wot.utils.getParams(location.search.slice(1)); // extract params from the query
-			console.log("Ad page with params", params);
+//			console.log("Featured page with params", params);
 
-			wot.ads.impression_id = params.impression_id;
+			wot.featured.impression_id = params.impression_id;
 
 			wot.bind("message:ads:config", _this.on_config);
 			wot.listen(["ads"]);
@@ -248,15 +234,15 @@ wot.ads = {
 		},
 
 		on_config: function (port, data) {
-			console.log("Data for the AD page", data);
+//			console.log("Data for the Featured page", data);
 
-			var _this = wot.ads.inside;
+			var _this = wot.featured.inside;
 
-			wot.ads.target = data.target;
-			wot.ads.config = data.config;
+			wot.featured.target = data.target;
+			wot.featured.config = data.config;
 
 			// * Prepare the page
-			_this.localize(wot.ads.config);
+			_this.localize(wot.featured.config);
 
 			_this.build_adlinks(data.adlinks);
 
@@ -304,9 +290,9 @@ wot.ads = {
 
 		report_back: function (msg, params) {
 			var def_params = {
-				target: wot.ads.target,
-				impression_id: wot.ads.impression_id,
-				config_version: wot.ads.config.config_version
+				target: wot.featured.target,
+				impression_id: wot.featured.impression_id,
+				config_version: wot.featured.config.config_version
 			};
 
 			var new_params = $.extend({}, def_params, params);
@@ -315,11 +301,11 @@ wot.ads = {
 		},
 
 		on_closeicon: function () {
-			wot.ads.inside.report_back("closeicon", {});
+			wot.featured.inside.report_back("closeicon", {});
 		},
 
 		on_adlink_click: function (event) {
-			var _this = wot.ads.inside,
+			var _this = wot.featured.inside,
 				$adlink = $(this),
 				link_position = $.inArray($adlink.closest(".adlink-item")[0], $(".adlink-item"));
 
@@ -330,18 +316,18 @@ wot.ads = {
 		},
 
 		on_ad_hover: function (event) {
-			var _this = wot.ads.inside;
+			var _this = wot.featured.inside;
 
 			_this.ad_hover_counter++;
 			_this.report_back("adhover", { count: _this.ad_hover_counter });
 		},
 
 		on_optout: function (event) {
-			var _this = wot.ads.inside;
+			var _this = wot.featured.inside;
 			_this.report_back("optout", {});
 		}
 	}
 
 };
 
-wot.ads.onload();
+wot.featured.onload();
