@@ -41,51 +41,6 @@ $.extend(wot, { featured: {
 
 	per_website: {},        // timings and other params per website
 
-	ADTARGETS: [
-		"chainreactioncycles.com",
-		"bike-discount.de",
-		"cyclingnews.com",
-		"bikeradar.com",
-		"roseversand.de",
-		"bike-components.de",
-		"wiggle.co.uk",
-		"bike24.de",
-		"evanscycles.com",
-		"hibike.de",
-		"actionsports.de",
-		"wiggle.com",
-		"merlincycles.com",
-		"bikeinn.com",
-		"fun-corner.de",
-		"starbike.com",
-		"cyclestore.co.uk",
-		"probikekit.co.uk",
-		"winstanleysbikes.co.uk",
-		"cyclesurgery.com",
-		"rutlandcycling.com",
-		"rosebikes.com",
-		"salden.nl",
-		"ukbikestore.co.uk",
-		"fahrrad24.de",
-		"islabikes.co.uk",
-		"wheelbase.co.uk",
-		"islabikes.com",
-		"velonews.com",
-		"chainreactioncycles.co.uk",
-		"rosebikes.de",
-		"roseversand.com",
-		"ukbikestore.com"
-	],
-
-	ADLINKS: [
-		"bike-discount.de",
-		"wiggle.co.uk",
-		"bike24.de",
-		"fun-corner.de",
-		"evanscycles.com",
-		"roseversand.com"
-	],
-
 	// Module functions
 	load_config: function (callback) {
 		var _this = this;
@@ -291,10 +246,12 @@ $.extend(wot, { featured: {
 		// config.adlinks_number
 		// config.adlinks_method
 
+		if (!config.adlinks) return [];
+
 		var method = config.adlinks_method || "static",
 			adlinks_number = config.adlinks_number || 1;
 
-		var copied = _this.ADLINKS.slice(0);    // make a copy
+		var copied = config.adlinks.slice(0);    // make a copy
 
 		// remove current targethostname from the copied list
 		var current_p = copied.indexOf(impression.targethostname);
@@ -308,7 +265,7 @@ $.extend(wot, { featured: {
 
 		switch (method) {
 			case "static":
-				res = _this.ADLINKS.slice(0, adlinks_number);
+				res = config.adlinks.slice(0, adlinks_number);
 				break;
 
 			case "random":
@@ -336,7 +293,7 @@ $.extend(wot, { featured: {
 			return false;
 		}
 
-		var targets = _this.ADTARGETS;
+		var targets = _this.config.adtargets || [];
 		var positive = true;
 
 		// Check current target
