@@ -1,5 +1,5 @@
 {
-	"config_version":           "20131202-1",
+	"config_version":           "20131205-1",
 	"activityscore_limit":      "3000",
 	"relaxed_secs":             "0",
 	"locales":                  ["en"],
@@ -10,12 +10,12 @@
 	"fade_delay_secs":          "20",
 	"pre_visible":              "100",
 	"frame_width":              "320",
-	"frame_height":             "200",
+	"frame_height":             "160",
 	"css":                      "right: 0px; -webkit-transition: right 0.6s; bottom: 40px; position: fixed; border-radius: 0px; border: 1px solid rgba(128, 128, 128, 0.5); visibility: hidden; box-shadow: 2px 2px 18px #000; z-index: 2147483647;",
-	"adlinks_number":           "3",
+	"adlinks_number":           "1",
 	"adlinks_method":           "random",
 	"ad_titlehint":             "featured",
-	"ad_title":                 "Alternatives from Web of Trust",
+	"ad_title":                 "Xmas sale ongoing at",
 	"adtargets": [
 		"chainreactioncycles.com",
 		"bike-discount.de",
@@ -52,11 +52,7 @@
 		"ukbikestore.com"
 	],
 	"adlinks": [
-		"bike-discount.de",
-		"wiggle.co.uk",
-		"bike24.de",
-		"fun-corner.de",
-		"evanscycles.com",
-		"roseversand.com"
+		"pedalon.co.uk",
+		"fun-corner.de"
 	]
 }
