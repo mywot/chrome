@@ -25,6 +25,10 @@ body {
     width: 580px;
 }
 
+textarea {
+    resize: none;
+}
+
 #wot-ratingwindow {
     display: block;
     padding: 10px 16px 0;
