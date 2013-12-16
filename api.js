@@ -22,7 +22,7 @@ $.extend(wot, { api: {
 	info: {
 		maxhosts: 100,
 		maxparamlength: 4096,
-		server: "api.mywot.com",
+		server: "vor.dev.mywot.com",
 		secure: true,
         prefetch_link: false,   // if true, /link API will fetch user's testimonies
 		updateformat: 4,
@@ -749,7 +749,7 @@ $.extend(wot, { api: {
 
     comments: {
 
-        server: "www.mywot.com",
+        server: "dev.mywot.com",
         version: "1",   // Comments API version
         PENDING_COMMENT_SID: "pending_comment:",
         PENDING_REMOVAL_SID: "pending_removal:",
@@ -823,7 +823,7 @@ $.extend(wot, { api: {
                     }
                 }
 
-                // the add-on does NOT have permissions for httpS://www.mywot.com so we use http and own encryption
+                // the add-on does NOT have permissions for httpS://dev.mywot.com so we use http and own encryption
                 var url = "http://" + this.server + (options.type == "POST" ? path : full_path);
                 var type = options.type;
 

@@ -1,519 +1,519 @@
 {
     "locale": {
         "message": "zh_CN"
-    }, 
+    },
     "lang": {
         "message": "zh-CN"
-    }, 
+    },
     "ext_description": {
         "message": "WOT 根据世界各地数百万用户的经验向您显示您可以信任的网站。WOT 使用快速方便，而且完全免费。"
-    }, 
+    },
     "components_0": {
         "message": "可信程度"
-    }, 
+    },
     "components_4": {
         "message": "儿童安全性"
-    }, 
+    },
     "components__short_0": {
         "message": "可信程度"
-    }, 
+    },
     "components__short_4": {
         "message": "儿童安全性"
-    }, 
+    },
     "reputationlevels_r0": {
-        "message": "未知", 
+        "message": "未知",
         "description": ""
-    }, 
+    },
     "reputationlevels_r1": {
         "message": "极差"
-    }, 
+    },
     "reputationlevels_r2": {
         "message": "较差"
-    }, 
+    },
     "reputationlevels_r3": {
         "message": "令人不满意"
-    }, 
+    },
     "reputationlevels_r4": {
         "message": "较好"
-    }, 
+    },
     "reputationlevels_r5": {
         "message": "极佳"
-    }, 
+    },
     "messages_initializing": {
         "message": "正在初始化 WOT…"
-    }, 
+    },
     "messages_notready": {
         "message": "正在激活 WOT…"
-    }, 
+    },
     "messages_failed": {
         "message": "未能加载评级；将立即重试。"
-    }, 
+    },
     "messages_notavailable": {
         "message": "评级不可用。"
-    }, 
+    },
     "messages_loading": {
         "message": "正在加载评级…"
-    }, 
+    },
     "ratingwindow_settings": {
         "message": "设置"
-    }, 
+    },
     "ratingwindow_guide": {
-        "message": "演示", 
+        "message": "演示",
         "description": ""
-    }, 
+    },
     "ratingwindow_forum": {
         "message": "论坛"
-    }, 
+    },
     "ratingwindow_profile": {
-        "message": "我的档案", 
+        "message": "我的档案",
         "description": ""
-    }, 
+    },
     "ratingwindow_wotrating": {
         "message": "WOT用户说",
         "description": ""
-    }, 
+    },
     "ratingwindow_myrating": {
         "message": "我的评级"
-    }, 
+    },
     "ratingwindow_viewscorecard": {
-        "message": "查看详情及评论", 
+        "message": "查看详情及评论",
         "description": ""
-    }, 
+    },
     "ratingwindow_addcomment": {
-        "message": "添加评论", 
+        "message": "添加评论",
         "description": ""
-    }, 
+    },
     "ratingwindow_editcomment": {
-        "message": "编辑评论", 
+        "message": "编辑评论",
         "description": ""
-    }, 
+    },
     "ratingwindow_backtoratings": {
         "message": "后退至理由列表",
         "description": ""
-    }, 
+    },
     "ratingwindow_backtoratings_category": {
         "message": "选择一个理由",
         "description": ""
-    }, 
+    },
     "ratingwindow_newversion": {
         "message": "有新版本可用 – 单击进行更新"
-    }, 
+    },
     "ratingwindow_invite_rw": {
-        "message": "您可以使用此工具评价网站。在颜色条上选择不同颜色以表示您对网站的信任程度。", 
+        "message": "您可以使用此工具评价网站。在颜色条上选择不同颜色以表示您对网站的信任程度。",
         "description": ""
-    }, 
+    },
     "warnings_information": {
-        "message": "查看详情及评论", 
+        "message": "查看详情及评论",
         "description": ""
-    }, 
+    },
     "warnings_ratesite": {
-        "message": "若您信任此网站，请<a>评价</a>", 
+        "message": "若您信任此网站，请<a>评价</a>",
         "description": ""
-    }, 
+    },
     "warnings_reratesite": {
-        "message": "<a>点击这里</a> 如果您想重新评价网站", 
+        "message": "<a>点击这里</a> 如果您想重新评价网站",
         "description": ""
-    }, 
+    },
     "warnings_reputation": {
         "message": "此网站的声誉较差"
-    }, 
+    },
     "warnings_rating": {
         "message": "您已将此网站评为较差等级，<br/>该评级触发了警告"
-    }, 
+    },
     "warnings_unknown": {
         "message": "此网站的评级未知"
-    }, 
+    },
     "warnings_warning": {
         "message": "警告!"
-    }, 
+    },
     "warnings_goto": {
         "message": "进入该网站"
-    }, 
+    },
     "warnings_leave": {
-        "message": "退出", 
+        "message": "退出",
         "description": ""
-    }, 
+    },
     "warnings_back": {
         "message": "回去"
-    }, 
+    },
     "warnings_reasontitle": {
-        "message": "用户已经指出以下问题", 
+        "message": "用户已经指出以下问题",
         "description": ""
-    }, 
+    },
     "warnings_othersreasontitle": {
-        "message": "其他用户的意见", 
+        "message": "其他用户的意见",
         "description": ""
-    }, 
+    },
     "warnings_noreasontitle": {
-        "message": "其他用户并没有指出给网站的问题，只给出了评价", 
+        "message": "其他用户并没有指出给网站的问题，只给出了评价",
         "description": ""
-    }, 
+    },
     "contextmenu_open_scorecard": {
-        "message": "公开 WOT 记分卡", 
+        "message": "公开 WOT 记分卡",
         "description": ""
-    }, 
+    },
     "wt_learnmore_link": {
-        "message": "<a id='wt-learnmore-link'>了解更多</a>关于 WOT 的信息。", 
+        "message": "<a id='wt-learnmore-link'>了解更多</a>关于 WOT 的信息。",
         "description": ""
-    }, 
+    },
     "wt_intro_0_msg": {
-        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>全新 WOT 已添加至您的浏览器。</p><p>单击此图标开始对网站评级 {ICO1}</p><p>{WT_LEARNMORE}</p>", 
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>全新 WOT 已添加至您的浏览器。</p><p>单击此图标开始对网站评级 {ICO1}</p><p>{WT_LEARNMORE}</p>",
         "description": ""
-    }, 
+    },
     "wt_intro_0_btn": {
-        "message": "好，可以了", 
+        "message": "好，可以了",
         "description": ""
-    }, 
+    },
     "wt_warning_text": {
-        "message": "<p>当您要访问的网站，在其他用户处的的声誉评级不佳，或在第三方机构的黑名单中，WOT 将警告您。此警告也将向您显示声誉不佳背后的原因。</p><p>{WT_LEARNMORE}</p><p>如果您不想看到这些警告，您可以关闭此功能。</p>", 
+        "message": "<p>当您要访问的网站，在其他用户处的的声誉评级不佳，或在第三方机构的黑名单中，WOT 将警告您。此警告也将向您显示声誉不佳背后的原因。</p><p>{WT_LEARNMORE}</p><p>如果您不想看到这些警告，您可以关闭此功能。</p>",
         "description": ""
-    }, 
+    },
     "wt_warning_turnoff": {
-        "message": "关闭警告功能", 
+        "message": "关闭警告功能",
         "description": ""
-    }, 
+    },
     "wt_warning_ok": {
-        "message": "好，可以了", 
+        "message": "好，可以了",
         "description": ""
-    }, 
+    },
     "wt_rw_text_hdr": {
-        "message": "分享您的经验！", 
+        "message": "分享您的经验！",
         "description": ""
-    }, 
+    },
     "wt_rw_text": {
-        "message": "<p>WOT 评级视窗为您显示基于其他用户经验的网站声誉。现在您可直接在已更新的视窗中评级并发表评论。单击彩色横条开始评级。</p><p class='wot-c'><a id='wt-learnmore-link'>了解更多</a> 关于 WTO 的信息。</p>", 
+        "message": "<p>WOT 评级视窗为您显示基于其他用户经验的网站声誉。现在您可直接在已更新的视窗中评级并发表评论。单击彩色横条开始评级。</p><p class='wot-c'><a id='wt-learnmore-link'>了解更多</a> 关于 WTO 的信息。</p>",
         "description": ""
-    }, 
+    },
     "wt_donut_msg": {
-        "message": "<p>WOT 通过显示红绿灯风格的图标，向您展示基于其他用户经验的网站声誉。</p><p>将鼠标悬停在此图标上查看声誉并了解原因。</p>", 
+        "message": "<p>WOT 通过显示红绿灯风格的图标，向您展示基于其他用户经验的网站声誉。</p><p>将鼠标悬停在此图标上查看声誉并了解原因。</p>",
         "description": ""
-    }, 
+    },
     "wt_donut_btn": {
-        "message": "好，可以了", 
+        "message": "好，可以了",
         "description": ""
-    }, 
+    },
     "fbl_hideforever": {
-        "message": "永久隐藏", 
+        "message": "永久隐藏",
         "description": ""
-    }, 
+    },
     "fbl_submit": {
-        "message": "提交", 
+        "message": "提交",
         "description": ""
-    }, 
+    },
     "fbl_whatisthis": {
-        "message": "这是什么？", 
+        "message": "这是什么？",
         "description": ""
-    }, 
+    },
     "fbl_optout_text": {
-        "message": "如果您不想被提问，请点击“是”", 
+        "message": "如果您不想被提问，请点击“是”",
         "description": ""
-    }, 
+    },
     "fbl_optout_yes": {
-        "message": "是", 
+        "message": "是",
         "description": ""
-    }, 
+    },
     "fbl_optout_no": {
-        "message": "否", 
+        "message": "否",
         "description": ""
-    }, 
+    },
     "fbl_whatisthis_text": {
-        "message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> 正在为百万用户的网络浏览安全和质量努力。每次看见该提示时，您可以提交您的意见，以帮助其他用户。",
+        "message": "<a href='http://dev.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> 正在为百万用户的网络浏览安全和质量努力。每次看见该提示时，您可以提交您的意见，以帮助其他用户。",
         "description": ""
-    }, 
+    },
     "fbl_final": {
-        "message": "谢谢！", 
+        "message": "谢谢！",
         "description": ""
-    }, 
+    },
     "fbl_this_website": {
-        "message": "该网站", 
+        "message": "该网站",
         "description": ""
-    }, 
+    },
     "fbl_dismiss": {
-        "message": "放弃", 
+        "message": "放弃",
         "description": ""
-    }, 
+    },
     "ratingwindow_question0": {
-        "message": "您对该网站的信任程度如何？", 
+        "message": "您对该网站的信任程度如何？",
         "description": ""
-    }, 
+    },
     "ratingwindow_question4": {
-        "message": "该网站对儿童来说是否合适？", 
+        "message": "该网站对儿童来说是否合适？",
         "description": ""
-    }, 
+    },
     "ratingwindow_categories": {
         "message": "至少提供一个理由",
         "description": ""
-    }, 
+    },
     "ratingwindow_comment": {
         "message": "发表评论",
         "description": ""
-    }, 
+    },
     "ratingwindow_comment_placeholder": {
         "message": "在这里描述你的经验…",
         "description": ""
-    }, 
+    },
     "ratingwindow_comment_regtext": {
-        "message": "您需要登录账户才能发表评论。", 
+        "message": "您需要登录账户才能发表评论。",
         "description": ""
-    }, 
+    },
     "ratingwindow_comment_register": {
-        "message": "现在注册一个账户吧", 
+        "message": "现在注册一个账户吧",
         "description": ""
-    }, 
+    },
     "ratingwindow_comment_captchatext": {
-        "message": "您必须在记分卡上输入验证码才能发表评论。", 
+        "message": "您必须在记分卡上输入验证码才能发表评论。",
         "description": ""
-    }, 
+    },
     "ratingwindow_comment_captchalink": {
-        "message": "打开记分卡", 
+        "message": "打开记分卡",
         "description": ""
-    }, 
+    },
     "ratingwindow_commenthints": {
-        "message": "<p>请尽量精确</p><p>给出证明或例子</p><p>根据您的真实体验给出评论</p><p>Do not spam</p>", 
+        "message": "<p>请尽量精确</p><p>给出证明或例子</p><p>根据您的真实体验给出评论</p><p>Do not spam</p>",
         "description": ""
-    }, 
+    },
     "ratingwindow_novoted": {
         "message": "点击这里提供理由",
         "description": ""
-    }, 
+    },
     "ratingwindow_morecats": {
-        "message": "更多", 
+        "message": "更多",
         "description": ""
-    }, 
+    },
     "ratingwindow_rerate_change": {
-        "message": "更改", 
+        "message": "更改",
         "description": ""
-    }, 
+    },
     "ratingwindow_rerate_category": {
-        "message": " ", 
+        "message": " ",
         "description": "TODO: TRANSLATE"
-    }, 
+    },
     "ratingwindow_fulllist": {
-        "message": "显示完整列表", 
+        "message": "显示完整列表",
         "description": ""
-    }, 
+    },
     "ratingwindow_vote_yes": {
-        "message": "是", 
+        "message": "是",
         "description": ""
-    }, 
+    },
     "ratingwindow_vote_no": {
         "message": "我不认同",
         "description": ""
-    }, 
+    },
     "messages_ready": {
-        "message": "网站声誉", 
+        "message": "网站声誉",
         "description": ""
-    }, 
+    },
     "testimony_0_levels_r0": {
-        "message": "点击颜色条以评价", 
+        "message": "点击颜色条以评价",
         "description": ""
-    }, 
+    },
     "testimony_0_levels_r1": {
-        "message": "我不信任", 
+        "message": "我不信任",
         "description": ""
-    }, 
+    },
     "testimony_0_levels_r2": {
-        "message": "我不信任", 
+        "message": "我不信任",
         "description": ""
-    }, 
+    },
     "testimony_0_levels_r3": {
-        "message": "该网站有可疑", 
+        "message": "该网站有可疑",
         "description": ""
-    }, 
+    },
     "testimony_0_levels_r4": {
-        "message": "我信任", 
+        "message": "我信任",
         "description": ""
-    }, 
+    },
     "testimony_0_levels_r5": {
-        "message": "我信任", 
+        "message": "我信任",
         "description": ""
-    }, 
+    },
     "testimony_4_levels_r0": {
-        "message": "点击颜色条以评价", 
+        "message": "点击颜色条以评价",
         "description": ""
-    }, 
+    },
     "testimony_4_levels_r1": {
-        "message": "不合适", 
+        "message": "不合适",
         "description": ""
-    }, 
+    },
     "testimony_4_levels_r2": {
-        "message": "不合适", 
+        "message": "不合适",
         "description": ""
-    }, 
+    },
     "testimony_4_levels_r3": {
-        "message": "请小心", 
+        "message": "请小心",
         "description": ""
-    }, 
+    },
     "testimony_4_levels_r4": {
-        "message": "合适", 
+        "message": "合适",
         "description": ""
-    }, 
+    },
     "testimony_4_levels_r5": {
-        "message": "合适", 
+        "message": "合适",
         "description": ""
-    }, 
+    },
     "testimony_unrated": {
-        "message": "无意见", 
+        "message": "无意见",
         "description": ""
-    }, 
+    },
     "testimony_delete": {
-        "message": "删除", 
+        "message": "删除",
         "description": ""
-    }, 
+    },
     "buttons_delete": {
-        "message": "删除评价", 
+        "message": "删除评价",
         "description": ""
-    }, 
+    },
     "buttons_delete_title": {
-        "message": "删除我对此网站的评价及选择的分类", 
+        "message": "删除我对此网站的评价及选择的分类",
         "description": ""
-    }, 
+    },
     "buttons_cancel": {
-        "message": "取消", 
+        "message": "取消",
         "description": ""
-    }, 
+    },
     "buttons_save": {
-        "message": "保存", 
+        "message": "保存",
         "description": ""
-    }, 
+    },
     "buttons_ok": {
-        "message": "好", 
+        "message": "好",
         "description": ""
-    }, 
+    },
     "popup_headertext": {
-        "message": "点击查看详情", 
+        "message": "点击查看详情",
         "description": ""
-    }, 
+    },
     "popup_nocattext": {
-        "message": "分享您关于此网站的意见", 
+        "message": "分享您关于此网站的意见",
         "description": ""
-    }, 
+    },
     "ratingwindow_thankyou": {
-        "message": "感谢您的经验分享", 
+        "message": "感谢您的经验分享",
         "description": ""
-    }, 
+    },
     "activityscore_text": {
-        "message": "您的最新活动分数为", 
+        "message": "您的最新活动分数为",
         "description": ""
-    }, 
+    },
     "activityscore_rookie": {
-        "message": "新手", 
+        "message": "新手",
         "description": ""
-    }, 
+    },
     "activityscore_bronze": {
-        "message": "铜牌用户", 
+        "message": "铜牌用户",
         "description": ""
-    }, 
+    },
     "activityscore_silver": {
-        "message": "银牌用户", 
+        "message": "银牌用户",
         "description": ""
-    }, 
+    },
     "activityscore_gold": {
-        "message": "金牌用户", 
+        "message": "金牌用户",
         "description": ""
-    }, 
+    },
     "activityscore_platinum": {
-        "message": "白金用户", 
+        "message": "白金用户",
         "description": ""
-    }, 
+    },
     "activityscore_next": {
-        "message": "不断作出评价，不断升级吧{NEXT_LEVEL}！", 
+        "message": "不断作出评价，不断升级吧{NEXT_LEVEL}！",
         "description": ""
-    }, 
+    },
     "bl_description": {
-        "message": "某第三方黑名单包含该网站。", 
+        "message": "某第三方黑名单包含该网站。",
         "description": ""
-    }, 
+    },
     "bl_description_pl": {
-        "message": "数个第三方黑名单包含该网站。", 
+        "message": "数个第三方黑名单包含该网站。",
         "description": ""
-    }, 
+    },
     "bl_information": {
-        "message": "WOT 用户使用第三方黑名单来警告用户可能的技术威胁，例如病毒和恶意软件。<a>阅读更多</a>", 
+        "message": "WOT 用户使用第三方黑名单来警告用户可能的技术威胁，例如病毒和恶意软件。<a>阅读更多</a>",
         "description": ""
-    }, 
+    },
     "bl_malware": {
-        "message": "恶意软件", 
+        "message": "恶意软件",
         "description": ""
-    }, 
+    },
     "bl_phishing": {
-        "message": "网络钓鱼", 
+        "message": "网络钓鱼",
         "description": ""
-    }, 
+    },
     "bl_scam": {
-        "message": "网络诈骗", 
+        "message": "网络诈骗",
         "description": ""
-    }, 
+    },
     "bl_spam": {
-        "message": "垃圾邮件", 
+        "message": "垃圾邮件",
         "description": ""
-    }, 
+    },
     "bl_tracking": {
-        "message": "跟踪用户", 
+        "message": "跟踪用户",
         "description": ""
-    }, 
+    },
     "bl_other": {
-        "message": "其他原因", 
+        "message": "其他原因",
         "description": ""
-    }, 
+    },
     "warning_button": {
-        "message": "评级详情", 
+        "message": "评级详情",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "warnings_message_rating": {
-        "message": "您已将此网站评为较差等级。", 
+        "message": "您已将此网站评为较差等级。",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "warnings_message_reputation": {
-        "message": "此网站的声誉较差。", 
+        "message": "此网站的声誉较差。",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "messages_offline": {
-        "message": "浏览器脱机时禁用。", 
+        "message": "浏览器脱机时禁用。",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "messages_disabled": {
         "message": "您已禁用了加载项",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "auto_update_title": {
-        "message": "WOT 更新", 
+        "message": "WOT 更新",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "auto_update_button_yes": {
-        "message": "立即更新", 
+        "message": "立即更新",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "description_restart": {
-        "message": "重启浏览器激活WOT。", 
+        "message": "重启浏览器激活WOT。",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "messages_error_register": {
-        "message": "未能激活加载项；将立即重试。", 
+        "message": "未能激活加载项；将立即重试。",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "warning": {
-        "message": "WOT 警告: %S", 
+        "message": "WOT 警告: %S",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "description_uninstall": {
-        "message": "重启后将卸载WOT。", 
+        "message": "重启后将卸载WOT。",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "warnings_blocked": {
-        "message": "已阻止", 
+        "message": "已阻止",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "auto_update_check": {
-        "message": "启用自动更新(推荐)", 
+        "message": "启用自动更新(推荐)",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "auto_update_button_no": {
-        "message": "稍后提醒我", 
+        "message": "稍后提醒我",
         "description": "imported from firefox add-on"
-    }, 
+    },
     "auto_update_message": {
-        "message": "WOT 有新版本可用。 想要更新附件吗？", 
+        "message": "WOT 有新版本可用。 想要更新附件吗？",
         "description": "imported from firefox add-on"
     }
 }

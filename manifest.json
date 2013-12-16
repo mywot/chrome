@@ -18,6 +18,9 @@
 		"tabs",
 		"contextMenus",
 		"http://www.mywot.com/*",
+		"http://dev.mywot.com/*",
+		"http://vor.dev.mywot.com/*",
+		"https://vor.dev.mywot.com/*",
 		"http://api.mywot.com/*",
 		"https://api.mywot.com/*"
 	],
@@ -71,7 +74,9 @@
 			],
 			"exclude_matches":  [
 				"http://www.mywot.com/*",
-				"https://www.mywot.com/*"
+				"https://www.mywot.com/*",
+				"http://dev.mywot.com/*",
+				"https://dev.mywot.com/*"
 			],
 			"js": [
 				"wot.js",
@@ -89,7 +94,9 @@
 		}, {
 			"matches": [
 				"http://www.mywot.com/*",
-				"https://www.mywot.com/*"
+				"https://www.mywot.com/*",
+				"http://dev.mywot.com/*",
+				"https://dev.mywot.com/*"
 			],
 			"js": [
 				"wot.js",
