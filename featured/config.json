@@ -1,5 +1,5 @@
 {
-	"config_version":           "20131211-1",
+	"config_version":           "20131216-1",
 	"activityscore_limit":      "3000",
 	"relaxed_secs":             "0",
 	"locales":                  ["en"],
@@ -17,25 +17,7 @@
 	"ad_titlehint":             "featured",
 	"ad_title":                 "Alternatives from Web of Trust",
 	"adtargets": [
-		"nike.com",
-		"adidas.com",
-		"underarmour.com",
-		"newbalance.com",
-		"converse.com",
-		"skechers.com",
-		"vans.com",
-		"camper.com",
-		"timberland.com",
-		"puma.com",
-		"jordan.com",
-		"brooksrunning.com",
-		"asics.com",
-		"jumpman23.com",
-		"and1.com"
 	],
 	"adlinks": [
-		"footlocker.com",
-		"kickz.com",
-		"zalando.com"
 	]
 }
