@@ -23,6 +23,20 @@ body {
     cursor: default;
     -webkit-user-select: none;
     width: 580px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAK0lEQVQIW2NkwAL+Bwc/Y0QXBwuuXSuFIgETBCmGSyALwiXQBcES2ARBEgA0ORaS9123nAAAAABJRU5ErkJggg==);    /* Testing add-on */
+}
+
+#test-label {
+    position: absolute;
+    left: 222px;
+    top: -1px;
+    text-transform: uppercase;
+    font-family: arial;
+    font-weight: bold;
+    font-size: 11px;
+    color: #F00;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0 10px;
 }
 
 textarea {
