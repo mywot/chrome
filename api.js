@@ -23,7 +23,7 @@ $.extend(wot, { api: {
 		maxhosts: 100,
 		maxparamlength: 4096,
 		server: "vor.dev.mywot.com",
-		secure: true,
+		secure: false,
         prefetch_link: false,   // if true, /link API will fetch user's testimonies
 		updateformat: 4,
 		updateinterval: 3 * 3600 * 1000,
@@ -484,7 +484,7 @@ $.extend(wot, { api: {
 		}
 
 		this.call("register", {
-				secure: true
+				secure: false
 			}, {
 				retrycount: retrycount
 			},
