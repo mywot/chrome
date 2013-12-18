@@ -393,7 +393,7 @@ $.extend(wot, { ratingwindow: {
 
         /* target */
         if (_this.current.target && cached.status == wot.cachestatus.ok) {
-            visible_hostname = bg.wot.url.decodehostname(normalized_target);
+            visible_hostname = normalized_target;
             rw_title = wot.i18n("messages", "ready");
         } else if (cached.status == wot.cachestatus.busy) {
             rw_title = wot.i18n("messages", "loading");
