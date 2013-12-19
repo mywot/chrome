@@ -1365,10 +1365,19 @@ $.extend(wot, { ratingwindow: {
                 var helptext = wot.get_level_label(item.name, rep, true);
 
                 if (helptext.length) {
-                    elems.helptext.text(helptext).show();
-                    elems.helptext.attr("r", rep);
+	                var show_helptext = true;
+	                if (rep == "r0" && _rw.prefs.get("activity_score") >= 3000) {
+		                show_helptext = false;
+	                }
+
+	                if (show_helptext) {
+		                elems.helptext.text(helptext).show();
+		                elems.helptext.attr("r", rep);
+	                } else {
+		                elems.helptext.text("");
+	                }
                 } else {
-                    elems.helptext.hide();
+	                elems.helptext.hide();
                 }
             });
 
