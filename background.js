@@ -29,6 +29,7 @@ $.extend(wot, { core: {
         type: null,
         text: ""
     },
+	last_testimony: null,   // datetime of the last testimony submitted
 
 	loadratings: function (hosts, onupdate)
 	{
