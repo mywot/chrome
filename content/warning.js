@@ -23,6 +23,8 @@ wot.warning = {
 	exit_mode: "back",
 	wtip_shown_dt: null,    // time when welcome tip was shown (to measure time spent to read it)
 	target: "",
+	wrapper_id: "wotwrapper",
+	warning_id: "wotwarning",
 
 	make_categories_block: function (categories, options) {
 
@@ -50,7 +52,6 @@ wot.warning = {
         }
 
         return tmpl;
-
     },
 
     make_blacklists: function(blacklists, options) {
@@ -166,48 +167,6 @@ wot.warning = {
 		return -1;
 	},
 
-	hideobjects: function(hide) {
-		try {
-			var elems = [ "embed", "object", "iframe", "applet" ];
-
-			for (var i = 0; i < elems.length; ++i) {
-				var objs = document.getElementsByTagName(elems[i]);
-
-				for (var j = 0; objs && j < objs.length; ++j) {
-					if (hide) {
-						objs[j].setAttribute("wothidden",
-							objs[j].style.display || "block");
-						objs[j].style.display = "none";
-					} else {
-						var display = objs[j].getAttribute("wothidden");
-						if (display) {
-							objs[j].removeAttribute("wothidden");
-							objs[j].style.display = display;
-						}
-					}
-				}
-			}
-		} catch (e) {
-			console.log("warning.hideobjects: failed with " + e);
-		}
-	},
-
-	hide: function()
-	{
-		try {
-			var elems = [ document.getElementById("wotwarning"),
-						document.getElementById("wotwrapper") ];
-
-			for (var i = 0; i < elems.length; ++i) {
-				if (elems[i] && elems[i].parentNode) {
-					elems[i].parentNode.removeChild(elems[i]);
-				}
-			}
-		} catch (e) {
-			console.log("warning.hide: failed with " + e);
-		}
-	},
-
 	set_exitmode: function() {
 		if (window.history.length > 1) {
 			wot.warning.exit_mode = "back"; // note: don't change this string, there are code dependent on it
@@ -217,8 +176,6 @@ wot.warning = {
 	},
 
 	enter_to_site: function (target) {
-		wot.warning.hide();
-		wot.warning.hideobjects(false);
 		wot.post("warnings", "enter_button", { target: target });
 		wot.post("cache", "setflags", {
 				target: target,
@@ -227,31 +184,25 @@ wot.warning = {
 	},
 
 	add: function(data, reason, show_wtip) {
-		/* Obviously, this isn't exactly foolproof. A site might have
-			elements with a higher z-index, or it might try to remove
-			our layer... */
 
 		try {
 			if (!data.target || !data.cached || document.getElementById("wotwarning")) {
 				return;
 			}
 
+			this.target = data.target;
+
 			wot.warning.set_exitmode();
 
 			var accessible = this.settings.accessible ? "accessible" : "";
 			show_wtip = show_wtip || false;
 
-			this.target = data.target;
 
             var normalized_target = (data.cached.value &&
                 data.cached.value.normalized) ? data.cached.value.normalized : data.decodedtarget;
 
             var blacklists = (data.cached.value && data.cached.value.blacklist) ? data.cached.value.blacklist : [];
-//            blacklists = ["malware", "phishing","shit", "scam", "spam", "spam"];
-
             var is_blacklisted = blacklists && blacklists.length > 0;
-
-			var wt_text_2 = wot.i18n("wt", "warning_text_2") || "";
 			var wt_text = wot.i18n("wt", "warning_text") || "";
 
             var info_link = is_blacklisted ? wot.i18n("bl", "information") : wot.i18n("warnings", "information");
@@ -381,7 +332,7 @@ wot.warning = {
 				return;
 			}
 
-			warning.setAttribute("id", "wotwarning");
+			warning.setAttribute("id", wot.warning.warning_id);
 
 			// For child safety we'll set opaque background on adult sites
 			var data_4 = data.cached.value[4];
@@ -402,21 +353,16 @@ wot.warning = {
             var _cats = (data.cached.value && data.cached.value.cats) ? data.cached.value.cats : {},
                 categories = wot.select_identified(_cats);
 
-			wrapper.setAttribute("id", "wotwrapper");
+			wrapper.setAttribute("id", wot.warning.wrapper_id);
 
 			warning = body[0].appendChild(warning);
 			wrapper = body[0].appendChild(wrapper);
 
 			wrapper.innerHTML = wot.utils.processhtml(this.make_warning(categories, blacklists, {}), replaces);
-			this.hideobjects(true);
 
 			wot.post("warnings", "shown", { type: "overlay", target: data.decodedtarget });   // for counting in stats
 
-            document.getElementById("wotinfobutton").addEventListener("click",
-                function() {
-                    var url = wot.urls.scorecard + encodeURIComponent(data.target);
-                    window.location.href = wot.contextedurl(url, wot.urls.contexts.warnviewsc);
-                }, false);
+            document.getElementById("wotinfobutton").addEventListener("click", wot.warning.on_info_link, false);
 
 			document.getElementById("wot-btn-leave").addEventListener("click",function(e){
 				wot.post("warnings", "leave_button", {label: wot.warning.exit_mode});
@@ -448,13 +394,7 @@ wot.warning = {
 					wot.warning.enter_to_site(data.target);
 				} , false);
 
-			document.getElementById("wotrate-link").addEventListener("click",
-				function() {
-					var url = wot.urls.scorecard +
-						encodeURIComponent(data.target) + "/rate";
-
-					window.location.href = wot.contextedurl(url, wot.urls.contexts.warnrate);
-				}, false);
+			document.getElementById("wotrate-link").addEventListener("click", wot.warning.on_rate_link, false);
 
 			if (show_wtip) {
 				window.setTimeout(wot.warning.show_welcometip, 500);
@@ -463,6 +403,14 @@ wot.warning = {
 		} catch (e) {
 			console.log("warning.add: failed with " + e);
 		}
+	},
+
+	on_info_link: function () {
+		wot.post("search", "openscorecard", { target: wot.warning.target, ctx: wot.urls.contexts.warnviewsc })
+	},
+
+	on_rate_link: function () {
+		wot.post("search", "ratesite", { target: wot.warning.target, ctx: wot.urls.contexts.warnviewsc })
 	},
 
 	show_welcometip: function () {
@@ -532,18 +480,14 @@ wot.warning = {
 
 	onload: function()
 	{
-		if (window !== window.top) {
-			return;
-		}
-
-		/* wait for status updates and warn if necessary */
-		wot.bind("message:warning:show", function(port, data) {
+		wot.bind("message:warnings:show", function(port, data) {
 			wot.warning.settings = data.settings;
-            wot.init_categories(data.settings);
+	        wot.init_categories(data.settings);
 			wot.warning.add(data.data, data.type.reason, data.show_wtip);
+			wot.listen(["warning", "wt"]);
 		});
 
-		wot.listen(["warning", "wt", "surveys", "ads"]);
+		wot.post("warnings", "ready", {});  // report to BG that frame's content is loaded and ready to be shown
 	}
 };
 

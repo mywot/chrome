@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "2.4.5.1",
+	"version": "2.4.5.2",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -26,6 +26,7 @@
 	],
 	"content_security_policy": "style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
+		"content/warning.html",
 		"widgets/featured-01.html",
 		"widgets/surveys.html",
 		"skin/include/popup.css",
@@ -81,7 +82,7 @@
 			"js": [
 				"wot.js",
 				"content/common.js",
-                "content/warning.js",
+                "content/i-warning.js",
 				"content/url.js",
 				"content/popup.js",
 				"content/search.js",

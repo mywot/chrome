@@ -18,134 +18,132 @@
 	along with WOT. If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* ! important in an attempt to override conflicting styles on websites where this is included */
-
 #wotwarning, #wotwrapper {
-    position: fixed ! important;
-    left: 0 ! important;
-    top: 0 ! important;
-    height: 100% ! important;
-    width: 100% ! important;
-    margin: 0 ! important;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
     display: block;
     cursor: default;
     -webkit-user-select: none;
 }
 
 #wotwarning {
-    z-index: 2147483645 ! important;
-    background-color: #000000 ! important;
-    opacity: 0.8 ! important;
+    z-index: 2147483645;
+    background-color: #000000;
+    opacity: 0.8;
 }
 
 #wotwrapper {
-    z-index: 2147483646 !important;
-    background-color: transparent !important;
-    opacity: 1.0 !important;
+    z-index: 2147483646;
+    background-color: transparent;
+    opacity: 1.0;
 }
 
 #wotcontainer {
-    position: static !important;
-    width: 388px ! important;
-    margin: 0 auto 0 !important;
-    outline: 0 !important;
-    padding: 0 0 17px !important;
-    z-index: 2147483647 !important;
-    text-align: center !important;
-    font-family: "Arial", sans-serif !important;
+    position: static;
+    width: 388px;
+    margin: 0 auto 0;
+    outline: 0;
+    padding: 0 0 17px;
+    z-index: 2147483647;
+    text-align: center;
+    font-family: "Arial", sans-serif;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     border: #babbbb solid 1px;
     box-shadow: 5px 5px 20px #111;
-    background-color: #ffffff !important;
-    cursor: default !important;
-    color: #504f4f !important;
+    background-color: #ffffff;
+    cursor: default;
+    color: #504f4f;
     direction: ltr; /* fixes issue #64 */
     float: none; /* fixes #90 */
     height: auto; /* fixes #99 */
-    display: block !important; /* fixes #148 */
+    display: block; /* fixes #148 */
 }
 
 .wotcontainer * {
-    position: static !important;
-    line-height: normal !important;
-    font-family: "Arial", sans-serif !important;
-    font-weight: normal !important;
-    cursor: default !important;
-    font-size: 10pt !important;
-    letter-spacing: 0 !important;
-    opacity: 1.0 !important;
-    outline: 0 !important;
-    border: 0 !important;
-    vertical-align: baseline !important;
-    word-spacing: 0 !important;
-    padding: 0 0 0 0 !important;
-    text-decoration: none !important;
-    background-color: transparent !important;
-    text-align: center !important;
-    margin: 0 !important;
-    color: #504f4f !important;
+    position: static;
+    line-height: normal;
+    font-family: "Arial", sans-serif;
+    font-weight: normal;
+    cursor: default;
+    font-size: 10pt;
+    letter-spacing: 0;
+    opacity: 1.0;
+    outline: 0;
+    border: 0;
+    vertical-align: baseline;
+    word-spacing: 0;
+    padding: 0 0 0 0;
+    text-decoration: none;
+    background-color: transparent;
+    text-align: center;
+    margin: 0;
+    color: #504f4f;
     width: auto; /* fixes issue #64 */
     float: none; /* fixes issue #64 */
     height: auto; /* fixes #99 */
 }
 
 .wot-logo {
-    position: relative !important;
-    top: 10px !important;
-    left: 12px !important;
-    width: 42px !important;
-    height: 17px !important;
-    background: url("../fusion/logo.png") top left no-repeat !important;
+    position: relative;
+    top: 10px;
+    left: 12px;
+    width: 42px;
+    height: 17px;
+    background: url("../fusion/logo.png") top left no-repeat;
 }
 
 .wot-warning {
-    margin-top: 6px !important;
-    width: 100% !important;
-    text-align: center !important;
-    font-size: 25pt !important;
-    font-weight: 800 !important;
-    color: #504f4f !important;
-    text-shadow: 1px 1px 1px #fff !important;
+    margin-top: 6px;
+    width: 100%;
+    text-align: center;
+    font-size: 25pt;
+    font-weight: 800;
+    color: #504f4f;
+    text-shadow: 1px 1px 1px #fff;
 }
 
 .wot-title  {
-    margin: 4px auto !important;
-    max-width: 90% !important;
-    font-size: 12px !important;
-    font-weight: bold !important;
-    color: #454545 !important;
-    text-shadow: 1px 1px 1px #fff !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
-    padding: 0 0.5em 0.5em 0.5em !important;
-    text-overflow: ellipsis !important;
+    margin: 4px auto;
+    max-width: 90%;
+    font-size: 12px;
+    font-weight: bold;
+    color: #454545;
+    text-shadow: 1px 1px 1px #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 0.5em 0.5em 0.5em;
+    text-overflow: ellipsis;
 }
 
 .wot-desc {
-    margin-top: 0 !important;
-    font-size: 13px !important;
-    color: #454545 !important;
-    margin-bottom: 1em !important;
-    padding: 0 10px !important;
-    text-align: center !important;
+    margin-top: 0;
+    font-size: 13px;
+    color: #454545;
+    margin-bottom: 1em;
+    padding: 0 10px;
+    text-align: center;
 }
 
 /* Section of ratings */
 #wot-warn-ratings {
-    width: 63% !important;
-    margin: 0.5em auto !important;
+    width: 63%;
+    margin: 0.5em auto;
 }
 
 #wotcontainer.wotnoratings #wot-warn-ratings {
-    display: none !important;
+    display: none;
 }
 
 .wot-rep-components-wrapper {
     min-height: 105px;
-    background-color: #F5F5F5 !important;
-    border-top: 1px solid #D1D1D1 !important;
-    border-bottom: 1px solid #D1D1D1 !important;
+    background-color: #F5F5F5;
+    border-top: 1px solid #D1D1D1;
+    border-bottom: 1px solid #D1D1D1;
 }
 
 #wotcontainer.blacklist .wot-rep-components-wrapper {
@@ -156,150 +154,150 @@
 .wot-rep-components {
     /*clear: left;*/
     display: inline-block;
-    margin: 0 auto !important;
-    /*padding-left: 20px !important;*/
+    margin: 0 auto;
+    /*padding-left: 20px;*/
 }
 
 .wot-component {
-    position: relative !important;
-    text-align: left !important;
+    position: relative;
+    text-align: left;
     display: inline;
     float: left;
-    min-width: 140px !important;
-    margin-top: 10px !important;
+    min-width: 140px;
+    margin-top: 10px;
 }
 
 .wot-comp-name {
-    padding: 8px 0 0.5em 0 !important;
-    color: #454545 !important;
-    text-align: left !important;
-    font-size: 12px !important;
+    padding: 8px 0 0.5em 0;
+    color: #454545;
+    text-align: left;
+    font-size: 12px;
     white-space: nowrap;
-    min-height: 18px !important;
+    min-height: 18px;
 }
 
 .wot-rep-data {
-    position: relative !important;
-    margin-top: 4px !important;
-    margin-left: 0 !important;
-    display: inline !important;
+    position: relative;
+    margin-top: 4px;
+    margin-left: 0;
+    display: inline;
 }
 
 /* Donuts icons */
 .wot-comp-icon {
-    position: absolute !important;
-    background-image: url("../b/donuts_150.png") !important;
-    background-repeat: no-repeat !important;
-    background-position: 0 -165px !important;
-    background-size: 35px 198px !important;
-    height: 33px !important;
-    width: 35px !important;
-    margin-left: -5px !important;
-    margin-top: 10px !important;
+    position: absolute;
+    background-image: url("../b/donuts_150.png");
+    background-repeat: no-repeat;
+    background-position: 0 -165px;
+    background-size: 35px 198px;
+    height: 33px;
+    width: 35px;
+    margin-left: -5px;
+    margin-top: 10px;
 }
 
 #wotcontainer.accessible .wot-comp-icon {
-    background-image: url("../b/accessible/donuts_150.png") !important;
+    background-image: url("../b/accessible/donuts_150.png");
 }
 
 .wot-comp-icon[r="r1"] {
-    background-position: 0 -132px !important;
+    background-position: 0 -132px;
 }
 
 .wot-comp-icon[r="r2"] {
-    background-position: 0 -99px !important;
+    background-position: 0 -99px;
 }
 
 .wot-comp-icon[r="r3"] {
-    background-position: 0 -66px !important;
+    background-position: 0 -66px;
 }
 
 .wot-comp-icon[r="r4"] {
-    background-position: 0 -33px !important;
+    background-position: 0 -33px;
 }
 
 .wot-comp-icon[r="r5"] {
-    background-position: 0 0 !important;
+    background-position: 0 0;
 }
 
 .wot-comp-conf {
-    position: absolute !important;
-    height: 42px !important;
-    margin-left: 26px !important;
-    margin-top: -2px !important;
-    width: 34px !important;
-    background: url("../b/confidence_150dpi.png") top left no-repeat !important;
-    background-size: 33px auto !important;
-    background-position: 0 -168px !important;
+    position: absolute;
+    height: 42px;
+    margin-left: 26px;
+    margin-top: -2px;
+    width: 34px;
+    background: url("../b/confidence_150dpi.png") top left no-repeat;
+    background-size: 33px auto;
+    background-position: 0 -168px;
 }
 
 .wot-comp-conf[c="c1"] {
-    background-position: 0 -126px !important;
+    background-position: 0 -126px;
 }
 .wot-comp-conf[c="c2"] {
-    background-position: 0 -84px !important;
+    background-position: 0 -84px;
 }
 .wot-comp-conf[c="c3"] {
-    background-position: 0 -42px !important;
+    background-position: 0 -42px;
 }
 .wot-comp-conf[c="c4"] {
-    background-position: 0 0 !important;
+    background-position: 0 0;
 }
 .wot-comp-conf[c="c5"] {
-    background-position: 0 -210px !important;
+    background-position: 0 -210px;
 }
 
 .rating-legend-wrapper {
-    position: relative !important;
-    margin: 3px 18px auto 74px !important;
-    background: url("../b/bubl_speech_c_150.png")  top left repeat-x !important;
-    background-size: 1px 23px !important;
-    height: 23px !important;
+    position: relative;
+    margin: 3px 18px auto 74px;
+    background: url("../b/bubl_speech_c_150.png")  top left repeat-x;
+    background-size: 1px 23px;
+    height: 23px;
     left: 1px;
     display: inline-block;
-    padding: 4px 0 !important;
+    padding: 4px 0;
 }
 
 .rating-legend-wrapper:before {
-    position: absolute !important;
-    content: "" !important;
-    height: 23px !important;
-    width: 17px !important;
-    background: url("../b/bubl_speech_l_150.png") top left no-repeat !important;
-    background-size: 17px 23px !important;
+    position: absolute;
+    content: "";
+    height: 23px;
+    width: 17px;
+    background: url("../b/bubl_speech_l_150.png") top left no-repeat;
+    background-size: 17px 23px;
     left: -17px;
     top: 0;
 }
 
 .rating-legend-wrapper:after {
-    position: absolute !important;
-    content: "" !important;
-    height: 23px !important;
-    width: 17px !important;
-    right: -17px !important;
-    background: url("../b/bubl_speech_r_150.png") top left no-repeat !important;
-    background-size: 10px 23px !important;
-    top: 0 !important;
+    position: absolute;
+    content: "";
+    height: 23px;
+    width: 17px;
+    right: -17px;
+    background: url("../b/bubl_speech_r_150.png") top left no-repeat;
+    background-size: 10px 23px;
+    top: 0;
 }
 
 .rating-legend {
-    position: relative !important;
-    height: 24px !important;
-    min-width: 48px !important;
-    margin: 2px 0 0em !important;
-    padding: 3px 4px 0 0px !important;
-    color: #454545 !important;
-    font-size: 12px !important;
-    text-align: center !important;
-    white-space: nowrap !important;
+    position: relative;
+    height: 24px;
+    min-width: 48px;
+    margin: 2px 0 0em;
+    padding: 3px 4px 0 0px;
+    color: #454545;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
     display: inline;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .ws-categories-area {
-    margin: 4px 0 0 !important;
-    padding: 0.4em 0 0 !important;
+    margin: 4px 0 0;
+    padding: 0.4em 0 0;
 }
 
 #wotcontainer.blacklist .ws-categories-area {
@@ -308,254 +306,254 @@
 }
 
 .ws-categories-title {
-    font-size: 12px !important;
-    font-weight: bold !important;
-    color: #888 !important;
-    padding-top: 8px !important;
+    font-size: 12px;
+    font-weight: bold;
+    color: #888;
+    padding-top: 8px;
 }
 
 #ws-categories-list {
-    margin: 8px 25px 0 74px !important;
-    text-align: left !important;
+    margin: 8px 25px 0 74px;
+    text-align: left;
 }
 
 .cat-item {
-    font-size: 9pt !important;
-    color: silver !important;
-    list-style: none !important;
-    padding: 0.25em 0 !important;
-    text-align: left !important;
-    background: none !important; /* issue fix */
+    font-size: 9pt;
+    color: silver;
+    list-style: none;
+    padding: 0.25em 0;
+    text-align: left;
+    background: none; /* issue fix */
 }
 
 .cat-item:before {
-    width: 1em !important;
-    height: 1em !important;
-    border: 1px solid #C0C0C0 !important;
-    background-color: #C0C0C0 !important;
-    border-radius: 50% !important;
-    content: "" !important;
-    position: absolute !important;
-    margin-left: -1.65em !important;
-    margin-top: 1px !important;
+    width: 1em;
+    height: 1em;
+    border: 1px solid #C0C0C0;
+    background-color: #C0C0C0;
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    margin-left: -1.65em;
+    margin-top: 1px;
 }
 
 .c-neutral.cat-item:before {
-    background-color: #707070 !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #9e9c9c 0%, #707070 100%) !important; /* Chrome10+,Safari5.1+ */
-    border-color: #7d7d7d !important;
+    background-color: #707070;
+    background: -webkit-radial-gradient(center, ellipse cover, #9e9c9c 0%, #707070 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #7d7d7d;
 }
 
 #wotcontainer.accessible .c-neutral.cat-item:before {
-    background-color: #707070 !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #9B9898 0%, #7E7E7E 100%) !important;
-    border-color: #707070 !important;
+    background-color: #707070;
+    background: -webkit-radial-gradient(center, ellipse cover, #9B9898 0%, #7E7E7E 100%);
+    border-color: #707070;
 }
 
 .c-questionable.cat-item:before {
-    background-color: #ffd100 !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #f8df68 0%, #f6cd0e 100%) !important; /* Chrome10+,Safari5.1+ */
-    border-color: #f6cd0e !important;
+    background-color: #ffd100;
+    background: -webkit-radial-gradient(center, ellipse cover, #f8df68 0%, #f6cd0e 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #f6cd0e;
 }
 
 #wotcontainer.accessible .c-questionable.cat-item:before {
-    background-color: #F6CD0E !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #FEE68A 0%, #F5CC33 100%) !important;
-    border-color: #F6CD0E !important;
+    background-color: #F6CD0E;
+    background: -webkit-radial-gradient(center, ellipse cover, #FEE68A 0%, #F5CC33 100%);
+    border-color: #F6CD0E;
 }
 
 .c-negative.cat-item:before {
-    background-color: #f66d3f !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #fca080 0%, #f77448 100%) !important; /* Chrome10+,Safari5.1+ */
-    border-color: #f66d3f !important;
+    background-color: #f66d3f;
+    background: -webkit-radial-gradient(center, ellipse cover, #fca080 0%, #f77448 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #f66d3f;
 }
 
 #wotcontainer.accessible .c-negative.cat-item:before {
     background-color: #1F1F1F;
-    background: -webkit-radial-gradient(center, ellipse cover,#939393 0%, #1F1F1F 100%) !important;
+    background: -webkit-radial-gradient(center, ellipse cover,#939393 0%, #1F1F1F 100%);
     border-color: #1F1F1F;
 }
 
 .c-positive.cat-item:before {
-    background-color: #68c800 !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #83d561 0%, #6dc14a 100%) !important; /* Chrome10+,Safari5.1+ */
-    border-color: #6dc14a !important;
+    background-color: #68c800;
+    background: -webkit-radial-gradient(center, ellipse cover, #83d561 0%, #6dc14a 100%); /* Chrome10+,Safari5.1+ */
+    border-color: #6dc14a;
 }
 
 #wotcontainer.accessible .c-positive.cat-item:before {
-    background-color: #B8B8B8 !important;
-    background: -webkit-radial-gradient(center, ellipse cover, #FDFDFD 0%, #F7F7F7 100%) !important;
-    border-color: #B8B8B8 !important;
+    background-color: #B8B8B8;
+    background: -webkit-radial-gradient(center, ellipse cover, #FDFDFD 0%, #F7F7F7 100%);
+    border-color: #B8B8B8;
 }
 
 .c0 {
-    font-size: 11px !important;
-    color: #a7a7a7 !important;
+    font-size: 11px;
+    color: #a7a7a7;
 }
 
 .c0.cat-item:before {
-    width: 4px !important;
-    height: 4px !important;
-    margin-left: -19px !important;
-    margin-top: 4px !important;
+    width: 4px;
+    height: 4px;
+    margin-left: -19px;
+    margin-top: 4px;
 }
 
 .c1 {
-    font-size: 12px !important;
-    color: #a7a7a7 !important;
+    font-size: 12px;
+    color: #a7a7a7;
 }
 
 .c1.cat-item:before {
-    width: 6px !important;
-    height: 6px !important;
-    margin-left: -20px !important;
-    margin-top: 3px !important;
+    width: 6px;
+    height: 6px;
+    margin-left: -20px;
+    margin-top: 3px;
 }
 
 .c2,
 .c3 {
-    font-size: 12px !important;
-    color: #646464 !important;
+    font-size: 12px;
+    color: #646464;
 }
 
 .c2.cat-item:before,
 .c3.cat-item:before {
-    width: 8px !important;
-    height: 8px !important;
-    margin-left: -21px !important;
-    margin-top: 2px !important;
+    width: 8px;
+    height: 8px;
+    margin-left: -21px;
+    margin-top: 2px;
 }
 
 .c4,
 .c5 {
-    font-size: 12px !important;
-    color: #5c5c5c !important;
-    font-weight: bold !important;
+    font-size: 12px;
+    color: #5c5c5c;
+    font-weight: bold;
 }
 
 .c4.cat-item:before,
 .c5.cat-item:before {
-    width: 10px !important;
-    height: 10px !important;
-    margin-left: -22px !important;
+    width: 10px;
+    height: 10px;
+    margin-left: -22px;
 }
 
 .wot-openscorecard-wrap {
-    margin-top: 14px !important;
-    text-align: left !important;
-    margin-left: 52px !important;
+    margin-top: 14px;
+    text-align: left;
+    margin-left: 52px;
 }
 
 #wotcontainer.blacklist .wot-openscorecard-wrap {
     /* in blacklist mode, align by center */
-    margin-left: 0 !important;
-    text-align: center !important;
+    margin-left: 0;
+    text-align: center;
 }
 
 #wotinfobutton,
 .wot-openscorecard {
-    padding: 0.4em 0 0.6em 0px !important;
-    font-size: 13px !important;
+    padding: 0.4em 0 0.6em 0px;
+    font-size: 13px;
 }
 
 .wot-link {
-    cursor: pointer !important;
-    color: #2353ce !important;
-    text-decoration: none !important;
+    cursor: pointer;
+    color: #2353ce;
+    text-decoration: none;
 }
 
 .wot-link:hover {
-    text-decoration: underline !important;
+    text-decoration: underline;
 }
 
 .wot-rateit-wrap {
-    margin: 14px auto 0 !important;
-    width: 80% !important;
+    margin: 14px auto 0;
+    width: 80%;
 }
 .wot-rateit-wrap span {
-    font-size: 12px !important;
+    font-size: 12px;
 }
 
 #wotrate-link {
-    font-size: 12px !important;
+    font-size: 12px;
 }
 
 /* bottom buttons row */
 .wot-buttons {
-    margin-top: 1em !important;
-    margin-bottom: 0.2em !important;
-    position: relative !important;
-    height: 32px !important;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+    position: relative;
+    height: 32px;
 }
 /* button's style */
 .wot-button {
-    display: inline !important;
-    float: left !important;
-    border-style: solid !important;
-    border-width: 1px !important;
-    border-top-color: #DFDFDF !important;
-    border-right-color: #C2C2C2 !important;
-    border-left-color: #D1CECE !important;
-    border-bottom-color: #AEAEAE !important;
-    padding: 0.5em 1.5em !important;
-    margin: 0.4em 1em !important;
+    display: inline;
+    float: left;
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: #DFDFDF;
+    border-right-color: #C2C2C2;
+    border-left-color: #D1CECE;
+    border-bottom-color: #AEAEAE;
+    padding: 0.5em 1.5em;
+    margin: 0.4em 1em;
     min-width: 95px;
-    border-radius: 2px !important;
-    font-size: 12px !important;
-    font-weight: bold !important;
-    color: #585858 !important;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #585858;
 
-    background-image: -webkit-linear-gradient(top, #FFF 0%, #e7e5e5 100%) !important;
-    box-shadow: 1px 1px 5px #d2d2d2 !important;
-    text-shadow: 1px 1px rgba(255,255,255,0.75) !important;
-    cursor: pointer !important;
+    background-image: -webkit-linear-gradient(top, #FFF 0%, #e7e5e5 100%);
+    box-shadow: 1px 1px 5px #d2d2d2;
+    text-shadow: 1px 1px rgba(255,255,255,0.75);
+    cursor: pointer;
 }
 
 .wot-button:hover {
-    background-image: -webkit-linear-gradient(top, #FFF 0%,#dadada 83%, #f3f1f1 100%) !important;
+    background-image: -webkit-linear-gradient(top, #FFF 0%,#dadada 83%, #f3f1f1 100%);
 }
 
 .wot-button:active {
-    box-shadow: 1px 1px 1px #d2d2d2 inset !important;
-    text-shadow: 0px 0px #DDD !important;
+    box-shadow: 1px 1px 1px #d2d2d2 inset;
+    text-shadow: 0px 0px #DDD;
 }
 
 #wot-btn-hide, #wot-btn-leave {
-    position: absolute !important;
+    position: absolute;
 }
 
 #wot-btn-hide {
-    left: 25px !important;
+    left: 25px;
 }
 
 #wot-btn-hide:active {
-    left: 26px !important;
+    left: 26px;
 }
 
 #wot-btn-leave {
-    right: 25px !important;
+    right: 25px;
 }
 
 #wot-btn-leave:active {
-    right: 24px !important;
+    right: 24px;
 }
 
 #wot-wt-warning-wrapper {
     width: 0;
     float: left;
-    position: relative !important;
+    position: relative;
     left: 390px;
     top: -40px;
 }
 
 .wot-wt-warning-content {
-    position: absolute !important;
+    position: absolute;
     width: 215px;
-    padding: 1em 1.5em 5.5em !important;
+    padding: 1em 1.5em 5.5em;
     border-color: white;
-    border-radius: 2px !important;
-    color: #757575 !important;
-    background-color: white !important;
+    border-radius: 2px;
+    color: #757575;
+    background-color: white;
     box-shadow: 0 0 7px 3px #aaa;
 }
 
@@ -564,61 +562,61 @@
     background-image: url(../b/welcometips/wt_left_corner_2.png);
     width: 20px;
     height: 26px;
-    position: relative !important;
+    position: relative;
     top: 50px;
     left: -230px;
     float: right;
 }
 
 .wot-wt-warning-content p {
-    text-align: left !important;
-    padding-bottom: 0.8em !important;
-    color: #656565 !important;
-    font-family: Arial !important;
+    text-align: left;
+    padding-bottom: 0.8em;
+    color: #656565;
+    font-family: Arial;
 }
 
 .wot-wt-warning-content label {
-    color: #656565 !important;
-    font-family: Arial !important;
+    color: #656565;
+    font-family: Arial;
 }
 
 /* Used in W-Tips */
 .wot-wt-warning-content .wot-cb {
-    text-align: center !important;
-    font-weight: bold !important;
+    text-align: center;
+    font-weight: bold;
 }
 
 .wot-wt-warning-content .wot-cb.latest {
-    padding-bottom: 0 !important;
+    padding-bottom: 0;
 }
 
 .wot-wt-warning-content > div:not([class="wot-wt-warn-footer"]) {
-    padding-top: 1em !important;
+    padding-top: 1em;
 }
 
 .wot-wt-logo {
     background-image: url(../fusion/logo.png);
     background-repeat: no-repeat;
     background-position: center;
-    height: 15px !important;
-    cursor: pointer !important;
+    height: 15px;
+    cursor: pointer;
 }
 
 /* BEGIN: Copy&Paste from welcometips.css */
 .wot-wt-button {
-    -webkit-transition: box-shadow 0.1s !important;
+    -webkit-transition: box-shadow 0.1s;
     width: 12em;
-    height: 24px !important;
-    margin: 1.3em auto 0.5em auto !important;
-    padding: 0.7em 0.5em 0.2em 0.5em !important;
+    height: 24px;
+    margin: 1.3em auto 0.5em auto;
+    padding: 0.7em 0.5em 0.2em 0.5em;
 
-    border: #71A939 solid 1px !important;;
-    border-radius: 3px !important;
+    border: #71A939 solid 1px;;
+    border-radius: 3px;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.47);;
-    text-shadow: 0px 0px 8px #fff !important;
-    background-image: -webkit-linear-gradient(top, #CCEFAC 0%, #9AD265 39%, #6FA736 83%, #83BC4A) !important;
+    text-shadow: 0px 0px 8px #fff;
+    background-image: -webkit-linear-gradient(top, #CCEFAC 0%, #9AD265 39%, #6FA736 83%, #83BC4A);
 
-    color: #375914 !important;
+    color: #375914;
     font-size: 10pt;
     font-weight: bold;
     text-align: center;
@@ -626,32 +624,32 @@
 }
 
 .wot-wt-button:hover {
-    background-image: -webkit-linear-gradient(top, #e5fad1 0%, #b2e186 39%, #83bc4a 83%, #83BC4A) !important;
+    background-image: -webkit-linear-gradient(top, #e5fad1 0%, #b2e186 39%, #83bc4a 83%, #83BC4A);
 }
 
 .wot-wt-button:active {
     top: 1px;
     border-color: #babbbb;
     box-shadow: none;
-    background-image: -webkit-linear-gradient(top, #a9d185 0%, #8abf58 39%, #6fa736 83%, #83bc4a) !important;
+    background-image: -webkit-linear-gradient(top, #a9d185 0%, #8abf58 39%, #6fa736 83%, #83bc4a);
 }
 /* END */
 
 .wot-wt-warn-button {
-    font-weight: bold !important;
-    color: #375914 !important;
+    font-weight: bold;
+    color: #375914;
 }
 
 .wot-wt-warn-footer {
-    position: absolute !important;
-    bottom: 1em !important;
-    width: 215px !important;
+    position: absolute;
+    bottom: 1em;
+    width: 215px;
 }
 
 .wot-wt-warning-content #wt-learnmore-link {
-    color: #1F7BD6 !important;
-    text-decoration: underline !important;
-    cursor: pointer !important;
+    color: #1F7BD6;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .wot-checkbox {
@@ -660,10 +658,10 @@
 
 .wot-blacklisting-info {
     display: none;
-    /*min-width: 150px !important;*/
-    max-width: 300px !important;
-    margin: 0 auto !important;
-    margin-top: 66px !important;
+    /*min-width: 150px;*/
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 66px;
 }
 
 #wotcontainer.blacklist .wot-blacklisting-info {
@@ -671,69 +669,69 @@
 }
 
 #wotcontainer.blacklist .wot-openscorecard-wrap {
-    margin-top: 4px !important;
+    margin-top: 4px;
 }
 
 .wot-bl-decoration {
-    position: relative !important;
+    position: relative;
     background: url(../b/ws/robot.png) no-repeat;
     background-size: auto 72px;
-    height: 72px !important;
-    margin-left: -52px !important;
-    width: 96px !important;
-    margin-top: -68px !important;
+    height: 72px;
+    margin-left: -52px;
+    width: 96px;
+    margin-top: -68px;
 }
 
 .wot-bl-decoration-donut {
     left: 86px;
     top: 0;
-    height: 27px !important;
+    height: 27px;
 }
 
 .wot-blacklist {
-    background: transparent !important;
-    background: url(../b/ws/list_c.png) repeat-x !important;
-    display: inline-block !important;
-    padding-top: 18px !important;
-    background-size: 1px 164px !important;
-    height: 154px !important;
-    position: relative !important;
+    background: transparent;
+    background: url(../b/ws/list_c.png) repeat-x;
+    display: inline-block;
+    padding-top: 18px;
+    background-size: 1px 164px;
+    height: 154px;
+    position: relative;
 }
 
 .wot-blacklist:before {
     content: "";
-    background: url("../b/ws/list_l.png") no-repeat !important;
-    background-size: 36px auto !important;
-    width: 36px !important;
-    height: 164px !important;
-    position: absolute !important;
-    left: -36px !important;
-    top: 0 !important;
+    background: url("../b/ws/list_l.png") no-repeat;
+    background-size: 36px auto;
+    width: 36px;
+    height: 164px;
+    position: absolute;
+    left: -36px;
+    top: 0;
 }
 
 .wot-blacklist:after {
     content: "";
-    background: url("../b/ws/list_r.png") no-repeat !important;
-    background-size: auto 164px !important;
-    width: 30px !important;
-    height: 164px !important;
-    position: absolute !important;
-    right: -30px !important;
-    top: 0 !important;
+    background: url("../b/ws/list_r.png") no-repeat;
+    background-size: auto 164px;
+    width: 30px;
+    height: 164px;
+    position: absolute;
+    right: -30px;
+    top: 0;
 }
 
 .wot-bl-verdict {
-    margin: 4px 2px !important;
-    padding: 2px 10px !important;
-    color: #FFF !important;
-    text-align: left !important;
-    font-family: sans-serif !important;
+    margin: 4px 2px;
+    padding: 2px 10px;
+    color: #FFF;
+    text-align: left;
+    font-family: sans-serif;
 }
 
 .wot-bl-verdict.empty {
-    min-width: 50px !important;
-    background-color: #606060 !important;
-    padding: 2px 0 3px !important;
-    margin: 14px 8px 10px 12px !important;
+    min-width: 50px;
+    background-color: #606060;
+    padding: 2px 0 3px;
+    margin: 14px 8px 10px 12px;
     content: "";
 }
