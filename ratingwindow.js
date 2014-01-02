@@ -1,6 +1,6 @@
 /*
  ratingwindow.js
- Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -708,6 +708,8 @@ $.extend(wot, { ratingwindow: {
     },
 
     localize: function () {
+	    var bgwot = wot.ratingwindow.get_bg().wot;
+
         /* texts */
         wot.components.forEach(function(item) {
             var n = item.name;
@@ -719,6 +721,10 @@ $.extend(wot, { ratingwindow: {
         });
 
         [
+            { selector: "#test-label",         text: "test version: " +
+										            bgwot.core.manifest.version + " / " +
+										            wot.urls.base.replace(/https?\:\/\//, "").replace("/", "") },
+
             { selector: "#myrating-header",         text: wot.i18n("ratingwindow", "myrating") },
             { selector: "#wot-header-link-guide",   text: wot.i18n("ratingwindow", "guide") },
             { selector: "#wot-header-link-forum",   text: wot.i18n("ratingwindow", "forum") },
@@ -2100,7 +2106,7 @@ $.extend(wot, { ratingwindow: {
         allow_commenting: true,
         is_banned: false,
         captcha_required: false,
-        MIN_LIMIT: 30,
+        MIN_LIMIT: 3,
         MAX_LIMIT: 20000,
         is_changed: false,
         posted_comment: {},

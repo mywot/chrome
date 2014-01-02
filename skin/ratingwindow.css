@@ -1,6 +1,6 @@
 /*
 	ratingwindow.css
-	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -28,15 +28,15 @@ body {
 
 #test-label {
     position: absolute;
-    left: 222px;
-    top: -1px;
+    left: 140px;
+    top: 0px;
     text-transform: uppercase;
     font-family: arial;
     font-weight: bold;
-    font-size: 11px;
+    font-size: 10px;
     color: #F00;
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 0 10px;
+    padding: 0 35px;
 }
 
 textarea {
