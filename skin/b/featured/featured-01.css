@@ -1,0 +1,93 @@
+body {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.80);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    -webkit-transition: background-color 0.2s;
+}
+
+body:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.logo {
+    position: absolute;
+    left: 22px;
+    top: 18px;
+    background-image: url("/skin/b/logo.png");
+    background-repeat: no-repeat;
+    background-size: 60%;
+    width: 70px;
+    height: 18px;
+}
+
+.close-icon {
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    height: 14px;
+    width: 14px;
+    background-image: url("/skin/b/featured/close_icon.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.close-icon:hover {
+    background-image: url("/skin/b/featured/close_icon_hover.png");
+}
+
+.title-hint {
+    position: absolute;
+    right: 48px;
+    top: 16px;
+    color: #9B9B9B;
+    font-variant: small-caps;
+    font-size: 14px;
+}
+
+body:hover .title-hint {
+    color: silver;
+}
+
+.title {
+    margin: 52px 0px 0px 14px;
+}
+
+.content {
+    margin: 12px 10px 0;
+}
+
+.optout {
+    color: #767a83;
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    font-size: 11px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.optout:hover {
+    /*color: rgba(255, 97, 84, 0.77);*/
+    text-decoration: underline;
+}
+
+#adlinks {
+    list-style-type: none;
+    padding: 0px 5px 0 4px;
+}
+
+.adlink-item,
+.adlink-item a {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.7em;
+    color: #1a2cb9;
+    text-decoration: none;
+}
+
+.adlink-item a:hover {
+    text-decoration: underline;
+}

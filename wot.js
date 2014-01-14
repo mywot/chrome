@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20131118,
+	version: 20131230,
 	platform: "opera",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -231,6 +231,8 @@ var wot = {
     },
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
+
+	TINY_THANKYOU_DURING: 60 * 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
 
 	// trusted extensions IDs
 	allowed_senders: {

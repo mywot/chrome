@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "2.3.1",
+	"version": "2.4.5",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -25,8 +25,10 @@
         "management",
         "storage"
 	],
-	"content_security_policy": "style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
+	"content_security_policy": "style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
+		"content/warning.html",
+		"widgets/featured-01.html",
 		"widgets/surveys.html",
 		"skin/include/popup.css",
 		"skin/include/warning.css",
@@ -79,12 +81,13 @@
 			"js": [
 				"wot.js",
 				"content/common.js",
-                "content/warning.js",
+                "content/i-warning.js",
 				"content/url.js",
 				"content/popup.js",
 				"content/search.js",
 				"content/welcome_tips.js",
-				"content/surveys.js"
+				"content/surveys.js",
+				"content/featured.js"
 			],
 			"run_at": "document_start",
 			"all_frames": true

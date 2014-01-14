@@ -44,6 +44,10 @@ $.extend(wot, {
             wot.prefs.set("super_fbl", event.currentTarget.checked);
         },
 
+	    supers_noadsthreshold: function (event) {
+            wot.prefs.set("super_noadsthreshold", event.currentTarget.checked);
+        },
+
         supers_showtestimonies: function (event) {
             var bg = chrome.extension.getBackgroundPage();
             wot.prefs.set("super_showtestimonies", event.currentTarget.checked);
@@ -70,6 +74,11 @@ $.extend(wot, {
                 attr("checked", wot.prefs.get("super_showtestimonies"));
 
             $("#btn-reset-cache").click(wot.settings_ui.reset_cache);
+
+	        $("#chk-ads-threashold").
+		        click(wot.settings_ui.supers_noadsthreshold).
+		        attr("checked", wot.prefs.get("super_noadsthreshold"));
+
         }
     }
 });

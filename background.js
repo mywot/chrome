@@ -29,6 +29,7 @@ $.extend(wot, { core: {
         type: null,
         text: ""
     },
+	last_testimony: null,   // datetime of the last testimony submitted
 
 	loadratings: function (hosts, onupdate)
 	{
@@ -92,7 +93,7 @@ $.extend(wot, { core: {
 			}
 
 			var cached = data.cached || {};
-		
+
 			if (cached.status == wot.cachestatus.ok) {
 				/* reputation */
 				var def_comp = cached.value[wot.default_component];
@@ -121,7 +122,7 @@ $.extend(wot, { core: {
 			} else if (cached.status == wot.cachestatus.error) {
 				return "error";
 			}
-			
+
 			return "default";
 		} catch (e) {
 			console.log("core.geticon: failed with " + e);
@@ -301,7 +302,7 @@ $.extend(wot, { core: {
 				if (warned) warning.reason = wot.warningreasons.skipped;
 				return warning; /* don't change the current status */
 			}
-			
+
 			var prefs = [
 				"accessible",
 				"min_confidence_level",
@@ -324,18 +325,16 @@ $.extend(wot, { core: {
 
 			var type = wot.getwarningtype(cached.value, settings);
 
-			var show_wtip = wot.wt.warning.tts();
-
 			if (type && type.type >= wot.warningtypes.overlay) {
 				var port = chrome.tabs.connect(tab.id, { name: "warning" });
 
 				if (port) {
 					port.postMessage({
-						message: "warning:show",
+						message: "warning:inject",
 						data: data,
 						type: type,
 						settings: settings,
-						show_wtip: show_wtip
+						id: wot.core.get_random_id(data.target , tab.id)
 					});
 				}
 			}
@@ -345,6 +344,74 @@ $.extend(wot, { core: {
 		} catch (e) {
 			wot.log("core.updatetabwarning: failed with ", e);
 		}
+	},
+
+	get_random_id: function () {
+		// generates random ID string. Used mainly for Warning screen
+
+		var l = "abcdefghijklmnopqrstwxyz_-1234567890";
+
+		var res = l[Math.ceil(Math.random() * 24)],
+			len = 5 + Math.ceil(Math.random() * 8),
+			set_len = l.length;    // first char must be letter or underscore
+
+		for (var i = 0; i < len; i++) {
+			res += l[Math.ceil(Math.random() * set_len - 1)];
+		}
+
+		// randomly uppercase chars
+		for (var res2 = "", i = 0; i < res.length; i++) {
+			if (Math.random() * 10 >= 5) {
+				res2 += res[i].toUpperCase();
+			} else {
+				res2 += res[i];
+			}
+		}
+
+		return res2;
+	},
+
+	show_warning: function (port) {
+		var tab = port.port.sender.tab,
+			host = wot.url.gethostname(tab.url),
+			data = {
+				target: host,
+				decodedtarget: wot.url.decodehostname(host),
+				cached: wot.cache.get(host) || { value: {} }
+			},
+			cached = data.cached || {};
+
+		var prefs = [
+			"accessible",
+			"min_confidence_level",
+			"warning_opacity",
+			"update:state"
+		];
+
+		wot.components.forEach(function(item) {
+			prefs.push("show_application_" + item.name);
+			prefs.push("warning_level_" + item.name);
+			prefs.push("warning_type_" + item.name);
+			prefs.push("warning_unknown_" + item.name);
+		});
+
+		var settings = {};
+
+		prefs.forEach(function(item) {
+			settings[item] = wot.prefs.get(item);
+		});
+
+		var type = wot.getwarningtype(cached.value, settings);
+
+		var show_wtip = wot.wt.warning.tts();
+
+		port.post("show", {
+			data: data,
+			type: type,
+			settings: settings,
+			show_wtip: show_wtip
+		});
+
 	},
 
 	setusermessage: function(data)
@@ -845,6 +912,9 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
+				var port = chrome.tabs.connect(port.port.sender.tab.id, { name: "warning" });
+				port.postMessage({ message: "warning:remove" });
+
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_BTN_ENTER, data.target);
 				wot.core.update(false);
 			});
@@ -852,6 +922,10 @@ $.extend(wot, { core: {
 			wot.bind("message:warnings:shown", function(port, data) {
 				wot.core.increase_ws_shown();
 				wot.ga.fire_event(wot.ga.categories.WS, wot.ga.actions.WS_SHOW, data.target);
+			});
+
+			wot.bind("message:warnings:ready", function(port, data) {
+				wot.core.show_warning(port);
 			});
 
 			wot.bind("message:search:popup_shown", function(port, data) {
@@ -895,7 +969,11 @@ $.extend(wot, { core: {
 				wot.wt.bind_events();
 			}
 
-			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget" ]);
+			if (wot.featured && wot.featured.bind_events) {
+				wot.featured.bind_events();
+			}
+
+			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget", "ads" ]);
 
 			/* event handlers */
 
@@ -929,10 +1007,11 @@ $.extend(wot, { core: {
 				if (wot.api.isregistered()) {
 					wot.core.welcome_user();
 					wot.api.update();
-					wot.api.processpending();   // submit
+					wot.api.processpending();       // submit
                     wot.api.comments.processpending();
-					wot.wt.init();  // initialize welcome tips engine
-					wot.surveys.init(); // init surveys engine
+					wot.wt.init();                  // initialize welcome tips engine
+					wot.surveys.init();             // init surveys engine
+					if (wot.featured) wot.featured.init();    // init Featured engine
 				}
 			});
 

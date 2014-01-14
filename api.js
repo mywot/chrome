@@ -67,6 +67,7 @@ $.extend(wot, { api: {
 				$.extend(params, {
 					target: wot.crypto.encrypt(params.target, nonce),
 					hosts:  wot.crypto.encrypt(params.hosts,  nonce),
+					data:  wot.crypto.encrypt(params.data,  nonce),
 					url:    wot.crypto.encrypt(params.url,  nonce)
 				});
 			}
@@ -409,7 +410,7 @@ $.extend(wot, { api: {
 				});
 
 				onupdate(batch);
-				
+
 				retrycount = retrycount || 0;
 
 				if (retry.length > 0 &&
@@ -475,7 +476,7 @@ $.extend(wot, { api: {
 			onsuccess();
 			return true;
 		}
-		
+
 		retrycount = retrycount || 0;
 
 		if (++retrycount > this.info.maxregisterretries) {
@@ -618,6 +619,26 @@ $.extend(wot, { api: {
 			},
 			function (data) {   // on success
 				wot.log("api.feedback: sent successfully ", params);
+			});
+	},
+
+	event: function(data)
+	{
+		return this.call("event", {
+				authentication: true,
+				encryption: true
+			}, {
+				data: JSON.stringify(data)
+			},
+			function(request)   // on error
+			{
+				if (request.status != 403) {
+//					wot.api.retry("query", [ target, onupdate ]);
+				}
+			},
+			function(result)      // on success
+			{
+//				console.log("EVENTS sent:", event, data);
 			});
 	},
 

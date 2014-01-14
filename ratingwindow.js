@@ -258,6 +258,7 @@ $.extend(wot, { ratingwindow: {
                 // count testimony event
                 if (is_rated) {
                     bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY, submission_mode);
+	                bgwot.core.last_testimony = Date.now(); // remember when user rated last time
                 } else {
                     bgwot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_TESTIMONY_DEL, submission_mode);
                 }
@@ -393,7 +394,7 @@ $.extend(wot, { ratingwindow: {
 
         /* target */
         if (_this.current.target && cached.status == wot.cachestatus.ok) {
-            visible_hostname = bg.wot.url.decodehostname(normalized_target);
+            visible_hostname = normalized_target;
             rw_title = wot.i18n("messages", "ready");
         } else if (cached.status == wot.cachestatus.busy) {
             rw_title = wot.i18n("messages", "loading");
@@ -1187,12 +1188,27 @@ $.extend(wot, { ratingwindow: {
 
         if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
 
-        var _rw = wot.ratingwindow;
+        var _rw = wot.ratingwindow,
+	        bg = _rw.get_bg(),
+	        last_rated = 0 + bg.wot.core.last_testimony;    // remember the value before saving the testimony
+
         wot.ratingwindow.finishstate(false);
         if (_rw.delete_action) {
             _rw.modes.auto();   // switch RW mode according to current state
         } else {
-            _rw.modes.thanks.activate();
+	        if (last_rated == 0 || (Date.now() - last_rated) > wot.TINY_THANKYOU_DURING) {
+		        // show full Thank You screen when last rating from the user was long time ago
+		        _rw.modes.thanks.activate();
+	        } else {
+		        // otherwise show tiny thank you
+		        _rw.modes.auto();
+		        $("#tiny-thankyou").fadeIn(500, function (){
+			        window.setTimeout(function (){
+				        $("#tiny-thankyou").fadeOut(1000);
+			        }, 2000);
+		        });
+	        }
+
         }
     },
 
@@ -1349,10 +1365,19 @@ $.extend(wot, { ratingwindow: {
                 var helptext = wot.get_level_label(item.name, rep, true);
 
                 if (helptext.length) {
-                    elems.helptext.text(helptext).show();
-                    elems.helptext.attr("r", rep);
+	                var show_helptext = true;
+	                if (rep == "r0" && _rw.prefs.get("activity_score") >= 3000) {
+		                show_helptext = false;
+	                }
+
+	                if (show_helptext) {
+		                elems.helptext.text(helptext).show();
+		                elems.helptext.attr("r", rep);
+	                } else {
+		                elems.helptext.text("");
+	                }
                 } else {
-                    elems.helptext.hide();
+	                elems.helptext.hide();
                 }
             });
 

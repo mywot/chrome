@@ -25,6 +25,10 @@ body {
     width: 580px;
 }
 
+textarea {
+    resize: none;
+}
+
 #wot-ratingwindow {
     display: block;
     padding: 10px 16px 0;
@@ -229,6 +233,18 @@ body {
 /*#hostname-text[status="information"] {*/
 /*color: #4e4e4e;*/
 /*}*/
+
+#tiny-thankyou {
+    display: none;
+    position: absolute;
+    margin: -35px 0 0 150px;
+    padding: 0.6em 1.5em;
+    background-color: rgba(195, 241, 173, 0.8);
+    color: #000;
+    font-size: 13px;
+    z-index: 25;
+    border-radius: 3px;
+}
 
 /* rating header */
 #wot-rating-header {
