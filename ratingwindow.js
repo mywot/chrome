@@ -21,7 +21,7 @@
 $.extend(wot, { ratingwindow: {
     MAX_VOTED_VISIBLE: 4,   // how many voted categories we can show in one line
 	sliderwidth: 154,
-    slider_shift: -4,       // ajustment
+    slider_shift: -4,       // adjustment
     opened_time: null,
     was_in_ratemode: false,
     timer_save_button: null,
@@ -29,9 +29,17 @@ $.extend(wot, { ratingwindow: {
     local_comment: null,
     is_registered: false,   // whether user has an account on mywot.com
     delete_action: false,   // remembers whether user is deleting rating
-    prefs: {},  // shortcut for background preferences
+    prefs: {},              // shortcut for background preferences
+	current: {},
 
-    get_bg: function () {
+	is_wg_allowed: true,
+	tags: [                 // WG tags
+//		{ value: "test", tokens: ["test"] },
+//		{ value: "controversial", tokens: ["controversial"]},
+//		{ value: "ideas", tokens: ["ideas"] }
+	],
+
+	get_bg: function () {
         // just a shortcut
         return chrome.extension.getBackgroundPage();
     },
@@ -185,7 +193,9 @@ $.extend(wot, { ratingwindow: {
                 testimonies_changed = false,
                 comment_changed = false,
                 has_comment = false,
-                user_comment = $("#user-comment").val().trim(),
+                user_comment = rw.comments.get_comment_value(),
+	            mytags = rw.comments.get_tags(user_comment),
+	            has_mytags = mytags && mytags.length,
                 user_comment_id = 0,
                 cached = {},
                 changed_votes = {},     // user votes diff as an object
@@ -279,10 +289,15 @@ $.extend(wot, { ratingwindow: {
 
             } else { // User clicked Save
                 // TODO: make it so, that if votes were changed and user have seen the comment, then submit the comment
-                if (comment_changed && has_up_votes) {
+                if (comment_changed && (has_up_votes || has_mytags || !has_comment)) {
                     // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
                     if (has_comment) {
 //                        bg.console.log("SUBMIT COMMENT");
+
+	                    // FIXME: remove line below. Artificially add category "Other" to passover server side restrictions
+	                    if (!has_up_votes && has_mytags) {
+		                    votes = { 304: 1 };  // category "Other" is upvoted artificially
+	                    }
 
                         // If user can't leave a comment for a reason, accept the comment locally, otherwise submit it silently
                         var keeper_status = (rw.comments.allow_commenting && rw.is_registered) ? wot.keeper.STATUSES.SUBMITTING : wot.keeper.STATUSES.LOCAL;
@@ -377,8 +392,6 @@ $.extend(wot, { ratingwindow: {
 
     /* user interface */
 
-    current: {},
-
     updatecontents: function()
     {
         var bg = chrome.extension.getBackgroundPage(),
@@ -407,7 +420,8 @@ $.extend(wot, { ratingwindow: {
         $_hostname.text(visible_hostname);
         $_wot_title_text.text(rw_title);
 
-        $("#wot-ratingwindow").toggleClass("unregistered", !_this.is_registered);
+        $("#wot-ratingwindow")
+	        .toggleClass("unregistered", !_this.is_registered);
 
         /* reputations */
         /* ratings */
@@ -494,7 +508,58 @@ $.extend(wot, { ratingwindow: {
             $("#wot-user-0").css("display", "block");
         }
 
+	    _this.update_wg_visibility();
+	    _this.update_wg_tags();
+
     },
+
+	update_wg_visibility: function () {
+		var _this = wot.ratingwindow,
+			$rw = $("#wot-ratingwindow"),
+			$wg_area = $("#wg-area");
+
+		$rw.toggleClass("webguide", _this.is_wg_allowed);
+
+		if (_this.is_wg_allowed) {
+			var visible = !$rw.hasClass("commenting") && !$rw.hasClass("thanks") && !$rw.hasClass("rate");
+			$wg_area.toggle(visible);
+		} else {
+			$wg_area.hide();
+		}
+	},
+
+	update_wg_tags: function () {
+		var rw = wot.ratingwindow,
+			mytags = rw.comments.get_tags(),
+			tagmap = [
+				{ elem: $("#wg-my-tags"), list: mytags },
+				{ elem: $("#wg-other-tags"), list: rw.tags }
+			],
+			filled = 0;
+
+
+		for (var i = 0; i < tagmap.length; i++) {
+			var $elem = tagmap[i].elem,
+				list = tagmap[i].list;
+
+			$elem.children().detach();  // clean the tags' section
+			for (var j = 0; j < list.length; j++) {
+				var $tag = $("<li></li>").addClass("wg-tag").text(list[j].value);
+				$elem.append($tag);
+			}
+
+			filled += $elem.children().length > 0 ? 1 : 0;
+		}
+
+		$("#wg-tags-separator").toggle(filled > 1);
+
+		var $wg_edit = $("#wg-change"),
+			$wg_title = $("#wg-title"),
+			$wg_addmore = $("#wg-addmore");
+
+		$wg_edit.text( mytags.length > 0 ? wot.i18n("wg", "edit") : wot.i18n("wg", "add") );
+		$wg_addmore.toggle(filled == 0);
+	},
 
     insert_categories: function (cat_list, $_target) {
         $_target.hide();   // to prevent blinking during modification
@@ -571,7 +636,7 @@ $.extend(wot, { ratingwindow: {
 
                         if (target_changed) {
 	                        _rw.modes.reset();
-	                        _rw.modes.auto();
+	                        _rw.modes.auto(true);
                         }
 
                         if (!data.target) {
@@ -600,6 +665,7 @@ $.extend(wot, { ratingwindow: {
         if (cached && cached.comment) {
             data = cached.comment;
             _rw.comments.captcha_required = captcha_required || false;
+	        _rw.is_wg_allowed = true; // data.wg || false;  // TODO: uncomment when API is ready
         }
 
         var error_code = data.error_code || 0;
@@ -637,6 +703,8 @@ $.extend(wot, { ratingwindow: {
             // switch to commenting mode if we have unfinished comment
             if (is_unsubmitted) {
                 _rw.modes.comment.activate();
+            } else {
+	            _rw.modes.auto(true);   // force to update the view
             }
 
         } else {
@@ -660,7 +728,8 @@ $.extend(wot, { ratingwindow: {
                 // this is considered below
             }
         }
-
+	    _rw.update_wg_tags();
+	    _rw.update_wg_visibility();
         _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting && !_comments.is_banned);
     },
 
@@ -751,6 +820,8 @@ $.extend(wot, { ratingwindow: {
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
+            { selector: "#wg-title",                text: wot.i18n("wg", "title") },
+            { selector: "#wg-addmore",              text: wot.i18n("wg", "add_long") },
             { selector: "#comment-captcha-text",   text: wot.i18n("ratingwindow", "comment_captchatext") },
             { selector: "#comment-captcha-link",   text: wot.i18n("ratingwindow", "comment_captchalink") }
 
@@ -877,26 +948,34 @@ $.extend(wot, { ratingwindow: {
             has_comment = _rw.comments.is_commented(),
             has_valid_comment = _rw.comments.has_valid_comment();
 
-        // 1. Either TR or CS are rated, OR none of them are rated (e.g. "delete my ratings")
-        for (i in wot.components) {
-            var cmp = wot.components[i].name;
-            if (_rw.state[cmp] && _rw.state[cmp].t !== null && _rw.state[cmp].t >= 0) {
-                testimonies++;
-            }
-        }
+	    if (_rw.modes.is_current("wgcomment")) {    // quick comment & tag mode
 
-        if (has_1upvote) {
-            // if there is a comment, it must be valid, otherwise disallow the submit
-            if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
-                passed = true;
-            } else if (testimonies == 0 && !has_comment) {
-                passed = true;
-            }
-        } else {
-            if (testimonies == 0 && has_comment == false) {
-                passed = true;  // no cats, no testimonies, no comment := "Delete everything" (if there are changes)
-            }
-        }
+		    if (has_comment && has_valid_comment) {
+			    passed = true;
+		    }
+
+	    } else {    // normal WOT rating mode
+		    // 1. Either TR or CS are rated, OR none of them are rated (e.g. "delete my ratings")
+		    for (var i in wot.components) {
+			    var cmp = wot.components[i].name;
+			    if (_rw.state[cmp] && _rw.state[cmp].t !== null && _rw.state[cmp].t >= 0) {
+				    testimonies++;
+			    }
+		    }
+
+		    if (has_1upvote) {
+			    // if there is a comment, it must be valid, otherwise disallow the submit
+			    if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
+				    passed = true;
+			    } else if (testimonies == 0 && !has_comment) {
+				    passed = true;
+			    }
+		    } else {
+			    if (testimonies == 0 && has_comment == false) {
+				    passed = true;  // no cats, no testimonies, no comment := "Delete everything" (if there are changes)
+			    }
+		    }
+	    }
 
         return passed;
     },
@@ -919,16 +998,23 @@ $.extend(wot, { ratingwindow: {
             $_submit.toggleClass("warning", !!warn);
 
             // If user wants to delete ratings, change the text of the button and hide "Delete ratings" button
-            if (enable && !_rw.is_rated(_rw.state) && !_rw.comments.has_valid_comment()) {
-                $_submit.text(wot.i18n("testimony", "delete"));
-                $("#btn-delete").hide();
-                delete_action = true; // remember the reverse of the label
-            }
+	        if (_rw.modes.is_current("wgcomment")) {
+		        delete_action = false;
+	        } else {
+		        if (enable && !_rw.is_rated(_rw.state) && !_rw.comments.has_valid_comment()) {
+			        $_submit.text(wot.i18n("testimony", "delete"));
+			        $("#btn-delete").hide();
+			        delete_action = true; // remember the reverse of the label
+		        }
+	        }
         }
 
         if (!delete_action) {
             $_submit.text(wot.i18n("buttons", "save"));
-            $("#btn-delete").show();
+
+	        if (_rw.modes.is_current("wgcomment")) {
+		        $("#btn-delete").show();
+	        }
         }
         _rw.delete_action = delete_action;
     },
@@ -1025,12 +1111,15 @@ $.extend(wot, { ratingwindow: {
         $("#user-comment").bind("change keyup", function() {
             window.setTimeout(function(){
                 wot.ratingwindow.comments.update_hint();
+	            wot.ratingwindow.update_wg_tags();
 
                 // set the timeout to update save button when user stops typing the comment
                 if (wot.ratingwindow.timer_save_button) {
                     window.clearTimeout(wot.ratingwindow.timer_save_button);
                 }
-                wot.ratingwindow.timer_save_button = window.setTimeout(wot.ratingwindow.update_submit_button, 200);
+                wot.ratingwindow.timer_save_button = window.setTimeout(function(){
+	                wot.ratingwindow.update_submit_button();
+                }, 200);
 
             }, 20);    // to react on any keyboard event after the text was changed
         });
@@ -1101,6 +1190,33 @@ $.extend(wot, { ratingwindow: {
 			wt.save_setting("rw_shown_dt");
 		}
 
+	    // Web Guide initialization
+	    $(document).on("click", ".wg-tag", function (e) {
+		    var tag_text = $(this).text();
+		    _rw.navigate(wot.urls.webguide + "/" + tag_text, wot.urls.contexts.wg_tag);
+	    });
+
+	    $("#wg-change, #wg-addmore").on("click", function (e) {
+		    _rw.modes.wgcomment.activate();
+	    });
+
+	    // autocomplete feature for WG comment
+	    // TODO: enable only if WG is enabled
+//	    $("#user-comment").typeahead([
+//		    {
+//			    name: "testdummy",
+//			    valueKey: "value",
+//			    local: _rw.tags
+//		    },
+////		    {
+////			    name: "popular",
+////			    prefetch: _rw.comments.WG_API_URL,
+////			    remote: _rw.comments.WG_API_URL + "%QUERY%"
+////		    }
+//	    ]);
+
+
+
         // increment "RatingWindow shown" counter
         _rw.count_window_opened();
         bg.wot.core.badge.text = "";
@@ -1112,6 +1228,14 @@ $.extend(wot, { ratingwindow: {
 //            bg.wot.core.set_badge(null, false);   // hide badge
 //        }
     },
+
+	show_tiny_thankyou: function () {
+		$("#tiny-thankyou").fadeIn(500, function (){
+			window.setTimeout(function (){
+				$("#tiny-thankyou").fadeOut(1000);
+			}, 2000);
+		});
+	},
 
     on_comment_button: function (e) {
         var _rw = wot.ratingwindow;
@@ -1192,30 +1316,26 @@ $.extend(wot, { ratingwindow: {
     on_submit: function (e) {
 //        console.log("on_submit()");
 
-        if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
+	    if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
 
-        var _rw = wot.ratingwindow,
-	        bg = _rw.get_bg(),
-	        last_rated = 0 + bg.wot.core.last_testimony;    // remember the value before saving the testimony
+	    var _rw = wot.ratingwindow,
+		    bg = _rw.get_bg(),
+		    last_rated = 0 + bg.wot.core.last_testimony;    // remember the value before saving the testimony
 
-        wot.ratingwindow.finishstate(false);
-        if (_rw.delete_action) {
-            _rw.modes.auto();   // switch RW mode according to current state
-        } else {
-	        if (last_rated == 0 || (Date.now() - last_rated) > wot.TINY_THANKYOU_DURING) {
-		        // show full Thank You screen when last rating from the user was long time ago
-		        _rw.modes.thanks.activate();
-	        } else {
-		        // otherwise show tiny thank you
-		        _rw.modes.auto();
-		        $("#tiny-thankyou").fadeIn(500, function (){
-			        window.setTimeout(function (){
-				        $("#tiny-thankyou").fadeOut(1000);
-			        }, 2000);
-		        });
-	        }
-
-        }
+	    wot.ratingwindow.finishstate(false);
+	    if (_rw.delete_action) {
+		    _rw.modes.auto();   // switch RW mode according to current state
+	    } else {
+		    if ((last_rated == 0 || (Date.now() - last_rated) > wot.TINY_THANKYOU_DURING) &&
+			    !_rw.modes.is_current("wgcomment")) {
+			    // show full Thank You screen when last rating from the user was long time ago
+			    _rw.modes.thanks.activate();
+		    } else {
+			    // otherwise show tiny thank you
+			    _rw.modes.auto();
+			    _rw.show_tiny_thankyou();
+		    }
+	    }
     },
 
     on_thanks_ok: function () {
@@ -1397,44 +1517,52 @@ $.extend(wot, { ratingwindow: {
         current_mode: "",
 
         unrated: {
-            visible: ["#reputation-info", "#user-communication", ".user-comm-social"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", ".user-comm-social"],
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
                 "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "view-mode unrated",
-            removeclass: "rated commenting thanks rate",
+            removeclass: "rated commenting thanks rate wgcommenting",
 
-            activate: function () {
-                if (!wot.ratingwindow.modes._activate("unrated")) return false;
+            activate: function (force) {
+                if (!wot.ratingwindow.modes._activate("unrated", force) && !force) return false;
+
+	            var $rated_votes = $("#rated-votes"),
+		            show_comment_icon = $rated_votes.hasClass("commented");
+	            $rated_votes.toggle(show_comment_icon);
+	            $(".user-comm-activity").toggle(!show_comment_icon);
+
+	            wot.ratingwindow.update_wg_visibility();
                 return true;
             }
         },
 
         rated: {
-            visible: ["#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social"],
             invisible: ["#rate-buttons", "#categories-selection-area",
                 "#commenting-area", "#thanks-area", "#ok-button"],
             addclass: "view-mode rated",
-            removeclass: "unrated commenting thanks rate",
+            removeclass: "unrated commenting thanks rate wgcommenting",
 
-            activate: function () {
-                if (!wot.ratingwindow.modes._activate("rated")) return false;
+            activate: function (force) {
+                if (!wot.ratingwindow.modes._activate("rated", force) && !force) return false;
                 wot.ratingwindow.update_uservoted();
+	            wot.ratingwindow.update_wg_visibility();
                 return true;
             }
         },
 
         rate: {
-            visible: ["#rate-buttons", "#categories-selection-area"],
+            visible: ["#ratings-area", "#rate-buttons", "#categories-selection-area"],
             invisible: ["#reputation-info", "#user-communication", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-area"],
             addclass: "rate",
-            removeclass: "view-mode rated unrated commenting thanks",
+            removeclass: "view-mode rated unrated commenting thanks wgcommenting",
 
-            activate: function () {
+            activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
 
-                if (!_rw.modes._activate("rate")) return false;
+                if (!_rw.modes._activate("rate", force) && !force) return false;
 
                 // "Comment" mode can be the first active mode in session, so we have to init things still.
                 if (prev_mode != "comment" || !_rw.cat_selector.inited) {
@@ -1458,17 +1586,17 @@ $.extend(wot, { ratingwindow: {
             }
         },
 
-        comment: { // Not implemented yet
-            visible: ["#rate-buttons", "#commenting-area", "#rated-votes"],
+        comment: { // Commenting during rating process
+            visible: ["#ratings-area", "#rate-buttons", "#commenting-area", "#rated-votes"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button"],
+                "#thanks-area", "#ok-button", "#wg-area"],
             addclass: "commenting",
-            removeclass: "view-mode rated unrated rate thanks",
+            removeclass: "view-mode rated unrated rate thanks wgcommenting",
 
-            activate: function () {
+            activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
-                if (!wot.ratingwindow.modes._activate("comment")) return false;
+                if (!wot.ratingwindow.modes._activate("comment", force) && !force) return false;
 
                 // TODO: this piece of code is a duplication. Should be refactored.
                 if (prev_mode == "" || !_rw.cat_selector.inited) {
@@ -1489,17 +1617,47 @@ $.extend(wot, { ratingwindow: {
                 return true;
             }
         },
+        wgcomment: { // Quick Comment mode for WebGuide feature
+            visible: ["#wg-area", "#commenting-area", "#rate-buttons"],
+            invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
+                "#thanks-area", "#ok-button", "#commenting-area", "#rated-votes"],
+            addclass: "wgcommenting",
+            removeclass: "view-mode rated unrated rate thanks",
+
+            activate: function (force) {
+                var _rw = wot.ratingwindow,
+                    prev_mode = _rw.modes.current_mode;
+                if (!wot.ratingwindow.modes._activate("wgcomment", force) && !force) return false;
+
+//                // TODO: this piece of code is a duplication. Should be refactored.
+//                if (prev_mode == "" || !_rw.cat_selector.inited) {
+//                    if (!_rw.cat_selector.inited) {
+//                        _rw.cat_selector.build();
+//                        _rw.cat_selector.init();
+//                    }
+//                    _rw.cat_selector.init_voted();
+//                }
+
+                _rw.was_in_ratemode = false; // user is commenting passing rating process
+                _rw.comments.update_hint();
+//                _rw.comments.update_button("comment", true);
+                _rw.update_submit_button();
+                _rw.comments.focus();
+                _rw.reveal_ratingwindow(true);
+                return true;
+            }
+        },
 
         thanks: {
-            visible: ["#thanks-area", "#rated-votes", "#ok-button"],
+            visible: ["#thanks-area", "#ratings-area", "#rated-votes", "#ok-button"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#commenting-area", "#rate-buttons"],
+                "#commenting-area", "#rate-buttons", "#wg-area"],
             addclass: "thanks view-mode",
-            removeclass: "rated unrated rate commenting",
+            removeclass: "rated unrated rate commenting wgcommenting",
 
-            activate: function () {
+            activate: function (force) {
                 var _rw = wot.ratingwindow;
-                if (!_rw.modes._activate("thanks")) return false;
+                if (!_rw.modes._activate("thanks", force) && !force) return false;
 
                 _rw.update_uservoted();
 
@@ -1525,29 +1683,29 @@ $.extend(wot, { ratingwindow: {
             $(visible.join(", ")).show();
         },
 
-        _activate: function (mode_name) {
+        _activate: function (mode_name, force) {
             /* Generic func to do common things for switching modes. Returns false if there is no need to switch the mode. */
 //            console.log("RW.modes.activate(" + mode_name + ")");
 
             var _rw = wot.ratingwindow;
-            if (_rw.modes.current_mode == mode_name) return false;
+            if (_rw.modes.current_mode == mode_name && !force) return false;
             _rw.modes.show_hide(mode_name);
             _rw.modes.current_mode = mode_name;
             _rw.rate_control.update_ratings_visibility(mode_name);
             return true;
         },
 
-        auto: function () {
+        auto: function (enforce) {
             var _rw = wot.ratingwindow;
 
             if (_rw.local_comment && _rw.local_comment.comment) {
-                _rw.modes.comment.activate();
+                _rw.modes.comment.activate(enforce);
             } else {
                 // If no locally saved comment exists, switch modes between Rated / Unrated
                 if (_rw.is_rated()) {
-                    _rw.modes.rated.activate();
+                    _rw.modes.rated.activate(enforce);
                 } else {
-                    _rw.modes.unrated.activate();
+                    _rw.modes.unrated.activate(enforce);
                 }
             }
         },
@@ -2106,14 +2264,27 @@ $.extend(wot, { ratingwindow: {
         allow_commenting: true,
         is_banned: false,
         captcha_required: false,
-        MIN_LIMIT: 3,
+        MIN_LIMIT: 30,
+        MIN_LIMIT_WG: 3,
+	    MIN_TAGS: 1,        // minimal amount of tags in the comment
+	    MAX_TAGS: 10,       // maximum amount of tags in the comment
         MAX_LIMIT: 20000,
         is_changed: false,
         posted_comment: {},
+	    WG_API_URL: "https://dev.mywot.com/en/ajax/guide/get/list?name=",
+
+	    get_comment_value: function (need_html) {
+		    var elem = $("#user-comment")[0],
+			    s = need_html ? elem.innerHTML : elem.innerText;
+
+		    s = typeof(s) == "string" ? s.trim() : "";
+
+		    return s;
+	    },
 
         is_commented: function() {
             // comment can be there, but it can be invalid (outside of limits restrictions, etc)
-            return ($("#user-comment").val().trim().length > 0);
+            return (wot.ratingwindow.comments.get_comment_value().length > 0);
         },
 
         get_comment: function (target) {
@@ -2129,20 +2300,31 @@ $.extend(wot, { ratingwindow: {
             // TODO: to be implemented when there will be a button "remove the comment" in UI
         },
 
+	    get_minlen: function () {
+		    var _this = wot.ratingwindow.comments;
+		    return wot.ratingwindow.modes.is_current("wgcomment") ? _this.MIN_LIMIT_WG : _this.MIN_LIMIT;
+	    },
+
+	    get_maxlen: function () {
+		    var _this = wot.ratingwindow.comments;
+		    return _this.MAX_LIMIT;
+	    },
+
         update_hint: function () {
             var rw = wot.ratingwindow,
                 _this = rw.comments,
-                $_comment = $("#user-comment"),
                 $_hint = $("#comment-bottom-hint"),
-                len = $_comment.val().trim().length,
+                len = _this.get_comment_value().length,
                 fix_len = 0,
-                cls = "";
+                cls = "",
+	            min_len = _this.get_minlen(),
+	            max_len = _this.get_maxlen();
 
-            if (len > 0 && len < _this.MIN_LIMIT) {
-                fix_len = String(len - _this.MIN_LIMIT).replace("-", "– "); // readability is our everything
+            if (len > 0 && len < min_len) {
+                fix_len = String(len - min_len).replace("-", "– "); // readability is our everything
                 cls = "error min"
-            } else if (len > _this.MAX_LIMIT) {
-                fix_len = len - _this.MAX_LIMIT;
+            } else if (len > max_len) {
+                fix_len = len - max_len;
                 cls = "error max"
             } else {
                 // we could show here something like "looks good!"
@@ -2179,15 +2361,48 @@ $.extend(wot, { ratingwindow: {
         },
 
         set_comment: function (text) {
-            $("#user-comment").val(text);
+            $("#user-comment")[0].innerText = text;
         },
 
         has_valid_comment: function () {
-            var comment = $("#user-comment").val().trim(),
-                _this = wot.ratingwindow.comments;
+            var _this = wot.ratingwindow.comments,
+	            comment = _this.get_comment_value(),
+	            minlen = _this.get_minlen(),
+	            maxlen = _this.get_maxlen(),
+	            is_wgcommenting = wot.ratingwindow.modes.is_current("wgcomment");
 
-            return (comment.length >= _this.MIN_LIMIT && comment.length < _this.MAX_LIMIT);
+	        if (is_wgcommenting) {
+		        var tags = _this.get_tags(comment);
+
+		        return (comment.length >= minlen &&
+			        comment.length < maxlen &&
+			        tags.length >= _this.MIN_TAGS &&
+			        tags.length <= _this.MAX_TAGS);
+
+	        } else {
+		        return (comment.length >= minlen && comment.length < maxlen);
+	        }
         },
+
+	    tags_re: /(\s|^)#([a-z0-9]{2,})/img,
+
+	    get_tags: function (text) {
+
+		    var _this = wot.ratingwindow.comments,
+			    res,
+			    tags = [];
+
+		    text = text ? text : _this.get_comment_value();
+
+		    while ((res = _this.tags_re.exec(text)) !== null) {
+			    if (res[2]) {
+				    tags.push({
+					    value: res[2]        // tag's text
+				    });
+			    }
+		    }
+		    return tags;
+	    },
 
         focus: function () {
             $("#user-comment").focus();

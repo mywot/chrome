@@ -119,6 +119,11 @@ textarea {
     min-height: 210px;
 }
 
+.webguide.view-mode #main-area,
+.webguide.wgcommenting #main-area {
+    min-height: 165px;
+}
+
 /* Always visible */
 #bottom-area {
     /*min-height: 3em;*/
@@ -280,11 +285,15 @@ textarea {
     left: 14px;
 }
 
-#myrating-header {
+.title {
     margin-left: 10px;
     font-size: 14px;
     font-weight: bold;
     color: #454545;
+}
+
+#myrating-header {
+
 }
 
 /* Headers for rating controls */
@@ -659,28 +668,21 @@ textarea {
 }
 
 #wot-rating-header-wot {
-    display: block;
-    font-size: 14px;
-    color: #454545;
-    text-align: left;
+    display: inline-block;
+    width: 264px;
     margin-top: 8px;
-    font-weight: bold;
-    margin-left: 11px;
+    text-align: left;
 }
 
 #rep-block {
     /*width: 200px;*/
 }
 
-/* scorecard */
-#wot-scorecard {
-    position: absolute;
-    right: 104px;
-    top: 130px;
-    z-index: 3;
-}
-
 #wot-scorecard-content {
+    display: inline-block;
+    max-width: 250px;
+    max-height: 1em;
+    overflow: hidden;
 }
 
 .wot-scorecard-text {
@@ -722,7 +724,7 @@ textarea {
 #tr-categories-list {
     margin: 11px 0 0 0;
     padding: 0;
-    min-height: 46px;
+    min-height: 50px;
     line-height: 9px;
     column-count: 2;
     -webkit-column-count: 2;
@@ -877,6 +879,10 @@ textarea {
     display: none;
 }
 
+.webguide #user-communication {
+    display: none !important;
+}
+
 .user-comm-activity {
     margin: 77px 25px 0;
     position: relative;
@@ -993,6 +999,128 @@ textarea {
 #wot-message[status="critical"] #wot-message-text {
     color: #d81f27;
 }
+
+/* -- Web Guide */
+
+#wg-area {
+    display: none;
+    min-height: 65px;
+}
+
+#wg-area:before {
+    position: absolute;
+    height: 0;
+    border-top: 1px solid #D9D9D9;
+    content: "";
+    width: 100%;
+    margin-top: 0px;
+    margin-left: -24px;
+}
+
+#wg-title {
+    display: inline-block;
+    margin-top: 11px;
+}
+
+#wg-change {
+    display: inline-block;
+    vertical-align: super;
+    font-size: 12px;
+    margin-left: 4px;
+    font-variant: small-caps;
+    border-bottom: 1px dotted #3163B9;
+    color: #3163B9;
+    cursor: pointer;
+}
+
+#wg-change:hover {
+    color: #cc2401;
+    border-bottom-color: #cc2401;
+}
+
+.wgcommenting #wg-change {
+    display: none;
+}
+
+#wg-tags {
+    margin-left: 10px;
+    margin-top: 6px;
+    height: 1.1em;
+    overflow: hidden;
+}
+
+#wg-my-tags {
+    display: inline-block;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-padding-start: 0;
+    list-style-type: none;
+}
+
+#wg-tags-separator {
+    display: inline-block;
+    font-size: 12px;
+    color: #808080;
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+#wg-other-tags {
+    display: inline-block;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-padding-start: 0;
+    list-style-type: none;
+}
+
+.wg-tag {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 12px;
+    color: #3163B9;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.wg-tag:last-child {
+    margin-right: 0;
+}
+
+.wg-tag:hover {
+    text-decoration: underline;
+}
+
+.wg-tag:hover:before {
+    content: "#";
+    color: #C0C0C0;
+    margin-left: -7px;
+    position: absolute;
+    font-size: 10px;
+    font-weight: lighter;
+    margin-top: 3px;
+}
+
+#wg-addmore {
+    display: inline;
+    color: #C0C0C0;
+    font-style: italic;
+    font-size: 12px;
+    margin: 0 6px;
+    cursor: pointer;
+}
+
+#wg-addmore:hover {
+    border-bottom: 1px dotted #898989;
+    color: #898989;
+}
+
+.wgcommenting #wg-addmore {
+    visibility: hidden;
+    width: 0;   /* hacky way of hiding the element */
+}
+
+/* -- // -- */
+
 /* partner */
 #wot-partner {
     display: none;
@@ -1027,6 +1155,15 @@ textarea {
     width: 529px;
     height: 30px;
     display: none;
+}
+
+.wgcommenting #rate-buttons {
+/* buttons in WebGuide commenting mode are positioned differently */
+    bottom: 90px;
+}
+
+.wgcommenting #btn-comment {
+    display: none !important;  /* hide this redundant button */
 }
 
 .buttons-wrapper {
@@ -1110,6 +1247,10 @@ textarea {
 
 #btn-delete:hover .btn-delete_label {
     display: block;
+}
+
+.wgcommenting #btn-delete {
+    display: none !important;
 }
 
 .btn-submit {
@@ -1445,9 +1586,35 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     min-height: 225px;
 }
 
+.wgcommenting #commenting-area {
+    min-height: 275px;
+}
+
+.wgcommenting #commenting-area:before {
+    position: absolute;
+    height: 0;
+    border-top: 1px solid #D9D9D9;
+    content: "";
+    width: 100%;
+    margin-top: -9px;
+    margin-left: -24px;
+}
+
 .comment-title {
     /* see the initial values at the beginning of this file */
     padding: 3px 0 4px;
+}
+
+#comment-top-hint {
+    display: none;
+    color: #979797;
+    font-size: 12px;
+    margin-bottom: 15px;
+    line-height: 1.5em;
+}
+
+.wgcommenting #comment-top-hint {
+    display: block;
 }
 
 .user-comment-wrapper {
@@ -1455,12 +1622,13 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 #user-comment {
+    -webkit-appearance: textarea;
     height: 126px;
     width: 350px;
     /*margin-right: 10px;*/
     padding: 8px;
-    border: 1px solid #C0C0C0;
-    border-radius: 3px;
+    /*border: 1px solid #C0C0C0;*/
+    /*border-radius: 3px;*/
     font-size: 13px;
     font-family: Arial;
     overflow-x: hidden;
@@ -1523,7 +1691,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     font-size: 14px;
     text-align: right;
     position: absolute;
-    bottom: 55px;
+    bottom: 60px;
     right: 50px;
     background-color: #FC4B56;
     padding: 3px 10px;
@@ -1535,6 +1703,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #comment-bottom-hint.error {
     display: block;
+}
+
+.wgcommenting #comment-bottom-hint {
+    bottom: 142px;
 }
 
 #thanks-area {

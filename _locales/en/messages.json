@@ -444,5 +444,17 @@
 	},
 	"ratingwindow_check_6a": {
 		"message": "Too many categories may result in people questioning the credibility of your review."
+	},
+	"wg_title": {
+		"message": "WOT Groups"
+	},
+	"wg_edit": {
+		"message": "edit"
+	},
+	"wg_add": {
+		"message": "add"
+	},
+	"wg_add_long": {
+		"message": "click to add a tag"
 	}
 }

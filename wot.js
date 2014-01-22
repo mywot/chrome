@@ -1,6 +1,6 @@
 /*
 	wot.js
-	Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -127,6 +127,7 @@ var wot = {
 		tour:       "http://dev.mywot.com/support/tour/",
 		tour_rw:    "http://dev.mywot.com/support/tour/ratingwindow",
 		tour_scorecard: "http://dev.mywot.com/support/tour/scorecard",
+		webguide: "https://dev.mywot.com/en/guide",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -149,7 +150,8 @@ var wot = {
 			wt_warn_lm: "wt-warn-lm",
 			wt_warn_logo: "wt-warn-logo",
 			wt_donuts_lm: "wt-donuts-lm",
-			wt_donuts_logo: "wt-donuts-logo"
+			wt_donuts_logo: "wt-donuts-logo",
+			wg_tag: "wg-tag"
 		}
 	},
 
@@ -232,7 +234,7 @@ var wot = {
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
-	TINY_THANKYOU_DURING: 60 * 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
+	TINY_THANKYOU_DURING: 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
 
 	// trusted extensions IDs
 	allowed_senders: {
