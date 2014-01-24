@@ -23,7 +23,8 @@ body {
     cursor: default;
     -webkit-user-select: none;
     width: 580px;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAK0lEQVQIW2NkwAL+Bwc/Y0QXBwuuXSuFIgETBCmGSyALwiXQBcES2ARBEgA0ORaS9123nAAAAABJRU5ErkJggg==);    /* Testing add-on */
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAK0lEQVQIW2NkwAL+Bwc/Y0QXBwuuXSuFIgETBCmGSyALwiXQBcES2ARBEgA0ORaS9123nAAAAABJRU5ErkJggg==);
+    background-repeat: repeat-x;
 }
 
 #test-label {
@@ -32,11 +33,20 @@ body {
     top: 0px;
     text-transform: uppercase;
     font-family: arial;
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-size: 10px;
-    color: #F00;
-    background-color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 250, 250, 0.98);
+    background-color: rgba(255, 102, 4, 0.20);
     padding: 0 35px;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    -webkit-transition: background-color 0.2s;
+    -webkit-user-select: text;
+}
+
+#test-label:hover {
+    background-color: rgba(255, 102, 4, 0.9);
 }
 
 textarea {
@@ -119,8 +129,8 @@ textarea {
     min-height: 210px;
 }
 
-.webguide.view-mode #main-area,
-.webguide.wgcommenting #main-area {
+.wg.view-mode #main-area,
+.wg.wgcommenting #main-area {
     min-height: 165px;
 }
 
@@ -879,7 +889,7 @@ textarea {
     display: none;
 }
 
-.webguide #user-communication {
+.wg #user-communication {
     display: none !important;
 }
 

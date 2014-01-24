@@ -127,7 +127,7 @@ var wot = {
 		tour:       "http://dev.mywot.com/support/tour/",
 		tour_rw:    "http://dev.mywot.com/support/tour/ratingwindow",
 		tour_scorecard: "http://dev.mywot.com/support/tour/scorecard",
-		webguide: "https://dev.mywot.com/en/guide",
+		wg: "https://dev.mywot.com/en/groups",
 
 		contexts: {
 			rwlogo:     "rw-logo",

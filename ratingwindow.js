@@ -518,7 +518,7 @@ $.extend(wot, { ratingwindow: {
 			$rw = $("#wot-ratingwindow"),
 			$wg_area = $("#wg-area");
 
-		$rw.toggleClass("webguide", _this.is_wg_allowed);
+		$rw.toggleClass("wg", _this.is_wg_allowed);
 
 		if (_this.is_wg_allowed) {
 			var visible = !$rw.hasClass("commenting") && !$rw.hasClass("thanks") && !$rw.hasClass("rate");
@@ -655,7 +655,8 @@ $.extend(wot, { ratingwindow: {
 
         var _rw = wot.ratingwindow,
             _comments = wot.ratingwindow.comments,
-            data = {},
+            comment_data = {},
+	        wg = cached.wg || {},
             bg = chrome.extension.getBackgroundPage(),
             is_unsubmitted = false;
 
@@ -663,12 +664,16 @@ $.extend(wot, { ratingwindow: {
         _rw.local_comment = local_comment;  // keep locally stored comment
 
         if (cached && cached.comment) {
-            data = cached.comment;
+            comment_data = cached.comment;
             _rw.comments.captcha_required = captcha_required || false;
-	        _rw.is_wg_allowed = true; // data.wg || false;  // TODO: uncomment when API is ready
         }
 
-        var error_code = data.error_code || 0;
+	    // WOT Groups data
+	    _rw.is_wg_allowed = wg.wg == true || false;
+	    _rw.tags = wg.tags ? wg.tags : [];
+
+        // Errors
+	    var error_code = comment_data.error_code || 0;
 
         _comments.allow_commenting = ([
             wot.comments.error_codes.AUTHENTICATION_FAILED,
@@ -682,22 +687,22 @@ $.extend(wot, { ratingwindow: {
         if (local_comment && !wot.utils.isEmptyObject(local_comment)) {
 
             // If server-side comment is newer, than drop locally stored one
-            if (local_comment.timestamp && data.timestamp && data.timestamp >= local_comment.timestamp) {
+            if (local_comment.timestamp && comment_data.timestamp && comment_data.timestamp >= local_comment.timestamp) {
                 // Remove a comment from keeper
                 bg.wot.keeper.remove_comment(local_comment.target);
                 _rw.local_comment = null;
             } else {
-                data.comment = local_comment.comment;
-                data.timestamp = local_comment.timestamp;
-                data.wcid = data.wcid === undefined ? 0 : data.wcid;
+                comment_data.comment = local_comment.comment;
+                comment_data.timestamp = local_comment.timestamp;
+                comment_data.wcid = comment_data.wcid === undefined ? 0 : comment_data.wcid;
                 is_unsubmitted = true;
             }
         }
 
         // check whether comment exists: "comment" should not be empty, and wcid should not be null (but it can be zero)
-        if (data && data.comment && data.wcid !== undefined) {
-            _comments.posted_comment = data;
-            _comments.set_comment(data.comment);
+        if (comment_data && comment_data.comment && comment_data.wcid !== undefined) {
+            _comments.posted_comment = comment_data;
+            _comments.set_comment(comment_data.comment);
             $("#rated-votes").addClass("commented");
 
             // switch to commenting mode if we have unfinished comment
@@ -1193,7 +1198,7 @@ $.extend(wot, { ratingwindow: {
 	    // Web Guide initialization
 	    $(document).on("click", ".wg-tag", function (e) {
 		    var tag_text = $(this).text();
-		    _rw.navigate(wot.urls.webguide + "/" + tag_text, wot.urls.contexts.wg_tag);
+		    _rw.navigate(wot.urls.wg + "/" + tag_text, wot.urls.contexts.wg_tag);
 	    });
 
 	    $("#wg-change, #wg-addmore").on("click", function (e) {
