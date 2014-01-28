@@ -1087,7 +1087,7 @@ $.extend(wot, { api: {
 		        var tags = data.wgtags || [],
 			        wg_enabled = data.wg || false;
 
-		        // clean tags from hash char is it's there
+		        // clean tags from hash char is it's there and add tokens field
 		        tags = tags.map(function (item) {
 			        if (item.value) {
 				        item.value = item.value.replace(/#/g, '');

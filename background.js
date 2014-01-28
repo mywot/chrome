@@ -31,6 +31,16 @@ $.extend(wot, { core: {
     },
 	last_testimony: null,   // datetime of the last testimony submitted
 
+	tags: {
+		mytags: [ {value:"js"}, {value:"startups"}, {value:"blogs"}, {value:"children"}, {value:"finland"} ],
+		mytags_updated: null,       // time when the list was updated last time
+		MYTAGS_UPD_INTERVAL: 30 * 60 * 1000,
+
+		popular_tags: [ {value:"ololo"}, {value:"kitchen"}, {value:"pictures"}, {value:"cats"} ],
+		popular_tags_updated: null,
+		POPULARTAGS_UPD_INTERVAL: 30 * 60 * 1000
+	},
+
 	loadratings: function (hosts, onupdate)
 	{
 		if (typeof (hosts) == "string") {

@@ -39,9 +39,12 @@ $.extend(wot, { ratingwindow: {
 //		{ value: "ideas", tokens: ["ideas"] }
 	],
 
-	get_bg: function () {
+	get_bg: function (sub_objname) {
         // just a shortcut
-        return chrome.extension.getBackgroundPage();
+        var bg = chrome.extension.getBackgroundPage();
+		if (sub_objname && bg[sub_objname]) return bg[sub_objname];
+
+		return bg;
     },
 
     is_rated: function (state) {
@@ -194,7 +197,7 @@ $.extend(wot, { ratingwindow: {
                 comment_changed = false,
                 has_comment = false,
                 user_comment = rw.comments.get_comment_value(),
-	            mytags = rw.comments.get_tags(user_comment),
+	            mytags = rw.comments.tags.get_tags(user_comment),
 	            has_mytags = mytags && mytags.length,
                 user_comment_id = 0,
                 cached = {},
@@ -528,9 +531,55 @@ $.extend(wot, { ratingwindow: {
 		}
 	},
 
+	suggest_tags: function () {
+		// autocomplete feature for WG comment
+		// TODO: enable only if WG is enabled
+
+		var rw = wot.ratingwindow,
+			tags_ac = [];
+
+		if (rw.is_wg_allowed) {
+
+			var mytags = rw.comments.tags.get_all_my_tags(),
+				popular_tags = rw.comments.tags.get_popular_tags();
+
+			// make a tag list from tags assigned to the website
+			tags_ac = rw.tags.map(function(item){
+				return item.value;
+			});
+
+			// add all user's tags if they are not in the list yet
+			tags_ac = tags_ac
+				.concat(
+					mytags
+						.map(function(item){
+							return item.value;
+						})
+						.filter(function (el, index, arr) {
+							return (tags_ac.indexOf(el) < 0);
+						}),
+					popular_tags
+						.map(function(item){
+							return item.value;
+						})
+						.filter(function (el, index, arr) {
+							return (tags_ac.indexOf(el) < 0);
+						})
+				);
+
+			tags_ac.sort();
+
+			tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
+
+			console.log(tags_ac);
+		}
+
+		return tags_ac;
+	},
+
 	update_wg_tags: function () {
 		var rw = wot.ratingwindow,
-			mytags = rw.comments.get_tags(),
+			mytags = rw.comments.tags.get_tags(),
 			tagmap = [
 				{ elem: $("#wg-my-tags"), list: mytags },
 				{ elem: $("#wg-other-tags"), list: rw.tags }
@@ -670,7 +719,11 @@ $.extend(wot, { ratingwindow: {
 
 	    // WOT Groups data
 	    _rw.is_wg_allowed = wg.wg == true || false;
-	    _rw.tags = wg.tags ? wg.tags : [];
+	    _rw.tags = [];
+
+	    if (wg.tags && wg.tags.length > 0) {
+		    _rw.tags = wg.tags;
+	    }
 
         // Errors
 	    var error_code = comment_data.error_code || 0;
@@ -1113,21 +1166,30 @@ $.extend(wot, { ratingwindow: {
 
         $(".rating-delete-icon, .rating-deletelabel").bind("click", _rw.rate_control.on_remove);
 
-        $("#user-comment").bind("change keyup", function() {
-            window.setTimeout(function(){
-                wot.ratingwindow.comments.update_hint();
-	            wot.ratingwindow.update_wg_tags();
+        $("#user-comment")
+	        .bind("change keyup", function(event) {
 
-                // set the timeout to update save button when user stops typing the comment
-                if (wot.ratingwindow.timer_save_button) {
-                    window.clearTimeout(wot.ratingwindow.timer_save_button);
-                }
-                wot.ratingwindow.timer_save_button = window.setTimeout(function(){
-	                wot.ratingwindow.update_submit_button();
-                }, 200);
+	//	        wot.ratingwindow.comments.tags.test_left_token(event);   // hook for catching typing a tag
 
-            }, 20);    // to react on any keyboard event after the text was changed
-        });
+	            window.setTimeout(function(){
+	                wot.ratingwindow.comments.update_hint();
+		            wot.ratingwindow.update_wg_tags();
+
+	                // set the timeout to update save button when user stops typing the comment
+	                if (wot.ratingwindow.timer_save_button) {
+	                    window.clearTimeout(wot.ratingwindow.timer_save_button);
+	                }
+	                wot.ratingwindow.timer_save_button = window.setTimeout(function(){
+		                wot.ratingwindow.update_submit_button();
+	                }, 200);
+
+	            }, 20);    // to react on any keyboard event after the text was changed
+	        })
+	        .tagautocomplete({
+		        source: wot.ratingwindow.suggest_tags,
+		        character: "#",
+		        items: 4
+	        });
 
         // Rate mode event handlers
         $("#btn-comment").bind("click", _rw.on_comment_button);
@@ -1205,24 +1267,7 @@ $.extend(wot, { ratingwindow: {
 		    _rw.modes.wgcomment.activate();
 	    });
 
-	    // autocomplete feature for WG comment
-	    // TODO: enable only if WG is enabled
-//	    $("#user-comment").typeahead([
-//		    {
-//			    name: "testdummy",
-//			    valueKey: "value",
-//			    local: _rw.tags
-//		    },
-////		    {
-////			    name: "popular",
-////			    prefetch: _rw.comments.WG_API_URL,
-////			    remote: _rw.comments.WG_API_URL + "%QUERY%"
-////		    }
-//	    ]);
-
-
-
-        // increment "RatingWindow shown" counter
+	    // increment "RatingWindow shown" counter
         _rw.count_window_opened();
         bg.wot.core.badge.text = "";
         bg.wot.core.badge.type = null;
@@ -2377,7 +2422,7 @@ $.extend(wot, { ratingwindow: {
 	            is_wgcommenting = wot.ratingwindow.modes.is_current("wgcomment");
 
 	        if (is_wgcommenting) {
-		        var tags = _this.get_tags(comment);
+		        var tags = _this.tags.get_tags(comment);
 
 		        return (comment.length >= minlen &&
 			        comment.length < maxlen &&
@@ -2388,26 +2433,6 @@ $.extend(wot, { ratingwindow: {
 		        return (comment.length >= minlen && comment.length < maxlen);
 	        }
         },
-
-	    tags_re: /(\s|^)#([a-z0-9]{2,})/img,
-
-	    get_tags: function (text) {
-
-		    var _this = wot.ratingwindow.comments,
-			    res,
-			    tags = [];
-
-		    text = text ? text : _this.get_comment_value();
-
-		    while ((res = _this.tags_re.exec(text)) !== null) {
-			    if (res[2]) {
-				    tags.push({
-					    value: res[2]        // tag's text
-				    });
-			    }
-		    }
-		    return tags;
-	    },
 
         focus: function () {
             $("#user-comment").focus();
@@ -2423,7 +2448,50 @@ $.extend(wot, { ratingwindow: {
             $("#comment-side-hint").hide();
             $("#user-comment").addClass("warning").attr("disabled", "1");
             $("#comment-captcha").show();
-        }
+        },
+
+	    tags: {
+		    tags_re: /(\s|^)#([a-z0-9]{2,})/img,
+		    reverse_re: /^(([a-z0-9]{1,})#(\s|$))/i,
+		    current_tag: "",
+//		    $tag_input: null,
+
+		    get_tags: function (text) {
+
+			    var _comments = wot.ratingwindow.comments,
+				    _this = _comments.tags,
+				    res,
+				    tags = [];
+
+			    text = text ? text : _comments.get_comment_value();
+
+			    while ((res = _this.tags_re.exec(text)) !== null) {
+				    if (res[2]) {
+					    tags.push({
+						    value: res[2]        // tag's text
+					    });
+				    }
+			    }
+			    return tags;
+		    },
+
+		    get_all_my_tags: function () {
+			    // returns all user's tags
+
+			    var rw = wot.ratingwindow,
+				    bgwot = rw.get_bg("wot");
+
+			        return bgwot.core.tags.mytags;
+		    },
+
+		    get_popular_tags: function () {
+
+			    var rw = wot.ratingwindow,
+				    bgwot = rw.get_bg("wot");
+
+			    return bgwot.core.tags.popular_tags;
+		    }
+	    }
     }
 
 }});

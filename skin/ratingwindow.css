@@ -1748,3 +1748,8 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     margin-top: 0.5em;
     color: #808080;
 }
+
+.typeahead {
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+}
