@@ -557,7 +557,11 @@ $.extend(wot, { ratingwindow: {
 						})
 						.filter(function (el, index, arr) {
 							return (tags_ac.indexOf(el) < 0);
-						}),
+						}));
+
+			// then add all popular tags if they are not in the list yet (this is why this concat is separated from above)
+			tags_ac = tags_ac
+				.concat(
 					popular_tags
 						.map(function(item){
 							return item.value;
@@ -1277,6 +1281,9 @@ $.extend(wot, { ratingwindow: {
 //        if (bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
 //            bg.wot.core.set_badge(null, false);   // hide badge
 //        }
+
+	    _rw.comments.tags.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
+	    _rw.comments.tags.update_popular_tags();
     },
 
 	show_tiny_thankyou: function () {
@@ -2490,6 +2497,36 @@ $.extend(wot, { ratingwindow: {
 				    bgwot = rw.get_bg("wot");
 
 			    return bgwot.core.tags.popular_tags;
+		    },
+
+		    update_mytags: function (force) {
+			    var rw = wot.ratingwindow,
+				    bgwot = rw.get_bg("wot");
+
+			    console.log(bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated, Date.now());
+
+			    if (!force &&
+				    bgwot.core.tags.mytags_updated !== null &&
+				    bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated > Date.now()) {
+				    return false;
+			    }
+
+			    bgwot.api.tags.my.get_tags();
+		    },
+
+		    update_popular_tags: function (force) {
+			    var rw = wot.ratingwindow,
+				    bgwot = rw.get_bg("wot");
+
+			    console.log(bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated, Date.now());
+
+			    if (!force &&
+				    bgwot.core.tags.popular_tags_updated !== null &&
+				    bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated > Date.now()) {
+				    return false;
+			    }
+
+			    bgwot.api.tags.popular.get_tags();
 		    }
 	    }
     }

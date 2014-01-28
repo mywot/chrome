@@ -1084,16 +1084,8 @@ $.extend(wot, { api: {
 	        ];
 
 	        if (fail_errors.indexOf(error_code) < 0 && target) {  // check for tags data (WOT Groups)
-		        var tags = data.wgtags || [],
+		        var tags = wot.api.tags.clean(data.wgtags),
 			        wg_enabled = data.wg || false;
-
-		        // clean tags from hash char is it's there and add tokens field
-		        tags = tags.map(function (item) {
-			        if (item.value) {
-				        item.value = item.value.replace(/#/g, '');
-			        }
-			        return item;
-		        });
 
 		        wot.cache.set_param(target, "wg", {
 			        wg: wg_enabled,
@@ -1170,6 +1162,85 @@ $.extend(wot, { api: {
 
             wot.core.update_ratingwindow_comment(); // to update status "the website is commented by the user"
         }
-    }
+    },
+
+	tags: {
+		my: {
+			get_tags: function () {
+				var api = wot.api;
+				api.tags._get_tags(api.tags.my, "mytags", "getmytags");
+			}
+		},
+
+		popular: {
+			get_tags: function () {
+				var api = wot.api;
+				api.tags._get_tags(api.tags.popular, "popular_tags", "getmastertags");
+			}
+		},
+
+		_get_tags: function (tags_obj, core_keyword, method) {
+
+			try {
+
+				wot.api.website_call("wg",
+					{
+						version: wot.api.comments.version
+					},
+					method,
+					{
+						encryption: true,
+						authentication: true
+					},
+					{},
+					function (err) {
+						console.error(err);
+					},
+					function (data) {
+						wot.api.tags._on_get_tags(data, core_keyword);
+					});
+
+			} catch (e) {
+				console.error(e);
+			}
+
+		},
+
+		_on_get_tags: function (data, core_keyword) {
+
+			console.log("my.on_get_tags()", data);
+
+			var _comment_api = wot.api.comments,
+				_tags_api = wot.api.tags,
+				error_code = _comment_api.is_error(data.error);
+
+			var fail_errors = [ // the list of errors that won't give WOT Groups data
+				wot.comments.error_codes.AUTHENTICATION_FAILED,
+				wot.comments.error_codes. AUTHENTICATION_REP_SERVER_ERROR,
+				wot.comments.error_codes.NO_ACTION_DEFINED
+			];
+
+			if (fail_errors.indexOf(error_code) < 0 && data.wg === true) {  // check for tags data (WOT Groups)
+				wot.core.tags[core_keyword] = _tags_api.clean(data.wgtags);
+				wot.core.tags[core_keyword + "_updated"] = Date.now();
+			}
+		},
+
+		clean: function (tag_array) {
+			// clean tags from hash char is it's there and add tokens field
+			var tags = [];
+
+			if (tag_array instanceof Array) {
+				tags = tag_array.map(function (item) {
+					if (item.value) {
+						item.value = item.value.replace(/#/g, '');
+					}
+					return item;
+				});
+			}
+
+			return tags;
+		}
+	}
 
 }});
