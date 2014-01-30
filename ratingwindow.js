@@ -575,7 +575,7 @@ $.extend(wot, { ratingwindow: {
 
 			tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
 
-			console.log(tags_ac);
+//			console.log(tags_ac);
 		}
 
 		return tags_ac;
@@ -1188,7 +1188,7 @@ $.extend(wot, { ratingwindow: {
         $("#user-comment")
 	        .bind("change keyup", function(event) {
 
-	//	        wot.ratingwindow.comments.tags.test_left_token(event);   // hook for catching typing a tag
+		        wot.ratingwindow.comments.update_caret(event, this);
 
 	            window.setTimeout(function(){
 	                wot.ratingwindow.comments.update_hint();
@@ -1207,7 +1207,8 @@ $.extend(wot, { ratingwindow: {
 	        .tagautocomplete({
 		        source: wot.ratingwindow.suggest_tags,
 		        character: "#",
-		        items: 4
+		        items: 4,
+		        show: wot.ratingwindow.show_tagautocomplete
 	        });
 
         // Rate mode event handlers
@@ -1300,6 +1301,37 @@ $.extend(wot, { ratingwindow: {
 	    _rw.comments.tags.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
 	    _rw.comments.tags.update_popular_tags();
     },
+
+	show_tagautocomplete: function () {
+
+		var _comments = wot.ratingwindow.comments;
+
+		var top, left,
+			pos = this.$element.position(),
+			height = this.$element[0].offsetHeight;
+
+		if (_comments.caret_left == null || _comments.caret_bottom == null) {
+			top = pos.top;
+			left = pos.left;
+		} else {
+			top = _comments.caret_bottom;
+			left = _comments.caret_left + _comments.AUTOCOMPLETE_OFFSET_X;
+
+			// TODO: ajust the position on the edges
+		}
+
+		this.$menu
+			.appendTo('body')
+			.show()
+			.css({
+				position: "absolute",
+				top: top + "px",
+				left: left + "px"
+			});
+
+		this.shown = true;
+		return this;
+	},
 
 	show_tiny_thankyou: function () {
 		$("#tiny-thankyou").fadeIn(500, function (){
@@ -2343,7 +2375,13 @@ $.extend(wot, { ratingwindow: {
         MAX_LIMIT: 20000,
         is_changed: false,
         posted_comment: {},
-	    WG_API_URL: "https://dev.mywot.com/en/ajax/guide/get/list?name=",
+
+	    caret_left: null,
+		caret_top: null,
+		caret_bottom: null,
+	    AUTOCOMPLETE_OFFSET_X: -20,
+
+		WG_API_URL: "https://dev.mywot.com/en/ajax/guide/get/list?name=",
 
 	    get_comment_value: function (need_html) {
 		    var elem = $("#user-comment")[0],
@@ -2472,6 +2510,34 @@ $.extend(wot, { ratingwindow: {
             $("#comment-captcha").show();
         },
 
+	    update_caret: function (event, element) {
+		    var _this = wot.ratingwindow.comments,
+			    sel = window.getSelection(),
+			    range = sel.getRangeAt(0);
+
+		    if (!range) {
+			    _this.caret_top = null;
+			    _this.caret_left = null;
+			    return;
+		    }
+
+
+		    var cr = range.getClientRects();
+
+		    if (!cr || !cr[0] || cr[0].width !== 0) {   // width == 0 means there is no selected text but only caret position
+			    _this.caret_top = null;
+			    _this.caret_left = null;
+			    return;
+		    }
+
+		    var parent = range.endContainer.parentNode,
+			    b = element.getBoundingClientRect();
+
+		    _this.caret_left = cr[0].left;
+		    _this.caret_top = cr[0].top - parent.offsetTop + b.top;
+		    _this.caret_bottom = cr[0].bottom - parent.offsetTop + b.top;
+	    },
+
 	    tags: {
 		    tags_re: /(\s|^)#([a-z0-9]{2,})/img,
 
@@ -2503,7 +2569,7 @@ $.extend(wot, { ratingwindow: {
 			    var rw = wot.ratingwindow,
 				    bgwot = rw.get_bg("wot");
 
-			    console.log(bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated, Date.now());
+//			    console.log(bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated, Date.now());
 
 			    if (!force &&
 				    bgwot.core.tags.mytags_updated !== null &&
@@ -2518,7 +2584,7 @@ $.extend(wot, { ratingwindow: {
 			    var rw = wot.ratingwindow,
 				    bgwot = rw.get_bg("wot");
 
-			    console.log(bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated, Date.now());
+//			    console.log(bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated, Date.now());
 
 			    if (!force &&
 				    bgwot.core.tags.popular_tags_updated !== null &&
