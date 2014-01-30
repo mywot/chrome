@@ -58,6 +58,10 @@ $.extend(wot, { core: {
 
 				_this.mytags = _this.mytags.concat(uniq_tags);
 			}
+		},
+
+		expire_mytags: function () {
+			wot.core.tags.mytags_updated = null;    // next time when RW will be opened, it will fetch new mytags from server
 		}
 	},
 
@@ -991,6 +995,10 @@ $.extend(wot, { core: {
 				});
             });
 
+			wot.bind("message:tags:clearmytags", function(port, data) {
+				wot.core.tags.expire_mytags();
+            });
+
 			if (wot.surveys && wot.surveys.bind_events) {
 				wot.surveys.bind_events();
 			}
@@ -1003,7 +1011,7 @@ $.extend(wot, { core: {
 				wot.featured.bind_events();
 			}
 
-			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget", "ads" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "tags", "wtb", "surveyswidget", "ads" ]);
 
 			/* event handlers */
 
