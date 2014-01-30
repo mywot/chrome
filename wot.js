@@ -970,7 +970,31 @@ var wot = {
         }
 
         return false;
-    }
+    },
+
+	tags: {
+		tags_re: /(\s|^)#([a-z0-9]{2,})/img,
+
+		get_tags: function (text) {
+
+			if (!text) return [];
+
+			var res,
+				tags = [],
+				_tags = {};
+
+			while ((res = wot.tags.tags_re.exec(text)) !== null) {
+				var tag = res[2] || "";
+				if (tag && !_tags[tag]) {
+					tags.push({
+						value: tag       // tag's text
+					});
+					_tags[tag] = true;  // remember the tag to avoid duplications
+				}
+			}
+			return tags;
+		}
+	}
 };
 
 

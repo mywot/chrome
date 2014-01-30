@@ -1107,25 +1107,38 @@ $.extend(wot, { api: {
                 target = _this.pull_nonce(nonce),
                 error_code = _this.is_error(data.error);
 
-            switch (error_code) {
-                case wot.comments.error_codes.SUCCESS:
-                    wot.keeper.remove_comment(target);  // delete the locally saved comment only on successful submit
-                    wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
-                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target); // don't try to send again
-                    break;
+	        try {
 
-                // for these errors we should try again, because there is non-zero possibility of quantum glitches around
-                case wot.comments.error_codes.AUTHENTICATION_FAILED:
-                case wot.comments.error_codes.AUTHENTICATION_REP_SERVER_ERROR:
-                case wot.comments.error_codes.COMMENT_SAVE_FAILED:
-                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
-                    wot.api.comments.retry("submit", [ target ]);   // yeah, try it again, ddos own server ;)
-                    break;
+	            switch (error_code) {
+	                case wot.comments.error_codes.SUCCESS:
+		                var local = wot.keeper.get_comment(target);
+	                    wot.keeper.remove_comment(target);  // delete the locally saved comment only on successful submit
+	                    wot.cache.update_comment(target, { status: wot.cachestatus.ok, error_code: error_code });
+	                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target); // don't try to send again
 
-                default:
-                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
-                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
-            }
+		                if (local && local.comment) {
+			                // extract tags and append them to the cached list of mytags
+			                var mytags = wot.tags.get_tags(local.comment);
+			                wot.core.tags.append_mytags(mytags);
+		                }
+
+		                break;
+
+	                // for these errors we should try again, because there is non-zero possibility of quantum glitches around
+	                case wot.comments.error_codes.AUTHENTICATION_FAILED:
+	                case wot.comments.error_codes.AUTHENTICATION_REP_SERVER_ERROR:
+	                case wot.comments.error_codes.COMMENT_SAVE_FAILED:
+	                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+	                    wot.api.comments.retry("submit", [ target ]);   // yeah, try it again, ddos own server ;)
+	                    break;
+
+	                default:
+	                    wot.cache.update_comment(target, { status: wot.cachestatus.error, error_code: error_code });
+	                    wot.prefs.clear(wot.api.comments.PENDING_COMMENT_SID + target);
+	            }
+	        } catch (e) {
+		        console.error(e);
+	        }
 
             wot.cache.captcha_required = !!data.captcha;
 

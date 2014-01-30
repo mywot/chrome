@@ -38,7 +38,27 @@ $.extend(wot, { core: {
 
 		popular_tags: [ ],
 		popular_tags_updated: null,
-		POPULARTAGS_UPD_INTERVAL: 30 * 60 * 1000
+		POPULARTAGS_UPD_INTERVAL: 30 * 60 * 1000,
+
+		append_mytags: function (mytags) {
+			if (mytags instanceof Array && mytags.length) {
+
+				var _this = wot.core.tags,
+					mytags_flat = _this.mytags.map(function (item) { return item.value });
+
+				var uniq = mytags.filter(function (tag) {
+					var tag_value = tag.value.trim();
+					return mytags_flat.indexOf(tag_value) < 0;
+				});
+
+				var uniq_tags = uniq.map(function (tag) {
+					tag.mytag = true;
+					return tag;
+				});
+
+				_this.mytags = _this.mytags.concat(uniq_tags);
+			}
+		}
 	},
 
 	loadratings: function (hosts, onupdate)

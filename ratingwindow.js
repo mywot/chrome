@@ -2459,27 +2459,12 @@ $.extend(wot, { ratingwindow: {
 
 	    tags: {
 		    tags_re: /(\s|^)#([a-z0-9]{2,})/img,
-		    reverse_re: /^(([a-z0-9]{1,})#(\s|$))/i,
-		    current_tag: "",
-//		    $tag_input: null,
 
 		    get_tags: function (text) {
-
-			    var _comments = wot.ratingwindow.comments,
-				    _this = _comments.tags,
-				    res,
-				    tags = [];
-
+			    var _comments = wot.ratingwindow.comments;
 			    text = text ? text : _comments.get_comment_value();
 
-			    while ((res = _this.tags_re.exec(text)) !== null) {
-				    if (res[2]) {
-					    tags.push({
-						    value: res[2]        // tag's text
-					    });
-				    }
-			    }
-			    return tags;
+			    return wot.tags.get_tags(text);
 		    },
 
 		    get_all_my_tags: function () {
