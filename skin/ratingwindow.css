@@ -1127,7 +1127,8 @@ textarea {
 }
 
 .wg-tag.group:hover {
-    border-color: #3163B9;
+    /*border-color: #3163B9;*/
+    border-color: rgba(68, 137, 255, 0.5);;
     color: #3163B9;
 }
 
