@@ -297,8 +297,8 @@ $.extend(wot, { ratingwindow: {
                     if (has_comment) {
 //                        bg.console.log("SUBMIT COMMENT");
 
-	                    // FIXME: remove line below. Artificially add category "Other" to passover server side restrictions
 	                    if (!has_up_votes && has_mytags) {
+		                    // TODO: remove line below. Artificially add category "Other" to passover server side restrictions
 		                    votes = { 304: 1 };  // category "Other" is upvoted artificially
 	                    }
 
@@ -583,12 +583,14 @@ $.extend(wot, { ratingwindow: {
 
 	update_wg_tags: function () {
 		var rw = wot.ratingwindow,
+			_tags = rw.comments.tags,
 			mytags = rw.comments.tags.get_tags(),
 			tagmap = [
 				{ elem: $("#wg-my-tags"), list: mytags },
 				{ elem: $("#wg-other-tags"), list: rw.tags }
 			],
-			filled = 0;
+			filled = 0,
+			prev = {};
 
 
 		for (var i = 0; i < tagmap.length; i++) {
@@ -597,14 +599,27 @@ $.extend(wot, { ratingwindow: {
 
 			$elem.children().detach();  // clean the tags' section
 			for (var j = 0; j < list.length; j++) {
-				var $tag = $("<li></li>").addClass("wg-tag").text(list[j].value);
+
+				var $tag,
+					tag = list[j],
+					tag_value = tag.value;
+
+				if (prev[tag_value]) continue;  // don't show one tag more than one time (if it was in mytags list)
+
+				$tag = $("<li></li>")
+				.addClass("wg-tag")
+				.toggleClass("group", _tags.is_group(tag_value))
+				.toggleClass("mytag", _tags.is_mytag(tag_value))
+				.text(tag_value);
+
 				$elem.append($tag);
+				prev[tag_value] = true;         // remember that we showed the tag
 			}
 
 			filled += $elem.children().length > 0 ? 1 : 0;
 		}
 
-		$("#wg-tags-separator").toggle(filled > 1);
+//		$("#wg-tags-separator").toggle(filled > 1);
 
 		var $wg_edit = $("#wg-change"),
 			$wg_title = $("#wg-title"),
@@ -2512,6 +2527,26 @@ $.extend(wot, { ratingwindow: {
 			    }
 
 			    bgwot.api.tags.popular.get_tags();
+		    },
+
+		    is_mytag: function (tag) {
+			    var _this = wot.ratingwindow.comments.tags,
+				    tags = _this.get_tags(),
+				    res = tags.filter(function(item){
+					    if (item.value == tag) return true;
+				    });
+
+			    return res.length > 0;
+		    },
+
+		    is_group: function (tag) {
+			    var _this = wot.ratingwindow.comments.tags,
+				    popular_groups = _this.get_popular_tags(),
+				    res = popular_groups.filter(function(item){
+					    if (item.value == tag) return true;
+				    });
+
+			    return res.length > 0;
 		    }
 	    }
     }
