@@ -163,7 +163,7 @@ wot.warning = {
 		try {
 			var data = wot.warning.data;
 
-			if (!data.target || !data.cached || document.getElementById("wotwarning")) {
+			if (!data.target || !data.cached || document.getElementById(wot.warning.warning_id)) {
 				return;
 			}
 
