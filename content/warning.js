@@ -480,6 +480,7 @@ wot.warning = {
 
 	onload: function()
 	{
+		wot.detect_environment(true);
 		wot.bind("message:warnings:show", function(port, data) {
 			wot.warning.settings = data.settings;
 	        wot.init_categories(data.settings);

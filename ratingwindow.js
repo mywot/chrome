@@ -935,6 +935,7 @@ $.extend(wot, { ratingwindow: {
         _rw.opened_time = new Date(); // remember time when RW was opened (for UX measurements)
         _rw.prefs = bg.wot.prefs;   // shortcut
         wot.cache_locale();
+	    wot.detect_environment(true);
 
         var first_opening = !_rw.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
 
@@ -1081,6 +1082,8 @@ $.extend(wot, { ratingwindow: {
 						wot.is_defined(["rw_text", "rw_text_hdr"], "wt");
 
 		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
+
+	    tts_wtip = tts_wtip && !wot.env.is_mailru_amigo;    // no tip for Amigo browser
 
         if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
 

@@ -32,6 +32,7 @@ var wot = {
 	// environment (browser, etc)
 	env: {
 		is_mailru: false,
+		is_mailru_amigo: false,
 		is_yandex: false,
 		is_rambler: false,
 
@@ -649,6 +650,7 @@ var wot = {
 		// try to understand in which environment we are run
 		var user_agent = window.navigator.userAgent || "";
 		wot.env.is_mailru = user_agent.indexOf("MRCHROME") >= 0;
+		wot.env.is_mailru_amigo = user_agent.indexOf("MRCHROME SOC") >= 0;
 
 		// old yandex browser is named "Yandex Internet" (chromium 18), new browser is named "YaBrowser" (chromium 22+)
 		wot.env.is_yandex = user_agent.indexOf("YaBrowser") >= 0 || user_agent.indexOf(" YI") >= 0;
@@ -660,10 +662,11 @@ var wot = {
 			wot.partner = "yandex";
 		}
 
-		if(!readonly) wot.prefs.set("partner", wot.partner);
-
-		// Is the mode "accessible" set on?
-		wot.env.is_accessible = wot.prefs.get("accessible");
+		if (wot.prefs) {
+			if(!readonly) wot.prefs.set("partner", wot.partner);
+			// Is the mode "accessible" set on?
+			wot.env.is_accessible = wot.prefs.get("accessible");
+		}
 	},
 
     cache_locale: function () {

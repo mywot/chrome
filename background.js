@@ -841,7 +841,14 @@ $.extend(wot, { core: {
 		}
 
 		// adapt min_confidence_level: 12 for newcomers, 8 - for users who use the addon more than 2 weeks
-		var min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
+		// but for Amigo mail.ru users it is always a bit higher: 12
+		var min_level;
+		if (wot.is_mailru_amigo) {
+			min_level = 12;
+		} else {
+			min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
+		}
+
 		wot.prefs.set("min_confidence_level", min_level);
 
 		// This GA reporting is disabled due to exceeding limits (10M/day)

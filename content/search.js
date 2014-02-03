@@ -370,12 +370,12 @@ wot.search = {
 
 			var r = this.getreputation(obj);
 
-			if ((this.settings.use_search_level &&
-					r >= this.settings.search_level) ||
-					(rule.searchlevel != null &&
-						r >= rule.searchlevel)) {
+			if ((this.settings.use_search_level && r >= this.settings.search_level) ||
+					(rule.searchlevel != null && r >= rule.searchlevel)) {
 				return css;
 			}
+
+			if (r < 0 && !this.settings.search_showunknown) return css;
 
 			var options = {
 				subtype: "plain"
@@ -441,6 +441,7 @@ wot.search = {
 			"search_type",
 			"show_search_popup",
 			"use_search_level",
+			"search_showunknown",
 			"ninja_donuts",
 			"ninja_announceshown",
 			"ninja_wave",

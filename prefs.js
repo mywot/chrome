@@ -32,6 +32,7 @@ $.extend(wot, { prefs: {
 		search_ignore_4:		true,
 		search_level:			wot.reputationlevels[5].min,
 		search_type:			wot.searchtypes.optimized,
+		search_showunknown:	    true,
 		show_application_0:		true,
 		show_application_1:		true,
 		show_application_2:		true,
@@ -84,20 +85,31 @@ $.extend(wot, { prefs: {
 	/* Overrides preferences depending on the environment */
 	get_overrided_defaults: function(name)
 	{
-		var mailru_params = {
+		var mailru_params,
+			mailru_params_0 = { // for Mail.ru Internet Browser (warning for adult sites)
 			"warning_level_4": 39,
-			"warning_type_4": wot.warningtypes.overlay,
-			"show_application_2": false
+			"warning_type_4": wot.warningtypes.overlay
+		};
+
+		var mailru_params_1 = {// for Mail.ru Amigo Browser (no warning for adult sites)
+			"warning_level_4": 0,
+			"warning_type_4": wot.warningtypes.none,
+			search_level: wot.reputationlevels[5].min,
+			use_search_level: true,
+			search_showunknown: false,
+			settingsui_searchlevel: "bad" // set UI settings to "Show poor reputation icons only"
 		};
 
 		if (wot.env.is_mailru) { // override only for MRU browser
+
+			mailru_params = wot.env.is_mailru_amigo ? mailru_params_1 : mailru_params_0;
+
 			if(mailru_params[name] !== undefined) {
 				return mailru_params[name];
 			}
 		}
 
 		return this.defaults[name];
-
 	},
 
 	get: function(name)
