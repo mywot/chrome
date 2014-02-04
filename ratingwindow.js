@@ -1308,7 +1308,8 @@ $.extend(wot, { ratingwindow: {
 
 		var top, left,
 			pos = this.$element.position(),
-			height = this.$element[0].offsetHeight;
+			area_height = this.$element[0].offsetHeight,
+			area_width = this.$element[0].offsetWidth;
 
 		if (_comments.caret_left == null || _comments.caret_bottom == null) {
 			top = pos.top;
@@ -1325,9 +1326,26 @@ $.extend(wot, { ratingwindow: {
 			.show()
 			.css({
 				position: "absolute",
-				top: top + "px",
-				left: left + "px"
+				top: "99999px",
+				left: "99999px"
 			});
+
+		// adjust position and avoid going beyond the right and bottom edges of the text area
+		var popup_height = this.$menu.height(),
+			popup_width = this.$menu.width();
+
+		if (left + popup_width > pos.left + area_width) {
+			left = pos.left + area_width - popup_width;
+		}
+
+		if (top + popup_height > pos.top + area_height) {
+			top = _comments.caret_top - popup_height - 20;
+		}
+
+		this.$menu.css({
+			top: top + "px",
+			left: left + "px"
+		});
 
 		this.shown = true;
 		return this;
@@ -2521,7 +2539,6 @@ $.extend(wot, { ratingwindow: {
 			    return;
 		    }
 
-
 		    var cr = range.getClientRects();
 
 		    if (!cr || !cr[0] || cr[0].width !== 0) {   // width == 0 means there is no selected text but only caret position
@@ -2530,12 +2547,9 @@ $.extend(wot, { ratingwindow: {
 			    return;
 		    }
 
-		    var parent = range.endContainer.parentNode,
-			    b = element.getBoundingClientRect();
-
 		    _this.caret_left = cr[0].left;
-		    _this.caret_top = cr[0].top - parent.offsetTop + b.top;
-		    _this.caret_bottom = cr[0].bottom - parent.offsetTop + b.top;
+		    _this.caret_top = cr[0].top;// - parent.offsetTop + b.top;
+		    _this.caret_bottom = cr[0].bottom;// - parent.offsetTop + b.top;
 	    },
 
 	    tags: {
