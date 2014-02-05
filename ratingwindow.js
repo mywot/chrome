@@ -1645,6 +1645,36 @@ $.extend(wot, { ratingwindow: {
             addclass: "view-mode unrated",
             removeclass: "rated commenting thanks rate wgcommenting",
 
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        before_show: function (prev_mode) {
+		        $("#main-area")[0].style.height = null;
+	        },
+
+	        before_hide: function (new_mode) {
+		        var $mainarea = $("#main-area");
+
+		        if (new_mode == "wgcomment") {
+			        $mainarea[0].style.height = wot.ratingwindow.modes.unrated.get_mainarea_height($mainarea);
+		        }
+	        },
+
+	        get_mainarea_height: function ($elem) {
+
+		        var e = $elem[0],
+			        rects = e.getClientRects(),
+			        rect = rects && rects.length ? rects[0] : {},
+			        h = rect.height || 0;
+
+		        return h + $("#ratings-area").height() - 1 + "px";
+	        },
+
             activate: function (force) {
                 if (!wot.ratingwindow.modes._activate("unrated", force) && !force) return false;
 
@@ -1665,6 +1695,26 @@ $.extend(wot, { ratingwindow: {
             addclass: "view-mode rated",
             removeclass: "unrated commenting thanks rate wgcommenting",
 
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        before_show: function (prev_mode) {
+		        $("#main-area")[0].style.height = null;
+	        },
+
+	        before_hide: function (new_mode) {
+		        var $mainarea = $("#main-area");
+
+		        if (new_mode == "wgcomment") {
+			        $mainarea[0].style.height = wot.ratingwindow.modes.unrated.get_mainarea_height($mainarea);
+		        }
+	        },
+
             activate: function (force) {
                 if (!wot.ratingwindow.modes._activate("rated", force) && !force) return false;
                 wot.ratingwindow.update_uservoted();
@@ -1680,7 +1730,15 @@ $.extend(wot, { ratingwindow: {
             addclass: "rate",
             removeclass: "view-mode rated unrated commenting thanks wgcommenting",
 
-            activate: function (force) {
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
 
@@ -1715,7 +1773,15 @@ $.extend(wot, { ratingwindow: {
             addclass: "commenting",
             removeclass: "view-mode rated unrated rate thanks wgcommenting",
 
-            activate: function (force) {
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
                 if (!wot.ratingwindow.modes._activate("comment", force) && !force) return false;
@@ -1740,9 +1806,33 @@ $.extend(wot, { ratingwindow: {
             }
         },
         wgcomment: { // Quick Comment mode for WebGuide feature
-            visible: ["#wg-area", "#commenting-area", "#rate-buttons"],
+            visible: ["#wg-area", "#commenting-area"],  // "#rate-buttons" will be shown after animation
             invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
                 "#thanks-area", "#ok-button", "#commenting-area", "#rated-votes"],
+
+	        show_effect: {
+		        name: "blind",
+		        direction: "down"
+	        },
+
+	        hide_effect: {
+		        name: null
+	        },
+
+	        show_duration: 200,
+	        hide_duration: 0,
+
+	        before_show: function () {
+	        },
+
+	        before_hide: function () {
+		        $("#rate-buttons").hide();
+	        },
+
+	        after_show: function () {
+		        $("#rate-buttons").show();
+	        },
+
             addclass: "wgcommenting",
             removeclass: "view-mode rated unrated rate thanks",
 
@@ -1796,13 +1886,49 @@ $.extend(wot, { ratingwindow: {
         },
 
         show_hide: function (mode_name) {
-            var _modes = wot.ratingwindow.modes;
-            var visible = _modes[mode_name] ? _modes[mode_name].visible : [];
-            var invisible = _modes[mode_name] ? _modes[mode_name].invisible : [];
+            var _modes = wot.ratingwindow.modes,
+	            current_mode = _modes.current_mode,
+	            mode = _modes[mode_name],
+	            cmode = _modes[current_mode] || {};
+            var visible = mode ? mode.visible : [];
+            var invisible = mode ? mode.invisible : [];
 
-            $(invisible.join(", ")).hide();
-            $("#wot-ratingwindow").addClass(_modes[mode_name].addclass).removeClass(_modes[mode_name].removeclass);
-            $(visible.join(", ")).show();
+            if (cmode && typeof(cmode.before_hide) == "function") cmode.before_hide(mode_name);
+
+	        var hide_effect = cmode.hide_effect ? cmode.hide_effect.name : "",
+	            show_effect = mode.show_effect ? mode.show_effect.name : "",
+		        hide_params = cmode.hide_effect ? cmode.hide_effect : {},
+		        show_params = mode.show_effect ? mode.show_effect : {};
+
+			var hide_options = {
+				effect: hide_effect,
+				duration: cmode && cmode.hide_duration ? cmode.hide_duration : 0,
+				complete: function () {
+					if (current_mode && typeof(cmode.after_hide) == "function") cmode.after_hide(mode_name);
+
+					// then switch classes
+					$("#wot-ratingwindow").addClass(mode.addclass).removeClass(mode.removeclass);
+				}
+			};
+
+	        hide_options = $.extend(hide_options, hide_params);
+	        $(invisible.join(", ")).hide(hide_options);
+
+
+	        // then show new mode
+	        if (typeof(mode.before_show) == "function") mode.before_show(current_mode);
+
+	        var show_options = {
+		        effect: show_effect,
+		        duration: mode && mode.show_duration ? mode.show_duration : 0,
+		        complete: function () {
+			        if (typeof(mode.after_show) == "function") mode.after_show(current_mode);
+		        }
+	        };
+	        show_options = $.extend(show_options, show_params);
+
+	        $(visible.join(", ")).show(show_options);
+
         },
 
         _activate: function (mode_name, force) {
