@@ -1027,7 +1027,7 @@ $.extend(wot, { ratingwindow: {
 
 	    if (_rw.modes.is_current("wgcomment")) {    // quick comment & tag mode
 
-		    if (has_comment && has_valid_comment) {
+		    if ((has_comment && has_valid_comment) || !has_comment && _rw.comments.is_changed()) {
 			    passed = true;
 		    }
 
@@ -1076,11 +1076,9 @@ $.extend(wot, { ratingwindow: {
 
             // If user wants to delete ratings, change the text of the button and hide "Delete ratings" button
 	        if (_rw.modes.is_current("wgcomment")) {
-		        delete_action = false;
+		        delete_action = (_rw.comments.is_changed() && !_rw.comments.is_commented());
 	        } else {
 		        if (enable && !_rw.is_rated(_rw.state) && !_rw.comments.has_valid_comment()) {
-			        $_submit.text(wot.i18n("testimony", "delete"));
-			        $("#btn-delete").hide();
 			        delete_action = true; // remember the reverse of the label
 		        }
 	        }
@@ -1089,10 +1087,14 @@ $.extend(wot, { ratingwindow: {
         if (!delete_action) {
             $_submit.text(wot.i18n("buttons", "save"));
 
-	        if (_rw.modes.is_current("wgcomment")) {
-		        $("#btn-delete").show();
-	        }
+//	        if (_rw.modes.is_current("wgcomment")) {
+//		        $("#btn-delete").show();
+//	        }
+        } else {
+	        $_submit.text(wot.i18n("testimony", "delete"));
+	        $("#btn-delete").hide();
         }
+
         _rw.delete_action = delete_action;
     },
 
@@ -2517,7 +2519,6 @@ $.extend(wot, { ratingwindow: {
 	    MIN_TAGS: 1,        // minimal amount of tags in the comment
 	    MAX_TAGS: 10,       // maximum amount of tags in the comment
         MAX_LIMIT: 20000,
-        is_changed: false,
         posted_comment: {},
 
 	    caret_left: null,
@@ -2541,6 +2542,18 @@ $.extend(wot, { ratingwindow: {
             return (wot.ratingwindow.comments.get_comment_value().length > 0);
         },
 
+	    is_changed: function () {
+		    var rw = wot.ratingwindow,
+			    _this = rw.comments,
+			    cached = rw.getcached(),
+			    prev_comment = "",
+			    current_comment = _this.get_comment_value();
+
+		    prev_comment = (cached.comment && cached.comment.comment) ? cached.comment.comment : "";
+
+		    return current_comment != prev_comment;
+		},
+
         get_comment: function (target) {
             var bg = wot.ratingwindow.get_bg(),
                 bgwot = bg.wot;
@@ -2554,12 +2567,12 @@ $.extend(wot, { ratingwindow: {
             // TODO: to be implemented when there will be a button "remove the comment" in UI
         },
 
-	    get_minlen: function () {
+	    get_minlen: function (is_wg) {
 		    var _this = wot.ratingwindow.comments;
-		    return wot.ratingwindow.modes.is_current("wgcomment") ? _this.MIN_LIMIT_WG : _this.MIN_LIMIT;
+		    return is_wg ? _this.MIN_LIMIT_WG : _this.MIN_LIMIT;
 	    },
 
-	    get_maxlen: function () {
+	    get_maxlen: function (is_wg) {
 		    var _this = wot.ratingwindow.comments;
 		    return _this.MAX_LIMIT;
 	    },
@@ -2569,17 +2582,24 @@ $.extend(wot, { ratingwindow: {
             var rw = wot.ratingwindow,
                 _this = rw.comments,
                 $_hint = $("#comment-bottom-hint"),
-                len = _this.get_comment_value().length,
+	            is_wg = wot.ratingwindow.modes.is_current("wgcomment") || rw.is_wg_allowed,
+	            is_wg_mode = wot.ratingwindow.modes.is_current("wgcomment"),
+	            len = _this.get_comment_value().length,
                 error_text = 0,
 	            errors = [],
-                cls = "",
-	            min_len = _this.get_minlen(),
-	            max_len = _this.get_maxlen(),
-	            is_wg_mode = wot.ratingwindow.modes.is_current("wgcomment");
+                cls = "";
+
+	        var _tags = rw.comments.tags,
+		        tags = rw.is_wg_allowed ? _tags.get_tags() : [],    // count tags only if WG is enabled for the user
+		        tags_num = tags.length,
+		        valid_tagged = rw.is_wg_allowed && tags_num >= _this.MIN_TAGS;
+
+	        var min_len = _this.get_minlen(valid_tagged),
+		        max_len = _this.get_maxlen(valid_tagged);
 
 	        errors.push({ text: error_text, cls: cls });    // initial "no errors" state
 
-            if (len > 0 && len < min_len) {
+			if (len > 0 && len < min_len) {
 	            errors.push({
 		            text: String(len - min_len).replace("-", "– "), // readability is our everything
 		            cls: "error min"
@@ -2593,10 +2613,6 @@ $.extend(wot, { ratingwindow: {
 
 	        // in WG comment mode we check number of hashtags first
 	        if (is_wg_mode && len > 0) {
-		        var _tags = rw.comments.tags,
-			        tags = _tags.get_tags(),
-			        tags_num = tags.length;
-
 		        if (tags_num < _this.MIN_TAGS) {
 			        errors.push({
 				        text: "– " + String(_this.MIN_TAGS - tags_num) + " #",
@@ -2647,10 +2663,10 @@ $.extend(wot, { ratingwindow: {
 
         has_valid_comment: function () {
             var _this = wot.ratingwindow.comments,
+	            is_wgcommenting = wot.ratingwindow.modes.is_current("wgcomment") || wot.ratingwindow.is_wg_allowed,
 	            comment = _this.get_comment_value(),
-	            minlen = _this.get_minlen(),
-	            maxlen = _this.get_maxlen(),
-	            is_wgcommenting = wot.ratingwindow.modes.is_current("wgcomment");
+	            minlen = _this.get_minlen(is_wgcommenting),
+	            maxlen = _this.get_maxlen(is_wgcommenting);
 
 	        if (is_wgcommenting) {
 		        var tags = _this.tags.get_tags(comment);
