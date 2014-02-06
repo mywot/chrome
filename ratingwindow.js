@@ -2565,26 +2565,53 @@ $.extend(wot, { ratingwindow: {
 	    },
 
         update_hint: function () {
+	        // shows / hides a error hint if comment parameters don't fit our requirements
             var rw = wot.ratingwindow,
                 _this = rw.comments,
                 $_hint = $("#comment-bottom-hint"),
                 len = _this.get_comment_value().length,
-                fix_len = 0,
+                error_text = 0,
+	            errors = [],
                 cls = "",
 	            min_len = _this.get_minlen(),
-	            max_len = _this.get_maxlen();
+	            max_len = _this.get_maxlen(),
+	            is_wg_mode = wot.ratingwindow.modes.is_current("wgcomment");
+
+	        errors.push({ text: error_text, cls: cls });    // initial "no errors" state
 
             if (len > 0 && len < min_len) {
-                fix_len = String(len - min_len).replace("-", "– "); // readability is our everything
-                cls = "error min"
+	            errors.push({
+		            text: String(len - min_len).replace("-", "– "), // readability is our everything
+		            cls: "error min"
+	            });
             } else if (len > max_len) {
-                fix_len = len - max_len;
-                cls = "error max"
-            } else {
-                // we could show here something like "looks good!"
+	            errors.push({
+		            text: len - max_len,
+		            cls: "error max"
+	            });
             }
 
-            $_hint.attr("class", cls).text(fix_len);
+	        // in WG comment mode we check number of hashtags first
+	        if (is_wg_mode && len > 0) {
+		        var _tags = rw.comments.tags,
+			        tags = _tags.get_tags(),
+			        tags_num = tags.length;
+
+		        if (tags_num < _this.MIN_TAGS) {
+			        errors.push({
+				        text: "– " + String(_this.MIN_TAGS - tags_num) + " #",
+				        cls: "error min"
+			        });
+		        } else if (tags_num > _this.MAX_TAGS) {
+			        errors.push({
+				        text: "> " + String(tags_num - _this.MIN_TAGS) + " #",
+				        cls: "error max"
+			        });
+		        }
+	        }
+
+            var err_to_show = errors.slice(-1)[0]; // take the last error to show
+	        $_hint.attr("class", err_to_show.cls).text(err_to_show.text);
         },
 
         update_button: function (mode, enabled) {
