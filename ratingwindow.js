@@ -39,6 +39,8 @@ $.extend(wot, { ratingwindow: {
 //		{ value: "ideas", tokens: ["ideas"] }
 	],
 
+	wg_viewer_timer: null,
+
 	get_bg: function (sub_objname) {
         // just a shortcut
         var bg = chrome.extension.getBackgroundPage();
@@ -197,7 +199,7 @@ $.extend(wot, { ratingwindow: {
                 comment_changed = false,
                 has_comment = false,
                 user_comment = rw.comments.get_comment_value(),
-	            mytags = rw.comments.tags.get_tags(user_comment),
+	            mytags = rw.wg.get_tags(user_comment),
 	            has_mytags = mytags && mytags.length,
                 user_comment_id = 0,
                 cached = {},
@@ -511,123 +513,10 @@ $.extend(wot, { ratingwindow: {
             $("#wot-user-0").css("display", "block");
         }
 
-	    _this.update_wg_visibility();
-	    _this.update_wg_tags();
+	    _this.wg.update_wg_visibility();
+	    _this.wg.update_wg_tags();
 
     },
-
-	update_wg_visibility: function () {
-		var _this = wot.ratingwindow,
-			$rw = $("#wot-ratingwindow"),
-			$wg_area = $("#wg-area");
-
-		$rw.toggleClass("wg", _this.is_wg_allowed);
-
-		if (_this.is_wg_allowed) {
-			var visible = !$rw.hasClass("commenting") && !$rw.hasClass("thanks") && !$rw.hasClass("rate");
-			$wg_area.toggle(visible);
-		} else {
-			$wg_area.hide();
-		}
-	},
-
-	suggest_tags: function () {
-		// autocomplete feature for WG comment
-		// TODO: enable only if WG is enabled
-
-		var rw = wot.ratingwindow,
-			tags_ac = [];
-
-		if (rw.is_wg_allowed) {
-
-			var mytags = rw.comments.tags.get_all_my_tags(),
-				popular_tags = rw.comments.tags.get_popular_tags();
-
-			// make a tag list from tags assigned to the website
-			tags_ac = rw.tags.map(function(item){
-				return item.value;
-			});
-
-			// add all user's tags if they are not in the list yet
-			tags_ac = tags_ac
-				.concat(
-					mytags
-						.map(function(item){
-							return item.value;
-						})
-						.filter(function (el, index, arr) {
-							return (tags_ac.indexOf(el) < 0);
-						}));
-
-			// then add all popular tags if they are not in the list yet (this is why this concat is separated from above)
-			tags_ac = tags_ac
-				.concat(
-					popular_tags
-						.map(function(item){
-							return item.value;
-						})
-						.filter(function (el, index, arr) {
-							return (tags_ac.indexOf(el) < 0);
-						})
-				);
-
-			tags_ac.sort();
-
-			tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
-
-//			console.log(tags_ac);
-		}
-
-		return tags_ac;
-	},
-
-	update_wg_tags: function () {
-		var rw = wot.ratingwindow,
-			_tags = rw.comments.tags,
-			mytags = rw.comments.tags.get_tags(),
-			tagmap = [
-				{ elem: $("#wg-my-tags"), list: mytags },
-				{ elem: $("#wg-other-tags"), list: rw.tags }
-			],
-			filled = 0,
-			prev = {};
-
-
-		for (var i = 0; i < tagmap.length; i++) {
-			var $elem = tagmap[i].elem,
-				list = tagmap[i].list;
-
-			$elem.children().detach();  // clean the tags' section
-			for (var j = 0; j < list.length; j++) {
-
-				var $tag,
-					tag = list[j],
-					tag_value = tag.value;
-
-				if (prev[tag_value]) continue;  // don't show one tag more than one time (if it was in mytags list)
-
-				$tag = $("<li></li>")
-				.addClass("wg-tag")
-				.toggleClass("group", _tags.is_group(tag_value))
-				.toggleClass("mytag", _tags.is_mytag(tag_value))
-				.text(tag_value);
-
-				$elem.append($tag);
-				prev[tag_value] = true;         // remember that we showed the tag
-			}
-
-			filled += $elem.children().length > 0 ? 1 : 0;
-		}
-
-//		$("#wg-tags-separator").toggle(filled > 1);
-
-		var $wg_edit = $("#wg-change"),
-			$wg_title = $("#wg-title"),
-			$wg_addmore = $("#wg-addmore");
-
-		$wg_edit.text( mytags.length > 0 ? wot.i18n("wg", "edit") : wot.i18n("wg", "add") );
-		$wg_addmore.toggle(filled == 0);
-	},
 
     insert_categories: function (cat_list, $_target) {
         $_target.hide();   // to prevent blinking during modification
@@ -805,8 +694,8 @@ $.extend(wot, { ratingwindow: {
                 // this is considered below
             }
         }
-	    _rw.update_wg_tags();
-	    _rw.update_wg_visibility();
+	    _rw.wg.update_wg_tags();
+	    _rw.wg.update_wg_visibility();
         _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting && !_comments.is_banned);
     },
 
@@ -1194,7 +1083,7 @@ $.extend(wot, { ratingwindow: {
 
 	            window.setTimeout(function(){
 	                wot.ratingwindow.comments.update_hint();
-		            wot.ratingwindow.update_wg_tags();
+		            wot.ratingwindow.wg.update_wg_tags();
 
 	                // set the timeout to update save button when user stops typing the comment
 	                if (wot.ratingwindow.timer_save_button) {
@@ -1207,10 +1096,10 @@ $.extend(wot, { ratingwindow: {
 	            }, 20);    // to react on any keyboard event after the text was changed
 	        })
 	        .tagautocomplete({
-		        source: wot.ratingwindow.suggest_tags,
+		        source: wot.ratingwindow.wg.suggest_tags,
 		        character: "#",
 		        items: 4,
-		        show: wot.ratingwindow.show_tagautocomplete
+		        show: wot.ratingwindow.wg.show_tagautocomplete
 	        });
 
         // Rate mode event handlers
@@ -1280,14 +1169,16 @@ $.extend(wot, { ratingwindow: {
 		}
 
 	    // Web Guide initialization
-	    $(document).on("click", ".wg-tag", function (e) {
-		    var tag_text = $(this).text();
-		    _rw.navigate(wot.urls.wg + "/" + tag_text, wot.urls.contexts.wg_tag);
-	    });
+	    $(document).on("click", ".wg-tag", _rw.wg.navigate_tag);
 
 	    $("#wg-change, #wg-addmore").on("click", function (e) {
 		    _rw.modes.wgcomment.activate();
 	    });
+
+	    $(document).on("mouseenter", ".wg-tag.info", _rw.wg.on_info_tag_hover);
+	    $(document).on("mouseleave", ".wg-tag.info", _rw.wg.on_info_tag_leave);
+	    $(document).on("mouseenter", "#wg-viewer", _rw.wg.on_wgviewer_hover);
+	    $(document).on("mouseleave", "#wg-viewer", _rw.wg.on_wgviewer_leave);
 
 	    // increment "RatingWindow shown" counter
         _rw.count_window_opened();
@@ -1300,58 +1191,9 @@ $.extend(wot, { ratingwindow: {
 //            bg.wot.core.set_badge(null, false);   // hide badge
 //        }
 
-	    _rw.comments.tags.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
-	    _rw.comments.tags.update_popular_tags();
+	    _rw.wg.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
+	    _rw.wg.update_popular_tags();
     },
-
-	show_tagautocomplete: function () {
-
-		var _comments = wot.ratingwindow.comments;
-
-		var top, left,
-			pos = this.$element.position(),
-			area_height = this.$element[0].offsetHeight,
-			area_width = this.$element[0].offsetWidth;
-
-		if (_comments.caret_left == null || _comments.caret_bottom == null) {
-			top = pos.top;
-			left = pos.left;
-		} else {
-			top = _comments.caret_bottom;
-			left = _comments.caret_left + _comments.AUTOCOMPLETE_OFFSET_X;
-
-			// TODO: ajust the position on the edges
-		}
-
-		this.$menu
-			.appendTo('body')
-			.show()
-			.css({
-				position: "absolute",
-				top: "99999px",
-				left: "99999px"
-			});
-
-		// adjust position and avoid going beyond the right and bottom edges of the text area
-		var popup_height = this.$menu.height(),
-			popup_width = this.$menu.width();
-
-		if (left + popup_width > pos.left + area_width) {
-			left = pos.left + area_width - popup_width;
-		}
-
-		if (top + popup_height > pos.top + area_height) {
-			top = _comments.caret_top - popup_height - 20;
-		}
-
-		this.$menu.css({
-			top: top + "px",
-			left: left + "px"
-		});
-
-		this.shown = true;
-		return this;
-	},
 
 	show_tiny_thankyou: function () {
 		$("#tiny-thankyou").fadeIn(500, function (){
@@ -1685,7 +1527,7 @@ $.extend(wot, { ratingwindow: {
 	            $rated_votes.toggle(show_comment_icon);
 	            $(".user-comm-activity").toggle(!show_comment_icon);
 
-	            wot.ratingwindow.update_wg_visibility();
+	            wot.ratingwindow.wg.update_wg_visibility();
                 return true;
             }
         },
@@ -1720,7 +1562,7 @@ $.extend(wot, { ratingwindow: {
             activate: function (force) {
                 if (!wot.ratingwindow.modes._activate("rated", force) && !force) return false;
                 wot.ratingwindow.update_uservoted();
-	            wot.ratingwindow.update_wg_visibility();
+	            wot.ratingwindow.wg.update_wg_visibility();
                 return true;
             }
         },
@@ -2526,8 +2368,6 @@ $.extend(wot, { ratingwindow: {
 		caret_bottom: null,
 	    AUTOCOMPLETE_OFFSET_X: -20,
 
-		WG_API_URL: "https://dev.mywot.com/en/ajax/guide/get/list?name=",
-
 	    get_comment_value: function (need_html) {
 		    var elem = $("#user-comment")[0],
 			    s = need_html ? elem.innerHTML : elem.innerText;
@@ -2589,8 +2429,8 @@ $.extend(wot, { ratingwindow: {
 	            errors = [],
                 cls = "";
 
-	        var _tags = rw.comments.tags,
-		        tags = rw.is_wg_allowed ? _tags.get_tags() : [],    // count tags only if WG is enabled for the user
+	        var _wg = rw.wg,
+		        tags = rw.is_wg_allowed ? _wg.get_tags() : [],    // count tags only if WG is enabled for the user
 		        tags_num = tags.length,
 		        valid_tagged = rw.is_wg_allowed && tags_num >= _this.MIN_TAGS;
 
@@ -2663,13 +2503,14 @@ $.extend(wot, { ratingwindow: {
 
         has_valid_comment: function () {
             var _this = wot.ratingwindow.comments,
+	            _wg = wot.ratingwindow.wg,
 	            is_wgcommenting = wot.ratingwindow.modes.is_current("wgcomment") || wot.ratingwindow.is_wg_allowed,
 	            comment = _this.get_comment_value(),
 	            minlen = _this.get_minlen(is_wgcommenting),
 	            maxlen = _this.get_maxlen(is_wgcommenting);
 
 	        if (is_wgcommenting) {
-		        var tags = _this.tags.get_tags(comment);
+		        var tags = _wg.get_tags(comment);
 
 		        return (comment.length >= minlen &&
 			        comment.length < maxlen &&
@@ -2722,83 +2563,363 @@ $.extend(wot, { ratingwindow: {
 	    },
 
 	    tags: {
-		    tags_re: /(\s|^)#([a-z0-9]{2,})/img,
+	    }
+    },
 
-		    get_tags: function (text) {
-			    var _comments = wot.ratingwindow.comments;
-			    text = text ? text : _comments.get_comment_value();
+	wg: {   // WOT Groups functionality
 
-			    return wot.tags.get_tags(text);
-		    },
+		get_tags: function (text) {
+			var _comments = wot.ratingwindow.comments;
+			text = text ? text : _comments.get_comment_value();
 
-		    get_all_my_tags: function () {
-			    // returns all user's tags
+			return wot.tags.get_tags(text);
+		},
 
-			    var rw = wot.ratingwindow,
-				    bgwot = rw.get_bg("wot");
+		get_all_my_tags: function () {
+			// returns all user's tags
 
-			        return bgwot.core.tags.mytags;
-		    },
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
 
-		    get_popular_tags: function () {
+			return bgwot.core.tags.mytags;
+		},
 
-			    var rw = wot.ratingwindow,
-				    bgwot = rw.get_bg("wot");
+		get_popular_tags: function () {
 
-			    return bgwot.core.tags.popular_tags;
-		    },
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
 
-		    update_mytags: function (force) {
-			    var rw = wot.ratingwindow,
-				    bgwot = rw.get_bg("wot");
+			return bgwot.core.tags.popular_tags;
+		},
+
+		update_mytags: function (force) {
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
 
 //			    console.log(bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated, Date.now());
 
-			    if (!force &&
-				    bgwot.core.tags.mytags_updated !== null &&
-				    bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated > Date.now()) {
-				    return false;
-			    }
+			if (!force &&
+				bgwot.core.tags.mytags_updated !== null &&
+				bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated > Date.now()) {
+				return false;
+			}
 
-			    bgwot.api.tags.my.get_tags();
-		    },
+			bgwot.api.tags.my.get_tags();
+		},
 
-		    update_popular_tags: function (force) {
-			    var rw = wot.ratingwindow,
-				    bgwot = rw.get_bg("wot");
+		update_popular_tags: function (force) {
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
 
 //			    console.log(bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated, Date.now());
 
-			    if (!force &&
-				    bgwot.core.tags.popular_tags_updated !== null &&
-				    bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated > Date.now()) {
-				    return false;
-			    }
+			if (!force &&
+				bgwot.core.tags.popular_tags_updated !== null &&
+				bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated > Date.now()) {
+				return false;
+			}
 
-			    bgwot.api.tags.popular.get_tags();
-		    },
+			bgwot.api.tags.popular.get_tags();
+		},
 
-		    is_mytag: function (tag) {
-			    var _this = wot.ratingwindow.comments.tags,
-				    tags = _this.get_tags(),
-				    res = tags.filter(function(item){
-					    if (item.value == tag) return true;
-				    });
+		is_group: function (tag) {
+			var _this = wot.ratingwindow.wg,
+				popular_groups = _this.get_popular_tags(),
+				res = popular_groups.filter(function(item){
+					if (item.value == tag) return true;
+				});
 
-			    return res.length > 0;
-		    },
+			return res.length > 0;
+		},
 
-		    is_group: function (tag) {
-			    var _this = wot.ratingwindow.comments.tags,
-				    popular_groups = _this.get_popular_tags(),
-				    res = popular_groups.filter(function(item){
-					    if (item.value == tag) return true;
-				    });
+		is_mytag: function (tag) {
+			var _this = wot.ratingwindow.wg,
+				tags = _this.get_tags(),
+				res = tags.filter(function(item){
+					if (item.value == tag) return true;
+				});
 
-			    return res.length > 0;
-		    }
-	    }
-    }
+			return res.length > 0;
+		},
+
+		get_info: function (tag_value) {
+			var infos = {
+				"drupal": {
+					info: "http://en.m.wikipedia.org/wiki/Drupal"
+				},
+				"programming": {
+					info: "http://en.m.wikipedia.org/wiki/Computer_programming"
+				},
+				"finland": {
+					info: "http://en.m.wikipedia.org/wiki/Finland"
+				},
+				"php": {
+					info: "http://en.m.wikipedia.org/wiki/Php"
+				},
+				"javascript": {
+					info: "http://en.m.wikipedia.org/wiki/Javascript"
+				},
+				"jquery": {
+					info: "http://en.m.wikipedia.org/wiki/Jquery"
+				},
+				"opensource": {
+					info: "http://en.m.wikipedia.org/wiki/Opensource"
+				},
+				"html": {
+					info: "http://en.m.wikipedia.org/wiki/Html"
+				},
+				"ransomeware": {
+					info: "http://en.m.wikipedia.org/wiki/Ransomware_(malware)"
+				},
+				"lapsi": {
+					info: "http://en.m.wikipedia.org/wiki/Lapsi"
+				},
+				"cycling": {
+					info: "http://en.m.wikipedia.org/wiki/Cycling"
+				}
+
+			};
+
+			var ltag = tag_value ? tag_value.trim().toLowerCase() : null;
+
+			if (ltag) {
+				return infos[ltag];
+			}
+
+			return null;
+		},
+
+		navigate_tag: function (e) {
+			var _rw = wot.ratingwindow,
+				tag_text = $(this).text();
+
+			_rw.navigate(wot.urls.wg + "?query=" + tag_text, wot.urls.contexts.wg_tag);
+		},
+
+		on_info_tag_hover: function (e) {
+
+			if (wot.ratingwindow.wg_viewer_timer) {
+				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			}
+
+			var $this = $(this);
+			var $wgviewer = $("#wg-viewer");
+			var info = $this.data("wg-info");
+
+			$wgviewer
+				.toggleClass("mini", !$wgviewer.hasClass("shown"))
+				.attr("src", info)
+				.show({ duration: 0, complete: function () {
+					setTimeout(function (){
+						$wgviewer
+							.removeClass("mini")
+							.addClass("shown");
+					}, 200);
+				} });
+		},
+
+		on_info_tag_leave: function () {
+			if (wot.ratingwindow.wg_viewer_timer) {
+				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			}
+
+			wot.ratingwindow.wg_viewer_timer = window.setTimeout(function (){
+				$("#wg-viewer").hide().removeClass("mini shown");
+			}, 300);
+		},
+
+		on_wgviewer_hover: function () {
+			if (wot.ratingwindow.wg_viewer_timer) {
+				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			}
+		},
+
+		on_wgviewer_leave: function () {
+			if (wot.ratingwindow.wg_viewer_timer) {
+				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			}
+
+			wot.ratingwindow.wg_viewer_timer = window.setTimeout(function (){
+				$("#wg-viewer").hide().removeClass("mini shown");
+			}, 300);
+		},
+
+		update_wg_visibility: function () {
+			var _this = wot.ratingwindow,
+				$rw = $("#wot-ratingwindow"),
+				$wg_area = $("#wg-area");
+
+			$rw.toggleClass("wg", _this.is_wg_allowed);
+
+			if (_this.is_wg_allowed) {
+				var visible = !$rw.hasClass("commenting") && !$rw.hasClass("thanks") && !$rw.hasClass("rate");
+				$wg_area.toggle(visible);
+			} else {
+				$wg_area.hide();
+			}
+		},
+
+		suggest_tags: function () {
+			// autocomplete feature for WG comment
+			// TODO: enable only if WG is enabled
+
+			var rw = wot.ratingwindow,
+				_wg = rw.wg,
+				tags_ac = [];
+
+			if (rw.is_wg_allowed) {
+
+				var mytags = _wg.get_all_my_tags(),
+					popular_tags = _wg.get_popular_tags();
+
+				// make a tag list from tags assigned to the website
+				tags_ac = rw.tags.map(function(item){
+					return item.value;
+				});
+
+				// add all user's tags if they are not in the list yet
+				tags_ac = tags_ac
+					.concat(
+						mytags
+							.map(function(item){
+								return item.value;
+							})
+							.filter(function (el, index, arr) {
+								return (tags_ac.indexOf(el) < 0);
+							}));
+
+				// then add all popular tags if they are not in the list yet (this is why this concat is separated from above)
+				tags_ac = tags_ac
+					.concat(
+						popular_tags
+							.map(function(item){
+								return item.value;
+							})
+							.filter(function (el, index, arr) {
+								return (tags_ac.indexOf(el) < 0);
+							})
+					);
+
+				tags_ac.sort();
+
+				tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
+
+//			console.log(tags_ac);
+			}
+
+			return tags_ac;
+		},
+
+		update_wg_tags: function () {
+			var rw = wot.ratingwindow,
+				_wg = rw.wg,
+				mytags = _wg.get_tags(),
+				tagmap = [
+					{ elem: $("#wg-my-tags"), list: mytags },
+					{ elem: $("#wg-other-tags"), list: rw.tags }
+				],
+				filled = 0,
+				prev = {};
+
+
+			for (var i = 0; i < tagmap.length; i++) {
+				var $elem = tagmap[i].elem,
+					list = tagmap[i].list;
+
+				$elem.children().detach();  // clean the tags' section
+				for (var j = 0; j < list.length; j++) {
+
+					var $tag, info,
+						tag = list[j],
+						tag_value = tag.value;
+
+					if (prev[tag_value]) continue;  // don't show one tag more than one time (if it was in mytags list)
+
+					$tag = $("<li></li>")
+						.addClass("wg-tag")
+						.toggleClass("group", _wg.is_group(tag_value))
+						.toggleClass("mytag", _wg.is_mytag(tag_value));
+
+					info = _wg.get_info(tag_value);
+
+					if (info) {
+						// this is a group with additional info linked
+						var $tag_inner = $("<span></span>");
+						$tag_inner.text(tag_value);
+						$tag
+							.append($tag_inner)
+							.addClass("info")
+							.data("wg-info", info.info);
+
+					} else {
+						$tag.text(tag_value);   // this is generic tag/group
+					}
+
+
+					$elem.append($tag);
+					prev[tag_value] = true;         // remember that we showed the tag
+				}
+
+				filled += $elem.children().length > 0 ? 1 : 0;
+			}
+
+			var $wg_edit = $("#wg-change"),
+//				$wg_title = $("#wg-title"),
+				$wg_addmore = $("#wg-addmore");
+
+			$wg_edit.text( mytags.length > 0 ? wot.i18n("wg", "edit") : wot.i18n("wg", "add") );
+			$wg_addmore.toggle(filled == 0);
+		},
+
+		show_tagautocomplete: function () {
+
+			var _comments = wot.ratingwindow.comments;
+
+			var top, left,
+				pos = this.$element.position(),
+				area_height = this.$element[0].offsetHeight,
+				area_width = this.$element[0].offsetWidth;
+
+			if (_comments.caret_left == null || _comments.caret_bottom == null) {
+				top = pos.top;
+				left = pos.left;
+			} else {
+				top = _comments.caret_bottom;
+				left = _comments.caret_left + _comments.AUTOCOMPLETE_OFFSET_X;
+
+				// TODO: ajust the position on the edges
+			}
+
+			this.$menu
+				.appendTo('body')
+				.show()
+				.css({
+					position: "absolute",
+					top: "99999px",
+					left: "99999px"
+				});
+
+			// adjust position and avoid going beyond the right and bottom edges of the text area
+			var popup_height = this.$menu.height(),
+				popup_width = this.$menu.width();
+
+			if (left + popup_width > pos.left + area_width) {
+				left = pos.left + area_width - popup_width;
+			}
+
+			if (top + popup_height > pos.top + area_height) {
+				top = _comments.caret_top - popup_height - 20;
+			}
+
+			this.$menu.css({
+				top: top + "px",
+				left: left + "px"
+			});
+
+			this.shown = true;
+			return this;
+		}
+	}   // End of wg object
 
 }});
 

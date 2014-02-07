@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20140205,
+	version: 20140207,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -127,7 +127,7 @@ var wot = {
 		tour:       "http://dev.mywot.com/support/tour/",
 		tour_rw:    "http://dev.mywot.com/support/tour/ratingwindow",
 		tour_scorecard: "http://dev.mywot.com/support/tour/scorecard",
-		wg: "https://dev.mywot.com/en/groups",
+		wg: "https://dev.mywot.com/en/groups/g",
 
 		contexts: {
 			rwlogo:     "rw-logo",
