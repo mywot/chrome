@@ -2703,17 +2703,21 @@ $.extend(wot, { ratingwindow: {
 			}
 
 			var $this = $(this);
-			var $wgviewer = $("#wg-viewer");
+			var $wgviewer = $("#wg-viewer"), $viewer_frame = $("#wg-viewer-frame");
 			var info = $this.data("wg-info");
 
-			$wgviewer
-				.toggleClass("mini", !$wgviewer.hasClass("shown"))
-				.attr("src", info)
+			$viewer_frame.attr("src", info);
+
+			$wgviewer.show();
+
+			$viewer_frame
+				.toggleClass("mini", !$viewer_frame.hasClass("shown"))
 				.show({ duration: 0, complete: function () {
 					setTimeout(function (){
-						$wgviewer
+						$viewer_frame
 							.removeClass("mini")
 							.addClass("shown");
+
 					}, 200);
 				} });
 		},
@@ -2724,7 +2728,8 @@ $.extend(wot, { ratingwindow: {
 			}
 
 			wot.ratingwindow.wg_viewer_timer = window.setTimeout(function (){
-				$("#wg-viewer").hide().removeClass("mini shown");
+				$("#wg-viewer").hide();
+				$("#wg-viewer-frame").removeClass("mini shown");
 			}, 300);
 		},
 
@@ -2740,7 +2745,8 @@ $.extend(wot, { ratingwindow: {
 			}
 
 			wot.ratingwindow.wg_viewer_timer = window.setTimeout(function (){
-				$("#wg-viewer").hide().removeClass("mini shown");
+				$("#wg-viewer").hide();
+				$("#wg-viewer-frame").removeClass("mini shown");
 			}, 300);
 		},
 
