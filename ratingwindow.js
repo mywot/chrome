@@ -1169,16 +1169,7 @@ $.extend(wot, { ratingwindow: {
 		}
 
 	    // Web Guide initialization
-	    $(document).on("click", ".wg-tag", _rw.wg.navigate_tag);
-
-	    $("#wg-change, #wg-addmore").on("click", function (e) {
-		    _rw.modes.wgcomment.activate();
-	    });
-
-	    $(document).on("mouseenter", ".wg-tag.info", _rw.wg.on_info_tag_hover);
-	    $(document).on("mouseleave", ".wg-tag.info", _rw.wg.on_info_tag_leave);
-	    $(document).on("mouseenter", "#wg-viewer", _rw.wg.on_wgviewer_hover);
-	    $(document).on("mouseleave", "#wg-viewer", _rw.wg.on_wgviewer_leave);
+	    _rw.wg.init_handlers();
 
 	    // increment "RatingWindow shown" counter
         _rw.count_window_opened();
@@ -1485,7 +1476,7 @@ $.extend(wot, { ratingwindow: {
         unrated: {
             visible: ["#ratings-area", "#reputation-info", "#user-communication", ".user-comm-social"],
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode unrated",
             removeclass: "rated commenting thanks rate wgcommenting",
 
@@ -1535,7 +1526,7 @@ $.extend(wot, { ratingwindow: {
         rated: {
             visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social"],
             invisible: ["#rate-buttons", "#categories-selection-area",
-                "#commenting-area", "#thanks-area", "#ok-button"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode rated",
             removeclass: "unrated commenting thanks rate wgcommenting",
 
@@ -1570,7 +1561,7 @@ $.extend(wot, { ratingwindow: {
         rate: {
             visible: ["#ratings-area", "#rate-buttons", "#categories-selection-area"],
             invisible: ["#reputation-info", "#user-communication", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button", "#wg-area"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "rate",
             removeclass: "view-mode rated unrated commenting thanks wgcommenting",
 
@@ -1613,7 +1604,7 @@ $.extend(wot, { ratingwindow: {
         comment: { // Commenting during rating process
             visible: ["#ratings-area", "#rate-buttons", "#commenting-area", "#rated-votes"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button", "#wg-area"],
+                "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "commenting",
             removeclass: "view-mode rated unrated rate thanks wgcommenting",
 
@@ -1652,7 +1643,7 @@ $.extend(wot, { ratingwindow: {
         wgcomment: { // Quick Comment mode for WebGuide feature
             visible: ["#wg-area", "#commenting-area"],  // "#rate-buttons" will be shown after animation
             invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button", "#commenting-area", "#rated-votes"],
+                "#thanks-area", "#ok-button", "#commenting-area", "#rated-votes", "#wg-about-area"],
 
 	        show_effect: {
 		        name: "blind",
@@ -1707,7 +1698,7 @@ $.extend(wot, { ratingwindow: {
         thanks: {
             visible: ["#thanks-area", "#ratings-area", "#rated-votes", "#ok-button"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#commenting-area", "#rate-buttons", "#wg-area"],
+                "#commenting-area", "#rate-buttons", "#wg-area", "#wg-about-area"],
             addclass: "thanks view-mode",
             removeclass: "rated unrated rate commenting wgcommenting",
 
@@ -1728,6 +1719,22 @@ $.extend(wot, { ratingwindow: {
                 return true;
             }
         },
+
+	    wg_about: {
+			// the explanation screen "What's this?" for WOT Groups
+		    visible: ["#wg-area", "#wg-about-area", "#ratings-area"],
+		    invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
+			    "#commenting-area", "#rate-buttons" ],
+		    addclass: "thanks view-mode",
+		    removeclass: "rated unrated rate commenting wgcommenting",
+
+		    activate: function (force) {
+			    var _rw = wot.ratingwindow;
+			    if (!_rw.modes._activate("wg_about", force) && !force) return false;
+
+			    return true;
+		    }
+	    },
 
         show_hide: function (mode_name) {
             var _modes = wot.ratingwindow.modes,
@@ -2567,6 +2574,35 @@ $.extend(wot, { ratingwindow: {
     },
 
 	wg: {   // WOT Groups functionality
+
+		init_handlers: function () {
+			var rw = wot.ratingwindow,
+				_this = rw.wg;
+
+			$(document).on("click", ".wg-tag", _this.navigate_tag);
+
+			$("#wg-change, #wg-addmore").on("click", function (e) {
+				rw.modes.wgcomment.activate();
+			});
+
+			$("#wg-about").on("click", function (e) {
+				rw.modes.wg_about.activate();
+			});
+
+			$("#wg-about-ok").on("click", function (e) {
+				rw.modes.auto();
+			});
+
+			$("#wg-about-learnmore").on("click", function (e) {
+				rw.navigate(wot.urls.wg_about, wot.urls.contexts.wg_about_learnmore)
+			});
+
+			$(document).on("mouseenter", ".wg-tag.info", _this.on_info_tag_hover);
+			$(document).on("mouseleave", ".wg-tag.info", _this.on_info_tag_leave);
+			$(document).on("mouseenter", "#wg-viewer", _this.on_wgviewer_hover);
+			$(document).on("mouseleave", "#wg-viewer", _this.on_wgviewer_leave);
+
+		},
 
 		get_tags: function (text) {
 			var _comments = wot.ratingwindow.comments;

@@ -127,7 +127,8 @@ var wot = {
 		tour:       "http://dev.mywot.com/support/tour/",
 		tour_rw:    "http://dev.mywot.com/support/tour/ratingwindow",
 		tour_scorecard: "http://dev.mywot.com/support/tour/scorecard",
-		wg: "https://dev.mywot.com/en/groups/g",
+		wg:         "https://dev.mywot.com/en/groups/g",
+		wg_about:   "https://dev.mywot.com/en/groups",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -151,7 +152,8 @@ var wot = {
 			wt_warn_logo: "wt-warn-logo",
 			wt_donuts_lm: "wt-donuts-lm",
 			wt_donuts_logo: "wt-donuts-logo",
-			wg_tag: "wg-tag"
+			wg_tag: "wg-tag",
+			wg_about_learnmore: "wg-learnmore"
 		}
 	},
 

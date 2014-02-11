@@ -53,6 +53,27 @@ textarea {
     resize: none;
 }
 
+.link {
+    color: #3073c5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.pseudo-link {
+    color: #3073c5;
+    cursor: pointer;
+    border-bottom: 1px dotted #3073c5;
+}
+
+.pseudo-link:hover {
+    color: red;
+    border-color: red;
+}
+
 #wot-ratingwindow {
     display: block;
     padding: 10px 16px 0;
@@ -185,6 +206,7 @@ textarea {
 .wot-header-link:hover {
     color: #3073c5;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .unregistered #wot-header-link-profile {
@@ -512,9 +534,6 @@ textarea {
     position: absolute;
     right: 50px;
     margin-top: 5px;
-    border-bottom: 1px dotted #3163B9;
-    color: #3163B9;
-    cursor: pointer;
 }
 
 /* don't chow this link during "commenting" mode */
@@ -696,14 +715,8 @@ textarea {
 }
 
 .wot-scorecard-text {
-    color: #3073c5;
 	font-size: 12px;
     font-weight: bold;
-    cursor: pointer;
-}
-
-.wot-scorecard-text:hover {
-    text-decoration: underline;
 }
 
 #wot-scorecard-visit {
@@ -1026,6 +1039,30 @@ textarea {
     width: 100%;
     margin-top: 0px;
     margin-left: -24px;
+}
+
+#wg-about-area {
+    display: none;
+    padding: 0px 20px;
+    font-size: 13px;
+}
+
+#wg-about-area p {
+    line-height: 1.5em;
+}
+
+.text-title {
+    font-weight: bold;
+}
+
+#wg-about-learnmore {
+    display: inline-block;
+    position: absolute;
+    right: 50px;
+}
+
+#wg-about-ok {
+    display: inline-block;
 }
 
 .wg-title-bar {
@@ -1775,14 +1812,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #comment-register-link,
 #comment-captcha-link {
-    color: #3073c5;
     font-size: 12px;
-    cursor: pointer;
-}
-
-#comment-register-link:hover,
-#comment-captcha-link:hover {
-    text-decoration: underline;
 }
 
 #comment-bottom-hint {
