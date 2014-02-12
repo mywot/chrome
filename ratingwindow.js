@@ -40,6 +40,7 @@ $.extend(wot, { ratingwindow: {
 	],
 
 	wg_viewer_timer: null,
+	msg_timer: null,
 
 	get_bg: function (sub_objname) {
         // just a shortcut
@@ -214,10 +215,6 @@ $.extend(wot, { ratingwindow: {
             // on unload finishing, restore previous message or remove current
             if (unload && bgwot.core.usermessage && bgwot.core.usermessage.previous) {
                 bgwot.core.usermessage = bgwot.core.usermessage.previous;
-            }
-
-            if (bgwot.core.unseenmessage()) {
-                bgwot.prefs.set("last_message", bg.wot.core.usermessage.id);
             }
 
             if (rw.current.target) {
@@ -457,18 +454,44 @@ $.extend(wot, { ratingwindow: {
         /* message */
 
         var msg = bg.wot.core.usermessage; // usual case: show a message from WOT server
-        var $_wot_message = $("#wot-message");
+
+	    // old style elements
+	    var $_wot_message = $("#wot-message"),
+		    $_wot_message_text = $("#wot-message-text");
+
+	    // new style elements
+	    var $msg_indicator = $("#message-indicator"),
+		    $msg_box = $("#floating-message"),
+		    $msg_text = $("#floating-message-text");
+
         // if we have something to tell a user
         if (msg.text) {
-            var status = msg.type || "";
-            $("#wot-message-text")
+            var status = msg.type || "",
+	            is_seen = !bg.wot.core.unseenmessage();
+
+	        $_wot_message_text
                 .attr("url", msg.url || "")
                 .attr("status", status)
                 .text(msg.text);
 
-            $_wot_message.attr("status", status).attr("msg_id", msg.id).show();
+	        $_wot_message.attr("status", status).attr("msg_id", msg.id).show();
+
+	        $msg_text.text(msg.text);
+
+	        $msg_box
+		        .attr("url", msg.url || "")
+		        .attr("status", status)
+		        .attr("msg_id", msg.id);
+
+	        $msg_indicator
+		        .toggleClass("unseen", !is_seen)
+		        .toggleClass("seen", is_seen)
+		        .show();
+
         } else {
             $_wot_message.hide();
+	        // hide the message icon on the top
+	        $msg_indicator.hide();
         }
 
         /* content for user (messages / communications) */
@@ -1065,7 +1088,7 @@ $.extend(wot, { ratingwindow: {
             }
         });
 
-        $("#wot-message").bind("click", function() {
+        $("#wot-message, #floating-message").bind("click", function() {
             var url = $("#wot-message-text").attr("url");
             if (url) {
                 var label = wot.i18n("locale") + "__" + $(this).attr("msg_id");
@@ -1073,6 +1096,40 @@ $.extend(wot, { ratingwindow: {
                 wot.ratingwindow.navigate(url, wurls.contexts.rwmsg);
             }
         });
+
+	    $("#message-indicator")
+		    .bind({
+			    "mouseenter": function() {
+				    $("#floating-message").fadeIn(200);
+				    $(this).addClass("seen").removeClass("unseen");
+				    if (_rw.msg_timer) clearTimeout(_rw.msg_timer);
+				    var bgwot = wot.ratingwindow.get_bg("wot");
+
+				    // remember the message as read
+				    if (bgwot.core.unseenmessage()) {
+		                bgwot.prefs.set("last_message", bgwot.core.usermessage.id);
+		            }
+			    },
+
+	            "mouseleave": function() {
+		            _rw.msg_timer = setTimeout(function (){
+			            $("#floating-message").fadeOut(200);
+		            },500);
+	            }
+		    });
+
+	    $("#floating-message").bind({
+		    "mouseenter": function() {
+			    if (_rw.msg_timer) clearTimeout(_rw.msg_timer);
+		    },
+
+		    "mouseleave": function() {
+			    if (_rw.msg_timer) clearTimeout(_rw.msg_timer);
+			    _rw.msg_timer = setTimeout(function (){
+				    $("#floating-message").fadeOut(200);
+			    },500);
+		    }
+	    });
 
         $(".rating-delete-icon, .rating-deletelabel").bind("click", _rw.rate_control.on_remove);
 

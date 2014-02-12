@@ -187,6 +187,62 @@ textarea {
     width: 42px;
 }
 
+@-webkit-keyframes flashing {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.1; }
+}
+
+#message-indicator {
+    background-size: 16px auto;
+    width: 16px;
+    height: 16px;
+    display: table-cell;
+    background-position-y: -2px;
+    padding: 0 0.6em;
+    background-repeat: no-repeat;
+    background-image: url("b/message.png");
+    visibility: hidden;
+}
+
+#message-indicator.unseen {
+    -webkit-animation: flashing 0.8s linear infinite;
+    visibility: visible;
+}
+
+#message-indicator.unseen:hover {
+    -webkit-animation: none;
+    opacity: 1;
+}
+
+#message-indicator.seen {
+    opacity: 0.1;
+    visibility: visible;
+}
+
+#message-indicator.seen:hover {
+    opacity: 1;
+}
+
+#floating-message {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 150px;
+    width: 362px;
+    z-index: 5;
+    background-color: #F5F5F5;
+    padding: 10px 15px;
+    border: 1px solid #C0C0C0;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px 1px rgba(94, 94, 94, 0.48);
+}
+
+#floating-message-text {
+    font-size: 13px;
+    line-height: 1.5em;
+}
+
 #wot-header-links {
     position: absolute;
     top: 2px;
@@ -1002,7 +1058,8 @@ textarea {
 }
 #wot-message-text[url^="http"]:hover,
 #wot-message[status="important"] #wot-message-text[url^="http"]:hover,
-#wot-message[status="critical"] #wot-message-text[url^="http"]:hover {
+#wot-message[status="critical"] #wot-message-text[url^="http"]:hover,
+#floating-message[url^="http"]:hover {
     color: #3073c5;
     cursor: pointer;
 }
@@ -1022,6 +1079,14 @@ textarea {
 }
 #wot-message[status="critical"] #wot-message-text {
     color: #d81f27;
+}
+
+#floating-message[status="important"] {
+    background-color: #FFD5AB;
+}
+
+#floating-message[status="critical"] {
+    background-color: #FF8B90;
 }
 
 /* -- Web Guide */
