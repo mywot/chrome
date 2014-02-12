@@ -809,7 +809,7 @@ $.extend(wot, { ratingwindow: {
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
-            { selector: "#wg-title",                text: wot.i18n("wg", "title") },
+            { selector: "#wg-title",                html: wot.i18n("wg", "title") },
             { selector: "#wg-addmore",              text: wot.i18n("wg", "add_long") },
             { selector: "#comment-captcha-text",   text: wot.i18n("ratingwindow", "comment_captchatext") },
             { selector: "#comment-captcha-link",   text: wot.i18n("ratingwindow", "comment_captchalink") }

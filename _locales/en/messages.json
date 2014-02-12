@@ -446,7 +446,7 @@
 		"message": "Too many categories may result in people questioning the credibility of your review."
 	},
 	"wg_title": {
-		"message": "WOT Groups"
+		"message": "WOT Groups<span class='wg-beta'>beta</span>"
 	},
 	"wg_edit": {
 		"message": "edit"
