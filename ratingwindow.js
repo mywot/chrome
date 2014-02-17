@@ -40,6 +40,7 @@ $.extend(wot, { ratingwindow: {
 	],
 
 	wg_viewer_timer: null,
+	wg_infotag_timer: null,
 	msg_timer: null,
 
 	get_bg: function (sub_objname) {
@@ -811,8 +812,11 @@ $.extend(wot, { ratingwindow: {
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
             { selector: "#wg-title",                html: wot.i18n("wg", "title") },
             { selector: "#wg-addmore",              text: wot.i18n("wg", "add_long") },
-            { selector: "#comment-captcha-text",   text: wot.i18n("ratingwindow", "comment_captchatext") },
-            { selector: "#comment-captcha-link",   text: wot.i18n("ratingwindow", "comment_captchalink") }
+            { selector: "#wg-viewer-title",         text: wot.i18n("wg", "viewer_title_wikidedia") },
+            { selector: "#wg-expander",             text: wot.i18n("wg", "expander") },
+            { selector: "#wg-about",                text: wot.i18n("wg", "about") },
+            { selector: "#comment-captcha-text",    text: wot.i18n("ratingwindow", "comment_captchatext") },
+            { selector: "#comment-captcha-link",    text: wot.i18n("ratingwindow", "comment_captchalink") }
 
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -1531,11 +1535,11 @@ $.extend(wot, { ratingwindow: {
         current_mode: "",
 
         unrated: {
-            visible: ["#ratings-area", "#reputation-info", "#user-communication", ".user-comm-social"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", ".user-comm-social", "#main-area"],
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode unrated",
-            removeclass: "rated commenting thanks rate wgcommenting",
+            removeclass: "rated commenting thanks rate wgcommenting wgexpanded",
 
 	        show_effect: {
 		        name: "fade",
@@ -1581,11 +1585,11 @@ $.extend(wot, { ratingwindow: {
         },
 
         rated: {
-            visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social", "#main-area"],
             invisible: ["#rate-buttons", "#categories-selection-area",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode rated",
-            removeclass: "unrated commenting thanks rate wgcommenting",
+            removeclass: "unrated commenting thanks rate wgcommenting wgexpanded",
 
 	        show_effect: {
 		        name: "fade",
@@ -1616,11 +1620,11 @@ $.extend(wot, { ratingwindow: {
         },
 
         rate: {
-            visible: ["#ratings-area", "#rate-buttons", "#categories-selection-area"],
+            visible: ["#ratings-area", "#rate-buttons", "#categories-selection-area", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#rated-votes",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "rate",
-            removeclass: "view-mode rated unrated commenting thanks wgcommenting",
+            removeclass: "view-mode rated unrated commenting thanks wgcommenting wgexpanded",
 
 	        show_effect: {
 		        name: "fade",
@@ -1659,11 +1663,11 @@ $.extend(wot, { ratingwindow: {
         },
 
         comment: { // Commenting during rating process
-            visible: ["#ratings-area", "#rate-buttons", "#commenting-area", "#rated-votes"],
+            visible: ["#ratings-area", "#rate-buttons", "#commenting-area", "#rated-votes", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
                 "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "commenting",
-            removeclass: "view-mode rated unrated rate thanks wgcommenting",
+            removeclass: "view-mode rated unrated rate thanks wgcommenting wgexpanded",
 
 	        show_effect: {
 		        name: "fade",
@@ -1697,8 +1701,9 @@ $.extend(wot, { ratingwindow: {
                 return true;
             }
         },
+
         wgcomment: { // Quick Comment mode for WebGuide feature
-            visible: ["#wg-area", "#commenting-area"],  // "#rate-buttons" will be shown after animation
+            visible: ["#wg-area", "#commenting-area", "#main-area"],  // "#rate-buttons" will be shown after animation
             invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
                 "#thanks-area", "#ok-button", "#commenting-area", "#rated-votes", "#wg-about-area"],
 
@@ -1726,25 +1731,15 @@ $.extend(wot, { ratingwindow: {
 	        },
 
             addclass: "wgcommenting",
-            removeclass: "view-mode rated unrated rate thanks",
+            removeclass: "view-mode rated unrated rate thanks wgexpanded",
 
             activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
                 if (!wot.ratingwindow.modes._activate("wgcomment", force) && !force) return false;
 
-//                // TODO: this piece of code is a duplication. Should be refactored.
-//                if (prev_mode == "" || !_rw.cat_selector.inited) {
-//                    if (!_rw.cat_selector.inited) {
-//                        _rw.cat_selector.build();
-//                        _rw.cat_selector.init();
-//                    }
-//                    _rw.cat_selector.init_voted();
-//                }
-
                 _rw.was_in_ratemode = false; // user is commenting passing rating process
                 _rw.comments.update_hint();
-//                _rw.comments.update_button("comment", true);
                 _rw.update_submit_button();
                 _rw.comments.focus();
                 _rw.reveal_ratingwindow(true);
@@ -1752,12 +1747,60 @@ $.extend(wot, { ratingwindow: {
             }
         },
 
+	    wgexpanded: { // Full view of WOT Groups feature
+		    visible: ["#wg-area", "#ratings-area" ],
+		    invisible: [ "#reputation-info", "#user-communication", "#categories-selection-area",
+			    "#thanks-area", "#ok-button", "#commenting-area", "#wg-about-area", "#ok-button"],
+
+		    show_duration: 300,
+		    hide_duration: 0,
+
+		    before_show: function () {
+			    $("#main-area").hide({
+				    effect: "blind",
+				    direction: "up",
+				    duration: 500,
+				    easing: "easeOutQuart",
+				    complete: function () {
+				        $("#wg-tags").addClass("expanded");
+			        }
+			    });
+		    },
+
+		    before_hide: function () {
+			    $("#wg-expander").text(wot.i18n("wg", "expander"));
+			    $("#wg-tags").removeClass("expanded");
+		    },
+
+		    after_show: function () {
+		    },
+
+		    after_hide: function () {
+			    wot.ratingwindow.wg.update_wg_tags();
+		    },
+
+		    addclass: "wgexpanded",
+		    removeclass: "rate thanks wgcommenting commenting",
+
+		    activate: function (force) {
+			    var _rw = wot.ratingwindow,
+				    prev_mode = _rw.modes.current_mode;
+			    if (!wot.ratingwindow.modes._activate("wgexpanded", force) && !force) return false;
+
+			    _rw.was_in_ratemode = false; // user is commenting passing rating process
+			    _rw.reveal_ratingwindow(true);
+			    $("#wg-expander").text(wot.i18n("wg", "expander_less"));
+
+			    return true;
+		    }
+	    },
+
         thanks: {
-            visible: ["#thanks-area", "#ratings-area", "#rated-votes", "#ok-button"],
+            visible: ["#thanks-area", "#ratings-area", "#rated-votes", "#ok-button", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
                 "#commenting-area", "#rate-buttons", "#wg-area", "#wg-about-area"],
             addclass: "thanks view-mode",
-            removeclass: "rated unrated rate commenting wgcommenting",
+            removeclass: "rated unrated rate commenting wgcommenting wgexpanded",
 
             activate: function (force) {
                 var _rw = wot.ratingwindow;
@@ -1779,11 +1822,11 @@ $.extend(wot, { ratingwindow: {
 
 	    wg_about: {
 			// the explanation screen "What's this?" for WOT Groups
-		    visible: ["#wg-area", "#wg-about-area", "#ratings-area"],
+		    visible: ["#wg-area", "#wg-about-area", "#ratings-area", "#main-area"],
 		    invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
 			    "#commenting-area", "#rate-buttons" ],
 		    addclass: "thanks view-mode",
-		    removeclass: "rated unrated rate commenting wgcommenting",
+		    removeclass: "rated unrated rate commenting wgcommenting wgexpanded",
 
 		    activate: function (force) {
 			    var _rw = wot.ratingwindow;
@@ -2654,6 +2697,19 @@ $.extend(wot, { ratingwindow: {
 				rw.navigate(wot.urls.wg_about, wot.urls.contexts.wg_about_learnmore)
 			});
 
+			$("#wg-expander")
+				.on("click", function () {
+					var $this = $(this);
+
+					if (wot.ratingwindow.modes.current_mode != "wgexpanded") {
+						$this.data("prev-mode", wot.ratingwindow.modes.current_mode);
+						rw.modes.wgexpanded.activate();
+					} else {
+						rw.modes[$this.data("prev-mode")].activate(true);
+					}
+
+				});
+
 			$(document).on("mouseenter", ".wg-tag.info", _this.on_info_tag_hover);
 			$(document).on("mouseleave", ".wg-tag.info", _this.on_info_tag_leave);
 			$(document).on("mouseenter", "#wg-viewer", _this.on_wgviewer_hover);
@@ -2791,36 +2847,49 @@ $.extend(wot, { ratingwindow: {
 
 		on_info_tag_hover: function (e) {
 
-			if (wot.ratingwindow.wg_viewer_timer) {
-				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			var rw = wot.ratingwindow;
+
+			if (rw.wg_viewer_timer) {
+				window.clearTimeout(rw.wg_viewer_timer);
 			}
 
+			if (rw.wg_infotag_timer) window.clearTimeout(rw.wg_infotag_timer);
+
 			var $this = $(this);
-			var $wgviewer = $("#wg-viewer"), $viewer_frame = $("#wg-viewer-frame");
-			var info = $this.data("wg-info");
 
-			$viewer_frame.attr("src", info);
+			rw.wg_infotag_timer = window.setTimeout(function() {
+				var $wgviewer = $("#wg-viewer"), $viewer_frame = $("#wg-viewer-frame");
+				var info = $this.data("wg-info");
 
-			$wgviewer.show();
+				$viewer_frame.attr("src", info);
 
-			$viewer_frame
-				.toggleClass("mini", !$viewer_frame.hasClass("shown"))
-				.show({ duration: 0, complete: function () {
-					setTimeout(function (){
-						$viewer_frame
-							.removeClass("mini")
-							.addClass("shown");
+				$wgviewer.show();
 
-					}, 200);
-				} });
+				$viewer_frame
+					.toggleClass("mini", !$viewer_frame.hasClass("shown"))
+					.show({ duration: 0, complete: function () {
+						setTimeout(function (){
+							$viewer_frame
+								.removeClass("mini")
+								.addClass("shown");
+
+						}, 200);
+					} });
+			}, 1000);   // wait a bit to avoid unnecessary showing
+
 		},
 
 		on_info_tag_leave: function () {
-			if (wot.ratingwindow.wg_viewer_timer) {
-				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+
+			var rw = wot.ratingwindow;
+
+			if (rw.wg_viewer_timer) {
+				window.clearTimeout(rw.wg_viewer_timer);
 			}
 
-			wot.ratingwindow.wg_viewer_timer = window.setTimeout(function (){
+			if (rw.wg_infotag_timer) window.clearTimeout(rw.wg_infotag_timer);
+
+			rw.wg_viewer_timer = window.setTimeout(function (){
 				$("#wg-viewer").hide();
 				$("#wg-viewer-frame").removeClass("mini shown");
 			}, 300);
@@ -2913,19 +2982,19 @@ $.extend(wot, { ratingwindow: {
 			var rw = wot.ratingwindow,
 				_wg = rw.wg,
 				mytags = _wg.get_tags(),
+				$tags = $("#wg-tags"),
 				tagmap = [
-					{ elem: $("#wg-my-tags"), list: mytags },
-					{ elem: $("#wg-other-tags"), list: rw.tags }
+					{ list: mytags },
+					{ list: rw.tags }
 				],
-				filled = 0,
+				has_tags = 0,
 				prev = {};
 
+			$tags.empty();  // clean the tags' section
 
 			for (var i = 0; i < tagmap.length; i++) {
-				var $elem = tagmap[i].elem,
-					list = tagmap[i].list;
+				var list = tagmap[i].list;
 
-				$elem.children().detach();  // clean the tags' section
 				for (var j = 0; j < list.length; j++) {
 
 					var $tag, info,
@@ -2955,19 +3024,25 @@ $.extend(wot, { ratingwindow: {
 					}
 
 
-					$elem.append($tag);
+					$tags.append($tag);
 					prev[tag_value] = true;         // remember that we showed the tag
 				}
 
-				filled += $elem.children().length > 0 ? 1 : 0;
 			}
 
+			has_tags = $tags.children().length > 0;
+
 			var $wg_edit = $("#wg-change"),
-//				$wg_title = $("#wg-title"),
 				$wg_addmore = $("#wg-addmore");
 
 			$wg_edit.text( mytags.length > 0 ? wot.i18n("wg", "edit") : wot.i18n("wg", "add") );
-			$wg_addmore.toggle(filled == 0);
+			$wg_addmore.toggleClass("hidden", has_tags);
+			$tags.toggle(has_tags);
+
+			var e_tags = $tags.get(0);
+			var is_partially = e_tags && e_tags.scrollHeight > e_tags.clientHeight; // test whether there are tags that don't fit
+
+			$("#wg-expander").toggleClass("hidden", !is_partially);
 		},
 
 		show_tagautocomplete: function () {

@@ -49,6 +49,10 @@ body {
     background-color: rgba(255, 102, 4, 0.9);
 }
 
+.hidden {
+    display: none !important;
+}
+
 textarea {
     resize: none;
 }
@@ -77,7 +81,9 @@ textarea {
 #wot-ratingwindow {
     display: block;
     padding: 10px 16px 0;
-    min-height: 390px;
+    /*min-height: 390px;*/
+    height: 408px;
+    max-height: 408px;
 }
 
 #wot-elements {
@@ -468,6 +474,10 @@ textarea {
     white-space: nowrap;
     padding: 1px 0;
     height: 20px;
+}
+
+#rated-votes.voted {
+    height: 24px; /* fixing a bug when mode is switched from wgcomment to wgexpanded */
 }
 
 #rated-votes.voted #voted-categories {
@@ -1106,6 +1116,10 @@ textarea {
     margin-left: -24px;
 }
 
+.wgexpanded #wg-area:before {
+    margin-top: -1px; /* hide the top line to avoid doubling of the separator */
+}
+
 #wg-about-area {
     display: none;
     padding: 0px 20px;
@@ -1132,7 +1146,8 @@ textarea {
 
 .wg-title-bar {
     width: 274px;
-    display: inline-block;
+    display: block;
+    margin-bottom: 3px;
 }
 
 #wg-title {
@@ -1148,10 +1163,16 @@ textarea {
     color: #5C5C5C;
 }
 
+#wg-right-bar {
+    position: absolute;
+    right: 33px;
+    margin-top: -25px;
+}
+
 #wg-change {
     display: inline-block;
     font-size: 12px;
-    /*margin-left: 20px;*/
+    margin: 0 4px;
     font-variant: small-caps;
     border: 1px dotted rgba(49, 99, 185, 0.7);
     color: #3163B9;
@@ -1168,15 +1189,27 @@ textarea {
     border: 1px solid rgba(255, 255, 255, 0.32);
 }
 
+#wg-expander {
+    display: inline-block;
+    font-size: 11px;
+    padding: 0px 0px;
+    margin: 0 4px;
+}
+
+#wg-expander:hover {
+    /*color: #FFF;*/
+    /*background-color: rgba(49, 99, 185, 0.94);*/
+    /*border-bottom: 1px solid rgba(255, 255, 255, 0.32);*/
+}
+
 .wgcommenting #wg-change {
     display: none;
 }
 
 #wg-about {
     display: inline-block;
-    font-size: 10px;
-    vertical-align: super;
-    margin-left: 10px;
+    font-size: 11px;
+    margin: 0 4px;
     border-bottom: 1px dotted #E2E2E2;
     color: #B8B8B8;
     cursor: pointer;
@@ -1188,27 +1221,33 @@ textarea {
 }
 
 #wg-tags {
-    margin-left: -3px;
-    margin-top: 3px;
-    height: 1.5em;
+    margin-left: 2px;
+    margin-top: 0;
+    height: 1.36em;
+    max-height: none;
     overflow: hidden;
-}
-
-#wg-my-tags {
-    display: inline-block;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     -webkit-padding-start: 0;
     list-style-type: none;
 }
 
-#wg-other-tags {
-    display: inline-block;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-padding-start: 0;
-    list-style-type: none;
+#wg-tags.expanded {
+    height: auto;
+    max-height: 190px;
 }
+
+/*#wg-my-tags {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*#wg-other-tags {*/
+    /*display: inline-block;*/
+    /*-webkit-margin-before: 0;*/
+    /*-webkit-margin-after: 0;*/
+    /*-webkit-padding-start: 0;*/
+    /*list-style-type: none;*/
+/*}*/
 
 .wg-tag {
     display: inline-block;
@@ -1273,11 +1312,11 @@ textarea {
 }
 
 #wg-addmore {
-    display: inline;
+    display: inline-block;
     color: #C0C0C0;
     font-style: italic;
     font-size: 12px;
-    margin: 0 6px;
+    margin: 5px 10px;
     cursor: pointer;
     transition: border 0.2s, color 0.2s;
 }

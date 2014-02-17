@@ -449,12 +449,24 @@
 		"message": "WOT Groups<span class='wg-beta'>beta</span>"
 	},
 	"wg_edit": {
-		"message": "edit"
+		"message": "edit my tags"
 	},
 	"wg_add": {
-		"message": "add"
+		"message": "add a tag"
 	},
 	"wg_add_long": {
-		"message": "click to add a tag"
+		"message": "click to comment with tags"
+	},
+	"wg_expander": {
+		"message": "show more"
+	},
+	"wg_expander_less": {
+		"message": "show less"
+	},
+	"wg_about": {
+		"message": "what's this?"
+	},
+	"wg_viewer_title_wikidedia": {
+		"message": "wg-viewer-title"
 	}
 }
