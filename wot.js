@@ -975,7 +975,7 @@ var wot = {
     },
 
 	tags: {
-		tags_re: /(\s|^)#([a-z0-9_]{2,})/img,
+		tags_re: /(\s|^)#([a-z0-9\u0400-\u04FF]{3,})/img,
 
 		get_tags: function (text) {
 
