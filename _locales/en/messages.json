@@ -466,7 +466,7 @@
 	"wg_about": {
 		"message": "what's this?"
 	},
-	"wg_viewer_title_wikidedia": {
-		"message": "wg-viewer-title"
+	"wg_viewer_title_wikipedia": {
+		"message": "Wikipedia"
 	}
 }

@@ -812,7 +812,7 @@ $.extend(wot, { ratingwindow: {
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
             { selector: "#wg-title",                html: wot.i18n("wg", "title") },
             { selector: "#wg-addmore",              text: wot.i18n("wg", "add_long") },
-            { selector: "#wg-viewer-title",         text: wot.i18n("wg", "viewer_title_wikidedia") },
+            { selector: ".wg-viewer-title",         text: wot.i18n("wg", "viewer_title_wikipedia") },
             { selector: "#wg-expander",             text: wot.i18n("wg", "expander") },
             { selector: "#wg-about",                text: wot.i18n("wg", "about") },
             { selector: "#comment-captcha-text",    text: wot.i18n("ratingwindow", "comment_captchatext") },

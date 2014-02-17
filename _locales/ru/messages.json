@@ -444,5 +444,29 @@
 	},
 	"ratingwindow_check_6a": {
 		"message": "Слишком много выбранных категорий может вызвать сомнения в правильности вашего мнения."
+	},
+	"wg_title": {
+		"message": "WOT Группы<span class='wg-beta'>бета</span>"
+	},
+	"wg_edit": {
+		"message": "изменить тэги"
+	},
+	"wg_add": {
+		"message": "добавить тэг"
+	},
+	"wg_add_long": {
+		"message": "кликните, чтобы оставить комментарий с тэгами"
+	},
+	"wg_expander": {
+		"message": "больше"
+	},
+	"wg_expander_less": {
+		"message": "меньше"
+	},
+	"wg_about": {
+		"message": "что это?"
+	},
+	"wg_viewer_title_wikipedia": {
+		"message": "Википедия"
 	}
 }
