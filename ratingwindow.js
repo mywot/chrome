@@ -3097,6 +3097,7 @@ $.extend(wot, { ratingwindow: {
 
 }});
 
+// Remove this part in Firefox when merging the code
 $(document).ready(function() {
     wot.ratingwindow.onload();
 });

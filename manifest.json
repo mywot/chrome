@@ -1,6 +1,6 @@
 {
-	"name": "WOT Beta",
-	"version": "2.4.5.15",
+	"name": "WOT (Testing)",
+	"version": "2.4.5.16",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
