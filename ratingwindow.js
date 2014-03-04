@@ -32,13 +32,8 @@ $.extend(wot, { ratingwindow: {
     prefs: {},              // shortcut for background preferences
 	current: {},
 
-	is_wg_allowed: true,
-	tags: [                 // WG tags
-//		{ value: "test", tokens: ["test"] },
-//		{ value: "controversial", tokens: ["controversial"]},
-//		{ value: "ideas", tokens: ["ideas"] }
-	],
-
+	is_wg_allowed: false,
+	tags: [],               // WG tags for the current website
 	wg_viewer_timer: null,
 	wg_infotag_timer: null,
 	msg_timer: null,
@@ -78,6 +73,8 @@ $.extend(wot, { ratingwindow: {
 	        _this.finishstate(false);
 	        _this.state = { target: target, down: -1 };
 	        _this.comments.set_comment("");  // reset comment field
+	        $("#voted-categories-content").empty();
+	        $("#rated-votes").removeClass("commented");
 	        was_target_changed = true;
         }
 
@@ -297,10 +294,10 @@ $.extend(wot, { ratingwindow: {
                     if (has_comment) {
 //                        bg.console.log("SUBMIT COMMENT");
 
-	                    if (!has_up_votes && has_mytags) {
-		                    // TODO: remove line below. Artificially add category "Other" to passover server side restrictions
-		                    votes = { 304: 1 };  // category "Other" is upvoted artificially
-	                    }
+//	                    if (!has_up_votes && has_mytags) {
+//		                    // TODO: remove line below. Artificially add category "Other" to passover server side restrictions
+//		                    votes = { 304: 1 };  // category "Other" is upvoted artificially
+//	                    }
 
                         // If user can't leave a comment for a reason, accept the comment locally, otherwise submit it silently
                         var keeper_status = (rw.comments.allow_commenting && rw.is_registered) ? wot.keeper.STATUSES.SUBMITTING : wot.keeper.STATUSES.LOCAL;
@@ -576,9 +573,9 @@ $.extend(wot, { ratingwindow: {
             // delete categories from the visible area
             _rw.insert_categories({}, $_tr_list);
 
-            if (this.current.target && cached.status == wot.cachestatus.ok && cached.value) {
+            if (_rw.current.target && cached.status == wot.cachestatus.ok && cached.value) {
                 var cats = cached.value.cats;
-                if (cats != null) {
+                if (!wot.utils.isEmptyObject(cats)) {
                     var sorted = wot.rearrange_categories(wot.select_identified(cats));    // sort categories and split into two parts (TR, CS)
                     _rw.insert_categories(sorted.all, $_tr_list);
                 }
@@ -610,7 +607,6 @@ $.extend(wot, { ratingwindow: {
 	                        if (target_changed) {   // no need to reask comment on every "iframe loaded" event
 		                        _rw.comments.get_comment(data.target);
 	                        }
-
                         } else {
                             bg.wot.core.update_ratingwindow_comment(); // don't allow unregistered addons to comment
                         }
@@ -632,7 +628,6 @@ $.extend(wot, { ratingwindow: {
     },
 
     update_comment: function (cached, local_comment, captcha_required) {
-        wot.log("update_comment()", cached);
 
         var _rw = wot.ratingwindow,
             _comments = wot.ratingwindow.comments,
@@ -716,6 +711,9 @@ $.extend(wot, { ratingwindow: {
 
             } else if (_rw.comments.is_banned) {
                 // this is considered below
+            } else {
+                // normal mode
+                _rw.comments.show_normal_hint();
             }
         }
 	    _rw.wg.update_wg_tags();
@@ -730,8 +728,6 @@ $.extend(wot, { ratingwindow: {
 
     count_window_opened: function () {
         // increase amount of times RW was shown (store to preferences)
-
-        wot.log("RW: count_window_opened");
 
         var bg = chrome.extension.getBackgroundPage();
         var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
@@ -806,7 +802,7 @@ $.extend(wot, { ratingwindow: {
             { selector: "#change-ratings",          text: wot.i18n("ratingwindow", "rerate_change") },
             { selector: ".comment-title",           text: wot.i18n("ratingwindow", "comment") },
             { selector: "#user-comment",            placeholder: wot.i18n("ratingwindow", "comment_placeholder") },
-            { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
+//            { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
@@ -815,6 +811,10 @@ $.extend(wot, { ratingwindow: {
             { selector: ".wg-viewer-title",         text: wot.i18n("wg", "viewer_title_wikipedia") },
             { selector: "#wg-expander",             text: wot.i18n("wg", "expander") },
             { selector: "#wg-about",                text: wot.i18n("wg", "about") },
+            { selector: ".wg-about-title",          text: wot.i18n("wg", "about_title") },
+            { selector: ".wg-about-content",        text: wot.i18n("wg", "about_content") },
+            { selector: "#wg-about-ok",             text: wot.i18n("wg", "about_ok") },
+            { selector: "#wg-about-learnmore",      text: wot.i18n("wg", "about_more") },
             { selector: "#comment-captcha-text",    text: wot.i18n("ratingwindow", "comment_captchatext") },
             { selector: "#comment-captcha-link",    text: wot.i18n("ratingwindow", "comment_captchalink") }
 
@@ -1295,9 +1295,7 @@ $.extend(wot, { ratingwindow: {
         _rw.comments.update_hint();
 
         wot.ratingwindow.finishstate(false);
-
         wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_DELETEALL);
-
         _rw.modes.auto();   // switch RW mode according to current state
     },
 
@@ -1504,7 +1502,7 @@ $.extend(wot, { ratingwindow: {
                     elems.indicator.attr("r", rep);
                     elems.data.attr("r", rep);
                 }
-                }
+            }
 
                 var helptext = wot.get_level_label(item.name, rep, true);
 
@@ -1539,7 +1537,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode unrated",
-            removeclass: "rated commenting thanks rate wgcommenting wgexpanded",
+            removeclass: "rated commenting thanks rate wgcommenting wgexpanded wgabout",
 
 	        show_effect: {
 		        name: "fade",
@@ -1568,7 +1566,7 @@ $.extend(wot, { ratingwindow: {
 			        rect = rects && rects.length ? rects[0] : {},
 			        h = rect.height || 0;
 
-		        return h + $("#ratings-area").height() - 1 + "px";
+		        return h + $("#ratings-area").height() - (wot.platform != "firefox"? 1 : 0) + "px";
 	        },
 
             activate: function (force) {
@@ -1576,6 +1574,7 @@ $.extend(wot, { ratingwindow: {
 
 	            var $rated_votes = $("#rated-votes"),
 		            show_comment_icon = $rated_votes.hasClass("commented");
+
 	            $rated_votes.toggle(show_comment_icon);
 	            $(".user-comm-activity").toggle(!show_comment_icon);
 
@@ -1589,7 +1588,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#rate-buttons", "#categories-selection-area",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode rated",
-            removeclass: "unrated commenting thanks rate wgcommenting wgexpanded",
+            removeclass: "unrated commenting thanks rate wgcommenting wgexpanded wgabout",
 
 	        show_effect: {
 		        name: "fade",
@@ -1613,6 +1612,9 @@ $.extend(wot, { ratingwindow: {
 
             activate: function (force) {
                 if (!wot.ratingwindow.modes._activate("rated", force) && !force) return false;
+
+	            $(".user-comm-activity").hide(); // in rated mode never show activity score line
+
                 wot.ratingwindow.update_uservoted();
 	            wot.ratingwindow.wg.update_wg_visibility();
                 return true;
@@ -1624,7 +1626,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#reputation-info", "#user-communication", "#rated-votes",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "rate",
-            removeclass: "view-mode rated unrated commenting thanks wgcommenting wgexpanded",
+            removeclass: "view-mode rated unrated commenting thanks wgcommenting wgexpanded wgabout",
 
 	        show_effect: {
 		        name: "fade",
@@ -1667,7 +1669,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
                 "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "commenting",
-            removeclass: "view-mode rated unrated rate thanks wgcommenting wgexpanded",
+            removeclass: "view-mode rated unrated rate thanks wgcommenting wgexpanded wgabout",
 
 	        show_effect: {
 		        name: "fade",
@@ -1692,6 +1694,9 @@ $.extend(wot, { ratingwindow: {
 	                _rw.update_catsel_state();  // update the category selector with current state
                 }
 
+		        // update side hint to the relevant hint
+		        $("#comment-side-hint").html(wot.i18n("ratingwindow", "commenthints"));
+
                 _rw.was_in_ratemode = true; // since in comment mode user is able to change rating, we should set the flag
                 _rw.comments.update_hint();
                 _rw.comments.update_button("comment", true);
@@ -1705,7 +1710,10 @@ $.extend(wot, { ratingwindow: {
         wgcomment: { // Quick Comment mode for WebGuide feature
             visible: ["#wg-area", "#commenting-area", "#main-area"],  // "#rate-buttons" will be shown after animation
             invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button", "#commenting-area", "#rated-votes", "#wg-about-area"],
+                "#thanks-area", "#ok-button", "#rated-votes", "#wg-about-area"],
+
+	        addclass: "wgcommenting",
+	        removeclass: "view-mode rated unrated rate thanks wgexpanded wgabout",
 
 	        show_effect: {
 		        name: "blind",
@@ -1730,19 +1738,21 @@ $.extend(wot, { ratingwindow: {
 		        $("#rate-buttons").show();
 	        },
 
-            addclass: "wgcommenting",
-            removeclass: "view-mode rated unrated rate thanks wgexpanded",
-
             activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
                 if (!wot.ratingwindow.modes._activate("wgcomment", force) && !force) return false;
 
-                _rw.was_in_ratemode = false; // user is commenting passing rating process
+//	            $("#main-area")[0].style.height = null;
+
+				// update side hint to the relevant hint
+	            $("#comment-side-hint").html(wot.i18n("ratingwindow", "wgcommenthints"));
+
+	            _rw.was_in_ratemode = false; // user is commenting passing rating process
                 _rw.comments.update_hint();
                 _rw.update_submit_button();
+	            _rw.reveal_ratingwindow(true);
                 _rw.comments.focus();
-                _rw.reveal_ratingwindow(true);
                 return true;
             }
         },
@@ -1751,6 +1761,9 @@ $.extend(wot, { ratingwindow: {
 		    visible: ["#wg-area", "#ratings-area" ],
 		    invisible: [ "#reputation-info", "#user-communication", "#categories-selection-area",
 			    "#thanks-area", "#ok-button", "#commenting-area", "#wg-about-area", "#ok-button"],
+
+		    addclass: "wgexpanded",
+		    removeclass: "rate thanks wgcommenting commenting wgabout",
 
 		    show_duration: 300,
 		    hide_duration: 0,
@@ -1779,9 +1792,6 @@ $.extend(wot, { ratingwindow: {
 			    wot.ratingwindow.wg.update_wg_tags();
 		    },
 
-		    addclass: "wgexpanded",
-		    removeclass: "rate thanks wgcommenting commenting",
-
 		    activate: function (force) {
 			    var _rw = wot.ratingwindow,
 				    prev_mode = _rw.modes.current_mode;
@@ -1800,7 +1810,7 @@ $.extend(wot, { ratingwindow: {
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
                 "#commenting-area", "#rate-buttons", "#wg-area", "#wg-about-area"],
             addclass: "thanks view-mode",
-            removeclass: "rated unrated rate commenting wgcommenting wgexpanded",
+            removeclass: "rated unrated rate commenting wgcommenting wgexpanded wgabout",
 
             activate: function (force) {
                 var _rw = wot.ratingwindow;
@@ -1825,12 +1835,22 @@ $.extend(wot, { ratingwindow: {
 		    visible: ["#wg-area", "#wg-about-area", "#ratings-area", "#main-area"],
 		    invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
 			    "#commenting-area", "#rate-buttons" ],
-		    addclass: "thanks view-mode",
-		    removeclass: "rated unrated rate commenting wgcommenting wgexpanded",
+		    addclass: "wgabout view-mode",
+		    removeclass: "rated unrated rate commenting thanks wgcommenting wgexpanded",
+
+		    before_hide: function (new_mode) {
+			    var $mainarea = $("#main-area");
+
+			    if (new_mode == "wgcomment") {
+				    $mainarea[0].style.height = wot.ratingwindow.modes.unrated.get_mainarea_height($mainarea);
+			    }
+		    },
 
 		    activate: function (force) {
 			    var _rw = wot.ratingwindow;
 			    if (!_rw.modes._activate("wg_about", force) && !force) return false;
+
+			    $("#main-area")[0].style.height = null;
 
 			    return true;
 		    }
@@ -1865,7 +1885,6 @@ $.extend(wot, { ratingwindow: {
 	        hide_options = $.extend(hide_options, hide_params);
 	        $(invisible.join(", ")).hide(hide_options);
 
-
 	        // then show new mode
 	        if (typeof(mode.before_show) == "function") mode.before_show(current_mode);
 
@@ -1877,9 +1896,7 @@ $.extend(wot, { ratingwindow: {
 		        }
 	        };
 	        show_options = $.extend(show_options, show_params);
-
 	        $(visible.join(", ")).show(show_options);
-
         },
 
         _activate: function (mode_name, force) {
@@ -1891,7 +1908,7 @@ $.extend(wot, { ratingwindow: {
             _rw.modes.show_hide(mode_name);
             _rw.modes.current_mode = mode_name;
             _rw.rate_control.update_ratings_visibility(mode_name);
-            return true;
+	        return true;
         },
 
         auto: function (enforce) {
@@ -2419,7 +2436,6 @@ $.extend(wot, { ratingwindow: {
 		    // now take the most important warning according to defined priorities
 		    for (var p = 0; p < wot.cat_combinations_prio.length; p++) {
 			    if (warns[wot.cat_combinations_prio[p]]) {
-//				    console.log("returned", wot.cat_combinations_prio[p]);
 				    _this.is_illogical = wot.cat_combinations_prio[p];
 				    break;
 			    }
@@ -2477,7 +2493,7 @@ $.extend(wot, { ratingwindow: {
 
 	    get_comment_value: function (need_html) {
 		    var elem = $("#user-comment")[0],
-			    s = need_html ? elem.innerHTML : elem.innerText;
+			    s = need_html ? elem.innerHTML : elem.textContent; // different in Firefox
 
 		    s = typeof(s) == "string" ? s.trim() : "";
 
@@ -2605,7 +2621,7 @@ $.extend(wot, { ratingwindow: {
         },
 
         set_comment: function (text) {
-            $("#user-comment")[0].innerText = text;
+            $("#user-comment")[0].textContent = text; // different in Firefox
         },
 
         has_valid_comment: function () {
@@ -2630,7 +2646,16 @@ $.extend(wot, { ratingwindow: {
         },
 
         focus: function () {
-            $("#user-comment").focus();
+	        setTimeout(function(){
+		        $("#user-comment").get(0).focus();
+	        }, 200);
+        },
+
+        show_normal_hint: function () {
+            $("#comment-register").hide();
+            $("#comment-captcha").hide();
+            $("#comment-side-hint").show();
+            $("#user-comment").removeClass("warning").attr("disabled", null);
         },
 
         show_register_invitation: function () {
@@ -2745,8 +2770,6 @@ $.extend(wot, { ratingwindow: {
 			var rw = wot.ratingwindow,
 				bgwot = rw.get_bg("wot");
 
-//			    console.log(bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated, Date.now());
-
 			if (!force &&
 				bgwot.core.tags.mytags_updated !== null &&
 				bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated > Date.now()) {
@@ -2759,8 +2782,6 @@ $.extend(wot, { ratingwindow: {
 		update_popular_tags: function (force) {
 			var rw = wot.ratingwindow,
 				bgwot = rw.get_bg("wot");
-
-//			    console.log(bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated, Date.now());
 
 			if (!force &&
 				bgwot.core.tags.popular_tags_updated !== null &&
@@ -2981,7 +3002,7 @@ $.extend(wot, { ratingwindow: {
 		update_wg_tags: function () {
 			var rw = wot.ratingwindow,
 				_wg = rw.wg,
-				mytags = _wg.get_tags(),
+				mytags = _wg.get_tags(),    // get list of user tags for the current website
 				$tags = $("#wg-tags"),
 				tagmap = [
 					{ list: mytags },

@@ -1223,7 +1223,7 @@ textarea {
 #wg-tags {
     margin-left: 2px;
     margin-top: 0;
-    height: 1.36em;
+    height: 1.25em; /* Diff in Chrome */
     max-height: none;
     overflow: hidden;
     -webkit-margin-before: 0;
@@ -1255,6 +1255,7 @@ textarea {
     padding: 2px 4px;
     margin-right: 2px;
     margin-left: 2px;
+    line-height: 1.5em;
     color: #5a5450;
     text-decoration: none;
     cursor: pointer;
@@ -1296,6 +1297,7 @@ textarea {
     position: relative;
     top: -5px;
     left: 1px;
+    line-height: 1.2em;
     display: inline-block;
     transition: background-color 0.2s;
     content: "W";
@@ -1319,6 +1321,8 @@ textarea {
     margin: 5px 10px;
     cursor: pointer;
     transition: border 0.2s, color 0.2s;
+    overflow: hidden;
+    height: 1.3em;
 }
 
 #wg-addmore:hover {

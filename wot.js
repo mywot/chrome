@@ -975,7 +975,8 @@ var wot = {
     },
 
 	tags: {
-		tags_re: /(\s|^)#([a-z0-9\u0400-\u04FF]{3,})/img,
+		tags_re: /(\s|^)#([a-zä-ö0-9\u0400-\u04FF]{2,})/img,
+		tags_validate_re: /^\d{2}$/im,
 
 		get_tags: function (text) {
 
@@ -987,6 +988,9 @@ var wot = {
 
 			while ((res = wot.tags.tags_re.exec(text)) !== null) {
 				var tag = res[2] || "";
+
+				if (wot.tags.tags_validate_re.test(tag)) continue;  // skip invalid tag
+
 				if (tag && !_tags[tag]) {
 					tags.push({
 						value: tag       // tag's text
@@ -994,6 +998,7 @@ var wot = {
 					_tags[tag] = true;  // remember the tag to avoid duplications
 				}
 			}
+			wot.tags.tags_re.lastIndex = 0; // reset the last index to avoid using it for the different text
 			return tags;
 		}
 	}
