@@ -1,6 +1,6 @@
 /*
 	ratingwindow.css
-	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -25,14 +25,63 @@ body {
     width: 580px;
 }
 
+#test-label {
+    position: absolute;
+    left: 140px;
+    top: 0px;
+    text-transform: uppercase;
+    font-family: arial;
+    /*font-weight: bold;*/
+    font-size: 10px;
+    color: rgba(255, 250, 250, 0.98);
+    background-color: rgba(255, 102, 4, 0.20);
+    padding: 0 35px;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    -webkit-transition: background-color 0.2s;
+    -webkit-user-select: text;
+}
+
+#test-label:hover {
+    background-color: rgba(255, 102, 4, 0.9);
+}
+
+.hidden {
+    display: none !important;
+}
+
 textarea {
     resize: none;
+}
+
+.link {
+    color: #3073c5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.pseudo-link {
+    color: #3073c5;
+    cursor: pointer;
+    border-bottom: 1px dotted #3073c5;
+}
+
+.pseudo-link:hover {
+    color: red;
+    border-color: red;
 }
 
 #wot-ratingwindow {
     display: block;
     padding: 10px 16px 0;
-    min-height: 390px;
+    /*min-height: 390px;*/
+    height: 408px;
+    max-height: 408px;
 }
 
 #wot-elements {
@@ -61,7 +110,6 @@ textarea {
 /* height of rating area depends on the mode:
  low height (94px): unrated, rate
  high height: (122px): rated, commenting, thanks
-
  */
 .view-mode #ratings-area,
 .commenting #ratings-area {
@@ -105,6 +153,11 @@ textarea {
     min-height: 210px;
 }
 
+.wg.view-mode #main-area,
+.wg.wgcommenting #main-area {
+    min-height: 165px;
+}
+
 /* Always visible */
 #bottom-area {
     /*min-height: 3em;*/
@@ -137,6 +190,62 @@ textarea {
     width: 42px;
 }
 
+@-webkit-keyframes flashing {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.1; }
+}
+
+#message-indicator {
+    background-size: 16px auto;
+    width: 16px;
+    height: 16px;
+    display: table-cell;
+    background-position-y: -2px;
+    padding: 0 0.6em;
+    background-repeat: no-repeat;
+    background-image: url("b/message.png");
+    visibility: hidden;
+}
+
+#message-indicator.unseen {
+    -webkit-animation: flashing 0.8s linear infinite;
+    visibility: visible;
+}
+
+#message-indicator.unseen:hover {
+    -webkit-animation: none;
+    opacity: 1;
+}
+
+#message-indicator.seen {
+    opacity: 0.1;
+    visibility: visible;
+}
+
+#message-indicator.seen:hover {
+    opacity: 1;
+}
+
+#floating-message {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 150px;
+    width: 362px;
+    z-index: 5;
+    background-color: #F5F5F5;
+    padding: 10px 15px;
+    border: 1px solid #C0C0C0;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px 1px rgba(94, 94, 94, 0.48);
+}
+
+#floating-message-text {
+    font-size: 13px;
+    line-height: 1.5em;
+}
+
 #wot-header-links {
     position: absolute;
     top: 2px;
@@ -156,6 +265,7 @@ textarea {
 .wot-header-link:hover {
     color: #3073c5;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .unregistered #wot-header-link-profile {
@@ -266,11 +376,15 @@ textarea {
     left: 14px;
 }
 
-#myrating-header {
+.title {
     margin-left: 10px;
     font-size: 14px;
     font-weight: bold;
     color: #454545;
+}
+
+#myrating-header {
+
 }
 
 /* Headers for rating controls */
@@ -357,6 +471,10 @@ textarea {
     white-space: nowrap;
     padding: 1px 0;
     height: 20px;
+}
+
+#rated-votes.voted {
+    height: 24px; /* fixing a bug when mode is switched from wgcomment to wgexpanded */
 }
 
 #rated-votes.voted #voted-categories {
@@ -479,9 +597,6 @@ textarea {
     position: absolute;
     right: 50px;
     margin-top: 5px;
-    border-bottom: 1px dotted #3163B9;
-    color: #3163B9;
-    cursor: pointer;
 }
 
 /* don't chow this link during "commenting" mode */
@@ -645,44 +760,28 @@ textarea {
 }
 
 #wot-rating-header-wot {
-    display: block;
-    font-size: 14px;
-    color: #454545;
-    text-align: left;
+    display: inline-block;
+    width: 264px;
     margin-top: 8px;
-    font-weight: bold;
-    margin-left: 11px;
+    text-align: left;
 }
 
 #rep-block {
     /*width: 200px;*/
 }
 
-/* scorecard */
-#wot-scorecard {
-    position: absolute;
-    right: 104px;
-    top: 130px;
-    z-index: 3;
-}
-
-#wot-scorecard-content {
-}
-
 .wot-scorecard-text {
-    color: #3073c5;
 	font-size: 12px;
-    cursor: pointer;
-}
-
-.wot-scorecard-text:hover {
-    text-decoration: underline;
+    font-weight: bold;
 }
 
 #wot-scorecard-visit {
-    margin-bottom: 0px;
-    margin-top: 9px;
+    display: inline;
+    max-width: 250px;
+    max-height: 1em;
+    overflow: hidden;
 }
+
 #wot-scorecard-comment-container {
     display: block;
     margin: 0;
@@ -708,7 +807,7 @@ textarea {
 #tr-categories-list {
     margin: 11px 0 0 0;
     padding: 0;
-    min-height: 46px;
+    min-height: 50px;
     line-height: 9px;
     column-count: 2;
     -webkit-column-count: 2;
@@ -863,6 +962,10 @@ textarea {
     display: none;
 }
 
+.wg #user-communication {
+    display: none !important;
+}
+
 .user-comm-activity {
     margin: 77px 25px 0;
     position: relative;
@@ -921,11 +1024,6 @@ textarea {
     cursor: pointer;
 }
 
-/*.wot-user-text.accessible[url^="http"]:hover {*/
-    /*color: #333;*/
-    /*text-decoration: underline;*/
-/*}*/
-
 /* message */
 #wot-message {
     display: none;
@@ -958,15 +1056,12 @@ textarea {
 }
 #wot-message-text[url^="http"]:hover,
 #wot-message[status="important"] #wot-message-text[url^="http"]:hover,
-#wot-message[status="critical"] #wot-message-text[url^="http"]:hover {
+#wot-message[status="critical"] #wot-message-text[url^="http"]:hover,
+#floating-message[url^="http"]:hover {
     color: #3073c5;
     cursor: pointer;
 }
-/*#wot-message-text.accessible[url^="http"]:hover,*/
-/*#wot-message[status="important"] #wot-message-text.accessible[url^="http"]:hover,*/
-/*#wot-message[status="critical"] #wot-message-text.accessible[url^="http"]:hover {*/
-    /*color: #333;*/
-/*}*/
+
 #wot-message[status="important"] {
     border-color: #ea8b2b;
 }
@@ -979,6 +1074,281 @@ textarea {
 #wot-message[status="critical"] #wot-message-text {
     color: #d81f27;
 }
+
+#floating-message[status="important"] {
+    background-color: #FFD5AB;
+}
+
+#floating-message[status="critical"] {
+    background-color: #FF8B90;
+}
+
+/* -- Web Guide */
+
+#wg-area {
+    display: none;
+    min-height: 65px;
+}
+
+#wg-area:before {
+    position: absolute;
+    height: 0;
+    border-top: 1px solid #D9D9D9;
+    content: "";
+    width: 100%;
+    margin-top: 0px;
+    margin-left: -24px;
+}
+
+.wgexpanded #wg-area:before {
+    margin-top: -1px; /* hide the top line to avoid doubling of the separator */
+}
+
+#wg-about-area {
+    display: none;
+    padding: 0px 20px;
+    font-size: 13px;
+}
+
+#wg-about-area p {
+    line-height: 1.5em;
+}
+
+.text-title {
+    font-weight: bold;
+}
+
+#wg-about-learnmore {
+    display: inline-block;
+    position: absolute;
+    right: 50px;
+}
+
+#wg-about-ok {
+    display: inline-block;
+}
+
+.wg-title-bar {
+    width: 274px;
+    display: block;
+    margin-bottom: 3px;
+}
+
+#wg-title {
+    display: inline-block;
+    margin-top: 11px;
+    margin-bottom: 2px;
+}
+
+.wg-beta {
+    vertical-align: super;
+    font-size: 9px;
+    padding-left: 4px;
+    color: #5C5C5C;
+}
+
+#wg-right-bar {
+    position: absolute;
+    right: 33px;
+    margin-top: -25px;
+}
+
+#wg-right-bar * {
+    -moz-user-select: none;
+}
+
+#wg-change {
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 4px;
+    font-variant: small-caps;
+    border: 1px dotted rgba(49, 99, 185, 0.7);
+    color: #3163B9;
+    cursor: pointer;
+    padding: 1px 12px;
+    border-radius: 9px;
+    font-weight: bold;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+#wg-change:hover {
+    color: #FFF;
+    background-color: rgba(49, 99, 185, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+#wg-expander {
+    display: inline-block;
+    font-size: 11px;
+    padding: 0px 0px;
+    margin: 0 4px;
+}
+
+#wg-expander:hover {
+    /*color: #FFF;*/
+    /*background-color: rgba(49, 99, 185, 0.94);*/
+    /*border-bottom: 1px solid rgba(255, 255, 255, 0.32);*/
+}
+
+.wgcommenting #wg-change {
+    display: none;
+}
+
+#wg-about {
+    display: inline-block;
+    font-size: 11px;
+    margin: 0 4px;
+    border-bottom: 1px dotted #E2E2E2;
+    color: #B8B8B8;
+    cursor: pointer;
+}
+
+#wg-about:hover {
+    border-bottom: 1px dotted #3163B9;
+    color: #3163B9;
+}
+
+#wg-tags {
+    margin-left: 2px;
+    margin-top: 0;
+    height: 1.25em; /* Diff in Chrome */
+    max-height: none;
+    overflow: hidden;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-padding-start: 0;
+    list-style-type: none;
+}
+
+#wg-tags.expanded {
+    height: auto;
+    max-height: 190px;
+}
+
+.wg-tag {
+    display: inline-block;
+    font-size: 14px;
+    padding: 2px 4px;
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-bottom: 3px;
+    line-height: 1.4em;
+    color: #5a5450;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.wg-tag:not(.group):hover {
+    text-decoration: underline;
+}
+
+.wg-tag.group {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid transparent;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.wg-tag.mytag {
+    font-size: 12px;
+}
+
+.wg-tag.mytag:not(.group):hover:before {
+    content: "#";
+    color: #757575;
+    margin-left: -7px;
+    position: absolute;
+    font-size: 10px;
+    font-weight: lighter;
+    margin-top: 2px;
+}
+
+.wg-tag.group:hover {
+    border-color: rgba(68, 137, 255, 0.5);;
+    color: #3163B9;
+}
+
+.wg-tag.info:after {
+    position: relative;
+    top: -5px;
+    left: 1px;
+    line-height: 1.2em;
+    display: inline-block;
+    transition: background-color 0.2s;
+    content: "W";
+    font-family: serif;
+    background-color: #B3B3B3;
+    font-size: 9px;
+    color: #FFF;
+    padding: 1px 2px;
+    border-radius: 4px;
+}
+
+.wg-tag.info:hover:after {
+    background-color: #171717;
+}
+
+#wg-addmore {
+    display: inline-block;
+    color: #C0C0C0;
+    font-style: italic;
+    font-size: 12px;
+    margin: 5px 10px;
+    cursor: pointer;
+    transition: border 0.2s, color 0.2s;
+    overflow: hidden;
+    height: 1.3em;
+}
+
+#wg-addmore:hover {
+    border-bottom: 1px dotted #898989;
+    color: #898989;
+}
+
+#wg-viewer {
+    position: absolute;
+    top: 30px;
+    left: 66px;
+    width: 420px;
+    height: 330px;
+    border: 1px solid #C0C0C0;
+    box-shadow: 2px 2px 11px rgba(73, 73, 73, 0.48);
+    border-radius: 3px;
+    background-color: #FFF;
+    z-index: 60;
+    transition: opacity 0.5s;
+    padding-bottom: 10px;
+}
+
+#wg-viewer-frame.mini {       /* pre-loading style to compensate flickering of the content inside iframe */
+    opacity: 0.01;
+}
+
+.wg-viewer-title {
+    height: 20px;
+    padding: 7px 10px 3px 10px;
+    background-color: #D7D7DB;
+    color: #494949;
+}
+
+#wg-viewer-frame {
+    display: none;
+    border: none;
+    width: 400px;
+    height: 305px;
+    margin: 0 10px;
+    transition: opacity 0.5s;
+}
+
+.wgcommenting #wg-addmore {
+    visibility: hidden;
+    width: 0;   /* hacky way of hiding the element */
+}
+
+/* -- // -- */
+
 /* partner */
 #wot-partner {
     display: none;
@@ -1013,6 +1383,15 @@ textarea {
     width: 529px;
     height: 30px;
     display: none;
+}
+
+.wgcommenting #rate-buttons {
+/* buttons in WebGuide commenting mode are positioned differently */
+    bottom: 90px;
+}
+
+.wgcommenting #btn-comment {
+    display: none !important;  /* hide this redundant button */
 }
 
 .buttons-wrapper {
@@ -1098,6 +1477,10 @@ textarea {
     display: block;
 }
 
+.wgcommenting #btn-delete {
+    display: none !important;
+}
+
 .btn-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -1105,12 +1488,6 @@ textarea {
 }
 
 .btn-submit:not(.disabled).warning {
-    /*background-image: -webkit-linear-gradient(top, #FFF 0%,#F16B6B 83%, #DD6969 100%);*/
-    /*border-top-color: #E2BEBE;*/
-    /*border-right-color: #C26D6D;*/
-    /*border-left-color: #CE8B8B;*/
-    /*border-bottom-color: #CA4141;*/
-    /*text-shadow: 1px 1px rgba(255, 184, 184, 0.75);*/
     background-image: -webkit-linear-gradient(top, #FFF 0%, #ffcc00 83%, #ffcc00 100%);
     border-top-color: #E7DB7E;
     border-right-color: #E6CE1F;
@@ -1120,7 +1497,6 @@ textarea {
 }
 
 .rw-button:not(.disabled).warning:hover {
-    /*background-image: -webkit-linear-gradient(top, #FFF 0%,#EEA0A0 83%, #F7B5B5 100%);*/
     background-image: -webkit-linear-gradient(top, #FFF 0%, #f1be00 83%, #e5b200 100%);
 }
 
@@ -1429,6 +1805,21 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     display: none;  /* is shown from JS when needed */
     margin: auto 19px;
     min-height: 225px;
+    user-select: none;
+}
+
+.wgcommenting #commenting-area {
+    min-height: 275px;
+}
+
+.wgcommenting #commenting-area:before {
+    position: absolute;
+    height: 0;
+    border-top: 1px solid #D9D9D9;
+    content: "";
+    width: 100%;
+    margin-top: -9px;
+    margin-left: -34px;
 }
 
 .comment-title {
@@ -1436,17 +1827,31 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     padding: 3px 0 4px;
 }
 
+#comment-top-hint {
+    display: none;
+    color: #979797;
+    font-size: 12px;
+    margin-bottom: 15px;
+    line-height: 1.5em;
+}
+
+.wgcommenting #comment-top-hint {
+    display: block;
+}
+
 .user-comment-wrapper {
     float: right;
 }
 
 #user-comment {
+    -webkit-appearance: textarea;
+    user-select: text;
     height: 126px;
     width: 350px;
     /*margin-right: 10px;*/
     padding: 8px;
-    border: 1px solid #C0C0C0;
-    border-radius: 3px;
+    /*border: 1px solid #C0C0C0;*/
+    /*border-radius: 3px;*/
     font-size: 13px;
     font-family: Arial;
     overflow-x: hidden;
@@ -1495,21 +1900,14 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #comment-register-link,
 #comment-captcha-link {
-    color: #3073c5;
     font-size: 12px;
-    cursor: pointer;
-}
-
-#comment-register-link:hover,
-#comment-captcha-link:hover {
-    text-decoration: underline;
 }
 
 #comment-bottom-hint {
     font-size: 14px;
     text-align: right;
     position: absolute;
-    bottom: 55px;
+    bottom: 60px;
     right: 50px;
     background-color: #FC4B56;
     padding: 3px 10px;
@@ -1521,6 +1919,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #comment-bottom-hint.error {
     display: block;
+}
+
+.wgcommenting #comment-bottom-hint {
+    bottom: 142px;
 }
 
 #thanks-area {
@@ -1551,4 +1953,9 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     font-size: 13px;
     margin-top: 0.5em;
     color: #808080;
+}
+
+.typeahead {
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
 }

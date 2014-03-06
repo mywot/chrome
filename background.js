@@ -31,6 +31,40 @@ $.extend(wot, { core: {
     },
 	last_testimony: null,   // datetime of the last testimony submitted
 
+	tags: {
+		mytags: [ ],
+		mytags_updated: null,       // time when the list was updated last time
+		MYTAGS_UPD_INTERVAL: 30 * 60 * 1000,
+
+		popular_tags: [ ],
+		popular_tags_updated: null,
+		POPULARTAGS_UPD_INTERVAL: 30 * 60 * 1000,
+
+		append_mytags: function (mytags) {
+			if (mytags instanceof Array && mytags.length) {
+
+				var _this = wot.core.tags,
+					mytags_flat = _this.mytags.map(function (item) { return item.value });
+
+				var uniq = mytags.filter(function (tag) {
+					var tag_value = tag.value.trim();
+					return mytags_flat.indexOf(tag_value) < 0;
+				});
+
+				var uniq_tags = uniq.map(function (tag) {
+					tag.mytag = true;
+					return tag;
+				});
+
+				_this.mytags = _this.mytags.concat(uniq_tags);
+			}
+		},
+
+		expire_mytags: function () {
+			wot.core.tags.mytags_updated = null;    // next time when RW will be opened, it will fetch new mytags from server
+		}
+	},
+
 	loadratings: function (hosts, onupdate)
 	{
 		if (typeof (hosts) == "string") {
@@ -968,6 +1002,10 @@ $.extend(wot, { core: {
 				});
             });
 
+			wot.bind("message:tags:clearmytags", function(port, data) {
+				wot.core.tags.expire_mytags();
+            });
+
 			if (wot.surveys && wot.surveys.bind_events) {
 				wot.surveys.bind_events();
 			}
@@ -980,7 +1018,7 @@ $.extend(wot, { core: {
 				wot.featured.bind_events();
 			}
 
-			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget", "ads" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "tags", "wtb", "surveyswidget", "ads" ]);
 
 			/* event handlers */
 

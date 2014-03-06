@@ -1,6 +1,6 @@
 /*
 	wot.js
-	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20140221,
+	version: 20140304,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -128,6 +128,8 @@ var wot = {
 		tour:       "http://www.mywot.com/support/tour/",
 		tour_rw:    "http://www.mywot.com/support/tour/ratingwindow",
 		tour_scorecard: "http://www.mywot.com/support/tour/scorecard",
+		wg:         "https://www.mywot.com/en/groups/g",
+		wg_about:   "https://www.mywot.com/en/groups",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -150,7 +152,9 @@ var wot = {
 			wt_warn_lm: "wt-warn-lm",
 			wt_warn_logo: "wt-warn-logo",
 			wt_donuts_lm: "wt-donuts-lm",
-			wt_donuts_logo: "wt-donuts-logo"
+			wt_donuts_logo: "wt-donuts-logo",
+			wg_tag: "wg-tag",
+			wg_about_learnmore: "wg-learnmore"
 		}
 	},
 
@@ -233,7 +237,7 @@ var wot = {
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
-	TINY_THANKYOU_DURING: 60 * 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
+	TINY_THANKYOU_DURING: 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
 
 	// trusted extensions IDs
 	allowed_senders: {
@@ -971,7 +975,36 @@ var wot = {
         }
 
         return false;
-    }
+    },
+
+	tags: {
+		tags_re: /(\s|^)#([a-zä-ö0-9\u0400-\u04FF]{2,})/img,
+		tags_validate_re: /^\d{2}$/im,
+
+		get_tags: function (text) {
+
+			if (!text) return [];
+
+			var res,
+				tags = [],
+				_tags = {};
+
+			while ((res = wot.tags.tags_re.exec(text)) !== null) {
+				var tag = res[2] || "";
+
+				if (wot.tags.tags_validate_re.test(tag)) continue;  // skip invalid tag
+
+				if (tag && !_tags[tag]) {
+					tags.push({
+						value: tag       // tag's text
+					});
+					_tags[tag] = true;  // remember the tag to avoid duplications
+				}
+			}
+			wot.tags.tags_re.lastIndex = 0; // reset the last index to avoid using it for the different text
+			return tags;
+		}
+	}
 };
 
 

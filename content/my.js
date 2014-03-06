@@ -29,6 +29,7 @@ wot.my = {
 					var target = clear.getAttribute("target");
 					if (target) {
 						wot.cache.clear(target);
+						wot.post("tags", "clearmytags", { });
 					}
 				});
 			}
