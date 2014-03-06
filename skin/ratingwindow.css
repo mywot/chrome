@@ -112,7 +112,6 @@ textarea {
 /* height of rating area depends on the mode:
  low height (94px): unrated, rate
  high height: (122px): rated, commenting, thanks
-
  */
 .view-mode #ratings-area,
 .commenting #ratings-area {
@@ -773,22 +772,18 @@ textarea {
     /*width: 200px;*/
 }
 
-#wot-scorecard-content {
-    display: inline-block;
-    max-width: 250px;
-    max-height: 1em;
-    overflow: hidden;
-}
-
 .wot-scorecard-text {
 	font-size: 12px;
     font-weight: bold;
 }
 
 #wot-scorecard-visit {
-    margin-bottom: 0px;
-    margin-top: 9px;
+    display: inline;
+    max-width: 250px;
+    max-height: 1em;
+    overflow: hidden;
 }
+
 #wot-scorecard-comment-container {
     display: block;
     margin: 0;
@@ -1031,11 +1026,6 @@ textarea {
     cursor: pointer;
 }
 
-/*.wot-user-text.accessible[url^="http"]:hover {*/
-    /*color: #333;*/
-    /*text-decoration: underline;*/
-/*}*/
-
 /* message */
 #wot-message {
     display: none;
@@ -1073,11 +1063,7 @@ textarea {
     color: #3073c5;
     cursor: pointer;
 }
-/*#wot-message-text.accessible[url^="http"]:hover,*/
-/*#wot-message[status="important"] #wot-message-text.accessible[url^="http"]:hover,*/
-/*#wot-message[status="critical"] #wot-message-text.accessible[url^="http"]:hover {*/
-    /*color: #333;*/
-/*}*/
+
 #wot-message[status="important"] {
     border-color: #ea8b2b;
 }
@@ -1169,6 +1155,10 @@ textarea {
     margin-top: -25px;
 }
 
+#wg-right-bar * {
+    -moz-user-select: none;
+}
+
 #wg-change {
     display: inline-block;
     font-size: 12px;
@@ -1237,25 +1227,14 @@ textarea {
     max-height: 190px;
 }
 
-/*#wg-my-tags {*/
-    /*display: inline-block;*/
-/*}*/
-
-/*#wg-other-tags {*/
-    /*display: inline-block;*/
-    /*-webkit-margin-before: 0;*/
-    /*-webkit-margin-after: 0;*/
-    /*-webkit-padding-start: 0;*/
-    /*list-style-type: none;*/
-/*}*/
-
 .wg-tag {
     display: inline-block;
     font-size: 14px;
     padding: 2px 4px;
     margin-right: 2px;
     margin-left: 2px;
-    line-height: 1.5em;
+    margin-bottom: 3px;
+    line-height: 1.4em;
     color: #5a5450;
     text-decoration: none;
     cursor: pointer;
@@ -1357,6 +1336,7 @@ textarea {
 }
 
 #wg-viewer-frame {
+    display: none;
     border: none;
     width: 400px;
     height: 305px;
@@ -1510,12 +1490,6 @@ textarea {
 }
 
 .btn-submit:not(.disabled).warning {
-    /*background-image: -webkit-linear-gradient(top, #FFF 0%,#F16B6B 83%, #DD6969 100%);*/
-    /*border-top-color: #E2BEBE;*/
-    /*border-right-color: #C26D6D;*/
-    /*border-left-color: #CE8B8B;*/
-    /*border-bottom-color: #CA4141;*/
-    /*text-shadow: 1px 1px rgba(255, 184, 184, 0.75);*/
     background-image: -webkit-linear-gradient(top, #FFF 0%, #ffcc00 83%, #ffcc00 100%);
     border-top-color: #E7DB7E;
     border-right-color: #E6CE1F;
@@ -1525,7 +1499,6 @@ textarea {
 }
 
 .rw-button:not(.disabled).warning:hover {
-    /*background-image: -webkit-linear-gradient(top, #FFF 0%,#EEA0A0 83%, #F7B5B5 100%);*/
     background-image: -webkit-linear-gradient(top, #FFF 0%, #f1be00 83%, #e5b200 100%);
 }
 
@@ -1834,6 +1807,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     display: none;  /* is shown from JS when needed */
     margin: auto 19px;
     min-height: 225px;
+    user-select: none;
 }
 
 .wgcommenting #commenting-area {
@@ -1873,6 +1847,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #user-comment {
     -webkit-appearance: textarea;
+    user-select: text;
     height: 126px;
     width: 350px;
     /*margin-right: 10px;*/

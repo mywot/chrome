@@ -790,7 +790,6 @@ $.extend(wot, { ratingwindow: {
             { selector: "#wot-rating-header-my",    text: wot.i18n("ratingwindow", "myrating") },
             { selector: "#wot-scorecard-visit",     text: wot.i18n("ratingwindow", "viewscorecard") },
             { selector: "#wot-scorecard-comment",   text: wot.i18n("ratingwindow", "addcomment") },
-//            { selector: "#wot-partner-text",        text: wot.i18n("ratingwindow", "inpartnership") },
             { selector: ".wt-rw-header-text",       html: wot.i18n("wt", "rw_text_hdr") },
             { selector: ".wt-rw-body",              html: wot.i18n("wt", "rw_text") },
             { selector: ".btn-delete_label",        text: wot.i18n("buttons", "delete") },
@@ -802,7 +801,6 @@ $.extend(wot, { ratingwindow: {
             { selector: "#change-ratings",          text: wot.i18n("ratingwindow", "rerate_change") },
             { selector: ".comment-title",           text: wot.i18n("ratingwindow", "comment") },
             { selector: "#user-comment",            placeholder: wot.i18n("ratingwindow", "comment_placeholder") },
-//            { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
@@ -1077,7 +1075,7 @@ $.extend(wot, { ratingwindow: {
             _rw.hide();
         });
 
-        $("#wot-scorecard-content").bind("click", function() {
+        $("#wot-scorecard-visit").bind("click", function() {
             if (wot.ratingwindow.current.target) {
                 wot.ratingwindow.navigate(wot.urls.scorecard +
                     encodeURIComponent(wot.ratingwindow.current.target),
