@@ -1014,10 +1014,6 @@ $.extend(wot, { core: {
 				wot.wt.bind_events();
 			}
 
-			if (wot.featured && wot.featured.bind_events) {
-				wot.featured.bind_events();
-			}
-
 			wot.listen([ "search", "my", "tab", "warnings", "tags", "wtb", "surveyswidget", "ads" ]);
 
 			/* event handlers */
@@ -1056,7 +1052,6 @@ $.extend(wot, { core: {
                     wot.api.comments.processpending();
 					wot.wt.init();                  // initialize welcome tips engine
 					wot.surveys.init();             // init surveys engine
-					if (wot.featured) wot.featured.init();    // init Featured engine
 				}
 			});
 
