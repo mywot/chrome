@@ -2468,7 +2468,7 @@ $.extend(wot, { ratingwindow: {
         is_banned: false,
         captcha_required: false,
         MIN_LIMIT: 30,
-        MIN_LIMIT_WG: 3,
+        MIN_LIMIT_WG: 30,
 	    MIN_TAGS: 1,        // minimal amount of tags in the comment
 	    MAX_TAGS: 10,       // maximum amount of tags in the comment
         MAX_LIMIT: 20000,
@@ -2615,22 +2615,26 @@ $.extend(wot, { ratingwindow: {
         has_valid_comment: function () {
             var _this = wot.ratingwindow.comments,
 	            _wg = wot.ratingwindow.wg,
-	            is_wgcommenting = wot.ratingwindow.modes.is_current("wgcomment") || wot.ratingwindow.is_wg_allowed,
+	            is_wgcommenting = wot.ratingwindow.is_wg_allowed,
 	            comment = _this.get_comment_value(),
-	            minlen = _this.get_minlen(is_wgcommenting),
-	            maxlen = _this.get_maxlen(is_wgcommenting);
+	            minlen = _this.get_minlen(false),
+	            minlen_withtags = _this.get_minlen(true),
+	            maxlen = _this.get_maxlen(false),
+	            maxlen_withtags = _this.get_maxlen(true);
 
 	        if (is_wgcommenting) {
 		        var tags = _wg.get_tags(comment);
 
-		        return (comment.length >= minlen &&
-			        comment.length < maxlen &&
-			        tags.length >= _this.MIN_TAGS &&
-			        tags.length <= _this.MAX_TAGS);
-
-	        } else {
-		        return (comment.length >= minlen && comment.length < maxlen);
+		        if (tags.length) {
+			        return (comment.length >= minlen_withtags &&
+				        comment.length < maxlen_withtags &&
+				        tags.length >= _this.MIN_TAGS &&
+				        tags.length <= _this.MAX_TAGS);
+		        }
 	        }
+
+	        // testing only length of text
+	        return (comment.length >= minlen && comment.length < maxlen);
         },
 
         focus: function () {
