@@ -1209,7 +1209,7 @@ textarea {
 #wg-tags {
     margin-left: 2px;
     margin-top: 0;
-    height: 1.25em; /* Diff in Chrome */
+    height: 26px; /* Diff in Chrome */
     max-height: none;
     overflow: hidden;
     -webkit-margin-before: 0;
@@ -1229,7 +1229,7 @@ textarea {
     padding: 2px 4px;
     margin-right: 2px;
     margin-left: 2px;
-    margin-bottom: 0; /* different in Chrome */
+    margin-bottom: 4px; /* different in Chrome */
     line-height: 1.4em;
     color: #5a5450;
     text-decoration: none;
