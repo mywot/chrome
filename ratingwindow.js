@@ -1532,7 +1532,9 @@ $.extend(wot, { ratingwindow: {
 	        hide_duration: 0,
 
 	        before_show: function (prev_mode) {
-		        $("#main-area")[0].style.height = null;
+		        if (prev_mode) {
+			        $("#main-area")[0].style.height = null;
+		        }
 	        },
 
 	        before_hide: function (new_mode) {
@@ -1583,7 +1585,9 @@ $.extend(wot, { ratingwindow: {
 	        hide_duration: 0,
 
 	        before_show: function (prev_mode) {
-		        $("#main-area")[0].style.height = null;
+		        if (prev_mode) {
+			        $("#main-area")[0].style.height = null;
+		        }
 	        },
 
 	        before_hide: function (new_mode) {
@@ -1850,14 +1854,14 @@ $.extend(wot, { ratingwindow: {
 
             if (cmode && typeof(cmode.before_hide) == "function") cmode.before_hide(mode_name);
 
-	        var hide_effect = cmode.hide_effect ? cmode.hide_effect.name : "",
-	            show_effect = mode.show_effect ? mode.show_effect.name : "",
-		        hide_params = cmode.hide_effect ? cmode.hide_effect : {},
-		        show_params = mode.show_effect ? mode.show_effect : {};
+	        var hide_effect = cmode.hide_effect ? cmode.hide_effect.name : "fade",
+	            show_effect = mode.show_effect ? mode.show_effect.name : "fade",
+		        hide_params = cmode.hide_effect ? cmode.hide_effect : { direction: "out" },
+		        show_params = mode.show_effect ? mode.show_effect : { direction: "in"};
 
 			var hide_options = {
 				effect: hide_effect,
-				duration: cmode && cmode.hide_duration ? cmode.hide_duration : 0,
+				duration: cmode && cmode.hide_duration && current_mode !='' ? cmode.hide_duration : 0,
 				complete: function () {
 					if (current_mode && typeof(cmode.after_hide) == "function") cmode.after_hide(mode_name);
 
@@ -1874,7 +1878,7 @@ $.extend(wot, { ratingwindow: {
 
 	        var show_options = {
 		        effect: show_effect,
-		        duration: mode && mode.show_duration ? mode.show_duration : 0,
+		        duration: mode && mode.show_duration && current_mode != '' ? mode.show_duration : 0,
 		        complete: function () {
 			        if (typeof(mode.after_show) == "function") mode.after_show(current_mode);
 		        }

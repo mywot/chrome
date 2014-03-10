@@ -916,7 +916,7 @@ $.extend(wot, { api: {
             };
 
             // if params are given, it means we are on normal way of sending data (not on retrying)
-            if (comment && votes) {
+            if (comment) {
                 $.extend(state.comment_data, {
                     comment: comment,
                     cid: comment_id || 0,

@@ -80,8 +80,6 @@ textarea {
     display: block;
     padding: 10px 16px 0;
     /*min-height: 390px;*/
-    height: 408px;
-    max-height: 408px;
 }
 
 #wot-elements {
@@ -1231,7 +1229,7 @@ textarea {
     padding: 2px 4px;
     margin-right: 2px;
     margin-left: 2px;
-    margin-bottom: 3px;
+    margin-bottom: 0; /* different in Chrome */
     line-height: 1.4em;
     color: #5a5450;
     text-decoration: none;
