@@ -122,7 +122,7 @@ var wot = {
         profile:	"https://www.mywot.com/user",
         signup:     "https://www.mywot.com/signup",
 		welcome:	"https://www.mywot.com/settings/welcome",
-		setcookies:	"https://www.mywot.com/setcookies.php",
+		setcookies:	"http://www.mywot.com/setcookies.php",  // this can be only http because the add-on doesn't have permission to access https
 		update:		"https://www.mywot.com/update",
 		tour_warning:"https://www.mywot.com/support/tour/warningscreen",
 		tour:       "https://www.mywot.com/support/tour/",

@@ -1221,8 +1221,6 @@ $.extend(wot, { api: {
 
 		_on_get_tags: function (data, core_keyword) {
 
-			console.log("my.on_get_tags()", data);
-
 			var _comment_api = wot.api.comments,
 				_tags_api = wot.api.tags,
 				error_code = _comment_api.is_error(data.error);
