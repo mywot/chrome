@@ -2470,7 +2470,7 @@ $.extend(wot, { ratingwindow: {
         is_banned: false,
         captcha_required: false,
         MIN_LIMIT: 30,
-        MIN_LIMIT_WG: 30,
+        MIN_LIMIT_WG: 10,
 	    MIN_TAGS: 1,        // minimal amount of tags in the comment
 	    MAX_TAGS: 10,       // maximum amount of tags in the comment
         MAX_LIMIT: 20000,
