@@ -2871,48 +2871,48 @@ $.extend(wot, { ratingwindow: {
 		},
 
 		get_info: function (tag_value) {
-			var infos = {
-				"drupal": {
-					info: "http://en.m.wikipedia.org/wiki/Drupal"
-				},
-				"programming": {
-					info: "http://en.m.wikipedia.org/wiki/Computer_programming"
-				},
-				"finland": {
-					info: "http://en.m.wikipedia.org/wiki/Finland"
-				},
-				"php": {
-					info: "http://en.m.wikipedia.org/wiki/Php"
-				},
-				"javascript": {
-					info: "http://en.m.wikipedia.org/wiki/Javascript"
-				},
-				"jquery": {
-					info: "http://en.m.wikipedia.org/wiki/Jquery"
-				},
-				"opensource": {
-					info: "http://en.m.wikipedia.org/wiki/Opensource"
-				},
-				"html": {
-					info: "http://en.m.wikipedia.org/wiki/Html"
-				},
-				"ransomeware": {
-					info: "http://en.m.wikipedia.org/wiki/Ransomware_(malware)"
-				},
-				"lapsi": {
-					info: "http://en.m.wikipedia.org/wiki/Lapsi"
-				},
-				"cycling": {
-					info: "http://en.m.wikipedia.org/wiki/Cycling"
-				}
-
-			};
-
-			var ltag = tag_value ? tag_value.trim().toLowerCase() : null;
-
-			if (ltag) {
-				return infos[ltag];
-			}
+//			var infos = {
+//				"drupal": {
+//					info: "http://en.m.wikipedia.org/wiki/Drupal"
+//				},
+//				"programming": {
+//					info: "http://en.m.wikipedia.org/wiki/Computer_programming"
+//				},
+//				"finland": {
+//					info: "http://en.m.wikipedia.org/wiki/Finland"
+//				},
+//				"php": {
+//					info: "http://en.m.wikipedia.org/wiki/Php"
+//				},
+//				"javascript": {
+//					info: "http://en.m.wikipedia.org/wiki/Javascript"
+//				},
+//				"jquery": {
+//					info: "http://en.m.wikipedia.org/wiki/Jquery"
+//				},
+//				"opensource": {
+//					info: "http://en.m.wikipedia.org/wiki/Opensource"
+//				},
+//				"html": {
+//					info: "http://en.m.wikipedia.org/wiki/Html"
+//				},
+//				"ransomeware": {
+//					info: "http://en.m.wikipedia.org/wiki/Ransomware_(malware)"
+//				},
+//				"lapsi": {
+//					info: "http://en.m.wikipedia.org/wiki/Lapsi"
+//				},
+//				"cycling": {
+//					info: "http://en.m.wikipedia.org/wiki/Cycling"
+//				}
+//
+//			};
+//
+//			var ltag = tag_value ? tag_value.trim().toLowerCase() : null;
+//
+//			if (ltag) {
+//				return infos[ltag];
+//			}
 
 			return null;
 		},
