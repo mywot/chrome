@@ -1143,9 +1143,8 @@ $.extend(wot, { ratingwindow: {
 		        character: "#",
 		        items: 4,
 		        show: wot.ratingwindow.wg.show_tagautocomplete
-	        });
-
-	    document.addEventListener("paste", _rw.comments.on_paste, false);   // overload the paste event
+	        })
+	        .get(0).addEventListener("paste", _rw.comments.on_paste, false);   // overload the paste event
 
         // Rate mode event handlers
         $("#btn-comment").bind("click", _rw.on_comment_button);
@@ -2688,71 +2687,10 @@ $.extend(wot, { ratingwindow: {
 		    _this.caret_bottom = cr[0].bottom;// - parent.offsetTop + b.top;
 	    },
 
-	    isOrContains: function (node, container) {
-			while (node) {
-				if (node === container) {
-					return true;
-				}
-				node = node.parentNode;
-			}
-			return false;
-		},
-
-	    elementContainsSelection: function (el) {
-			var _this = wot.ratingwindow.comments,
-				sel;
-			if (window.getSelection) {
-				sel = window.getSelection();
-				if (sel.rangeCount > 0) {
-					for (var i = 0; i < sel.rangeCount; ++i) {
-						if (!_this.isOrContains(sel.getRangeAt(i).commonAncestorContainer, el)) {
-							return false;
-						}
-					}
-					return true;
-				}
-			} else if ((sel = document.selection) && sel.type != "Control") {
-				return _this.isOrContains(sel.createRange().parentElement(), el);
-			}
-			return false;
-		},
-
 	    on_paste: function (e) {
 		    // Use custom paste handler to get plain text content from clipboard and paste it to the current position
-
-		    var _this = wot.ratingwindow.comments;
-
-		    if (e.target && e.target.id == "user-comment") {
-			    e.preventDefault();
-			    var plain_comment = e.clipboardData.getData("text/plain"),
-				    el = e.target;
-
-			    var sel = window.getSelection();
-			    if (_this.elementContainsSelection(el)) {
-				    if (sel.getRangeAt && sel.rangeCount) {
-					    range = sel.getRangeAt(0);
-					    range.deleteContents();
-
-					    el = document.createElement("span");
-					    el.textContent = plain_comment;
-					    var frag = document.createDocumentFragment(),
-						    node, lastNode;
-					    while ((node = el.firstChild)) {
-						    lastNode = frag.appendChild(node);
-					    }
-					    range.insertNode(frag);
-
-					    // Preserve the selection
-					    if (lastNode) {
-						    range = range.cloneRange();
-						    range.setStartAfter(lastNode);
-						    range.collapse(true);
-						    sel.removeAllRanges();
-						    sel.addRange(range);
-					    }
-				    }
-			    }
-		    }
+		    document.execCommand('insertText', false, e.clipboardData.getData('text/plain'));
+		    e.preventDefault();
 	    }
     },
 
