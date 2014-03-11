@@ -155,6 +155,11 @@ var wot = {
 			wt_donuts_logo:     "wt-donuts-logo",
 			wg_tag:             "wg-tag",
 			wg_about_learnmore: "wg-learnmore"
+		},
+
+		geturl: function (url) {
+			var is_wg = wot.ratingwindow ? wot.ratingwindow.is_wg_allowed : (wot.core ? wot.core.tags.is_wg_allowed : false);
+			return is_wg ? url.replace('www.mywot.com', 'beta.mywot.com') : url;
 		}
 	},
 

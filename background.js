@@ -32,6 +32,7 @@ $.extend(wot, { core: {
 	last_testimony: null,   // datetime of the last testimony submitted
 
 	tags: {
+		is_wg_allowed: false,
 		mytags: [ ],
 		mytags_updated: null,       // time when the list was updated last time
 		MYTAGS_UPD_INTERVAL: 30 * 60 * 1000,
@@ -689,7 +690,7 @@ $.extend(wot, { core: {
 	{
 		if(!target) return;
         hash = hash ? "#" + hash : "";
-		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context) + hash;
+		var url = wot.contextedurl(wot.urls.geturl(wot.urls.scorecard) + encodeURIComponent(target), context) + hash;
 		chrome.tabs.create({ url: url });
 	},
 

@@ -1093,6 +1093,8 @@ $.extend(wot, { api: {
 		        });
 	        }
 
+	        wot.core.tags.is_wg_allowed = wg_enabled;
+
             wot.cache.captcha_required = !!data.captcha;
 
             wot.core.update_ratingwindow_comment();

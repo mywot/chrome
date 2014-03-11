@@ -1026,7 +1026,7 @@ $.extend(wot, { ratingwindow: {
                 event.preventDefault();
             }
             else {
-                wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
+                wot.ratingwindow.navigate(wurls.geturl(wurls.base), wurls.contexts.rwlogo);
             }
         });
 
@@ -1037,21 +1037,21 @@ $.extend(wot, { ratingwindow: {
         });
 
         $("#wot-header-link-settings").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.settings, wurls.contexts.rwsettings);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.settings), wurls.contexts.rwsettings);
         });
 
         $("#wot-header-link-profile").bind("click", function() {
             bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_PROFILELNK,
                 _rw.is_registered ? "registered" : "unregistered");
-            wot.ratingwindow.navigate(wurls.profile, wurls.contexts.rwprofile);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.profile), wurls.contexts.rwprofile);
         });
 
         $("#wot-header-link-guide").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.tour, wurls.contexts.rwguide);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.tour), wurls.contexts.rwguide);
         });
 
         $("#wot-header-link-forum").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.base + "forum", wurls.contexts.rwforum);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.base) + "forum", wurls.contexts.rwforum);
         });
 
         $("#wot-header-close").bind("click", function() {
@@ -1061,7 +1061,7 @@ $.extend(wot, { ratingwindow: {
 
         $("#wot-scorecard-visit").bind("click", function() {
             if (wot.ratingwindow.current.target) {
-                wot.ratingwindow.navigate(wot.urls.scorecard +
+                wot.ratingwindow.navigate(wot.urls.geturl(wot.urls.scorecard) +
                     encodeURIComponent(wot.ratingwindow.current.target),
                     wurls.contexts.rwviewsc);
             }
@@ -1157,12 +1157,12 @@ $.extend(wot, { ratingwindow: {
 
 
         $("#comment-register-link").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.signup, wurls.contexts.rwcommreg);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.signup), wurls.contexts.rwcommreg);
         });
 
         $("#comment-captcha-link").bind("click", function() {
             if (wot.ratingwindow.current.target) {
-                wot.ratingwindow.navigate(wot.urls.scorecard +
+                wot.ratingwindow.navigate(wot.urls.geturl(wot.urls.scorecard) +
                     encodeURIComponent(wot.ratingwindow.current.target + "/rate"),
                     wurls.contexts.rwcaptcha, "rate");
             }
