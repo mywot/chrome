@@ -3002,7 +3002,7 @@ $.extend(wot, { ratingwindow: {
 				$tags = $("#wg-tags"),
 				tagmap = [
 					{ list: mytags },
-					{ list: rw.tags }
+					{ list: rw.tags, group: true }
 				],
 				has_tags = 0,
 				prev = {};
@@ -3022,7 +3022,7 @@ $.extend(wot, { ratingwindow: {
 
 					$tag = $("<li></li>")
 						.addClass("wg-tag")
-						.toggleClass("group", _wg.is_group(tag_value))
+						.toggleClass("group", tagmap[i].group || _wg.is_group(tag_value))
 						.toggleClass("mytag", _wg.is_mytag(tag_value));
 
 					info = _wg.get_info(tag_value);
