@@ -306,6 +306,8 @@ $.extend(wot, { ratingwindow: {
                             }
                         }
                     }
+                    // update cache in RW object
+	                rw.current.cached = bgwot.cache.get(target);
                 }
             }
 
