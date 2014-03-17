@@ -2555,7 +2555,7 @@ $.extend(wot, { ratingwindow: {
 
 			if (len > 0 && len < min_len) {
 	            errors.push({
-		            text: String(len - min_len).replace("-", "– "), // readability is our everything
+		            text: String(len - min_len).replace("-", "&#8211; "), // readability is our everything
 		            cls: "error min"
 	            });
             } else if (len > max_len) {
@@ -2569,7 +2569,7 @@ $.extend(wot, { ratingwindow: {
 	        if (is_wg_mode && len > 0) {
 		        if (tags_num < _this.MIN_TAGS) {
 			        errors.push({
-				        text: "– " + String(_this.MIN_TAGS - tags_num) + " #",
+				        text: "&#8211; " + String(_this.MIN_TAGS - tags_num) + " #",
 				        cls: "error min"
 			        });
 		        } else if (tags_num > _this.MAX_TAGS) {
@@ -2581,7 +2581,7 @@ $.extend(wot, { ratingwindow: {
 	        }
 
             var err_to_show = errors.slice(-1)[0]; // take the last error to show
-	        $_hint.attr("class", err_to_show.cls).text(err_to_show.text);
+	        $_hint.attr("class", err_to_show.cls).html(err_to_show.text);
         },
 
         update_button: function (mode, enabled) {
