@@ -52,7 +52,7 @@
 
       this.after();
 
-      setCaretPosition(this.$element[0], position)  
+      setCaretPosition(this.$element[0], position)
 
       return this.hide()
     }
@@ -83,10 +83,10 @@
       var query = this.query;
       var position = getCaretPosition(this.$element[0]);
       query = query.substring(0, position);
-      var regex = new RegExp("(^|\\s)([" + this.options.character + "][\\w-]*)$");
+      var regex = new RegExp("(^|\\s)([" + this.options.character + "][\\w\u0400-\u04FF]*)$");
       var result = regex.exec(query);
       if(result && result[2])
-        return result[2].trim().toLowerCase();
+        return result[2].trim().toLocaleLowerCase();
       return '';
     }
 
@@ -104,10 +104,10 @@
       this.index_for_split = range.startOffset - this.length_of_query;
       this.node = range.startContainer
 
-      return ~item.toLowerCase().indexOf(tquery)
+	  return ~item.toLocaleLowerCase().indexOf(tquery)
     }
 
-  ,  highlighter: function (item) {     
+  ,  highlighter: function (item) {
       var query = this.extractor().replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
       return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
         return '<strong>' + match + '</strong>'

@@ -1001,7 +1001,8 @@ var wot = {
 
 				if (tag && !_tags[tag]) {
 					tags.push({
-						value: tag       // tag's text
+						value: tag,       // tag's text
+						value_indx: tag.toLocaleLowerCase()       // index value of the tag
 					});
 					_tags[tag] = true;  // remember the tag to avoid duplications
 				}

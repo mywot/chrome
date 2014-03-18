@@ -2753,7 +2753,11 @@ $.extend(wot, { ratingwindow: {
 			var rw = wot.ratingwindow,
 				bgwot = rw.get_bg("wot");
 
-			return bgwot.core.tags.mytags;
+			return bgwot.core.tags.mytags.map(function(item){
+				// update the "index" value of the tag (make it normalized)
+				item.value_indx = String(item.value).toLocaleLowerCase();
+				return item;
+			});
 		},
 
 		get_popular_tags: function () {
@@ -2761,7 +2765,11 @@ $.extend(wot, { ratingwindow: {
 			var rw = wot.ratingwindow,
 				bgwot = rw.get_bg("wot");
 
-			return bgwot.core.tags.popular_tags;
+			return bgwot.core.tags.popular_tags.map(function(item){
+				// update the "index" value of the tag (make it normalized)
+				item.value_indx = String(item.value).toLocaleLowerCase();
+				return item;
+			});
 		},
 
 		update_mytags: function (force) {
@@ -2794,7 +2802,7 @@ $.extend(wot, { ratingwindow: {
 			var _this = wot.ratingwindow.wg,
 				popular_groups = _this.get_popular_tags(),
 				res = popular_groups.filter(function(item){
-					if (item.value == tag) return true;
+					if (item.value_indx == tag.toLocaleLowerCase()) return true;
 				});
 
 			return res.length > 0;
@@ -2804,7 +2812,7 @@ $.extend(wot, { ratingwindow: {
 			var _this = wot.ratingwindow.wg,
 				tags = _this.get_tags(),
 				res = tags.filter(function(item){
-					if (item.value == tag) return true;
+					if (item.value_indx == tag.toLocaleLowerCase()) return true;
 				});
 
 			return res.length > 0;
@@ -2987,7 +2995,7 @@ $.extend(wot, { ratingwindow: {
 							})
 					);
 
-				tags_ac.sort();
+//				tags_ac.sort();
 
 				tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
 
@@ -3018,9 +3026,10 @@ $.extend(wot, { ratingwindow: {
 
 					var $tag, info,
 						tag = list[j],
-						tag_value = tag.value;
+						tag_value = tag.value,
+						tag_value_indx = tag_value.toLocaleLowerCase();
 
-					if (prev[tag_value]) continue;  // don't show one tag more than one time (if it was in mytags list)
+					if (prev[tag_value_indx]) continue;  // don't show one tag more than one time (if it was in mytags list)
 
 					$tag = $("<li></li>")
 						.addClass("wg-tag")
@@ -3044,7 +3053,7 @@ $.extend(wot, { ratingwindow: {
 
 
 					$tags.append($tag);
-					prev[tag_value] = true;         // remember that we showed the tag
+					prev[tag_value_indx] = true;         // remember that we showed the tag
 				}
 
 			}

@@ -110,7 +110,7 @@
     }
 
   , matcher: function (item) {
-      return ~item.toLowerCase().indexOf(this.query.toLowerCase())
+      return ~item.toLocaleLowerCase().indexOf(this.query.toLocaleLowerCase())
     }
 
   , sorter: function (items) {
@@ -120,7 +120,7 @@
         , item
 
       while (item = items.shift()) {
-        if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
+        if (!item.toLocaleLowerCase().indexOf(this.query.toLocaleLowerCase())) beginswith.push(item)
         else if (~item.indexOf(this.query)) caseSensitive.push(item)
         else caseInsensitive.push(item)
       }
