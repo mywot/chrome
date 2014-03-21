@@ -1424,7 +1424,6 @@ $.extend(wot, { ratingwindow: {
                 $_ratingarea = $("#ratings-area");
 
             if (mode == "unrated") {
-                var cached = _rw.getcached();
                 if (_rw.state.target) {
                     $_ratingarea.attr("disabled", null);
                 } else {
@@ -2483,13 +2482,17 @@ $.extend(wot, { ratingwindow: {
 	    AUTOCOMPLETE_OFFSET_X: -20,
 
 	    get_comment_value: function (need_html) {
-		    var elem = $("#user-comment")[0],
-			    s = need_html ? elem.innerHTML : elem.textContent; // different in Firefox
+		    var $elem = $("#user-comment"),
+			    s = need_html ? $elem.html() : $elem.get(0).innerText; // this is different in FF
 
 		    s = typeof(s) == "string" ? s.trim() : "";
 
 		    return s;
 	    },
+
+		set_comment: function (text) {
+			$("#user-comment").get(0).innerText = text;
+		},
 
         is_commented: function() {
             // comment can be there, but it can be invalid (outside of limits restrictions, etc)
@@ -2609,10 +2612,6 @@ $.extend(wot, { ratingwindow: {
             }
 
             $_button.toggle(!_this.is_banned);  // don't show this button to banned users
-        },
-
-        set_comment: function (text) {
-            $("#user-comment")[0].textContent = text; // different in Firefox
         },
 
         has_valid_comment: function () {

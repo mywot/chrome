@@ -80,9 +80,10 @@
     }
 
   , lookup: function (event) {
-      var items
+      var items,
+	      content = this.$element.get(0).innerText ? this.$element.get(0).innerText : this.$element.get(0).textContent;
 
-      this.query = this.$element.is("input") ? this.$element.val() : this.$element.text();
+      this.query = this.$element.is("input") ? this.$element.val() : content;
 
       if (!this.query || this.query.length < this.options.minLength) {
         return this.shown ? this.hide() : this
