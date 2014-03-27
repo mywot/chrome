@@ -431,3 +431,52 @@
     border-right-color: #68c800;
     border-bottom-color: #68c800;
 }
+
+@-webkit-keyframes wot-icon-animation {
+    0% { opacity: 1.0; }
+    100% { opacity: 0.1; }
+}
+
+#wot-paranja {
+    position: absolute;
+    background-color: rgba(204, 198, 195, 0.63);
+    z-index: 99;
+    top: 22px;
+    bottom: 95px;
+    left: 0;
+    right: 0;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAaklEQVQYV2NkYGAwBuKzQAwC9UA8C4ifQ/n/GaEMkCIfIG6E8iWB9DMgZoQpAOncgmTSfyBbCmQSSAFIEqYTZNIZkE6YSSAGyDi4nUC2CbKb4CphdqK7CaYAbieSb8BuAikASSKblIbsJgCKXBfTNjWx1AAAAABJRU5ErkJggg==");
+    display: none;
+}
+
+.wot-locked #wot-paranja {
+    display: block;
+}
+
+#wot-unlock {
+    margin: 5px 0px;
+    border-top: 1px solid #C0C0C0;
+    padding: 10px 16px 1px;
+    display: none;
+}
+
+.wot-locked #wot-unlock {
+    display: block;
+}
+
+.wot-unlock-text {
+    max-width: 250px;
+    line-height: 1.4em;
+    color: #666;
+}
+
+#wot-unlock-btn {
+    margin: 8px 30px;
+    background-color: #17A517;
+    padding: 7px;
+    font-size: 15px;
+    color: #FFF;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 2px 2px 4px #C0C0C0;
+}

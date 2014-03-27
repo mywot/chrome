@@ -322,7 +322,6 @@ $.extend(wot, { core: {
 
 		try {
 
-
 			/* Check if "warned" flag is expired */
 			if(cached.flags && cached.flags.warned) {
 				warned = cached.flags.warned;
@@ -603,15 +602,15 @@ $.extend(wot, { core: {
 		}
 	},
 
-	setuserlevel: function(data)
+	setuser_paramenter: function(data, attr_name, param_name)
 	{
 		try {
 			var elems = data.getElementsByTagName("status");
 
 			if (elems && elems.length > 0) {
-				wot.prefs.set("status_level", $(elems[0]).attr("level") || "");
+				wot.prefs.set(param_name, $(elems[0]).attr(attr_name) || "");
 			} else {
-				wot.prefs.clear("status_level");
+				wot.prefs.clear(param_name);
 			}
 		} catch (e) {
 			console.error("core.setuserlevel: failed with ", e);
@@ -914,8 +913,22 @@ $.extend(wot, { core: {
 			/* messages */
 
 			wot.bind("message:search:hello", function(port, data) {
+
+				var lock_state = null,
+					unlock_price = null;
+
+				if (wot.payments) {
+					lock_state = wot.payments.get_feature_status("search-icons");
+					unlock_price = wot.payments.get_price("search-icons");
+				}
+
 				wot.core.processrules(data.url, function(rule) {
-					port.post("process", { url: data.url, rule: rule });
+					port.post("process", {
+						url: data.url,
+						rule: rule,
+						lock_state: lock_state,
+						unlock_price: unlock_price
+					});
 				});
 			});
 
@@ -937,7 +950,13 @@ $.extend(wot, { core: {
 					if (wot.wt && wot.wt.enabled) {
 						wt_enable_donut_tip = wot.wt.donuts.tts();
 					}
-					port.post("update", { rule: data.rule, ratings: ratings, wt_enabled: wt_enable_donut_tip });
+
+					port.post("update",
+						{
+							rule: data.rule,
+							ratings: ratings,
+							wt_enabled: wt_enable_donut_tip
+						});
 				});
 			});
 
@@ -993,6 +1012,12 @@ $.extend(wot, { core: {
 				wot.core.open_scorecard(data.target, data.ctx);
 			});
 
+			wot.bind("message:search:openunlocker", function(port, data) {
+				if (wot.payments) {
+					wot.payments.open_unlocker(data);
+				}
+			});
+
 			wot.bind("message:search:ratesite", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx, "rate");
 			});
@@ -1001,6 +1026,12 @@ $.extend(wot, { core: {
 				port.post("setcookies", {
 					cookies: wot.api.processcookies(data.cookies) || []
 				});
+            });
+
+			wot.bind("message:my:payment_approved", function(port, data) {
+				window.setTimeout(function(){
+					wot.cache.clearall();
+				}, 300);
             });
 
 			wot.bind("message:tags:clearmytags", function(port, data) {
@@ -1047,6 +1078,7 @@ $.extend(wot, { core: {
 				wot.core.update(true);
 
 				if (wot.api.isregistered()) {
+					if (wot.payments) wot.payments.load_config();   // init paid features offer
 					wot.core.welcome_user();
 					wot.api.update();
 					wot.api.processpending();       // submit

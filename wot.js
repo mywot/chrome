@@ -130,6 +130,7 @@ var wot = {
 		tour_scorecard: "https://www.mywot.com/support/tour/scorecard",
 		wg:         "https://beta.mywot.com/en/groups/g",
 		wg_about:   "https://beta.mywot.com/en/groups",
+		unlock:     "addon/payment/paypal/init",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -268,6 +269,14 @@ var wot = {
 		DAY: 24 * 3600,
 		WEEK: 7 * 24 * 3600,
 		MONTH: 30 * 24 * 3600
+	},
+
+	// Features lock state
+	LOCK_STATE: {
+		TRIAL: 0,
+		REMINDER: 1,
+		LOCKED: 2,
+		UNLOCKED: 3
 	},
 
 	/* logging */
@@ -1144,14 +1153,15 @@ wot.utils = {
 	},
 
 	query_param: function(obj, prefix) {
-		var str = [];
-		for(var p in obj) {
-			var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-			str.push(typeof v == "object" ?
+		var k, p, v, arr = [];
+		for(p in obj) {
+			k = prefix ? prefix + "[" + p + "]" : p;
+			v = obj[p];
+			arr.push(typeof v == "object" ?
 				wot.utils.query_param(v, k) :
 				encodeURIComponent(k) + "=" + encodeURIComponent(v));
 		}
-		return str.join("&");
+		return arr.join("&");
 	},
 
 	getParams: function (query) {

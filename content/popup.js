@@ -20,35 +20,39 @@
 
 const WOT_POPUP_HTML =
     '<div id="wot-logo">{POPUPHEADERTEXT}</div>' +
-        '<div id="wot-ratings{ID}" class="wot-ratings">' +
+    '<div id="wot-ratings{ID}" class="wot-ratings">' +
         '<div id="wot-hostname"></div>' +
         '<div id="wot-r0-stack{ID}" class="wot-stack wot-stack-left">' +
-        '<div id="wot-r0-header{ID}" class="wot-header">{POPUPTEXT0}</div>' +
-        '<div id="wot-r0-rep{ID}" class="wot-rep"></div>' +
-        '<div id="wot-r0-cnf{ID}" class="wot-cnf"></div>' +
-        '<div class="rating-legend-wrapper">' +
-            '<div class="rating-legend">{REPTEXT0}</div>' +
-        '</div>' +
+            '<div id="wot-r0-header{ID}" class="wot-header">{POPUPTEXT0}</div>' +
+            '<div id="wot-r0-rep{ID}" class="wot-rep"></div>' +
+            '<div id="wot-r0-cnf{ID}" class="wot-cnf"></div>' +
+            '<div class="rating-legend-wrapper">' +
+                '<div class="rating-legend">{REPTEXT0}</div>' +
+            '</div>' +
 
         '</div>' +
         '<div id="wot-r4-stack{ID}" class="wot-stack wot-stack-right">' +
-        '<div id="wot-r4-header{ID}" class="wot-header">{POPUPTEXT4}</div>' +
-        '<div id="wot-r4-rep{ID}" class="wot-rep"></div>' +
-        '<div id="wot-r4-cnf{ID}" class="wot-cnf"></div>' +
-        '<div class="rating-legend-wrapper">' +
-        '<div class="rating-legend">{REPTEXT4}</div>' +
+	        '<div id="wot-r4-header{ID}" class="wot-header">{POPUPTEXT4}</div>' +
+	        '<div id="wot-r4-rep{ID}" class="wot-rep"></div>' +
+            '<div id="wot-r4-cnf{ID}" class="wot-cnf"></div>' +
+            '<div class="rating-legend-wrapper">' +
+                '<div class="rating-legend">{REPTEXT4}</div>' +
+            '</div>' +
         '</div>' +
-
-        '</div>' +
-        '</div>' +
-        '<div id="wot-categories">' +
+    '</div>' +
+    '<div id="wot-paranja"></div>' +
+    '<div id="wot-categories">' +
         '<div id="wot-cat-text">{POPUPNOCAT}</div>' +
         '<ul id="wot-cat-list"></ul>' +
-        '</div>' +
-        '<div class="wot-corners-wrapper">' +
+    '</div>' +
+    '<div class="wot-corners-wrapper">' +
         '<div id="wot-pp-tr" class="wot-pp-tr"></div>' +
         '<div id="wot-pp-cs" class="wot-pp-cs"></div>' +
-        '</div>';
+    '</div>' +
+    '<div id="wot-unlock">' +
+        '<div class="wot-unlock-text">The safety icons are a paid feature. It costs only ${PRICE} to unlock this protection.</div>' +
+        '<div id="wot-unlock-btn">Unlock</div>' +
+    '</div>';
 
 wot.popup = {
     cache:			{},
@@ -114,10 +118,11 @@ wot.popup = {
             this.rule_name = rule_name;
 
             var layer = document.createElement("div");
-            var accessible_cls = wot.search.settings.accessible ? " wot-popup-layer-accessible" : "";
+            var accessible_cls = wot.search.settings.accessible ? "wot-popup-layer-accessible" : "",
+	            locked_cls = wot.search.is_unlocked() ? "" : "wot-locked";
 
             layer.setAttribute("id", id);
-            layer.setAttribute("class", "wot-popup-layer" + accessible_cls);
+            layer.setAttribute("class", [ "wot-popup-layer", accessible_cls, locked_cls ].join(" "));
             layer.setAttribute("style", "display: none;");
 
 
@@ -131,6 +136,9 @@ wot.popup = {
                 }, {
                     from: "POPUPNOCAT",
                     to: wot.i18n("popup", "nocattext")
+                }, {
+                    from: "PRICE",
+                    to: wot.utils.htmlescape(String(wot.search.unlock_price))
                 }
             ];
 
@@ -153,6 +161,11 @@ wot.popup = {
             var rate_link = document.getElementById("wot-cat-text");
             if (rate_link) {
                 rate_link.addEventListener("click", wot.popup.on_rate_click);
+            }
+
+            var unlock_button = document.getElementById("wot-unlock-btn");
+            if (unlock_button) {
+	            unlock_button.addEventListener("click", wot.popup.on_unlock_click);
             }
 
         } catch (e) {
@@ -618,5 +631,18 @@ wot.popup = {
         } catch (e) {
             console.error("popup.onclick: failed with ", e);
         }
-    }
+    },
+
+	on_unlock_click: function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		wot.post("search", "openunlocker",
+			{
+//				unlock_price: "1.99",
+				ctx: wot.urls.contexts.popupviewsc
+			});
+
+		wot.popup.hide(wot.popup.version, true);
+	}
 };

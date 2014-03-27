@@ -464,7 +464,7 @@ $.extend(wot, { api: {
 
 				wot.core.setusermessage(data);
 				wot.core.setusercontent(data);
-				wot.core.setuserlevel(data);
+				wot.core.setuser_paramenter(data, "level", "status_level");
 
 				onupdate([ target ]);
 			});
