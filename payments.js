@@ -21,7 +21,7 @@
 $.extend(wot, { payments: {
 
 	STATUS_PLAN: {
-		UNKNOWN: null,
+		UNKNOWN: 0,
 		PAID: 1
 	},
 
@@ -35,12 +35,14 @@ $.extend(wot, { payments: {
 	loader_timer: null,
 
 	get_status_plan: function () {
+
+		var _this = wot.payments;
 		if (wot.core.is_level("") || wot.core.is_level("registered")) {
-			return wot.STATUS_PLAN.UNKNOWN;
+			return _this.STATUS_PLAN.UNKNOWN;
 		} else if (wot.core.is_level("unregistred_paid") || wot.core.is_level("registered_paid")) {
-			return wot.STATUS_PLAN.PAID;
+			return _this.STATUS_PLAN.PAID;
 		}
-		return wot.STATUS_PLAN.UNKNOWN
+		return _this.STATUS_PLAN.UNKNOWN;
 	},
 
 	get_feature_status: function (feature) {
@@ -101,6 +103,10 @@ $.extend(wot, { payments: {
 
 		chrome.tabs.create({ url: url });
 
+	},
+
+	open_premium_tos: function (data) {
+		wot.core.open_mywot(wot.urls.premium_tos, data.ctx);
 	},
 
 	load_config: function () {

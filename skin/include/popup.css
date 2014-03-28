@@ -442,7 +442,7 @@
     background-color: rgba(204, 198, 195, 0.63);
     z-index: 99;
     top: 22px;
-    bottom: 95px;
+    bottom: 114px;
     left: 0;
     right: 0;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAaklEQVQYV2NkYGAwBuKzQAwC9UA8C4ifQ/n/GaEMkCIfIG6E8iWB9DMgZoQpAOncgmTSfyBbCmQSSAFIEqYTZNIZkE6YSSAGyDi4nUC2CbKb4CphdqK7CaYAbieSb8BuAikASSKblIbsJgCKXBfTNjWx1AAAAABJRU5ErkJggg==");
@@ -458,6 +458,22 @@
     border-top: 1px solid #C0C0C0;
     padding: 10px 16px 1px;
     display: none;
+}
+
+.wot-unlock-icon {
+    display: none; /* well, icon doesn't look good */
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 6px;
+    margin-top: -40px;
+    padding: 5px;
+    z-index: 999;
+    background-image: url("../fusion/16_16/plain/lock.png");
+    background-color: rgba(255, 255, 255, 0.86);
+    background-repeat: no-repeat;
+    background-position: 5px;
+    border-radius: 4px;
 }
 
 .wot-locked #wot-unlock {
@@ -479,4 +495,19 @@
     text-align: center;
     border-radius: 2px;
     box-shadow: 2px 2px 4px #C0C0C0;
+}
+
+#wot-unlock-tos {
+    color: #7A7A7A;
+    margin-top: 10px;
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+#wot-unlock-toslink {
+    text-decoration: underline;
+}
+
+#wot-unlock-toslink:hover {
+    color: #3073C5;
 }

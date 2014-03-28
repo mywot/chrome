@@ -271,15 +271,15 @@ wot.search = {
 				elem_style = "cursor: pointer; " +
 					"display: inline-block;"
 
-				if (wot.search.is_unlocked()) {
+//				if (wot.search.is_unlocked()) {
 					elem_style +=
 						"width: 16px; " +
 						"height: 16px;";
-				} else {
-					elem_style +=
-						"width: 5px; " +
-						"height: 5px;";
-				}
+//				} else {
+//					elem_style +=
+//						"width: 5px; " +
+//						"height: 5px;";
+//				}
 
 				elem.setAttribute("style", elem_style);
 
@@ -520,14 +520,9 @@ wot.search = {
 
 				if (!wot.search.is_unlocked()) {
 					var locked_style = "div[wotsearchtarget].locked:not(.invisible) {" +
-//						"-webkit-animation: wot-icon-animation 1s linear 0.8s 3 alternate;" +
-						"background-image: none !important;" +
-						"margin-left: 4px;" +
-						"top: .4em;" +
-						"background-color: #FFF;" +
-						"border-radius: 50%/50%;" +
-						"color: #FFF;" +
-						"border: 4px solid #5D5D5D;" +
+//						"-webkit-animation: wot-icon-animation 1s linear 1s 1 alternate;" +
+						"background-image: url(" + chrome.extension.getURL("/skin/fusion/16_16/plain/lock.png") + ") !important;" +
+						"background-size: 12px;" +
 						"}";
 					wot.utils.attach_style({style: locked_style}, "wotfeaturelock", window);
 				}

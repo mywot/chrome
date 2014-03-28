@@ -1018,6 +1018,12 @@ $.extend(wot, { core: {
 				}
 			});
 
+			wot.bind("message:search:premium-tos", function(port, data) {
+				if (wot.payments) {
+					wot.payments.open_premium_tos(data);
+				}
+			});
+
 			wot.bind("message:search:ratesite", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx, "rate");
 			});

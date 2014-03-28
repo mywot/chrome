@@ -131,6 +131,7 @@ var wot = {
 		wg:         "https://beta.mywot.com/en/groups/g",
 		wg_about:   "https://beta.mywot.com/en/groups",
 		unlock:     "addon/payment/paypal/init",
+		premium_tos: "https://www.mywot.com/terms/premium",
 
 		contexts: {
 			rwlogo:     "rw-logo",
