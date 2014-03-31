@@ -25,7 +25,7 @@ $.extend(wot, { payments: {
 		PAID: 1
 	},
 
-	UNLOCKING_AS: 1000,
+	UNLOCKING_AS: 500,
 
 	UPDATE_INTERVAL: 60 * 60 * 1000,    // update config every hour
 //	CONFIG_URL: "/test-1.json",
@@ -39,7 +39,7 @@ $.extend(wot, { payments: {
 		var _this = wot.payments;
 		if (wot.core.is_level("") || wot.core.is_level("registered")) {
 			return _this.STATUS_PLAN.UNKNOWN;
-		} else if (wot.core.is_level("unregistred_paid") || wot.core.is_level("registered_paid")) {
+		} else if (wot.core.is_level("unregistered_paid") || wot.core.is_level("registered_paid")) {
 			return _this.STATUS_PLAN.PAID;
 		}
 		return _this.STATUS_PLAN.UNKNOWN;
@@ -53,9 +53,9 @@ $.extend(wot, { payments: {
 			timesinceinstall = wot.time_sincefirstrun();
 
 		// Test for unlocking attributes
-//		if (wot.get_activity_score() >= _this.UNLOCKING_AS) {
-//			return wot.LOCK_STATE.UNLOCKED;
-//		}
+		if (wot.get_activity_score() >= _this.UNLOCKING_AS) {
+			return wot.LOCK_STATE.UNLOCKED;
+		}
 
 		if (status_plan == _this.STATUS_PLAN.PAID) {
 			return wot.LOCK_STATE.UNLOCKED;

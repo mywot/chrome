@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20140318,
+	version: 20140331,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -128,10 +128,10 @@ var wot = {
 		tour:       "https://www.mywot.com/support/tour/",
 		tour_rw:    "https://www.mywot.com/support/tour/ratingwindow",
 		tour_scorecard: "https://www.mywot.com/support/tour/scorecard",
-		wg:         "https://beta.mywot.com/en/groups/g",
-		wg_about:   "https://beta.mywot.com/en/groups",
+		wg:         "https://beta.mywot.com/groups/g",
+		wg_about:   "https://beta.mywot.com/groups",
 		unlock:     "addon/payment/paypal/init",
-		premium_tos: "https://www.mywot.com/terms/premium",
+		premium_tos: "https://www.mywot.com/terms/fees-payment",
 
 		contexts: {
 			rwlogo:     "rw-logo",
