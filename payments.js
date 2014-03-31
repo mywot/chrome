@@ -28,8 +28,8 @@ $.extend(wot, { payments: {
 	UNLOCKING_AS: 1000,
 
 	UPDATE_INTERVAL: 60 * 60 * 1000,    // update config every hour
-	CONFIG_URL: "/test-1.json",
-//	CONFIG_URL: "https://api.mywot.com/tests/config.json",
+//	CONFIG_URL: "/test-1.json",
+	CONFIG_URL: "https://api.mywot.com/tests/config.json",
 	config: {},
 
 	loader_timer: null,
