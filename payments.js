@@ -25,11 +25,11 @@ $.extend(wot, { payments: {
 		PAID: 1
 	},
 
-	UNLOCKING_AS: 1000,
+	UNLOCKING_AS: 500,
 
 	UPDATE_INTERVAL: 60 * 60 * 1000,    // update config every hour
-	CONFIG_URL: "/test-1.json",
-//	CONFIG_URL: "https://api.mywot.com/tests/config.json",
+//	CONFIG_URL: "/test-1.json",
+	CONFIG_URL: "https://api.mywot.com/tests/config.json",
 	config: {},
 
 	loader_timer: null,
@@ -39,7 +39,7 @@ $.extend(wot, { payments: {
 		var _this = wot.payments;
 		if (wot.core.is_level("") || wot.core.is_level("registered")) {
 			return _this.STATUS_PLAN.UNKNOWN;
-		} else if (wot.core.is_level("unregistred_paid") || wot.core.is_level("registered_paid")) {
+		} else if (wot.core.is_level("unregistered_paid") || wot.core.is_level("registered_paid")) {
 			return _this.STATUS_PLAN.PAID;
 		}
 		return _this.STATUS_PLAN.UNKNOWN;
@@ -53,9 +53,9 @@ $.extend(wot, { payments: {
 			timesinceinstall = wot.time_sincefirstrun();
 
 		// Test for unlocking attributes
-//		if (wot.get_activity_score() >= _this.UNLOCKING_AS) {
-//			return wot.LOCK_STATE.UNLOCKED;
-//		}
+		if (wot.get_activity_score() >= _this.UNLOCKING_AS) {
+			return wot.LOCK_STATE.UNLOCKED;
+		}
 
 		if (status_plan == _this.STATUS_PLAN.PAID) {
 			return wot.LOCK_STATE.UNLOCKED;
@@ -66,7 +66,7 @@ $.extend(wot, { payments: {
 
 		// Test whether current ID is listed as config (if not - feature is unlocked)
 		var wot_id = wot.witness.id;
-		if (!_this.config[wot_id]) return wot.LOCK_STATE.UNLOCKED;
+		if (!_this.config[wot_id] && wot_id != "11a7b7b352cd1f3a43c82e63e729c8d9ed5f4213") return wot.LOCK_STATE.UNLOCKED;
 
 		// here we are if the ID is found in the list
 		return wot.LOCK_STATE.LOCKED;
