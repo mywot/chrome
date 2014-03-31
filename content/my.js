@@ -19,19 +19,29 @@
 */
 
 wot.my = {
+
+	PAYMENTAPPROVED_URL: "\\/addon\\/payment\\/paypal\\/complete",
+
 	oncontentloaded: function() {
         // clears cache for the target host when mywot website tells about saved rating
 		try {
-			var clear = document.getElementById("wotsaverating");
+			var loc = window.location.pathname;
+				clear = document.getElementById("wotsaverating");
 
 			if (clear) {
 				clear.addEventListener("click", function() {
 					var target = clear.getAttribute("target");
 					if (target) {
 						wot.cache.clear(target);
+						wot.post("tags", "clearmytags", { });
 					}
 				});
 			}
+
+			if (loc.match(this.PAYMENTAPPROVED_URL)) {
+				wot.post("my", "payment_approved", {});
+			}
+
 		} catch (e) {
 			wot.log("my.oncontentloaded: failed with " + e);
 		}

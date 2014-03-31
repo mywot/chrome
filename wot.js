@@ -1,6 +1,6 @@
 /*
 	wot.js
-	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20140221,
+	version: 20140318,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -116,18 +116,22 @@ var wot = {
 	},
 
 	urls: {
-		base:		"http://www.mywot.com/",
-		scorecard:	"http://www.mywot.com/scorecard/",
-		settings:	"http://www.mywot.com/settings",
-        profile:	"http://www.mywot.com/user",
+		base:		"https://www.mywot.com/",
+		scorecard:	"https://www.mywot.com/scorecard/",
+		settings:	"https://www.mywot.com/settings",
+        profile:	"https://www.mywot.com/user",
         signup:     "https://www.mywot.com/signup",
-		welcome:	"http://www.mywot.com/settings/welcome",
-		setcookies:	"http://www.mywot.com/setcookies.php",
-		update:		"http://www.mywot.com/update",
-		tour_warning:"http://www.mywot.com/support/tour/warningscreen",
-		tour:       "http://www.mywot.com/support/tour/",
-		tour_rw:    "http://www.mywot.com/support/tour/ratingwindow",
-		tour_scorecard: "http://www.mywot.com/support/tour/scorecard",
+		welcome:	"https://www.mywot.com/settings/welcome",
+		setcookies:	"http://www.mywot.com/setcookies.php",  // this can be only http because the add-on doesn't have permission to access https
+		update:		"https://www.mywot.com/update",
+		tour_warning:"https://www.mywot.com/support/tour/warningscreen",
+		tour:       "https://www.mywot.com/support/tour/",
+		tour_rw:    "https://www.mywot.com/support/tour/ratingwindow",
+		tour_scorecard: "https://www.mywot.com/support/tour/scorecard",
+		wg:         "https://beta.mywot.com/en/groups/g",
+		wg_about:   "https://beta.mywot.com/en/groups",
+		unlock:     "addon/payment/paypal/init",
+		premium_tos: "https://www.mywot.com/terms/premium",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -141,16 +145,23 @@ var wot = {
 			rwcaptcha:  "rw-captcha",
 			warnviewsc: "warn-viewsc",
 			warnrate:   "warn-rate",
-			popupviewsc: "popup",
-			popuprate:  "popup-rate",
-			popupdonuts: "popup-donuts",
+			popupviewsc:    "popup",
+			popuprate:      "popup-rate",
+			popupdonuts:    "popup-donuts",
 			fbl_logo:   "fbl-logo",
 			wt_intro:   "wt-intro",
 			wt_rw_lm:   "wt-rw-lm",
 			wt_warn_lm: "wt-warn-lm",
-			wt_warn_logo: "wt-warn-logo",
-			wt_donuts_lm: "wt-donuts-lm",
-			wt_donuts_logo: "wt-donuts-logo"
+			wt_warn_logo:       "wt-warn-logo",
+			wt_donuts_lm:       "wt-donuts-lm",
+			wt_donuts_logo:     "wt-donuts-logo",
+			wg_tag:             "wg-tag",
+			wg_about_learnmore: "wg-learnmore"
+		},
+
+		geturl: function (url) {
+			var is_wg = wot.ratingwindow ? wot.ratingwindow.is_wg_allowed : (wot.core ? wot.core.tags.is_wg_allowed : false);
+			return is_wg ? url.replace('www.mywot.com', 'beta.mywot.com') : url;
 		}
 	},
 
@@ -233,7 +244,7 @@ var wot = {
 
 	expire_warned_after: 20000,  // number of milliseconds after which warned flag will be expired
 
-	TINY_THANKYOU_DURING: 60 * 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
+	TINY_THANKYOU_DURING: 60 * 60 * 1000, // within this time after prev rating user won't see separate ThankYou screen after new submission. Milliseconds.
 
 	// trusted extensions IDs
 	allowed_senders: {
@@ -259,6 +270,14 @@ var wot = {
 		DAY: 24 * 3600,
 		WEEK: 7 * 24 * 3600,
 		MONTH: 30 * 24 * 3600
+	},
+
+	// Features lock state
+	LOCK_STATE: {
+		TRIAL: 0,
+		REMINDER: 1,
+		LOCKED: 2,
+		UNLOCKED: 3
 	},
 
 	/* logging */
@@ -971,7 +990,37 @@ var wot = {
         }
 
         return false;
-    }
+    },
+
+	tags: {
+		tags_re: /(\s|^)#([a-zä-ö0-9\u0400-\u04FF]{2,})/img,
+		tags_validate_re: /^\d{2}$/im,
+
+		get_tags: function (text) {
+
+			if (!text) return [];
+
+			var res,
+				tags = [],
+				_tags = {};
+
+			while ((res = wot.tags.tags_re.exec(text)) !== null) {
+				var tag = res[2] || "";
+
+				if (wot.tags.tags_validate_re.test(tag)) continue;  // skip invalid tag
+
+				if (tag && !_tags[tag]) {
+					tags.push({
+						value: tag,       // tag's text
+						value_indx: tag.toLocaleLowerCase()       // index value of the tag
+					});
+					_tags[tag] = true;  // remember the tag to avoid duplications
+				}
+			}
+			wot.tags.tags_re.lastIndex = 0; // reset the last index to avoid using it for the different text
+			return tags;
+		}
+	}
 };
 
 
@@ -1105,14 +1154,15 @@ wot.utils = {
 	},
 
 	query_param: function(obj, prefix) {
-		var str = [];
-		for(var p in obj) {
-			var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-			str.push(typeof v == "object" ?
+		var k, p, v, arr = [];
+		for(p in obj) {
+			k = prefix ? prefix + "[" + p + "]" : p;
+			v = obj[p];
+			arr.push(typeof v == "object" ?
 				wot.utils.query_param(v, k) :
 				encodeURIComponent(k) + "=" + encodeURIComponent(v));
 		}
-		return str.join("&");
+		return arr.join("&");
 	},
 
 	getParams: function (query) {

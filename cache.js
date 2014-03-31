@@ -68,6 +68,31 @@ $.extend(wot, { cache: {
 		return false;
 	},
 
+	set_param: function (name, param, data) {
+		if (!this.cache[name]) {
+			this.cache[name] = {}
+		}
+
+		var o = {};
+		o[param] = data;
+
+		$.extend(this.cache[name], o);
+	},
+
+	update_param: function (name, param, data) {
+		if (this.cache[name] && this.cache[name][param]) {
+			$.extend(this.cache[name][param], data);
+		} else {
+			wot.log("WARN! wot.cache.update_param() can't find param data for ", name, param);
+		}
+	},
+
+	remove_param: function (name, param) {
+		if (this.cache[name] && this.cache[name][param]) {
+			delete this.cache[name][param];
+		}
+	},
+
     set_comment: function (name, comment_data) {
         wot.log("wot.cache.set_comment(name, comment_data)", name, comment_data);
 
@@ -340,7 +365,7 @@ $.extend(wot, { cache: {
 		wot.bind("message:cache:setflags", function(port, data) {
 			wot.cache.setflags(data.target, data.flags);
 		});
-		
+
 		wot.bind("message:cache:clear", function(port, data) {
 			wot.cache.clear(data.target);
 		});
