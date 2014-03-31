@@ -25,7 +25,7 @@ $.extend(wot, { payments: {
 		PAID: 1
 	},
 
-	UNLOCKING_AS: 500,
+	UNLOCKING_AS: 15000,
 
 	UPDATE_INTERVAL: 60 * 60 * 1000,    // update config every hour
 //	CONFIG_URL: "/test-1.json",
