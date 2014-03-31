@@ -521,7 +521,7 @@ wot.search = {
 				if (!wot.search.is_unlocked()) {
 					var locked_style = "div[wotsearchtarget].locked:not(.invisible) {" +
 //						"-webkit-animation: wot-icon-animation 1s linear 1s 1 alternate;" +
-						"background-image: url(" + chrome.extension.getURL("/skin/fusion/16_16/plain/lock.png") + ") !important;" +
+						"background-image: url(" + chrome.extension.getURL("/skin/fusion/16_16/plain/locked.png") + ") !important;" +
 						"background-size: 12px;" +
 						"}";
 					wot.utils.attach_style({style: locked_style}, "wotfeaturelock", window);
