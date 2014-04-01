@@ -589,18 +589,20 @@ wot.search = {
 	onclickrating: function(event)
 	{
 		try {
-			var target =
-				event.target.getAttribute(wot.search.getattrname("target"));
+//			var target =
+//				event.target.getAttribute(wot.search.getattrname("target"));
+//
+//			if (target) {
+//
+//				wot.post("search", "openscorecard", {
+//					target: target,
+//					ctx: wot.urls.contexts.popupdonuts
+//				});
 
-			if (target) {
-
-				wot.post("search", "openscorecard", {
-					target: target,
-					ctx: wot.urls.contexts.popupdonuts
-				});
+				wot.popup.onmousemove(event);
 
 				event.stopPropagation();
-			}
+//			}
 		} catch (e) {
 			console.log("search.onclickrating: failed with " + e);
 		}
