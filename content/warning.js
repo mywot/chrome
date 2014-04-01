@@ -177,10 +177,6 @@ wot.warning = {
 
 	enter_to_site: function (target) {
 		wot.post("warnings", "enter_button", { target: target });
-		wot.post("cache", "setflags", {
-				target: target,
-				flags: { warned: true, warned_expire: null }
-		});
 	},
 
 	add: function(data, reason, show_wtip) {

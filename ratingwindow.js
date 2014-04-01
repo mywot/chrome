@@ -1011,7 +1011,7 @@ $.extend(wot, { ratingwindow: {
 
         wot.init_categories(_rw.prefs);
 
-        _rw.is_registered = bg.wot.core.is_level("registered");
+        _rw.is_registered = bg.wot.core.is_registered();
 
         /* accessibility */
         $("#wot-ratingwindow").toggleClass("accessible", bg.wot.prefs.get("accessible"));

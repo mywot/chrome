@@ -632,6 +632,10 @@ $.extend(wot, { core: {
         }
     },
 
+	is_registered: function () {
+		return wot.core.is_level("registered") || wot.core.is_level("registered_paid");
+	},
+
 	processrules: function(url, onmatch)
 	{
 		onmatch = onmatch || function() {};
@@ -973,6 +977,9 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
+
+				wot.cache.setflags(data.target, { warned: true, warned_expire: null });
+
 				var port = chrome.tabs.connect(port.port.sender.tab.id, { name: "warning" });
 				port.postMessage({ message: "warning:remove" });
 

@@ -596,7 +596,7 @@ var wot = {
 			reason: this.warningreasons.none
 		};
 
-		this.components.forEach(function(item) {
+		wot.components.forEach(function(item) {
 			var comp = wot.getwarningtypeforcomponent(item.name, data, prefs);
 
 			if (comp) {
