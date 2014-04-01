@@ -632,6 +632,10 @@ $.extend(wot, { core: {
         }
     },
 
+	is_registered: function () {
+		return wot.core.is_level("registered") || wot.core.is_level("registered_paid");
+	},
+
 	processrules: function(url, onmatch)
 	{
 		onmatch = onmatch || function() {};
