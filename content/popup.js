@@ -646,7 +646,8 @@ wot.popup = {
 
 		wot.post("search", "openunlocker",
 			{
-				ctx: wot.urls.contexts.popupviewsc
+				ctx: wot.urls.contexts.popupviewsc,
+				rule: wot.popup.rule_name
 			});
 
 		wot.popup.hide(wot.popup.version, true);
@@ -658,7 +659,8 @@ wot.popup = {
 
 		wot.post("search", "premium-tos",
 			{
-				ctx: wot.urls.contexts.popupviewsc
+				ctx: wot.urls.contexts.popupviewsc,
+				rule: wot.popup.rule_name
 			});
 
 //		wot.popup.hide(wot.popup.version, true);
