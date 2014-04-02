@@ -109,6 +109,10 @@ $.extend(wot, { payments: {
 		wot.core.open_mywot(wot.urls.premium_tos, data.ctx);
 	},
 
+	open_premium_readmore: function (data) {
+		wot.core.open_mywot("https://www.mywot.com/forum/45536-WOT-freemium", data.ctx);
+	},
+
 	load_config: function () {
 
 		var _this = wot.payments;

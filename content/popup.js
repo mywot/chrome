@@ -53,6 +53,7 @@ const WOT_POPUP_HTML =
 	    '<div class="wot-unlock-icon"></div>' +
         '<div class="wot-unlock-text">The <b>safety icons</b> are a paid feature. It costs only ${PRICE} / year to unlock this <b>protection</b>.</div>' +
         '<div id="wot-unlock-btn">Unlock using PayPal</div>' +
+	    '<div id="wot-unlock-learnmore">Read more about it <a id="wot-unlock-readmore">on our forum</a>.</div>' +
 	    '<div id="wot-unlock-tos">By clicking "Unlock" you agree with <a id="wot-unlock-toslink">terms of service</a>.</div>' +
     '</div>';
 
@@ -173,6 +174,11 @@ wot.popup = {
             var tos_link = document.getElementById("wot-unlock-toslink");
             if (tos_link) {
 	            tos_link.addEventListener("click", wot.popup.on_unlock_tos_click);
+            }
+
+            var read_link = document.getElementById("wot-unlock-readmore");
+            if (read_link) {
+	            read_link.addEventListener("click", wot.popup.on_unlock_read_click);
             }
 
         } catch (e) {
@@ -664,5 +670,16 @@ wot.popup = {
 			});
 
 //		wot.popup.hide(wot.popup.version, true);
+	},
+
+	on_unlock_read_click: function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		wot.post("search", "premium-readmore",
+			{
+				ctx: wot.urls.contexts.popupviewsc,
+				rule: wot.popup.rule_name
+			});
 	}
 };

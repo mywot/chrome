@@ -1031,6 +1031,12 @@ $.extend(wot, { core: {
 				}
 			});
 
+			wot.bind("message:search:premium-readmore", function(port, data) {
+				if (wot.payments) {
+					wot.payments.open_premium_readmore(data);
+				}
+			});
+
 			wot.bind("message:search:ratesite", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx, "rate");
 			});

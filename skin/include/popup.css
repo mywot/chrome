@@ -442,7 +442,7 @@
     background-color: rgba(204, 198, 195, 0.63);
     z-index: 99;
     top: 22px;
-    bottom: 114px;
+    bottom: 136px;
     left: 0;
     right: 0;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAaklEQVQYV2NkYGAwBuKzQAwC9UA8C4ifQ/n/GaEMkCIfIG6E8iWB9DMgZoQpAOncgmTSfyBbCmQSSAFIEqYTZNIZkE6YSSAGyDi4nUC2CbKb4CphdqK7CaYAbieSb8BuAikASSKblIbsJgCKXBfTNjWx1AAAAABJRU5ErkJggg==");
@@ -458,6 +458,7 @@
     border-top: 1px solid #C0C0C0;
     padding: 10px 16px 1px;
     display: none;
+    cursor: default;
 }
 
 .wot-unlock-icon {
@@ -486,6 +487,7 @@
     color: #666;
 }
 
+
 #wot-unlock-btn {
     margin: 8px 30px;
     background-color: #17A517;
@@ -495,6 +497,11 @@
     text-align: center;
     border-radius: 2px;
     box-shadow: 2px 2px 4px #C0C0C0;
+    cursor: pointer;
+}
+
+#wot-unlock-btn:hover {
+    background-color: #1dcd1f;
 }
 
 #wot-unlock-tos {
@@ -505,9 +512,24 @@
 }
 
 #wot-unlock-toslink {
+    cursor: pointer;
     text-decoration: underline;
 }
 
 #wot-unlock-toslink:hover {
     color: #3073C5;
+}
+
+#wot-unlock-learnmore {
+
+}
+
+#wot-unlock-readmore {
+    cursor: pointer;
+    color: #3073C5;
+    text-decoration: underline;
+}
+
+#wot-unlock-readmore:hover {
+    color: #213dc5;
 }
