@@ -51,7 +51,7 @@ const WOT_POPUP_HTML =
     '</div>' +
     '<div id="wot-unlock">' +
 	    '<div class="wot-unlock-icon"></div>' +
-        '<div class="wot-unlock-text">The <b>safety icons</b> are a paid feature. It costs only ${PRICE} / year to unlock this <b>protection</b>.</div>' +
+        '<div class="wot-unlock-text">Help us make WOT better. We ask for a small fee of ${PRICE} / year to unlock <b>safety icons</b>.</div>' +
         '<div id="wot-unlock-btn">Unlock using PayPal</div>' +
 	    '<div id="wot-unlock-learnmore">Read more about it <a id="wot-unlock-readmore">on our forum</a>.</div>' +
 	    '<div id="wot-unlock-tos">By clicking "Unlock" you agree with <a id="wot-unlock-toslink">terms of service</a>.</div>' +
