@@ -61,8 +61,13 @@ textarea {
     cursor: pointer;
 }
 
+.link.modest {
+    color: #8f8f8f;
+}
+
 .link:hover {
     text-decoration: underline;
+    color: #3073c5; /* explicitly set for .modest mode */
 }
 
 .pseudo-link {
@@ -263,7 +268,7 @@ textarea {
     padding: 0 0.6em;
 }
 
-.wot-header-link:hover {
+.wot-header-link:not(.notlink):hover {
     color: #3073c5;
     cursor: pointer;
     text-decoration: underline;
@@ -274,6 +279,29 @@ textarea {
     background-color: #E7F1FF;
     border-radius: 5px;
     padding: 2px 0.6em 0;
+}
+
+#header-link-profile-text {
+    display: inline-block;
+}
+
+#header-boardmsg {
+    background-color: #FF4C4C;
+    border-radius: 4px;
+    font-size: 10px;
+    text-align: center;
+    color: #FFF;
+    display: inline-block;
+    padding: 1px 4px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+    left: 0px;
+    visibility: hidden;
+}
+
+#header-boardmsg.messages {
+    visibility: visible;
 }
 
 #wot-header-close {

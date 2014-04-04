@@ -705,6 +705,8 @@ $.extend(wot, { ratingwindow: {
                 _rw.comments.show_normal_hint();
             }
         }
+
+	    _rw.update_boardmessages(comment_data.newBoardMessages);
 	    _rw.wg.update_wg_tags();
 	    _rw.wg.update_wg_visibility();
         _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting && !_comments.is_banned);
@@ -714,6 +716,17 @@ $.extend(wot, { ratingwindow: {
     {
         window.close();
     },
+
+	update_boardmessages: function (count) {
+
+		count = count || 0;
+		count = $.isNumeric(count) ? count : 0;
+//		var _rw = wot.ratingwindow;
+
+		$("#header-boardmsg").
+			toggleClass("messages", count != 0)
+			.text(count);
+	},
 
     count_window_opened: function () {
         // increase amount of times RW was shown (store to preferences)
@@ -769,7 +782,7 @@ $.extend(wot, { ratingwindow: {
             { selector: "#wot-header-link-guide",   text: wot.i18n("ratingwindow", "guide") },
             { selector: "#wot-header-link-forum",   text: wot.i18n("ratingwindow", "forum") },
             { selector: "#wot-header-link-settings",text: wot.i18n("ratingwindow", "settings") },
-            { selector: "#wot-header-link-profile", text: wot.i18n("ratingwindow", "profile") },
+            { selector: "#header-link-profile-text", text: wot.i18n("ratingwindow", "profile") },
             { selector: "#wot-title-text",          text: wot.i18n("messages", "initializing") },
             { selector: "#wot-rating-header-wot",   text: wot.i18n("ratingwindow", "wotrating") },
             { selector: "#wot-rating-header-my",    text: wot.i18n("ratingwindow", "myrating") },
