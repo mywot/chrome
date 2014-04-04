@@ -105,6 +105,8 @@ $.extend(wot, { wt: {
 	init: function () {
 		wot.log("wot.wt.init()");
 
+		wot.wt.enabled = wot.wt.enabled && !wot.env.is_mailru_amigo;    // disable tips for Mail.ru Amigo browser
+
 		if (wot.wt.enabled) {
 
             // whether super-settings is off, check normal conditions
@@ -225,6 +227,8 @@ $.extend(wot, { wt: {
 
             if (wot.prefs.get("super_wtips")) return true;
 
+			if (wot.is_mailru_amigo) return false;
+
  			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings,
 				 timesince_firstshow = wot.time_since(wt_settings.warning_shown_dt);
@@ -328,6 +332,8 @@ $.extend(wot, { wt: {
 		tts: function () {
 
             if (wot.prefs.get("super_wtips")) return true;
+
+			if (wot.is_mailru_amigo) return false;
 
 			var timesincefirstrun = wot.time_sincefirstrun() || 0,
 				wt_settings = wot.wt.settings;

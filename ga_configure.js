@@ -157,7 +157,7 @@ $.extend(wot, { ga: {
 //		var accessible = wot.env.is_accessible ? "acc" : "normal",
 		var partner = wot.prefs.get("partner") || "undefined";  // set partner
 
-        var is_registered = wot.core.is_level("registered") ? "yes" : "no";
+        var is_registered = wot.core.is_registered() ? "yes" : "no";
 
 		_gaq.push(['_setCustomVar', 2, 'partner', partner, 2]); // scope = 2 (session level)
 		_gaq.push(['_setCustomVar', 3, 'registered', is_registered, 2]); // scope = 2 (session level)

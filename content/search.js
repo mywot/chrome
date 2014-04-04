@@ -235,6 +235,18 @@ wot.search = {
 		}
 	},
 
+	is_unlocked: function () {
+		var _this = wot.search,
+			unlocked = {};
+
+		if (!_this.unlock_price) return true;   // if no price, unlock the feature
+
+		unlocked[wot.LOCK_STATE.UNLOCKED] = true;
+		unlocked[wot.LOCK_STATE.TRIAL] = true;
+
+		return unlocked[_this.lock_state];
+	},
+
 	is_ninja: function(rule)
 	{
 		return rule.ninja && wot.search.settings.ninja_donuts;
@@ -244,8 +256,9 @@ wot.search = {
 	{
 		try {
 			// ninja - is experimental feature to make donuts on the SERP hidden
-			var is_ninja = wot.search.is_ninja(rule);
-			var elem = frame.document.createElement(wot.search.base_element);
+			var elem_style,
+				is_ninja = wot.search.is_ninja(rule),
+				elem = frame.document.createElement(wot.search.base_element);
 
 			if (elem) {
 
@@ -255,11 +268,20 @@ wot.search = {
 
 				if(is_ninja) elem.setAttribute("class", "invisible");
 
-				elem.setAttribute("style",
-					"cursor: pointer; " +
-					"width: 16px; " +
-					"height: 16px;" +
-					"display: inline-block;");
+				elem_style = "cursor: pointer; " +
+					"display: inline-block;"
+
+//				if (wot.search.is_unlocked()) {
+					elem_style +=
+						"width: 16px; " +
+						"height: 16px;";
+//				} else {
+//					elem_style +=
+//						"width: 5px; " +
+//						"height: 5px;";
+//				}
+
+				elem.setAttribute("style", elem_style);
 
 				if(is_ninja) {
 
@@ -291,6 +313,10 @@ wot.search = {
 					// use parent to avoid hiding donut when cursor moves to it but goes out of the link
 					link_parent.addEventListener("mouseover", do_ninja, false);
 					link_parent.addEventListener("mouseout", do_ninja, false);
+				} else if (!wot.search.is_unlocked()) {
+					// get some attention to donuts when the feature is unlocked
+					var cls = elem.getAttribute("class");
+					elem.setAttribute("class", cls + " locked");
 				}
 
 				elem.addEventListener("click", this.onclickrating, false);
@@ -370,12 +396,12 @@ wot.search = {
 
 			var r = this.getreputation(obj);
 
-			if ((this.settings.use_search_level &&
-					r >= this.settings.search_level) ||
-					(rule.searchlevel != null &&
-						r >= rule.searchlevel)) {
+			if ((this.settings.use_search_level && r >= this.settings.search_level) ||
+					(rule.searchlevel != null && r >= rule.searchlevel)) {
 				return css;
 			}
+
+			if (r < 0 && !this.settings.search_showunknown) return css;
 
 			var options = {
 				subtype: "plain"
@@ -441,6 +467,7 @@ wot.search = {
 			"search_type",
 			"show_search_popup",
 			"use_search_level",
+			"search_showunknown",
 			"ninja_donuts",
 			"ninja_announceshown",
 			"ninja_wave",
@@ -489,6 +516,15 @@ wot.search = {
 
 				if (data.rule.prestyle) {
 					wot.utils.attach_style({style: wot.search.formatcss(data.rule.prestyle)}, wot.search.getname("prestyle"), window);
+				}
+
+				if (!wot.search.is_unlocked()) {
+					var locked_style = "div[wotsearchtarget].locked:not(.invisible) {" +
+//						"-webkit-animation: wot-icon-animation 1s linear 1s 1 alternate;" +
+						"background-image: url(" + chrome.extension.getURL("/skin/fusion/16_16/plain/locked.png") + ") !important;" +
+						"background-size: 12px;" +
+						"}";
+					wot.utils.attach_style({style: locked_style}, "wotfeaturelock", window);
 				}
 
 				wot.init_categories(wot.search.settings);   // init categories
@@ -553,18 +589,20 @@ wot.search = {
 	onclickrating: function(event)
 	{
 		try {
-			var target =
-				event.target.getAttribute(wot.search.getattrname("target"));
+//			var target =
+//				event.target.getAttribute(wot.search.getattrname("target"));
+//
+//			if (target) {
+//
+//				wot.post("search", "openscorecard", {
+//					target: target,
+//					ctx: wot.urls.contexts.popupdonuts
+//				});
 
-			if (target) {
-
-				wot.post("search", "openscorecard", {
-					target: target,
-					ctx: wot.urls.contexts.popupdonuts
-				});
+				wot.popup.onmousemove(event);
 
 				event.stopPropagation();
-			}
+//			}
 		} catch (e) {
 			console.log("search.onclickrating: failed with " + e);
 		}
@@ -576,6 +614,8 @@ wot.search = {
 			wot.bind("message:search:process", function(port, data) {
 				/* load the necessary settings before starting */
 				wot.search.loadsettings(function() {
+					wot.search.lock_state = data.lock_state;
+					wot.search.unlock_price = data.unlock_price;
 					wot.search.onprocess(data);
 				});
 			});

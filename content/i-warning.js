@@ -24,6 +24,8 @@ wot.warning = {
 	generated_style: "",
 	exit_mode: "back",
 	check_timer: null,
+	removal_attempts: 0,
+	is_removed: false,
 
 	onload: function () {
 		if (window !== window.top) {
@@ -47,19 +49,38 @@ wot.warning = {
 			// set regular check whether Warning is still visible or removed
 			wot.warning.check_timer = window.setInterval(function () {
 
-				var w = document.getElementById(wot.warning.warning_id);
+				var w = wot.warning,
+					w_elem = document.getElementById(w.warning_id);
 
-				if (!wot.warning.test_visibility(w)) {  // test whether Warning is distorted in any way
+				if (!w.test_visibility(w_elem)) {  // test whether Warning is distorted in any way
 
-					// remove the corrupted element if it presents
-					if (w) {
-						wot.warning.hide();
+					// remove the corrupted element if it exists still
+					if (w_elem) {
+						w.hide();
 					}
 
-					wot.warning.add();  // create new fresh warning
+					w.add();  // create new fresh warning
+					w.removal_attempts++;
+
+					if (w.removal_attempts > 2) {
+						// so... you are trying to kill our warning, huh?
+						wot.warning.removal_attempts = 0;
+
+						// Let the hell clearance take place!
+						document.open();
+						document.write(""); // yeah, now try to get rid of this. LOL
+						document.close();
+
+						// re-init warning
+						clearInterval(wot.warning.check_timer);
+						wot.warning.check_timer = null;
+
+						wot.warning.inject(port, data);
+						wot.warning.is_removed = true;  // important to have full name here, otherwise the reference is broken
+					}
 				}
 
-			}, 1000);
+			}, 400);
 		}
 	},
 
@@ -70,15 +91,18 @@ wot.warning = {
 	},
 
 	remove: function (port, data) {
-
 		// stop the checker
 		if (wot.warning.check_timer) {
 			window.clearInterval(wot.warning.check_timer);
 			wot.warning.check_timer = null;
 		}
 
-		wot.warning.hide();
-		wot.warning.hideobjects(false);
+		if (wot.warning.is_removed) {
+			window.location.reload(true);
+		} else {
+			wot.warning.hide();
+			wot.warning.hideobjects(false);
+		}
 	},
 
 	hideobjects: function(hide) {
@@ -159,11 +183,11 @@ wot.warning = {
 		}).join("; ");
 	},
 
-	add: function(data) {
+	add: function() {
 		try {
 			var data = wot.warning.data;
 
-			if (!data.target || !data.cached || document.getElementById("wotwarning")) {
+			if (!data || !data.target || !data.cached || document.getElementById(wot.warning.warning_id)) {
 				return;
 			}
 

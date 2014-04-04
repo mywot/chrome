@@ -31,6 +31,41 @@ $.extend(wot, { core: {
     },
 	last_testimony: null,   // datetime of the last testimony submitted
 
+	tags: {
+		is_wg_allowed: false,
+		mytags: [ ],
+		mytags_updated: null,       // time when the list was updated last time
+		MYTAGS_UPD_INTERVAL: 30 * 60 * 1000,
+
+		popular_tags: [ ],
+		popular_tags_updated: null,
+		POPULARTAGS_UPD_INTERVAL: 30 * 60 * 1000,
+
+		append_mytags: function (mytags) {
+			if (mytags instanceof Array && mytags.length) {
+
+				var _this = wot.core.tags,
+					mytags_flat = _this.mytags.map(function (item) { return item.value });
+
+				var uniq = mytags.filter(function (tag) {
+					var tag_value = tag.value.trim();
+					return mytags_flat.indexOf(tag_value) < 0;
+				});
+
+				var uniq_tags = uniq.map(function (tag) {
+					tag.mytag = true;
+					return tag;
+				});
+
+				_this.mytags = _this.mytags.concat(uniq_tags);
+			}
+		},
+
+		expire_mytags: function () {
+			wot.core.tags.mytags_updated = null;    // next time when RW will be opened, it will fetch new mytags from server
+		}
+	},
+
 	loadratings: function (hosts, onupdate)
 	{
 		if (typeof (hosts) == "string") {
@@ -286,7 +321,6 @@ $.extend(wot, { core: {
 		};
 
 		try {
-
 
 			/* Check if "warned" flag is expired */
 			if(cached.flags && cached.flags.warned) {
@@ -568,15 +602,15 @@ $.extend(wot, { core: {
 		}
 	},
 
-	setuserlevel: function(data)
+	setuser_paramenter: function(data, attr_name, param_name)
 	{
 		try {
 			var elems = data.getElementsByTagName("status");
 
 			if (elems && elems.length > 0) {
-				wot.prefs.set("status_level", $(elems[0]).attr("level") || "");
+				wot.prefs.set(param_name, $(elems[0]).attr(attr_name) || "");
 			} else {
-				wot.prefs.clear("status_level");
+				wot.prefs.clear(param_name);
 			}
 		} catch (e) {
 			console.error("core.setuserlevel: failed with ", e);
@@ -597,6 +631,10 @@ $.extend(wot, { core: {
             return false;   // in case of errors it is safer to assume that user is not registered yet
         }
     },
+
+	is_registered: function () {
+		return wot.core.is_level("registered") || wot.core.is_level("registered_paid");
+	},
 
 	processrules: function(url, onmatch)
 	{
@@ -655,7 +693,7 @@ $.extend(wot, { core: {
 	{
 		if(!target) return;
         hash = hash ? "#" + hash : "";
-		var url = wot.contextedurl(wot.urls.scorecard + encodeURIComponent(target), context) + hash;
+		var url = wot.contextedurl(wot.urls.geturl(wot.urls.scorecard) + encodeURIComponent(target), context) + hash;
 		chrome.tabs.create({ url: url });
 	},
 
@@ -841,7 +879,14 @@ $.extend(wot, { core: {
 		}
 
 		// adapt min_confidence_level: 12 for newcomers, 8 - for users who use the addon more than 2 weeks
-		var min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
+		// but for Amigo mail.ru users it is always a bit higher: 12
+		var min_level;
+		if (wot.is_mailru_amigo) {
+			min_level = 12;
+		} else {
+			min_level = time_sincefirstrun >= 3600 * 24 * 14 ? 8 : 12;
+		}
+
 		wot.prefs.set("min_confidence_level", min_level);
 
 		// This GA reporting is disabled due to exceeding limits (10M/day)
@@ -872,8 +917,22 @@ $.extend(wot, { core: {
 			/* messages */
 
 			wot.bind("message:search:hello", function(port, data) {
+
+				var lock_state = null,
+					unlock_price = null;
+
+				if (wot.payments) {
+					lock_state = wot.payments.get_feature_status("search-icons");
+					unlock_price = wot.payments.get_price("search-icons");
+				}
+
 				wot.core.processrules(data.url, function(rule) {
-					port.post("process", { url: data.url, rule: rule });
+					port.post("process", {
+						url: data.url,
+						rule: rule,
+						lock_state: lock_state,
+						unlock_price: unlock_price
+					});
 				});
 			});
 
@@ -895,7 +954,13 @@ $.extend(wot, { core: {
 					if (wot.wt && wot.wt.enabled) {
 						wt_enable_donut_tip = wot.wt.donuts.tts();
 					}
-					port.post("update", { rule: data.rule, ratings: ratings, wt_enabled: wt_enable_donut_tip });
+
+					port.post("update",
+						{
+							rule: data.rule,
+							ratings: ratings,
+							wt_enabled: wt_enable_donut_tip
+						});
 				});
 			});
 
@@ -912,6 +977,9 @@ $.extend(wot, { core: {
 			});
 
 			wot.bind("message:warnings:enter_button", function(port, data) {
+
+				wot.cache.setflags(data.target, { warned: true, warned_expire: null });
+
 				var port = chrome.tabs.connect(port.port.sender.tab.id, { name: "warning" });
 				port.postMessage({ message: "warning:remove" });
 
@@ -951,6 +1019,24 @@ $.extend(wot, { core: {
 				wot.core.open_scorecard(data.target, data.ctx);
 			});
 
+			wot.bind("message:search:openunlocker", function(port, data) {
+				if (wot.payments) {
+					wot.payments.open_unlocker(data);
+				}
+			});
+
+			wot.bind("message:search:premium-tos", function(port, data) {
+				if (wot.payments) {
+					wot.payments.open_premium_tos(data);
+				}
+			});
+
+			wot.bind("message:search:premium-readmore", function(port, data) {
+				if (wot.payments) {
+					wot.payments.open_premium_readmore(data);
+				}
+			});
+
 			wot.bind("message:search:ratesite", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx, "rate");
 			});
@@ -961,6 +1047,16 @@ $.extend(wot, { core: {
 				});
             });
 
+			wot.bind("message:my:payment_approved", function(port, data) {
+				window.setTimeout(function(){
+					wot.cache.clearall();
+				}, 300);
+            });
+
+			wot.bind("message:tags:clearmytags", function(port, data) {
+				wot.core.tags.expire_mytags();
+            });
+
 			if (wot.surveys && wot.surveys.bind_events) {
 				wot.surveys.bind_events();
 			}
@@ -969,11 +1065,7 @@ $.extend(wot, { core: {
 				wot.wt.bind_events();
 			}
 
-			if (wot.featured && wot.featured.bind_events) {
-				wot.featured.bind_events();
-			}
-
-			wot.listen([ "search", "my", "tab", "warnings", "wtb", "surveyswidget", "ads" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "tags", "wtb", "surveyswidget", "ads" ]);
 
 			/* event handlers */
 
@@ -1005,13 +1097,13 @@ $.extend(wot, { core: {
 				wot.core.update(true);
 
 				if (wot.api.isregistered()) {
+					if (wot.payments) wot.payments.load_config();   // init paid features offer
 					wot.core.welcome_user();
 					wot.api.update();
 					wot.api.processpending();       // submit
                     wot.api.comments.processpending();
 					wot.wt.init();                  // initialize welcome tips engine
 					wot.surveys.init();             // init surveys engine
-					if (wot.featured) wot.featured.init();    // init Featured engine
 				}
 			});
 

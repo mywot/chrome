@@ -1,6 +1,6 @@
 /*
  ratingwindow.js
- Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -21,7 +21,7 @@
 $.extend(wot, { ratingwindow: {
     MAX_VOTED_VISIBLE: 4,   // how many voted categories we can show in one line
 	sliderwidth: 154,
-    slider_shift: -4,       // ajustment
+    slider_shift: -4,       // adjustment
     opened_time: null,
     was_in_ratemode: false,
     timer_save_button: null,
@@ -29,11 +29,21 @@ $.extend(wot, { ratingwindow: {
     local_comment: null,
     is_registered: false,   // whether user has an account on mywot.com
     delete_action: false,   // remembers whether user is deleting rating
-    prefs: {},  // shortcut for background preferences
+    prefs: {},              // shortcut for background preferences
+	current: {},
 
-    get_bg: function () {
+	is_wg_allowed: false,
+	tags: [],               // WG tags for the current website
+	wg_viewer_timer: null,
+	wg_infotag_timer: null,
+	msg_timer: null,
+
+	get_bg: function (sub_objname) {
         // just a shortcut
-        return chrome.extension.getBackgroundPage();
+        var bg = chrome.extension.getBackgroundPage();
+		if (sub_objname && bg[sub_objname]) return bg[sub_objname];
+
+		return bg;
     },
 
     is_rated: function (state) {
@@ -63,6 +73,8 @@ $.extend(wot, { ratingwindow: {
 	        _this.finishstate(false);
 	        _this.state = { target: target, down: -1 };
 	        _this.comments.set_comment("");  // reset comment field
+	        $("#voted-categories-content").empty();
+	        $("#rated-votes").removeClass("commented");
 	        was_target_changed = true;
         }
 
@@ -185,7 +197,9 @@ $.extend(wot, { ratingwindow: {
                 testimonies_changed = false,
                 comment_changed = false,
                 has_comment = false,
-                user_comment = $("#user-comment").val().trim(),
+                user_comment = rw.comments.get_comment_value(),
+	            mytags = rw.wg.get_tags(user_comment),
+	            has_mytags = mytags && mytags.length,
                 user_comment_id = 0,
                 cached = {},
                 changed_votes = {},     // user votes diff as an object
@@ -199,10 +213,6 @@ $.extend(wot, { ratingwindow: {
             // on unload finishing, restore previous message or remove current
             if (unload && bgwot.core.usermessage && bgwot.core.usermessage.previous) {
                 bgwot.core.usermessage = bgwot.core.usermessage.previous;
-            }
-
-            if (bgwot.core.unseenmessage()) {
-                bgwot.prefs.set("last_message", bg.wot.core.usermessage.id);
             }
 
             if (rw.current.target) {
@@ -225,11 +235,6 @@ $.extend(wot, { ratingwindow: {
                     user_comment_id = 0;            // no previous comment, set cid to zero
                 }
             }
-
-//            bg.console.log("testimonies_changed:", testimonies_changed);
-//            bg.console.log("comment_changed:", comment_changed);
-//            bg.console.log("is_rated:", is_rated);
-//            bg.console.log("has_comment:", has_comment);
 
             /* if user's testimonies or categories were changed, store them in the cache and submit */
             if (testimonies_changed) {
@@ -268,7 +273,6 @@ $.extend(wot, { ratingwindow: {
             }
 
             if (unload) {  // RW was closed by browser (not by clicking "Save")
-//                bg.console.log("RW triggered finish state during Unload");
 
                 if (comment_changed) {
 //                    bg.console.log("The comment seems to be changed");
@@ -279,10 +283,9 @@ $.extend(wot, { ratingwindow: {
 
             } else { // User clicked Save
                 // TODO: make it so, that if votes were changed and user have seen the comment, then submit the comment
-                if (comment_changed && has_up_votes) {
+                if (comment_changed && (has_up_votes || has_mytags || !has_comment)) {
                     // Comment should be submitted, if (either comment OR categories votes were changed) AND at least one up vote is given
                     if (has_comment) {
-//                        bg.console.log("SUBMIT COMMENT");
 
                         // If user can't leave a comment for a reason, accept the comment locally, otherwise submit it silently
                         var keeper_status = (rw.comments.allow_commenting && rw.is_registered) ? wot.keeper.STATUSES.SUBMITTING : wot.keeper.STATUSES.LOCAL;
@@ -296,7 +299,6 @@ $.extend(wot, { ratingwindow: {
                     } else {
                         if (comment_changed) {
                             // remove the comment
-//                        bg.console.log("REMOVE COMMENT");
                             bgwot.keeper.remove_comment(target);
                             if (rw.is_registered) {
                                 bgwot.api.comments.remove(target);
@@ -304,6 +306,8 @@ $.extend(wot, { ratingwindow: {
                             }
                         }
                     }
+                    // update cache in RW object
+	                rw.current.cached = bgwot.cache.get(target);
                 }
             }
 
@@ -377,8 +381,6 @@ $.extend(wot, { ratingwindow: {
 
     /* user interface */
 
-    current: {},
-
     updatecontents: function()
     {
         var bg = chrome.extension.getBackgroundPage(),
@@ -407,7 +409,8 @@ $.extend(wot, { ratingwindow: {
         $_hostname.text(visible_hostname);
         $_wot_title_text.text(rw_title);
 
-        $("#wot-ratingwindow").toggleClass("unregistered", !_this.is_registered);
+        $("#wot-ratingwindow")
+	        .toggleClass("unregistered", !_this.is_registered);
 
         /* reputations */
         /* ratings */
@@ -438,18 +441,44 @@ $.extend(wot, { ratingwindow: {
         /* message */
 
         var msg = bg.wot.core.usermessage; // usual case: show a message from WOT server
-        var $_wot_message = $("#wot-message");
+
+	    // old style elements
+	    var $_wot_message = $("#wot-message"),
+		    $_wot_message_text = $("#wot-message-text");
+
+	    // new style elements
+	    var $msg_indicator = $("#message-indicator"),
+		    $msg_box = $("#floating-message"),
+		    $msg_text = $("#floating-message-text");
+
         // if we have something to tell a user
         if (msg.text) {
-            var status = msg.type || "";
-            $("#wot-message-text")
+            var status = msg.type || "",
+	            is_seen = !bg.wot.core.unseenmessage();
+
+	        $_wot_message_text
                 .attr("url", msg.url || "")
                 .attr("status", status)
                 .text(msg.text);
 
-            $_wot_message.attr("status", status).attr("msg_id", msg.id).show();
+	        $_wot_message.attr("status", status).attr("msg_id", msg.id).show();
+
+	        $msg_text.text(msg.text);
+
+	        $msg_box
+		        .attr("url", msg.url || "")
+		        .attr("status", status)
+		        .attr("msg_id", msg.id);
+
+	        $msg_indicator
+		        .toggleClass("unseen", !is_seen)
+		        .toggleClass("seen", is_seen)
+		        .show();
+
         } else {
             $_wot_message.hide();
+	        // hide the message icon on the top
+	        $msg_indicator.hide();
         }
 
         /* content for user (messages / communications) */
@@ -494,6 +523,9 @@ $.extend(wot, { ratingwindow: {
             $("#wot-user-0").css("display", "block");
         }
 
+	    _this.wg.update_wg_visibility();
+	    _this.wg.update_wg_tags();
+
     },
 
     insert_categories: function (cat_list, $_target) {
@@ -530,9 +562,9 @@ $.extend(wot, { ratingwindow: {
             // delete categories from the visible area
             _rw.insert_categories({}, $_tr_list);
 
-            if (this.current.target && cached.status == wot.cachestatus.ok && cached.value) {
+            if (_rw.current.target && cached.status == wot.cachestatus.ok && cached.value) {
                 var cats = cached.value.cats;
-                if (cats != null) {
+                if (!wot.utils.isEmptyObject(cats)) {
                     var sorted = wot.rearrange_categories(wot.select_identified(cats));    // sort categories and split into two parts (TR, CS)
                     _rw.insert_categories(sorted.all, $_tr_list);
                 }
@@ -564,14 +596,13 @@ $.extend(wot, { ratingwindow: {
 	                        if (target_changed) {   // no need to reask comment on every "iframe loaded" event
 		                        _rw.comments.get_comment(data.target);
 	                        }
-
                         } else {
                             bg.wot.core.update_ratingwindow_comment(); // don't allow unregistered addons to comment
                         }
 
                         if (target_changed) {
 	                        _rw.modes.reset();
-	                        _rw.modes.auto();
+	                        _rw.modes.auto(true);
                         }
 
                         if (!data.target) {
@@ -586,11 +617,11 @@ $.extend(wot, { ratingwindow: {
     },
 
     update_comment: function (cached, local_comment, captcha_required) {
-        wot.log("update_comment()", cached);
 
         var _rw = wot.ratingwindow,
             _comments = wot.ratingwindow.comments,
-            data = {},
+            comment_data = {},
+	        wg = cached.wg || {},
             bg = chrome.extension.getBackgroundPage(),
             is_unsubmitted = false;
 
@@ -598,11 +629,20 @@ $.extend(wot, { ratingwindow: {
         _rw.local_comment = local_comment;  // keep locally stored comment
 
         if (cached && cached.comment) {
-            data = cached.comment;
+            comment_data = cached.comment;
             _rw.comments.captcha_required = captcha_required || false;
         }
 
-        var error_code = data.error_code || 0;
+	    // WOT Groups data
+	    _rw.is_wg_allowed = wg.wg == true || false;
+	    _rw.tags = [];
+
+	    if (wg.tags && wg.tags.length > 0) {
+		    _rw.tags = wg.tags;
+	    }
+
+        // Errors
+	    var error_code = comment_data.error_code || 0;
 
         _comments.allow_commenting = ([
             wot.comments.error_codes.AUTHENTICATION_FAILED,
@@ -616,27 +656,29 @@ $.extend(wot, { ratingwindow: {
         if (local_comment && !wot.utils.isEmptyObject(local_comment)) {
 
             // If server-side comment is newer, than drop locally stored one
-            if (local_comment.timestamp && data.timestamp && data.timestamp >= local_comment.timestamp) {
+            if (local_comment.timestamp && comment_data.timestamp && comment_data.timestamp >= local_comment.timestamp) {
                 // Remove a comment from keeper
                 bg.wot.keeper.remove_comment(local_comment.target);
                 _rw.local_comment = null;
             } else {
-                data.comment = local_comment.comment;
-                data.timestamp = local_comment.timestamp;
-                data.wcid = data.wcid === undefined ? 0 : data.wcid;
+                comment_data.comment = local_comment.comment;
+                comment_data.timestamp = local_comment.timestamp;
+                comment_data.wcid = comment_data.wcid === undefined ? 0 : comment_data.wcid;
                 is_unsubmitted = true;
             }
         }
 
         // check whether comment exists: "comment" should not be empty, and wcid should not be null (but it can be zero)
-        if (data && data.comment && data.wcid !== undefined) {
-            _comments.posted_comment = data;
-            _comments.set_comment(data.comment);
+        if (comment_data && comment_data.comment && comment_data.wcid !== undefined) {
+            _comments.posted_comment = comment_data;
+            _comments.set_comment(comment_data.comment);
             $("#rated-votes").addClass("commented");
 
             // switch to commenting mode if we have unfinished comment
             if (is_unsubmitted) {
                 _rw.modes.comment.activate();
+            } else {
+	            _rw.modes.auto(true);   // force to update the view
             }
 
         } else {
@@ -658,9 +700,15 @@ $.extend(wot, { ratingwindow: {
 
             } else if (_rw.comments.is_banned) {
                 // this is considered below
+            } else {
+                // normal mode
+                _rw.comments.show_normal_hint();
             }
         }
 
+	    _rw.update_boardmessages(comment_data.newBoardMessages);
+	    _rw.wg.update_wg_tags();
+	    _rw.wg.update_wg_visibility();
         _comments.update_button(_rw.modes.current_mode, _comments.allow_commenting && !_comments.is_banned);
     },
 
@@ -669,10 +717,19 @@ $.extend(wot, { ratingwindow: {
         window.close();
     },
 
+	update_boardmessages: function (count) {
+
+		count = count || 0;
+		count = $.isNumeric(count) ? count : 0;
+//		var _rw = wot.ratingwindow;
+
+		$("#header-boardmsg").
+			toggleClass("messages", count != 0)
+			.text(count);
+	},
+
     count_window_opened: function () {
         // increase amount of times RW was shown (store to preferences)
-
-        wot.log("RW: count_window_opened");
 
         var bg = chrome.extension.getBackgroundPage();
         var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
@@ -708,6 +765,8 @@ $.extend(wot, { ratingwindow: {
     },
 
     localize: function () {
+	    var bgwot = wot.ratingwindow.get_bg().wot;
+
         /* texts */
         wot.components.forEach(function(item) {
             var n = item.name;
@@ -723,13 +782,12 @@ $.extend(wot, { ratingwindow: {
             { selector: "#wot-header-link-guide",   text: wot.i18n("ratingwindow", "guide") },
             { selector: "#wot-header-link-forum",   text: wot.i18n("ratingwindow", "forum") },
             { selector: "#wot-header-link-settings",text: wot.i18n("ratingwindow", "settings") },
-            { selector: "#wot-header-link-profile", text: wot.i18n("ratingwindow", "profile") },
+            { selector: "#header-link-profile-text", text: wot.i18n("ratingwindow", "profile") },
             { selector: "#wot-title-text",          text: wot.i18n("messages", "initializing") },
             { selector: "#wot-rating-header-wot",   text: wot.i18n("ratingwindow", "wotrating") },
             { selector: "#wot-rating-header-my",    text: wot.i18n("ratingwindow", "myrating") },
             { selector: "#wot-scorecard-visit",     text: wot.i18n("ratingwindow", "viewscorecard") },
             { selector: "#wot-scorecard-comment",   text: wot.i18n("ratingwindow", "addcomment") },
-//            { selector: "#wot-partner-text",        text: wot.i18n("ratingwindow", "inpartnership") },
             { selector: ".wt-rw-header-text",       html: wot.i18n("wt", "rw_text_hdr") },
             { selector: ".wt-rw-body",              html: wot.i18n("wt", "rw_text") },
             { selector: ".btn-delete_label",        text: wot.i18n("buttons", "delete") },
@@ -741,12 +799,20 @@ $.extend(wot, { ratingwindow: {
             { selector: "#change-ratings",          text: wot.i18n("ratingwindow", "rerate_change") },
             { selector: ".comment-title",           text: wot.i18n("ratingwindow", "comment") },
             { selector: "#user-comment",            placeholder: wot.i18n("ratingwindow", "comment_placeholder") },
-            { selector: "#comment-side-hint",       html: wot.i18n("ratingwindow", "commenthints") },
             { selector: ".thanks-text",             text: wot.i18n("ratingwindow", "thankyou") },
             { selector: "#comment-register-text",   text: wot.i18n("ratingwindow", "comment_regtext") },
             { selector: "#comment-register-link",   text: wot.i18n("ratingwindow", "comment_register") },
-            { selector: "#comment-captcha-text",   text: wot.i18n("ratingwindow", "comment_captchatext") },
-            { selector: "#comment-captcha-link",   text: wot.i18n("ratingwindow", "comment_captchalink") }
+            { selector: "#wg-title",                html: wot.i18n("wg", "title") },
+            { selector: "#wg-addmore",              text: wot.i18n("wg", "add_long") },
+            { selector: ".wg-viewer-title",         text: wot.i18n("wg", "viewer_title_wikipedia") },
+            { selector: "#wg-expander",             text: wot.i18n("wg", "expander") },
+            { selector: "#wg-about",                text: wot.i18n("wg", "about") },
+            { selector: ".wg-about-title",          text: wot.i18n("wg", "about_title") },
+            { selector: ".wg-about-content",        text: wot.i18n("wg", "about_content") },
+            { selector: "#wg-about-ok",             text: wot.i18n("wg", "about_ok") },
+            { selector: "#wg-about-learnmore",      text: wot.i18n("wg", "about_more") },
+            { selector: "#comment-captcha-text",    text: wot.i18n("ratingwindow", "comment_captchatext") },
+            { selector: "#comment-captcha-link",    text: wot.i18n("ratingwindow", "comment_captchalink") }
 
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -871,26 +937,34 @@ $.extend(wot, { ratingwindow: {
             has_comment = _rw.comments.is_commented(),
             has_valid_comment = _rw.comments.has_valid_comment();
 
-        // 1. Either TR or CS are rated, OR none of them are rated (e.g. "delete my ratings")
-        for (i in wot.components) {
-            var cmp = wot.components[i].name;
-            if (_rw.state[cmp] && _rw.state[cmp].t !== null && _rw.state[cmp].t >= 0) {
-                testimonies++;
-            }
-        }
+	    if (_rw.modes.is_current("wgcomment")) {    // quick comment & tag mode
 
-        if (has_1upvote) {
-            // if there is a comment, it must be valid, otherwise disallow the submit
-            if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
-                passed = true;
-            } else if (testimonies == 0 && !has_comment) {
-                passed = true;
-            }
-        } else {
-            if (testimonies == 0 && has_comment == false) {
-                passed = true;  // no cats, no testimonies, no comment := "Delete everything" (if there are changes)
-            }
-        }
+		    if ((has_comment && has_valid_comment) || !has_comment && _rw.comments.is_changed()) {
+			    passed = true;
+		    }
+
+	    } else {    // normal WOT rating mode
+		    // 1. Either TR or CS are rated, OR none of them are rated (e.g. "delete my ratings")
+		    for (var i in wot.components) {
+			    var cmp = wot.components[i].name;
+			    if (_rw.state[cmp] && _rw.state[cmp].t !== null && _rw.state[cmp].t >= 0) {
+				    testimonies++;
+			    }
+		    }
+
+		    if (has_1upvote) {
+			    // if there is a comment, it must be valid, otherwise disallow the submit
+			    if ((testimonies > 0 && !has_comment) || has_valid_comment) {    // if rated OR commented, then OK
+				    passed = true;
+			    } else if (testimonies == 0 && !has_comment) {
+				    passed = true;
+			    }
+		    } else {
+			    if (testimonies == 0 && has_comment == false) {
+				    passed = true;  // no cats, no testimonies, no comment := "Delete everything" (if there are changes)
+			    }
+		    }
+	    }
 
         return passed;
     },
@@ -913,17 +987,26 @@ $.extend(wot, { ratingwindow: {
             $_submit.toggleClass("warning", !!warn);
 
             // If user wants to delete ratings, change the text of the button and hide "Delete ratings" button
-            if (enable && !_rw.is_rated(_rw.state) && !_rw.comments.has_valid_comment()) {
-                $_submit.text(wot.i18n("testimony", "delete"));
-                $("#btn-delete").hide();
-                delete_action = true; // remember the reverse of the label
-            }
+	        if (_rw.modes.is_current("wgcomment")) {
+		        delete_action = (_rw.comments.is_changed() && !_rw.comments.is_commented());
+	        } else {
+		        if (enable && !_rw.is_rated(_rw.state) && !_rw.comments.has_valid_comment()) {
+			        delete_action = true; // remember the reverse of the label
+		        }
+	        }
         }
 
         if (!delete_action) {
             $_submit.text(wot.i18n("buttons", "save"));
-            $("#btn-delete").show();
+
+//	        if (_rw.modes.is_current("wgcomment")) {
+//		        $("#btn-delete").show();
+//	        }
+        } else {
+	        $_submit.text(wot.i18n("testimony", "delete"));
+	        $("#btn-delete").hide();
         }
+
         _rw.delete_action = delete_action;
     },
 
@@ -935,12 +1018,13 @@ $.extend(wot, { ratingwindow: {
         _rw.opened_time = new Date(); // remember time when RW was opened (for UX measurements)
         _rw.prefs = bg.wot.prefs;   // shortcut
         wot.cache_locale();
+	    wot.detect_environment(true);
 
         var first_opening = !_rw.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
 
         wot.init_categories(_rw.prefs);
 
-        _rw.is_registered = bg.wot.core.is_level("registered");
+        _rw.is_registered = bg.wot.core.is_registered();
 
         /* accessibility */
         $("#wot-ratingwindow").toggleClass("accessible", bg.wot.prefs.get("accessible"));
@@ -957,7 +1041,7 @@ $.extend(wot, { ratingwindow: {
                 event.preventDefault();
             }
             else {
-                wot.ratingwindow.navigate(wurls.base, wurls.contexts.rwlogo);
+                wot.ratingwindow.navigate(wurls.geturl(wurls.base), wurls.contexts.rwlogo);
             }
         });
 
@@ -968,21 +1052,21 @@ $.extend(wot, { ratingwindow: {
         });
 
         $("#wot-header-link-settings").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.settings, wurls.contexts.rwsettings);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.settings), wurls.contexts.rwsettings);
         });
 
         $("#wot-header-link-profile").bind("click", function() {
             bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_PROFILELNK,
                 _rw.is_registered ? "registered" : "unregistered");
-            wot.ratingwindow.navigate(wurls.profile, wurls.contexts.rwprofile);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.profile), wurls.contexts.rwprofile);
         });
 
         $("#wot-header-link-guide").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.tour, wurls.contexts.rwguide);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.tour), wurls.contexts.rwguide);
         });
 
         $("#wot-header-link-forum").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.base + "forum", wurls.contexts.rwforum);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.base) + "forum", wurls.contexts.rwforum);
         });
 
         $("#wot-header-close").bind("click", function() {
@@ -990,9 +1074,9 @@ $.extend(wot, { ratingwindow: {
             _rw.hide();
         });
 
-        $("#wot-scorecard-content").bind("click", function() {
+        $("#wot-scorecard-visit").bind("click", function() {
             if (wot.ratingwindow.current.target) {
-                wot.ratingwindow.navigate(wot.urls.scorecard +
+                wot.ratingwindow.navigate(wot.urls.geturl(wot.urls.scorecard) +
                     encodeURIComponent(wot.ratingwindow.current.target),
                     wurls.contexts.rwviewsc);
             }
@@ -1005,7 +1089,7 @@ $.extend(wot, { ratingwindow: {
             }
         });
 
-        $("#wot-message").bind("click", function() {
+        $("#wot-message, #floating-message").bind("click", function() {
             var url = $("#wot-message-text").attr("url");
             if (url) {
                 var label = wot.i18n("locale") + "__" + $(this).attr("msg_id");
@@ -1014,20 +1098,68 @@ $.extend(wot, { ratingwindow: {
             }
         });
 
+	    $("#message-indicator")
+		    .bind({
+			    "mouseenter": function() {
+				    $("#floating-message").fadeIn(200);
+				    $(this).addClass("seen").removeClass("unseen");
+				    if (_rw.msg_timer) clearTimeout(_rw.msg_timer);
+				    var bgwot = wot.ratingwindow.get_bg("wot");
+
+				    // remember the message as read
+				    if (bgwot.core.unseenmessage()) {
+		                bgwot.prefs.set("last_message", bgwot.core.usermessage.id);
+		            }
+			    },
+
+	            "mouseleave": function() {
+		            _rw.msg_timer = setTimeout(function (){
+			            $("#floating-message").fadeOut(200);
+		            },500);
+	            }
+		    });
+
+	    $("#floating-message").bind({
+		    "mouseenter": function() {
+			    if (_rw.msg_timer) clearTimeout(_rw.msg_timer);
+		    },
+
+		    "mouseleave": function() {
+			    if (_rw.msg_timer) clearTimeout(_rw.msg_timer);
+			    _rw.msg_timer = setTimeout(function (){
+				    $("#floating-message").fadeOut(200);
+			    },500);
+		    }
+	    });
+
         $(".rating-delete-icon, .rating-deletelabel").bind("click", _rw.rate_control.on_remove);
 
-        $("#user-comment").bind("change keyup", function() {
-            window.setTimeout(function(){
-                wot.ratingwindow.comments.update_hint();
+        $("#user-comment")
+	        .bind("change keyup", function(event) {
 
-                // set the timeout to update save button when user stops typing the comment
-                if (wot.ratingwindow.timer_save_button) {
-                    window.clearTimeout(wot.ratingwindow.timer_save_button);
-                }
-                wot.ratingwindow.timer_save_button = window.setTimeout(wot.ratingwindow.update_submit_button, 200);
+		        wot.ratingwindow.comments.update_caret(event, this);
 
-            }, 20);    // to react on any keyboard event after the text was changed
-        });
+	            window.setTimeout(function(){
+	                wot.ratingwindow.comments.update_hint();
+		            wot.ratingwindow.wg.update_wg_tags();
+
+	                // set the timeout to update save button when user stops typing the comment
+	                if (wot.ratingwindow.timer_save_button) {
+	                    window.clearTimeout(wot.ratingwindow.timer_save_button);
+	                }
+	                wot.ratingwindow.timer_save_button = window.setTimeout(function(){
+		                wot.ratingwindow.update_submit_button();
+	                }, 200);
+
+	            }, 20);    // to react on any keyboard event after the text was changed
+	        })
+	        .tagautocomplete({
+		        source: wot.ratingwindow.wg.suggest_tags,
+		        character: "#",
+		        items: 4,
+		        show: wot.ratingwindow.wg.show_tagautocomplete
+	        })
+	        .get(0).addEventListener("paste", _rw.comments.on_paste, false);   // overload the paste event
 
         // Rate mode event handlers
         $("#btn-comment").bind("click", _rw.on_comment_button);
@@ -1039,12 +1171,12 @@ $.extend(wot, { ratingwindow: {
 
 
         $("#comment-register-link").bind("click", function() {
-            wot.ratingwindow.navigate(wurls.signup, wurls.contexts.rwcommreg);
+            wot.ratingwindow.navigate(wurls.geturl(wurls.signup), wurls.contexts.rwcommreg);
         });
 
         $("#comment-captcha-link").bind("click", function() {
             if (wot.ratingwindow.current.target) {
-                wot.ratingwindow.navigate(wot.urls.scorecard +
+                wot.ratingwindow.navigate(wot.urls.geturl(wot.urls.scorecard) +
                     encodeURIComponent(wot.ratingwindow.current.target + "/rate"),
                     wurls.contexts.rwcaptcha, "rate");
             }
@@ -1082,6 +1214,8 @@ $.extend(wot, { ratingwindow: {
 
 		tts_wtip = tts_wtip && (wot.get_activity_score() < bg.wot.wt.activity_score_max);
 
+	    tts_wtip = tts_wtip && !wot.env.is_mailru_amigo;    // no tip for Amigo browser
+
         if (bg.wot.prefs.get("super_wtips")) tts_wtip = true;  // override by super-setting
 
 		if (tts_wtip) {
@@ -1095,7 +1229,10 @@ $.extend(wot, { ratingwindow: {
 			wt.save_setting("rw_shown_dt");
 		}
 
-        // increment "RatingWindow shown" counter
+	    // Web Guide initialization
+	    _rw.wg.init_handlers();
+
+	    // increment "RatingWindow shown" counter
         _rw.count_window_opened();
         bg.wot.core.badge.text = "";
         bg.wot.core.badge.type = null;
@@ -1105,7 +1242,18 @@ $.extend(wot, { ratingwindow: {
 //        if (bg.wot.core.badge_status && bg.wot.core.badge_status.type == wot.badge_types.notice.type) {
 //            bg.wot.core.set_badge(null, false);   // hide badge
 //        }
+
+	    _rw.wg.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
+	    _rw.wg.update_popular_tags();
     },
+
+	show_tiny_thankyou: function () {
+		$("#tiny-thankyou").fadeIn(500, function (){
+			window.setTimeout(function (){
+				$("#tiny-thankyou").fadeOut(1000);
+			}, 2000);
+		});
+	},
 
     on_comment_button: function (e) {
         var _rw = wot.ratingwindow;
@@ -1147,9 +1295,7 @@ $.extend(wot, { ratingwindow: {
         _rw.comments.update_hint();
 
         wot.ratingwindow.finishstate(false);
-
         wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_DELETEALL);
-
         _rw.modes.auto();   // switch RW mode according to current state
     },
 
@@ -1186,30 +1332,26 @@ $.extend(wot, { ratingwindow: {
     on_submit: function (e) {
 //        console.log("on_submit()");
 
-        if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
+	    if ($(e.currentTarget).hasClass("disabled")) return;    // do nothing is "Save" is not allowed
 
-        var _rw = wot.ratingwindow,
-	        bg = _rw.get_bg(),
-	        last_rated = 0 + bg.wot.core.last_testimony;    // remember the value before saving the testimony
+	    var _rw = wot.ratingwindow,
+		    bg = _rw.get_bg(),
+		    last_rated = 0 + bg.wot.core.last_testimony;    // remember the value before saving the testimony
 
-        wot.ratingwindow.finishstate(false);
-        if (_rw.delete_action) {
-            _rw.modes.auto();   // switch RW mode according to current state
-        } else {
-	        if (last_rated == 0 || (Date.now() - last_rated) > wot.TINY_THANKYOU_DURING) {
-		        // show full Thank You screen when last rating from the user was long time ago
-		        _rw.modes.thanks.activate();
-	        } else {
-		        // otherwise show tiny thank you
-		        _rw.modes.auto();
-		        $("#tiny-thankyou").fadeIn(500, function (){
-			        window.setTimeout(function (){
-				        $("#tiny-thankyou").fadeOut(1000);
-			        }, 2000);
-		        });
-	        }
-
-        }
+	    wot.ratingwindow.finishstate(false);
+	    if (_rw.delete_action) {
+		    _rw.modes.auto();   // switch RW mode according to current state
+	    } else {
+		    if ((last_rated == 0 || (Date.now() - last_rated) > wot.TINY_THANKYOU_DURING) &&
+			    !_rw.modes.is_current("wgcomment")) {
+			    // show full Thank You screen when last rating from the user was long time ago
+			    _rw.modes.thanks.activate();
+		    } else {
+			    // otherwise show tiny thank you
+			    _rw.modes.auto();
+			    _rw.show_tiny_thankyou();
+		    }
+	    }
     },
 
     on_thanks_ok: function () {
@@ -1295,7 +1437,6 @@ $.extend(wot, { ratingwindow: {
                 $_ratingarea = $("#ratings-area");
 
             if (mode == "unrated") {
-                var cached = _rw.getcached();
                 if (_rw.state.target) {
                     $_ratingarea.attr("disabled", null);
                 } else {
@@ -1360,7 +1501,7 @@ $.extend(wot, { ratingwindow: {
                     elems.indicator.attr("r", rep);
                     elems.data.attr("r", rep);
                 }
-                }
+            }
 
                 var helptext = wot.get_level_label(item.name, rep, true);
 
@@ -1391,44 +1532,118 @@ $.extend(wot, { ratingwindow: {
         current_mode: "",
 
         unrated: {
-            visible: ["#reputation-info", "#user-communication", ".user-comm-social"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", ".user-comm-social", "#main-area"],
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode unrated",
-            removeclass: "rated commenting thanks rate",
+            removeclass: "rated commenting thanks rate wgcommenting wgexpanded wgabout",
 
-            activate: function () {
-                if (!wot.ratingwindow.modes._activate("unrated")) return false;
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        before_show: function (prev_mode) {
+		        if (prev_mode) {
+			        $("#main-area")[0].style.height = null;
+		        }
+	        },
+
+	        before_hide: function (new_mode) {
+		        var $mainarea = $("#main-area");
+
+		        if (new_mode == "wgcomment") {
+			        $mainarea[0].style.height = wot.ratingwindow.modes.unrated.get_mainarea_height($mainarea);
+		        }
+	        },
+
+	        get_mainarea_height: function ($elem) {
+
+		        var e = $elem[0],
+			        rects = e.getClientRects(),
+			        rect = rects && rects.length ? rects[0] : {},
+			        h = rect.height || 0;
+
+		        return h + $("#ratings-area").height() - (wot.platform != "firefox"? 1 : 0) + "px";
+	        },
+
+            activate: function (force) {
+                if (!wot.ratingwindow.modes._activate("unrated", force) && !force) return false;
+
+	            var $rated_votes = $("#rated-votes"),
+		            show_comment_icon = $rated_votes.hasClass("commented");
+
+	            $rated_votes.toggle(show_comment_icon);
+	            $(".user-comm-activity").toggle(!show_comment_icon);
+
+	            wot.ratingwindow.wg.update_wg_visibility();
                 return true;
             }
         },
 
         rated: {
-            visible: ["#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social", "#main-area"],
             invisible: ["#rate-buttons", "#categories-selection-area",
-                "#commenting-area", "#thanks-area", "#ok-button"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode rated",
-            removeclass: "unrated commenting thanks rate",
+            removeclass: "unrated commenting thanks rate wgcommenting wgexpanded wgabout",
 
-            activate: function () {
-                if (!wot.ratingwindow.modes._activate("rated")) return false;
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        before_show: function (prev_mode) {
+		        if (prev_mode) {
+			        $("#main-area")[0].style.height = null;
+		        }
+	        },
+
+	        before_hide: function (new_mode) {
+		        var $mainarea = $("#main-area");
+
+		        if (new_mode == "wgcomment") {
+			        $mainarea[0].style.height = wot.ratingwindow.modes.unrated.get_mainarea_height($mainarea);
+		        }
+	        },
+
+            activate: function (force) {
+                if (!wot.ratingwindow.modes._activate("rated", force) && !force) return false;
+
+	            $(".user-comm-activity").hide(); // in rated mode never show activity score line
+
                 wot.ratingwindow.update_uservoted();
+	            wot.ratingwindow.wg.update_wg_visibility();
                 return true;
             }
         },
 
         rate: {
-            visible: ["#rate-buttons", "#categories-selection-area"],
+            visible: ["#ratings-area", "#rate-buttons", "#categories-selection-area", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "rate",
-            removeclass: "view-mode rated unrated commenting thanks",
+            removeclass: "view-mode rated unrated commenting thanks wgcommenting wgexpanded wgabout",
 
-            activate: function () {
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
 
-                if (!_rw.modes._activate("rate")) return false;
+                if (!_rw.modes._activate("rate", force) && !force) return false;
 
                 // "Comment" mode can be the first active mode in session, so we have to init things still.
                 if (prev_mode != "comment" || !_rw.cat_selector.inited) {
@@ -1452,17 +1667,25 @@ $.extend(wot, { ratingwindow: {
             }
         },
 
-        comment: { // Not implemented yet
-            visible: ["#rate-buttons", "#commenting-area", "#rated-votes"],
+        comment: { // Commenting during rating process
+            visible: ["#ratings-area", "#rate-buttons", "#commenting-area", "#rated-votes", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button"],
+                "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
             addclass: "commenting",
-            removeclass: "view-mode rated unrated rate thanks",
+            removeclass: "view-mode rated unrated rate thanks wgcommenting wgexpanded wgabout",
 
-            activate: function () {
+	        show_effect: {
+		        name: "fade",
+		        direction: "in"
+	        },
+
+	        show_duration: 100,
+	        hide_duration: 0,
+
+	        activate: function (force) {
                 var _rw = wot.ratingwindow,
                     prev_mode = _rw.modes.current_mode;
-                if (!wot.ratingwindow.modes._activate("comment")) return false;
+                if (!wot.ratingwindow.modes._activate("comment", force) && !force) return false;
 
                 // TODO: this piece of code is a duplication. Should be refactored.
                 if (prev_mode == "" || !_rw.cat_selector.inited) {
@@ -1474,6 +1697,9 @@ $.extend(wot, { ratingwindow: {
 	                _rw.update_catsel_state();  // update the category selector with current state
                 }
 
+		        // update side hint to the relevant hint
+		        $("#comment-side-hint").html(wot.i18n("ratingwindow", "commenthints"));
+
                 _rw.was_in_ratemode = true; // since in comment mode user is able to change rating, we should set the flag
                 _rw.comments.update_hint();
                 _rw.comments.update_button("comment", true);
@@ -1484,16 +1710,114 @@ $.extend(wot, { ratingwindow: {
             }
         },
 
-        thanks: {
-            visible: ["#thanks-area", "#rated-votes", "#ok-button"],
-            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#commenting-area", "#rate-buttons"],
-            addclass: "thanks view-mode",
-            removeclass: "rated unrated rate commenting",
+        wgcomment: { // Quick Comment mode for WebGuide feature
+            visible: ["#wg-area", "#commenting-area", "#main-area"],  // "#rate-buttons" will be shown after animation
+            invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
+                "#thanks-area", "#ok-button", "#rated-votes", "#wg-about-area"],
 
-            activate: function () {
+	        addclass: "wgcommenting",
+	        removeclass: "view-mode rated unrated rate thanks wgexpanded wgabout",
+
+	        show_effect: {
+		        name: "blind",
+		        direction: "down"
+	        },
+
+	        hide_effect: {
+		        name: null
+	        },
+
+	        show_duration: 200,
+	        hide_duration: 0,
+
+	        before_show: function () {
+	        },
+
+	        before_hide: function () {
+		        $("#rate-buttons").hide();
+	        },
+
+	        after_show: function () {
+		        $("#rate-buttons").show();
+	        },
+
+            activate: function (force) {
+                var _rw = wot.ratingwindow,
+                    prev_mode = _rw.modes.current_mode;
+                if (!wot.ratingwindow.modes._activate("wgcomment", force) && !force) return false;
+
+//	            $("#main-area")[0].style.height = null;
+
+				// update side hint to the relevant hint
+	            $("#comment-side-hint").html(wot.i18n("ratingwindow", "wgcommenthints"));
+
+	            _rw.was_in_ratemode = false; // user is commenting passing rating process
+                _rw.comments.update_hint();
+                _rw.update_submit_button();
+	            _rw.reveal_ratingwindow(true);
+                _rw.comments.focus();
+                return true;
+            }
+        },
+
+	    wgexpanded: { // Full view of WOT Groups feature
+		    visible: ["#wg-area", "#ratings-area" ],
+		    invisible: [ "#reputation-info", "#user-communication", "#categories-selection-area",
+			    "#thanks-area", "#ok-button", "#commenting-area", "#wg-about-area", "#ok-button"],
+
+		    addclass: "wgexpanded",
+		    removeclass: "rate thanks wgcommenting commenting wgabout",
+
+		    show_duration: 300,
+		    hide_duration: 0,
+
+		    before_show: function () {
+			    $("#main-area").hide({
+				    effect: "blind",
+				    direction: "up",
+				    duration: 500,
+				    easing: "easeOutQuart",
+				    complete: function () {
+				        $("#wg-tags").addClass("expanded");
+			        }
+			    });
+		    },
+
+		    before_hide: function () {
+			    $("#wg-expander").text(wot.i18n("wg", "expander"));
+			    $("#wg-tags").removeClass("expanded");
+		    },
+
+		    after_show: function () {
+		    },
+
+		    after_hide: function () {
+			    wot.ratingwindow.wg.update_wg_tags();
+		    },
+
+		    activate: function (force) {
+			    var _rw = wot.ratingwindow,
+				    prev_mode = _rw.modes.current_mode;
+			    if (!wot.ratingwindow.modes._activate("wgexpanded", force) && !force) return false;
+
+			    _rw.was_in_ratemode = false; // user is commenting passing rating process
+			    _rw.reveal_ratingwindow(true);
+			    $("#wg-expander").text(wot.i18n("wg", "expander_less"));
+
+			    return true;
+		    }
+	    },
+
+        thanks: {
+            visible: ["#thanks-area", "#ratings-area", "#rated-votes", "#ok-button", "#main-area"],
+            invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
+                "#commenting-area", "#rate-buttons", "#wg-area", "#wg-about-area"],
+            addclass: "thanks view-mode",
+            removeclass: "rated unrated rate commenting wgcommenting wgexpanded wgabout",
+
+            activate: function (force) {
                 var _rw = wot.ratingwindow;
-                if (!_rw.modes._activate("thanks")) return false;
+                if (!_rw.modes._activate("thanks", force) && !force) return false;
 
                 _rw.update_uservoted();
 
@@ -1509,39 +1833,98 @@ $.extend(wot, { ratingwindow: {
             }
         },
 
-        show_hide: function (mode_name) {
-            var _modes = wot.ratingwindow.modes;
-            var visible = _modes[mode_name] ? _modes[mode_name].visible : [];
-            var invisible = _modes[mode_name] ? _modes[mode_name].invisible : [];
+	    wg_about: {
+			// the explanation screen "What's this?" for WOT Groups
+		    visible: ["#wg-area", "#wg-about-area", "#ratings-area", "#main-area"],
+		    invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
+			    "#commenting-area", "#rate-buttons" ],
+		    addclass: "wgabout view-mode",
+		    removeclass: "rated unrated rate commenting thanks wgcommenting wgexpanded",
 
-            $(invisible.join(", ")).hide();
-            $("#wot-ratingwindow").addClass(_modes[mode_name].addclass).removeClass(_modes[mode_name].removeclass);
-            $(visible.join(", ")).show();
+		    before_hide: function (new_mode) {
+			    var $mainarea = $("#main-area");
+
+			    if (new_mode == "wgcomment") {
+				    $mainarea[0].style.height = wot.ratingwindow.modes.unrated.get_mainarea_height($mainarea);
+			    }
+		    },
+
+		    activate: function (force) {
+			    var _rw = wot.ratingwindow;
+			    if (!_rw.modes._activate("wg_about", force) && !force) return false;
+
+			    $("#main-area")[0].style.height = null;
+
+			    return true;
+		    }
+	    },
+
+        show_hide: function (mode_name) {
+            var _modes = wot.ratingwindow.modes,
+	            current_mode = _modes.current_mode,
+	            mode = _modes[mode_name],
+	            cmode = _modes[current_mode] || {};
+            var visible = mode ? mode.visible : [];
+            var invisible = mode ? mode.invisible : [];
+
+            if (cmode && typeof(cmode.before_hide) == "function") cmode.before_hide(mode_name);
+
+	        var hide_effect = cmode.hide_effect ? cmode.hide_effect.name : "fade",
+	            show_effect = mode.show_effect ? mode.show_effect.name : "fade",
+		        hide_params = cmode.hide_effect ? cmode.hide_effect : { direction: "out" },
+		        show_params = mode.show_effect ? mode.show_effect : { direction: "in"};
+
+			var hide_options = {
+				effect: hide_effect,
+				duration: cmode && cmode.hide_duration && current_mode !='' ? cmode.hide_duration : 0,
+				complete: function () {
+					if (current_mode && typeof(cmode.after_hide) == "function") cmode.after_hide(mode_name);
+
+					// then switch classes
+					$("#wot-ratingwindow").addClass(mode.addclass).removeClass(mode.removeclass);
+				}
+			};
+
+	        hide_options = $.extend(hide_options, hide_params);
+	        $(invisible.join(", ")).hide(hide_options);
+
+	        // then show new mode
+	        if (typeof(mode.before_show) == "function") mode.before_show(current_mode);
+
+	        var show_options = {
+		        effect: show_effect,
+		        duration: mode && mode.show_duration && current_mode != '' ? mode.show_duration : 0,
+		        complete: function () {
+			        if (typeof(mode.after_show) == "function") mode.after_show(current_mode);
+		        }
+	        };
+	        show_options = $.extend(show_options, show_params);
+	        $(visible.join(", ")).show(show_options);
         },
 
-        _activate: function (mode_name) {
+        _activate: function (mode_name, force) {
             /* Generic func to do common things for switching modes. Returns false if there is no need to switch the mode. */
 //            console.log("RW.modes.activate(" + mode_name + ")");
 
             var _rw = wot.ratingwindow;
-            if (_rw.modes.current_mode == mode_name) return false;
+            if (_rw.modes.current_mode == mode_name && !force) return false;
             _rw.modes.show_hide(mode_name);
             _rw.modes.current_mode = mode_name;
             _rw.rate_control.update_ratings_visibility(mode_name);
-            return true;
+	        return true;
         },
 
-        auto: function () {
+        auto: function (enforce) {
             var _rw = wot.ratingwindow;
 
             if (_rw.local_comment && _rw.local_comment.comment) {
-                _rw.modes.comment.activate();
+                _rw.modes.comment.activate(enforce);
             } else {
                 // If no locally saved comment exists, switch modes between Rated / Unrated
                 if (_rw.is_rated()) {
-                    _rw.modes.rated.activate();
+                    _rw.modes.rated.activate(enforce);
                 } else {
-                    _rw.modes.unrated.activate();
+                    _rw.modes.unrated.activate(enforce);
                 }
             }
         },
@@ -2056,7 +2439,6 @@ $.extend(wot, { ratingwindow: {
 		    // now take the most important warning according to defined priorities
 		    for (var p = 0; p < wot.cat_combinations_prio.length; p++) {
 			    if (warns[wot.cat_combinations_prio[p]]) {
-//				    console.log("returned", wot.cat_combinations_prio[p]);
 				    _this.is_illogical = wot.cat_combinations_prio[p];
 				    break;
 			    }
@@ -2101,14 +2483,46 @@ $.extend(wot, { ratingwindow: {
         is_banned: false,
         captcha_required: false,
         MIN_LIMIT: 30,
+        MIN_LIMIT_WG: 10,
+	    MIN_TAGS: 1,        // minimal amount of tags in the comment
+	    MAX_TAGS: 10,       // maximum amount of tags in the comment
         MAX_LIMIT: 20000,
-        is_changed: false,
         posted_comment: {},
+
+	    caret_left: null,
+		caret_top: null,
+		caret_bottom: null,
+	    AUTOCOMPLETE_OFFSET_X: -20,
+
+	    get_comment_value: function (need_html) {
+		    var $elem = $("#user-comment"),
+			    s = need_html ? $elem.html() : $elem.get(0).innerText; // this is different in FF
+
+		    s = typeof(s) == "string" ? s.trim() : "";
+
+		    return s;
+	    },
+
+		set_comment: function (text) {
+			$("#user-comment").get(0).innerText = text;
+		},
 
         is_commented: function() {
             // comment can be there, but it can be invalid (outside of limits restrictions, etc)
-            return ($("#user-comment").val().trim().length > 0);
+            return (wot.ratingwindow.comments.get_comment_value().length > 0);
         },
+
+	    is_changed: function () {
+		    var rw = wot.ratingwindow,
+			    _this = rw.comments,
+			    cached = rw.getcached(),
+			    prev_comment = "",
+			    current_comment = _this.get_comment_value();
+
+		    prev_comment = (cached.comment && cached.comment.comment) ? cached.comment.comment : "";
+
+		    return current_comment != prev_comment;
+		},
 
         get_comment: function (target) {
             var bg = wot.ratingwindow.get_bg(),
@@ -2123,26 +2537,67 @@ $.extend(wot, { ratingwindow: {
             // TODO: to be implemented when there will be a button "remove the comment" in UI
         },
 
+	    get_minlen: function (is_wg) {
+		    var _this = wot.ratingwindow.comments;
+		    return is_wg ? _this.MIN_LIMIT_WG : _this.MIN_LIMIT;
+	    },
+
+	    get_maxlen: function (is_wg) {
+		    var _this = wot.ratingwindow.comments;
+		    return _this.MAX_LIMIT;
+	    },
+
         update_hint: function () {
+	        // shows / hides a error hint if comment parameters don't fit our requirements
             var rw = wot.ratingwindow,
                 _this = rw.comments,
-                $_comment = $("#user-comment"),
                 $_hint = $("#comment-bottom-hint"),
-                len = $_comment.val().trim().length,
-                fix_len = 0,
+	            is_wg = wot.ratingwindow.modes.is_current("wgcomment") || rw.is_wg_allowed,
+	            is_wg_mode = wot.ratingwindow.modes.is_current("wgcomment"),
+	            len = _this.get_comment_value().length,
+                error_text = 0,
+	            errors = [],
                 cls = "";
 
-            if (len > 0 && len < _this.MIN_LIMIT) {
-                fix_len = String(len - _this.MIN_LIMIT).replace("-", "– "); // readability is our everything
-                cls = "error min"
-            } else if (len > _this.MAX_LIMIT) {
-                fix_len = len - _this.MAX_LIMIT;
-                cls = "error max"
-            } else {
-                // we could show here something like "looks good!"
+	        var _wg = rw.wg,
+		        tags = rw.is_wg_allowed ? _wg.get_tags() : [],    // count tags only if WG is enabled for the user
+		        tags_num = tags.length,
+		        valid_tagged = rw.is_wg_allowed && tags_num >= _this.MIN_TAGS;
+
+	        var min_len = _this.get_minlen(valid_tagged),
+		        max_len = _this.get_maxlen(valid_tagged);
+
+	        errors.push({ text: error_text, cls: cls });    // initial "no errors" state
+
+			if (len > 0 && len < min_len) {
+	            errors.push({
+		            text: String(len - min_len).replace("-", "&#8211; "), // readability is our everything
+		            cls: "error min"
+	            });
+            } else if (len > max_len) {
+	            errors.push({
+		            text: len - max_len,
+		            cls: "error max"
+	            });
             }
 
-            $_hint.attr("class", cls).text(fix_len);
+	        // in WG comment mode we check number of hashtags first
+	        if (is_wg_mode && len > 0) {
+		        if (tags_num < _this.MIN_TAGS) {
+			        errors.push({
+				        text: "&#8211; " + String(_this.MIN_TAGS - tags_num) + " #",
+				        cls: "error min"
+			        });
+		        } else if (tags_num > _this.MAX_TAGS) {
+			        errors.push({
+				        text: "> " + String(tags_num - _this.MIN_TAGS) + " #",
+				        cls: "error max"
+			        });
+		        }
+	        }
+
+            var err_to_show = errors.slice(-1)[0]; // take the last error to show
+	        $_hint.attr("class", err_to_show.cls).html(err_to_show.text);
         },
 
         update_button: function (mode, enabled) {
@@ -2172,19 +2627,42 @@ $.extend(wot, { ratingwindow: {
             $_button.toggle(!_this.is_banned);  // don't show this button to banned users
         },
 
-        set_comment: function (text) {
-            $("#user-comment").val(text);
-        },
-
         has_valid_comment: function () {
-            var comment = $("#user-comment").val().trim(),
-                _this = wot.ratingwindow.comments;
+            var _this = wot.ratingwindow.comments,
+	            _wg = wot.ratingwindow.wg,
+	            is_wgcommenting = wot.ratingwindow.is_wg_allowed,
+	            comment = _this.get_comment_value(),
+	            minlen = _this.get_minlen(false),
+	            minlen_withtags = _this.get_minlen(true),
+	            maxlen = _this.get_maxlen(false),
+	            maxlen_withtags = _this.get_maxlen(true);
 
-            return (comment.length >= _this.MIN_LIMIT && comment.length < _this.MAX_LIMIT);
+	        if (is_wgcommenting) {
+		        var tags = _wg.get_tags(comment);
+
+		        if (tags.length) {
+			        return (comment.length >= minlen_withtags &&
+				        comment.length < maxlen_withtags &&
+				        tags.length >= _this.MIN_TAGS &&
+				        tags.length <= _this.MAX_TAGS);
+		        }
+	        }
+
+	        // testing only length of text
+	        return (comment.length >= minlen && comment.length < maxlen);
         },
 
         focus: function () {
-            $("#user-comment").focus();
+	        setTimeout(function(){
+		        $("#user-comment").get(0).focus();
+	        }, 200);
+        },
+
+        show_normal_hint: function () {
+            $("#comment-register").hide();
+            $("#comment-captcha").hide();
+            $("#comment-side-hint").show();
+            $("#user-comment").removeClass("warning").attr("disabled", null);
         },
 
         show_register_invitation: function () {
@@ -2197,11 +2675,469 @@ $.extend(wot, { ratingwindow: {
             $("#comment-side-hint").hide();
             $("#user-comment").addClass("warning").attr("disabled", "1");
             $("#comment-captcha").show();
-        }
-    }
+        },
+
+	    update_caret: function (event, element) {
+		    var _this = wot.ratingwindow.comments,
+			    sel = window.getSelection(),
+			    range = sel.getRangeAt(0);
+
+		    if (!range) {
+			    _this.caret_top = null;
+			    _this.caret_left = null;
+			    return;
+		    }
+
+		    var cr = range.getClientRects();
+
+		    if (!cr || !cr[0] || cr[0].width !== 0) {   // width == 0 means there is no selected text but only caret position
+			    _this.caret_top = null;
+			    _this.caret_left = null;
+			    return;
+		    }
+
+		    _this.caret_left = cr[0].left;
+		    _this.caret_top = cr[0].top;// - parent.offsetTop + b.top;
+		    _this.caret_bottom = cr[0].bottom;// - parent.offsetTop + b.top;
+	    },
+
+	    on_paste: function (e) {
+		    // Use custom paste handler to get plain text content from clipboard and paste it to the current position
+		    document.execCommand('insertText', false, e.clipboardData.getData('text/plain'));
+		    e.preventDefault();
+	    }
+    },
+
+	wg: {   // WOT Groups functionality
+
+		init_handlers: function () {
+			var rw = wot.ratingwindow,
+				_this = rw.wg;
+
+			$(document).on("click", ".wg-tag", _this.navigate_tag);
+
+			$("#wg-change, #wg-addmore").on("click", function (e) {
+				rw.modes.wgcomment.activate();
+			});
+
+			$("#wg-about").on("click", function (e) {
+				rw.modes.wg_about.activate();
+			});
+
+			$("#wg-about-ok").on("click", function (e) {
+				rw.modes.auto();
+			});
+
+			$("#wg-about-learnmore").on("click", function (e) {
+				rw.navigate(wot.urls.wg_about, wot.urls.contexts.wg_about_learnmore)
+			});
+
+			$("#wg-expander")
+				.on("click", function () {
+					var $this = $(this);
+
+					if (wot.ratingwindow.modes.current_mode != "wgexpanded") {
+						$this.data("prev-mode", wot.ratingwindow.modes.current_mode);
+						rw.modes.wgexpanded.activate();
+					} else {
+						rw.modes[$this.data("prev-mode")].activate(true);
+					}
+
+				});
+
+			$(document).on("mouseenter", ".wg-tag.info", _this.on_info_tag_hover);
+			$(document).on("mouseleave", ".wg-tag.info", _this.on_info_tag_leave);
+			$(document).on("mouseenter", "#wg-viewer", _this.on_wgviewer_hover);
+			$(document).on("mouseleave", "#wg-viewer", _this.on_wgviewer_leave);
+
+		},
+
+		get_tags: function (text) {
+			var _comments = wot.ratingwindow.comments;
+			text = text ? text : _comments.get_comment_value();
+
+			return wot.tags.get_tags(text);
+		},
+
+		get_all_my_tags: function () {
+			// returns all user's tags
+
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
+
+			return bgwot.core.tags.mytags.map(function(item){
+				// update the "index" value of the tag (make it normalized)
+				item.value_indx = String(item.value).toLocaleLowerCase();
+				return item;
+			});
+		},
+
+		get_popular_tags: function () {
+
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
+
+			return bgwot.core.tags.popular_tags.map(function(item){
+				// update the "index" value of the tag (make it normalized)
+				item.value_indx = String(item.value).toLocaleLowerCase();
+				return item;
+			});
+		},
+
+		update_mytags: function (force) {
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
+
+			if (!force &&
+				bgwot.core.tags.mytags_updated !== null &&
+				bgwot.core.tags.MYTAGS_UPD_INTERVAL + bgwot.core.tags.mytags_updated > Date.now()) {
+				return false;
+			}
+
+			bgwot.api.tags.my.get_tags();
+		},
+
+		update_popular_tags: function (force) {
+			var rw = wot.ratingwindow,
+				bgwot = rw.get_bg("wot");
+
+			if (!force &&
+				bgwot.core.tags.popular_tags_updated !== null &&
+				bgwot.core.tags.POPULARTAGS_UPD_INTERVAL + bgwot.core.tags.popular_tags_updated > Date.now()) {
+				return false;
+			}
+
+			bgwot.api.tags.popular.get_tags();
+		},
+
+		is_group: function (tag) {
+			var _this = wot.ratingwindow.wg,
+				popular_groups = _this.get_popular_tags(),
+				res = popular_groups.filter(function(item){
+					if (item.value_indx == tag.toLocaleLowerCase()) return true;
+				});
+
+			return res.length > 0;
+		},
+
+		is_mytag: function (tag) {
+			var _this = wot.ratingwindow.wg,
+				tags = _this.get_tags(),
+				res = tags.filter(function(item){
+					if (item.value_indx == tag.toLocaleLowerCase()) return true;
+				});
+
+			return res.length > 0;
+		},
+
+		get_info: function (tag_value) {
+//			var infos = {
+//				"drupal": {
+//					info: "http://en.m.wikipedia.org/wiki/Drupal"
+//				},
+//				"programming": {
+//					info: "http://en.m.wikipedia.org/wiki/Computer_programming"
+//				},
+//				"finland": {
+//					info: "http://en.m.wikipedia.org/wiki/Finland"
+//				},
+//				"php": {
+//					info: "http://en.m.wikipedia.org/wiki/Php"
+//				},
+//				"javascript": {
+//					info: "http://en.m.wikipedia.org/wiki/Javascript"
+//				},
+//				"jquery": {
+//					info: "http://en.m.wikipedia.org/wiki/Jquery"
+//				},
+//				"opensource": {
+//					info: "http://en.m.wikipedia.org/wiki/Opensource"
+//				},
+//				"html": {
+//					info: "http://en.m.wikipedia.org/wiki/Html"
+//				},
+//				"ransomeware": {
+//					info: "http://en.m.wikipedia.org/wiki/Ransomware_(malware)"
+//				},
+//				"lapsi": {
+//					info: "http://en.m.wikipedia.org/wiki/Lapsi"
+//				},
+//				"cycling": {
+//					info: "http://en.m.wikipedia.org/wiki/Cycling"
+//				}
+//
+//			};
+//
+//			var ltag = tag_value ? tag_value.trim().toLowerCase() : null;
+//
+//			if (ltag) {
+//				return infos[ltag];
+//			}
+
+			return null;
+		},
+
+		navigate_tag: function (e) {
+			var _rw = wot.ratingwindow,
+				tag_text = $(this).text();
+
+			_rw.navigate(wot.urls.wg + "?query=" + tag_text, wot.urls.contexts.wg_tag);
+		},
+
+		on_info_tag_hover: function (e) {
+
+			var rw = wot.ratingwindow;
+
+			if (rw.wg_viewer_timer) {
+				window.clearTimeout(rw.wg_viewer_timer);
+			}
+
+			if (rw.wg_infotag_timer) window.clearTimeout(rw.wg_infotag_timer);
+
+			var $this = $(this);
+
+			rw.wg_infotag_timer = window.setTimeout(function() {
+				var $wgviewer = $("#wg-viewer"), $viewer_frame = $("#wg-viewer-frame");
+				var info = $this.data("wg-info");
+
+				$viewer_frame.attr("src", info);
+
+				$wgviewer.show();
+
+				$viewer_frame
+					.toggleClass("mini", !$viewer_frame.hasClass("shown"))
+					.show({ duration: 0, complete: function () {
+						setTimeout(function (){
+							$viewer_frame
+								.removeClass("mini")
+								.addClass("shown");
+
+						}, 200);
+					} });
+			}, 1000);   // wait a bit to avoid unnecessary showing
+
+		},
+
+		on_info_tag_leave: function () {
+
+			var rw = wot.ratingwindow;
+
+			if (rw.wg_viewer_timer) {
+				window.clearTimeout(rw.wg_viewer_timer);
+			}
+
+			if (rw.wg_infotag_timer) window.clearTimeout(rw.wg_infotag_timer);
+
+			rw.wg_viewer_timer = window.setTimeout(function (){
+				$("#wg-viewer").hide();
+				$("#wg-viewer-frame").removeClass("mini shown");
+			}, 300);
+		},
+
+		on_wgviewer_hover: function () {
+			if (wot.ratingwindow.wg_viewer_timer) {
+				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			}
+		},
+
+		on_wgviewer_leave: function () {
+			if (wot.ratingwindow.wg_viewer_timer) {
+				window.clearTimeout(wot.ratingwindow.wg_viewer_timer);
+			}
+
+			wot.ratingwindow.wg_viewer_timer = window.setTimeout(function (){
+				$("#wg-viewer").hide();
+				$("#wg-viewer-frame").removeClass("mini shown");
+			}, 300);
+		},
+
+		update_wg_visibility: function () {
+			var _this = wot.ratingwindow,
+				$rw = $("#wot-ratingwindow"),
+				$wg_area = $("#wg-area");
+
+			$rw.toggleClass("wg", _this.is_wg_allowed);
+
+			if (_this.is_wg_allowed) {
+				var visible = !$rw.hasClass("commenting") && !$rw.hasClass("thanks") && !$rw.hasClass("rate");
+				$wg_area.toggle(visible);
+			} else {
+				$wg_area.hide();
+			}
+		},
+
+		suggest_tags: function () {
+			// autocomplete feature for WG comment
+			// TODO: enable only if WG is enabled
+
+			var rw = wot.ratingwindow,
+				_wg = rw.wg,
+				tags_ac = [];
+
+			if (rw.is_wg_allowed) {
+
+				var mytags = _wg.get_all_my_tags(),
+					popular_tags = _wg.get_popular_tags();
+
+				// make a tag list from tags assigned to the website
+				tags_ac = rw.tags.map(function(item){
+					return item.value;
+				});
+
+				// add all user's tags if they are not in the list yet
+				tags_ac = tags_ac
+					.concat(
+						mytags
+							.map(function(item){
+								return item.value;
+							})
+							.filter(function (el, index, arr) {
+								return (tags_ac.indexOf(el) < 0);
+							}));
+
+				// then add all popular tags if they are not in the list yet (this is why this concat is separated from above)
+				tags_ac = tags_ac
+					.concat(
+						popular_tags
+							.map(function(item){
+								return item.value;
+							})
+							.filter(function (el, index, arr) {
+								return (tags_ac.indexOf(el) < 0);
+							})
+					);
+
+//				tags_ac.sort();
+
+				tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
+
+//			console.log(tags_ac);
+			}
+
+			return tags_ac;
+		},
+
+		update_wg_tags: function () {
+			var rw = wot.ratingwindow,
+				_wg = rw.wg,
+				mytags = _wg.get_tags(),    // get list of user tags for the current website
+				$tags = $("#wg-tags"),
+				tagmap = [
+					{ list: mytags },
+					{ list: rw.tags, group: true }
+				],
+				has_tags = 0,
+				prev = {};
+
+			$tags.empty();  // clean the tags' section
+
+			for (var i = 0; i < tagmap.length; i++) {
+				var list = tagmap[i].list;
+
+				for (var j = 0; j < list.length; j++) {
+
+					var $tag, info,
+						tag = list[j],
+						tag_value = tag.value,
+						tag_value_indx = tag_value.toLocaleLowerCase();
+
+					if (prev[tag_value_indx]) continue;  // don't show one tag more than one time (if it was in mytags list)
+
+					$tag = $("<li></li>")
+						.addClass("wg-tag")
+						.toggleClass("group", tagmap[i].group || _wg.is_group(tag_value))
+						.toggleClass("mytag", _wg.is_mytag(tag_value));
+
+					info = _wg.get_info(tag_value);
+
+					if (info) {
+						// this is a group with additional info linked
+						var $tag_inner = $("<span></span>");
+						$tag_inner.text(tag_value);
+						$tag
+							.append($tag_inner)
+							.addClass("info")
+							.data("wg-info", info.info);
+
+					} else {
+						$tag.text(tag_value);   // this is generic tag/group
+					}
+
+
+					$tags.append($tag);
+					prev[tag_value_indx] = true;         // remember that we showed the tag
+				}
+
+			}
+
+			has_tags = $tags.children().length > 0;
+
+			var $wg_edit = $("#wg-change"),
+				$wg_addmore = $("#wg-addmore");
+
+			$wg_edit.text( mytags.length > 0 ? wot.i18n("wg", "edit") : wot.i18n("wg", "add") );
+			$wg_addmore.toggleClass("hidden", has_tags);
+			$tags.toggle(has_tags);
+
+			var e_tags = $tags.get(0);
+			var is_partially = e_tags && e_tags.scrollHeight > e_tags.clientHeight; // test whether there are tags that don't fit
+
+			$("#wg-expander").toggleClass("hidden", !is_partially);
+		},
+
+		show_tagautocomplete: function () {
+
+			var _comments = wot.ratingwindow.comments;
+
+			var top, left,
+				pos = this.$element.position(),
+				area_height = this.$element[0].offsetHeight,
+				area_width = this.$element[0].offsetWidth;
+
+			if (_comments.caret_left == null || _comments.caret_bottom == null) {
+				top = pos.top;
+				left = pos.left;
+			} else {
+				top = _comments.caret_bottom;
+				left = _comments.caret_left + _comments.AUTOCOMPLETE_OFFSET_X;
+
+				// TODO: ajust the position on the edges
+			}
+
+			this.$menu
+				.appendTo('body')
+				.show()
+				.css({
+					position: "absolute",
+					top: "99999px",
+					left: "99999px"
+				});
+
+			// adjust position and avoid going beyond the right and bottom edges of the text area
+			var popup_height = this.$menu.height(),
+				popup_width = this.$menu.width();
+
+			if (left + popup_width > pos.left + area_width) {
+				left = pos.left + area_width - popup_width;
+			}
+
+			if (top + popup_height > pos.top + area_height) {
+				top = _comments.caret_top - popup_height - 20;
+			}
+
+			this.$menu.css({
+				top: top + "px",
+				left: left + "px"
+			});
+
+			this.shown = true;
+			return this;
+		}
+	}   // End of wg object
 
 }});
 
+// Remove this part in Firefox when merging the code
 $(document).ready(function() {
     wot.ratingwindow.onload();
 });

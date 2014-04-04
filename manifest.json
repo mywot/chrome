@@ -1,6 +1,6 @@
 {
 	"name": "WOT",
-	"version": "2.4.5",
+	"version": "2.5.13",
 	"manifest_version": 2,
 	"minimum_chrome_version": "18",
 	"default_locale": "en",
@@ -28,7 +28,6 @@
 	"content_security_policy": "style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; script-src 'self' https://ssl.google-analytics.com; object-src 'self'; img-src *",
 	"web_accessible_resources" : [
 		"content/warning.html",
-		"widgets/featured-01.html",
 		"widgets/surveys.html",
 		"skin/include/popup.css",
 		"skin/include/warning.css",
@@ -55,6 +54,8 @@
 		"skin/fusion/accessible/16_16/plain/r3.png",
 		"skin/fusion/accessible/16_16/plain/r4.png",
 		"skin/fusion/accessible/16_16/plain/r5.png",
+		"skin/fusion/16_16/plain/lock.png",
+		"skin/fusion/16_16/plain/locked.png",
 		"skin/fusion/16_16/plain/r0.png",
 		"skin/fusion/16_16/plain/r1.png",
 		"skin/fusion/16_16/plain/r2.png",
@@ -86,8 +87,7 @@
 				"content/popup.js",
 				"content/search.js",
 				"content/welcome_tips.js",
-				"content/surveys.js",
-				"content/featured.js"
+				"content/surveys.js"
 			],
 			"run_at": "document_start",
 			"all_frames": true
