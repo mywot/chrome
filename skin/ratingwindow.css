@@ -274,16 +274,17 @@ textarea {
     text-decoration: underline;
 }
 
-.unregistered #wot-header-link-profile {
-    color: #727272;
-    background-color: #E7F1FF;
-    border-radius: 5px;
-    padding: 2px 0.6em 0;
-}
-
 #header-link-profile-text {
     display: inline-block;
 }
+
+.unregistered #header-link-profile-text {
+    color: #727272;
+    background-color: #E7F1FF;
+    border-radius: 5px;
+    padding: 2px 0.6em 2px;
+}
+
 
 #header-boardmsg {
     background-color: #FF4C4C;
