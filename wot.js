@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20140403,
+	version: 20140408,
 	platform: "chrome",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -993,7 +993,7 @@ var wot = {
     },
 
 	tags: {
-		tags_re: /(\s|^)#([a-zä-ö0-9\u0400-\u04FF]{2,})/img,
+		tags_re: /(\s|^)#([a-z0-9\u0400-\u04FF\u00E4\u00F6]{2,})/img,
 		tags_validate_re: /^\d{2}$/im,
 
 		get_tags: function (text) {
