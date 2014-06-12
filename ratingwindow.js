@@ -485,9 +485,8 @@ $.extend(wot, { ratingwindow: {
         $(".wot-user").hide();
 
         // TODO: rewrite below: use activity score stored in Prefs instead.
-        var index = 0,
+        var user_header,
             item = (bg.wot.core.usercontent && bg.wot.core.usercontent.length > 0) ? bg.wot.core.usercontent[0] : {},
-            user_header = wot.i18n("activityscore","text"),
             user_as = 0,
             $_user_text = $("#wot-user-0-text"),
             as_notice = wot.i18n("activityscore", "next");
@@ -503,11 +502,15 @@ $.extend(wot, { ratingwindow: {
 
         as_notice = as_notice.replace("{NEXT_LEVEL}", level_name);
 
-        $("#wot-user-0-header").text(wot.i18n("activityscore", "text"));
-        $("#user-activityscore").text(user_as);
+	    var as_html = '<span id="user-activityscore">' + user_as + '</span>';
+	    user_header = wot.i18n("activityscore","text").replace("{SCORE}", as_html);
 
-        $(".thanks-activityscore-text").text(user_header); // on the "Thank you" screen
-        $(".thanks-activityscore-number").text(user_as);   // on the "Thank you" screen
+        $("#wot-user-0-header").html(user_header);
+
+	    var as_html_thankyou = '<span class="thanks-activityscore-number">' + user_as + '</span>';
+	    var thank_your_as = wot.i18n("activityscore","text").replace("{SCORE}", as_html_thankyou);
+        $(".thanks-activityscore-text").html(thank_your_as); // on the "Thank you" screen
+
         $(".thanks-ratemore").html(as_notice || "");     // on the "Thank you" screen
 
         $_user_text.attr("url", item.url || "");
@@ -523,8 +526,9 @@ $.extend(wot, { ratingwindow: {
             $("#wot-user-0").css("display", "block");
         }
 
-	    _this.wg.update_wg_visibility();
-	    _this.wg.update_wg_tags();
+	    // WOT Groups feature discontinued: commented out the code below
+//	    _this.wg.update_wg_visibility();
+//	    _this.wg.update_wg_tags();
 
     },
 

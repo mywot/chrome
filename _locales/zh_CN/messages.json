@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "您的最新活动分数为",
+        "message": "您的最新活动分数为 {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

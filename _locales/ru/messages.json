@@ -317,7 +317,7 @@
         "message": "Спасибо за ваше мнение!"
     },
     "activityscore_text": {
-        "message": "Ваша оценка активности – "
+        "message": "Ваша оценка активности – {SCORE}"
     },
     "activityscore_rookie": {
         "message": "новичок"

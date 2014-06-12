@@ -394,7 +394,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "您目前的活躍等級是",
+        "message": "您目前的活躍等級是 {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

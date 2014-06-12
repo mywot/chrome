@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "당신의 활동점수는 이제 [score] 점입니다",
+        "message": "당신의 활동점수는 {SCORE} 점입니다",
         "description": ""
     },
     "activityscore_rookie": {
