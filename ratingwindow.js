@@ -1247,8 +1247,8 @@ $.extend(wot, { ratingwindow: {
 //            bg.wot.core.set_badge(null, false);   // hide badge
 //        }
 
-	    _rw.wg.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
-	    _rw.wg.update_popular_tags();
+//	    _rw.wg.update_mytags();  // fetch user's tags whether they are not loaded yet or expired
+//	    _rw.wg.update_popular_tags();
     },
 
 	show_tiny_thankyou: function () {
