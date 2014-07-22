@@ -20,7 +20,7 @@
 
 $.extend(wot, { url: {
 	host: {
-		//----11111-----233333445555543332666666666666666666666666666666666666662227788888729999
+		//----11111-----23333333344555555543332666666666666666666666666666666666666662227788888729999
 		re: /^(\w+):\/\/(([^:@]+)(:([^@]+))?@)?([^:\/\?&=#\[\]]+|\[[^\/\?&=#\[\]]+\])\.?(:(\d+))?(.*)$/,
 		host: 6,
 		path: 9
@@ -71,11 +71,18 @@ $.extend(wot, { url: {
 		try {
 			url = url.replace(/^\s*/, "").replace(/\s*$/, "");
 
+			var host, path,
+				parser = document.createElement('a');
+
+			parser.href = url;
+			host = parser.hostname;
+
+
 			if (this.issupportedscheme(url)) {
 				var match = this.host.re.exec(url);
 
-				if (match && match[this.host.host]) {
-					var host = wot.idn.toascii(match[this.host.host]);
+				if (match && host) {
+					host = wot.idn.toascii(host);
 
 					while (this.isequivalent(host)) {
 						host = this.getparent(host);
@@ -86,6 +93,7 @@ $.extend(wot, { url: {
 					}
 				}
 			}
+
 		} catch (e) {
 			console.log("url.gethostname: failed with " + e + "\n");
 		}
