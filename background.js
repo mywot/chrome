@@ -1,6 +1,6 @@
 /*
 	background.js
-	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2015  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -20,6 +20,7 @@
 
 $.extend(wot, { core: {
 	usermessage: {},
+	fetching: false,
 	usercontent: [],
 	activity_score: 0,
 	badge_status: null,
@@ -29,6 +30,7 @@ $.extend(wot, { core: {
         type: null,
         text: ""
     },
+    loc_map :{},
 	last_testimony: null,   // datetime of the last testimony submitted
 
 	tags: {
@@ -904,6 +906,13 @@ $.extend(wot, { core: {
 //		}
 	},
 
+    fetch:function(tab) {
+       	var port = chrome.tabs.connect(tab.id, { name: "warning" });
+		port.postMessage({
+			message: "loc:check"
+		});
+	},
+
 	onload: function()
 	{
 		try {
@@ -918,23 +927,27 @@ $.extend(wot, { core: {
 
 			wot.bind("message:search:hello", function(port, data) {
 
-				var lock_state = null,
-					unlock_price = null;
-
-				if (wot.payments) {
-					lock_state = wot.payments.get_feature_status("search-icons");
-					unlock_price = wot.payments.get_price("search-icons");
-				}
-
 				wot.core.processrules(data.url, function(rule) {
 					port.post("process", {
 						url: data.url,
-						rule: rule,
-						lock_state: lock_state,
-						unlock_price: unlock_price
+						rule: rule
 					});
 				});
 			});
+
+			wot.bind("message:search:check", function(port, data) {
+
+				if (data.top && data.visible != "prerender") { // analize only main window and ignore frames
+					try {
+						wot.stats.loc(data.url, data.referrer);
+					} catch (e) {
+						console.error('Exception in stats.loc captured:');
+						console.error(e);
+					}
+				}
+				wot.core.fetching = false;
+			});
+
 
 			wot.bind("message:search:get", function(port, data) {
 				wot.core.loadratings(data.targets, function(hosts) {
@@ -1019,24 +1032,6 @@ $.extend(wot, { core: {
 				wot.core.open_scorecard(data.target, data.ctx);
 			});
 
-			wot.bind("message:search:openunlocker", function(port, data) {
-				if (wot.payments) {
-					wot.payments.open_unlocker(data);
-				}
-			});
-
-			wot.bind("message:search:premium-tos", function(port, data) {
-				if (wot.payments) {
-					wot.payments.open_premium_tos(data);
-				}
-			});
-
-			wot.bind("message:search:premium-readmore", function(port, data) {
-				if (wot.payments) {
-					wot.payments.open_premium_readmore(data);
-				}
-			});
-
 			wot.bind("message:search:ratesite", function(port, data) {
 				wot.core.open_scorecard(data.target, data.ctx, "rate");
 			});
@@ -1045,12 +1040,6 @@ $.extend(wot, { core: {
 				port.post("setcookies", {
 					cookies: wot.api.processcookies(data.cookies) || []
 				});
-            });
-
-			wot.bind("message:my:payment_approved", function(port, data) {
-				window.setTimeout(function(){
-					wot.cache.clearall();
-				}, 300);
             });
 
 			wot.bind("message:tags:clearmytags", function(port, data) {
@@ -1065,16 +1054,64 @@ $.extend(wot, { core: {
 				wot.wt.bind_events();
 			}
 
-			wot.listen([ "search", "my", "tab", "warnings", "tags", "wtb", "surveyswidget", "ads" ]);
+			wot.listen([ "search", "my", "tab", "warnings", "tags", "wtb", "surveyswidget" ]);
 
 			/* event handlers */
 
-			chrome.tabs.onUpdated.addListener(function(id, obj) {
+			chrome.tabs.onUpdated.addListener(function(id, changeInfo, tab) {
 				wot.core.updatetab(id, true);
+				if (changeInfo.status == 'complete') {
+					if(wot.stats.isWebURL(tab.url)) {
+						wot.core.loc_map[id] = tab.url;
+	                    wot.core.fetching = true;
+	                    wot.core.fetch(tab);
+	               }
+	           }
 			});
 
-			chrome.tabs.onSelectionChanged.addListener(function(id, obj) {
+			chrome.tabs.onReplaced.addListener(function(addedTabId, removedTabId){
+				wot.core.fetching = true;
+				var tab = chrome.tabs.get(addedTabId, function(tab) {
+					if(wot.stats.isWebURL(tab.url)) {
+						wot.core.loc_map[addedTabId] = tab.url;
+						if(typeof (wot.core.loc_map[removedTabId]) != 'undefined'){
+							delete wot.core.loc_map[removedTabId];
+						}
+						wot.core.fetch(tab);
+					}
+				});
+			});
+
+			chrome.tabs.onActivated.addListener(function(info) {
+				if(!wot.core.fetching) {
+					var tab = chrome.tabs.get(info.tabId, function(tab) {
+						if(wot.stats.isWebURL(tab.url)) {
+							if(typeof (wot.core.loc_map[info.tabId]) != 'undefined'){
+								wot.stats.focus(tab.url);
+							}
+
+						}
+					});
+				}
+			});
+
+			chrome.tabs.onSelectionChanged.addListener(function(id, selectInfo) {
 				wot.core.updatetab(id, true);
+				if(!wot.core.fetching) {
+					chrome.tabs.get(id, function(tab) {
+						if(wot.stats.isWebURL(tab.url)) {
+							if(typeof (wot.core.loc_map[id]) != 'undefined'){
+								wot.stats.focus(tab.url);
+							}
+						}
+					});
+				}
+			});
+
+			chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
+				if(typeof (wot.core.loc_map[id]) != 'undefined'){
+					delete wot.core.loc_map[id];
+				}
 			});
 
 			wot.core.createmenu();
@@ -1097,7 +1134,6 @@ $.extend(wot, { core: {
 				wot.core.update(true);
 
 				if (wot.api.isregistered()) {
-					if (wot.payments) wot.payments.load_config();   // init paid features offer
 					wot.core.welcome_user();
 					wot.api.update();
 					wot.api.processpending();       // submit

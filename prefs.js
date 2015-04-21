@@ -66,7 +66,11 @@ $.extend(wot, { prefs: {
 
         settingsui_warnlevel:   "normal",   // this is should not be considered by the add-on. Only to render prefs on the settings page
         settingsui_parental:    false,
-        settingsui_searchlevel: "normal"
+        settingsui_searchlevel: "normal",
+        stats_uid: 				"",
+        stats_sess: 			"",
+        stats_installtime: 		"",
+        stats_settings: 		""
     },
 
 	set: function(name, value)

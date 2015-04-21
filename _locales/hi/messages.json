@@ -1,0 +1,487 @@
+{
+    "locale": {
+        "message": "hi"
+    },
+    "lang": {
+        "message": "hi-IN"
+    },
+    "ext_description": {
+        "message": "WOT करोड़ों उपयोगकर्ताओं के अनुभवों के आधार पर विश्वसनीय वेबसाइट पाने में आपकी सहायता करता है और यह क्रोम के सबसे लोकप्रिय एड-ऑन में से एक है।"
+    },
+    "components_0": {
+        "message": "विश्वसनीयता"
+    },
+    "components_4": {
+        "message": "बाल सुरक्षा"
+    },
+    "components__short_0": {
+        "message": "विश्वसनीयता"
+    },
+    "components__short_4": {
+        "message": "बाल सुरक्षा"
+    },
+    "reputationlevels_r0": {
+        "message": "अज्ञात"
+    },
+    "reputationlevels_r1": {
+        "message": "अत्यंत खराब"
+    },
+    "reputationlevels_r2": {
+        "message": "खराब"
+    },
+    "reputationlevels_r3": {
+        "message": "असंतोषजनक"
+    },
+    "reputationlevels_r4": {
+        "message": "अच्छा"
+    },
+    "reputationlevels_r5": {
+        "message": "उत्कृष्ट"
+    },
+    "messages_initializing": {
+        "message": "WOT शुरू हो रहा है..."
+    },
+    "messages_notready": {
+        "message": "WOT सक्रिय हो रहा है ..."
+    },
+    "messages_failed": {
+        "message": "रेटिंग लोड करने में विफल; शीघ्र पुन: प्रयास करेंगे"
+    },
+    "messages_notavailable": {
+        "message": "रेटिंग उपलब्ध नहीं हैं"
+    },
+    "messages_loading": {
+        "message": "रेटिंग लोड हो रहे हैं ..."
+    },
+    "ratingwindow_settings": {
+        "message": "सेटिंग्स"
+    },
+    "ratingwindow_guide": {
+        "message": "यात्रा"
+    },
+    "ratingwindow_forum": {
+        "message": "फोरम"
+    },
+    "ratingwindow_profile": {
+        "message": "मेरा प्रोफाइल"
+    },
+    "ratingwindow_wotrating": {
+        "message": "WOT उपयोगकर्ता कहते हैं"
+    },
+    "ratingwindow_myrating": {
+        "message": "मेरी रेटिंग"
+    },
+    "ratingwindow_viewscorecard": {
+        "message": "विवरण और टिप्पणियां देखें"
+    },
+    "ratingwindow_addcomment": {
+        "message": "एक टिप्पणी जोड़ें"
+    },
+    "ratingwindow_editcomment": {
+        "message": "टिप्पणी संपादित करें"
+    },
+    "ratingwindow_backtoratings": {
+        "message": "कारणों पर वापस जाएं"
+    },
+    "ratingwindow_backtoratings_category": {
+        "message": "एक कारण चुनें"
+    },
+    "ratingwindow_newversion": {
+        "message": "नया वर्शन उपलब्ध है - अपडेट करने के लिए क्लिक करें"
+    },
+    "ratingwindow_invite_rw": {
+        "message": "इस टूल के इस्तेमाल से आप वेबसाइटों को रेटिंग दे सकते हैं। आप किसी वेबसाइट पर कितना विश्वास करते हैं उसे व्यक्त करने के लिए रंगीन बार पर क्लिक करें।"
+    },
+    "warnings_information": {
+        "message": "विवरण और टिप्पणियां देखें"
+    },
+    "warnings_ratesite": {
+        "message": "अगर आप इस साइट पर विश्वास करते हैं तो कृपया <a>इसे रेट करें</a>"
+    },
+    "warnings_reratesite": {
+        "message": "अगर आप इस साइट को पुन:रेट करना चाहते हैं तो <a>यहाँ क्लिक करें</a>"
+    },
+    "warnings_reputation": {
+        "message": "उपयोगकर्ता रेटिंग के अनुसार इस वेबसाइट की <br/>विश्वसनीयता अच्छी नहीं है"
+    },
+    "warnings_rating": {
+        "message": "आपने इस वेबसाइट को खराब रेटिंग दी है जिससे <br/>एक चेतावनी सक्रिय हुई"
+    },
+    "warnings_unknown": {
+        "message": "इस साइट की रेटिंग अज्ञात है"
+    },
+    "warnings_warning": {
+        "message": "चेतावनी!"
+    },
+    "warnings_goto": {
+        "message": "साइट पर जाएं"
+    },
+    "warnings_leave": {
+        "message": "निकास"
+    },
+    "warnings_back": {
+        "message": "वापस जाएं"
+    },
+    "warnings_reasontitle": {
+        "message": "उपयोगकर्ताओं ने निम्नलिखित मामलों को चिह्नित किया है"
+    },
+    "warnings_othersreasontitle": {
+        "message": "दूसरे उपयोगकर्ताओं की राय"
+    },
+    "warnings_noreasontitle": {
+        "message": "उपयोगकर्ताओं ने अभी तक इस साइट को चिह्नित नहीं किया है और केवल इसे रेट किया है "
+    },
+    "contextmenu_open_scorecard": {
+        "message": "WOT स्कोरकार्ड खोलें"
+    },
+    "wt_learnmore_link": {
+        "message": "<a id='wt-learnmore-link'>WOT के बारे में</a> और अधिक जानें।"
+    },
+    "wt_intro_0_msg": {
+        "message": "<img src='{ADDON_BASEURI}skin/b/welcometips/wt_intro_0.png' width='196px' height='40px'/><p>नया WOT आपके ब्राउज़र में जोड़ दिया गया है।</p><p>वेबसाइटों को रेट देने के लिए इस आइकन पर क्लिक करें{ICO1}</p><p>{WT_LEARNMORE}</p>",
+        "description": "This message appears on introduction welcome tip right after the add-on was installed"
+    },
+    "wt_intro_0_btn": {
+        "message": "ठीक है, समझ लिया"
+    },
+    "wt_warning_text": {
+        "message": "<p>WOT आपको तब चेतावनी देता है जब आप ऐसी साइट पर जाते हैं जो दूसरे उपयोगकर्ताओं की रेटिंग या तृतीय पक्षों की कालीसूचियों के आधार पर खराब विश्वसनीयता वाली साइट हो।</p><p>यह चेतावनी आपको खराब विश्वसनीयता के पीछे के कारणों को भी दर्शाती है।</p><p>{WT_LEARNMORE}</p><p>अगर आप चेतावनियों को नहीं देखना चाहते हैं तो आप उन्हें ऑफ कर सकते हैं।</p>",
+        "description": "this is a WelcomeTip which is shown when a user sees Warning first time"
+    },
+    "wt_warning_turnoff": {
+        "message": "चेतावनियों को ऑफ करें"
+    },
+    "wt_warning_ok": {
+        "message": "ठीक है, समझ लिया"
+    },
+    "wt_rw_text_hdr": {
+        "message": "अपने अनुभवों को साझा करें!"
+    },
+    "wt_rw_text": {
+        "message": "<p>WOT रेटिंग़ विंडो आपको दूसरे उपयोगकर्ताओं के अनुभवों के आधार पर वेबसाइट की विश्वसनीयता को दर्शाता है।</p><p>अब आप अद्यतन विंडो से सीधे रेट कर सकते हैं और टिप्पणी दे सकते हैं।</p><p>रंगीन बार पर क्लिक करके रेटिंग देना शुरू करें।</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a>WOT के बारे में</p>"
+    },
+    "wt_donut_msg": {
+        "message": "<p>WOT आपको ट्रैफिक लाइट-संकेत आइकन दिखाकर दूसरे उपयोगकर्ताओं के अनुभवों के आधार पर वेबसाइट की विश्वसनीयता को दर्शाता है।</p><p>विश्वसनीयता और उसके पीछे के कारण को देखने के लिए आइकन के ऊपर माउस को घुमाएं।</p>"
+    },
+    "wt_donut_btn": {
+        "message": "ठीक है, समझ लिया"
+    },
+    "fbl_hideforever": {
+        "message": "हमेशा के लिए छिपाएं"
+    },
+    "fbl_submit": {
+        "message": "जमा करें"
+    },
+    "fbl_whatisthis": {
+        "message": "यह क्या है?"
+    },
+    "fbl_optout_text": {
+        "message": "अगर आप प्रश्नों का पूछा जाना पसंद नहीं करते हैं तो *हाँ* पर क्लिक करें"
+    },
+    "fbl_optout_yes": {
+        "message": "हाँ"
+    },
+    "fbl_optout_no": {
+        "message": "नहीं"
+    },
+    "fbl_whatisthis_text": {
+        "message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>वेब ऑफ ट्रस्ट (WOT)</a> करोड़ों उपयोगकर्ताओं के लिए पूरी वेबा दुनिया में सुरक्षा और गुणवत्ता को बढ़ावा देने के लिए काम कर रहा है। आप जब भी इस प्राम्प्ट को देखते हैं, अपनी राय प्रस्तुत करके सहायता कर सकते हैं।"
+    },
+    "fbl_final": {
+        "message": "धन्यवाद!"
+    },
+    "fbl_this_website": {
+        "message": "यह वेबसाइट"
+    },
+    "fbl_dismiss": {
+        "message": "खारिज करें"
+    },
+    "ratingwindow_question0": {
+        "message": "आप इस साइट पर कितना विश्वास करते हैं?"
+    },
+    "ratingwindow_question4": {
+        "message": "बच्चों के लिए यह वेबसाइट कितनी उपयुक्त है?"
+    },
+    "ratingwindow_categories": {
+        "message": "कम-से-कम एक कारण दें"
+    },
+    "ratingwindow_comment": {
+        "message": "एक टिप्पणी दें"
+    },
+    "ratingwindow_comment_placeholder": {
+        "message": "यहाँ अपने अनुभव को वर्णित करें ...."
+    },
+    "ratingwindow_comment_regtext": {
+        "message": "अपनी टिप्पणी प्रकाशित करने के लिए आपका खाता होना आवश्यक है।"
+    },
+    "ratingwindow_comment_register": {
+        "message": "अभी एक खाता बनाएं"
+    },
+    "ratingwindow_comment_captchatext": {
+        "message": "अपनी टिप्पणी को प्रकाशित करने के लिए स्कोरकार्ड में आपको कैप्चा दर्ज करना आवश्यक है।"
+    },
+    "ratingwindow_comment_captchalink": {
+        "message": "अभी स्कोरकार्ड खोलें"
+    },
+    "ratingwindow_commenthints": {
+        "message": "<p>संक्षेप में कहें</p><p>साक्ष्य या उदाहरण दें</p><p>अपने वास्तविक अनुभवों के अनुसार टिप्पणी दें</p><p>स्पैम नहीं भेजें</p>"
+    },
+    "ratingwindow_novoted": {
+        "message": "कारण बताने के लिए यहाँ क्लिक करें"
+    },
+    "ratingwindow_morecats": {
+        "message": "अधिक"
+    },
+    "ratingwindow_rerate_change": {
+        "message": "बदलें"
+    },
+    "ratingwindow_rerate_category": {
+        "message": " "
+    },
+    "ratingwindow_fulllist": {
+        "message": "पूरी सूची दिखाएं"
+    },
+    "ratingwindow_vote_yes": {
+        "message": "हाँ"
+    },
+    "ratingwindow_vote_no": {
+        "message": "मैं असहमत हूँ"
+    },
+    "messages_ready": {
+        "message": "की विश्वसनीयता"
+    },
+    "testimony_0_levels_r0": {
+        "message": "रेट करने के लिए बार पर क्लिक करें"
+    },
+    "testimony_0_levels_r1": {
+        "message": "मैं विश्वास नहीं करता/करती"
+    },
+    "testimony_0_levels_r2": {
+        "message": "मैं विश्वास नहीं करता/करती"
+    },
+    "testimony_0_levels_r3": {
+        "message": "यह संदेहास्पद है"
+    },
+    "testimony_0_levels_r4": {
+        "message": "मैं विश्वास करता/करती हूँ"
+    },
+    "testimony_0_levels_r5": {
+        "message": "मैं विश्वास करता/करती हूँ"
+    },
+    "testimony_4_levels_r0": {
+        "message": "रेट करने के लिए बार पर क्लिक करें"
+    },
+    "testimony_4_levels_r1": {
+        "message": "उपयुक्त नहीं "
+    },
+    "testimony_4_levels_r2": {
+        "message": "उपयुक्त नहीं "
+    },
+    "testimony_4_levels_r3": {
+        "message": "सावधान रहें"
+    },
+    "testimony_4_levels_r4": {
+        "message": "उपयुक्त"
+    },
+    "testimony_4_levels_r5": {
+        "message": "उपयुक्त"
+    },
+    "testimony_unrated": {
+        "message": "कोई राय नहीं"
+    },
+    "testimony_delete": {
+        "message": "डिलीट करें"
+    },
+    "buttons_delete": {
+        "message": "रेटिंग डिलीट करें"
+    },
+    "buttons_delete_title": {
+        "message": "वेबसाइट के लिए मेरी रेटिंग और श्रेणियां डिलीट करें"
+    },
+    "buttons_cancel": {
+        "message": "रद्द करें"
+    },
+    "buttons_save": {
+        "message": "सहेजें"
+    },
+    "buttons_ok": {
+        "message": "ओके"
+    },
+    "popup_headertext": {
+        "message": "विवरण देखने के लिए क्लिक करें"
+    },
+    "popup_nocattext": {
+        "message": "इस वेबसाइट के बारे में अपनी राय साझा करें"
+    },
+    "ratingwindow_thankyou": {
+        "message": "अपना अनुभव साझा करने के लिए धन्यवाद!"
+    },
+    "activityscore_text": {
+        "message": "आपकी गतिविधि स्कोर अब है {SCORE}"
+    },
+    "activityscore_rookie": {
+        "message": "रूकी"
+    },
+    "activityscore_bronze": {
+        "message": "ब्रांज़"
+    },
+    "activityscore_silver": {
+        "message": "सिल्वर"
+    },
+    "activityscore_gold": {
+        "message": "गोल्ड"
+    },
+    "activityscore_platinum": {
+        "message": "प्लेटिनम"
+    },
+    "activityscore_next": {
+        "message": "{NEXT_LEVEL} स्तर पर पहुंचने के लिए रेटिंग देते रहें!"
+    },
+    "bl_description": {
+        "message": "यह वेबसाइट तृतीय पक्ष कालीसूची में दिखती है"
+    },
+    "bl_description_pl": {
+        "message": "यह वेबसाइट तृतीय पक्ष कालीसूचियों में दिखती है"
+    },
+    "bl_information": {
+        "message": "WOT वायरसों और मालवेयर जैसे तकनीकी खतरों के बारे में उपयोगकर्ताओं को सावधान करने के लिए तृतीय पक्ष कालीसूचियों का उपयोग करता है।<a>अधिक के लिए जानकारी पढ़ें</a>"
+    },
+    "bl_malware": {
+        "message": "मालवेयर"
+    },
+    "bl_phishing": {
+        "message": "फिशिंग"
+    },
+    "bl_scam": {
+        "message": "स्कैम"
+    },
+    "bl_spam": {
+        "message": "स्पैम"
+    },
+    "bl_tracking": {
+        "message": "ट्रैकिंग"
+    },
+    "bl_other": {
+        "message": "अन्य कारण"
+    },
+    "warning_button": {
+        "message": "रेटिंग विवरण",
+        "description": "used in Firefox add-on only"
+    },
+    "warnings_message_rating": {
+        "message": "आपने इस साइट को खराब रेटिंग दी है।",
+        "description": "used in Firefox add-on only"
+    },
+    "warnings_message_reputation": {
+        "message": "उपयोगकर्ताओं की रेटिंग के आधार पर इस साइट की विश्वसनीयता ठीक नहीं है।",
+        "description": "used in Firefox add-on only"
+    },
+    "messages_offline": {
+        "message": "जब ब्राउज़र ऑफलाइन था तब डिसेबल किया गया।",
+        "description": "used in Firefox add-on only"
+    },
+    "messages_disabled": {
+        "message": "आपने एड-ऑन को डिसेबल कर दिया है",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_title": {
+        "message": "WOT अपडेट",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_button_yes": {
+        "message": "अभी अपडेट करें",
+        "description": "used in Firefox add-on only"
+    },
+    "description_restart": {
+        "message": "WOT सक्रिय करने के लिए ब्राउज़र को पुन:स्टार्ट करें।",
+        "description": "used in Firefox add-on only"
+    },
+    "messages_error_register": {
+        "message": "एड-ऑन सक्रिय करने में विफल; शीघ्र ही पुन: प्रयास करेंगे।",
+        "description": "used in Firefox add-on only"
+    },
+    "warning": {
+        "message": "WOT चेतावनी: %S",
+        "description": "used in Firefox add-on only"
+    },
+    "description_uninstall": {
+        "message": "पुन:स्टार्ट करने के बाद WOT अनइनस्टॉल हो जाएगा।",
+        "description": "used in Firefox add-on only"
+    },
+    "warnings_blocked": {
+        "message": "ब्लॉक किया गया",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_check": {
+        "message": "स्वचालित अपडेट्स एनेबल करें (अनुशंसित)",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_button_no": {
+        "message": "बाद में मुझे याद दिलाएं",
+        "description": "used in Firefox add-on only"
+    },
+    "auto_update_message": {
+        "message": "WOT का एक नया संस्करण उपलब्ध है। क्या आप अपने एड ऑन को अपडेट करना चाहेंगे?",
+        "description": "used in Firefox add-on only"
+    },
+	"ratingwindow_check_1a": {
+		"message": "यदि आपको भी गंभीर नकारात्मक बातें कहनी थीं तो अन्य उपयोगकर्ता इस बात नहीं समझ पाएंगे कि आपने 'अच्छी साइट' क्यों चुना। "
+	},
+	"ratingwindow_check_1b": {
+		"message": "अन्य उपयोगकर्ताओं को यह भी समझ में नहीं आ सकता कि बच्चों के लिए तैयार की गई साइट में इस प्रकार के नकारात्मक चरित्र होने चाहिए।"
+	},
+	"ratingwindow_check_2a": {
+		"message": "अन्य उपयोगकर्ता आपकी समीक्षा को विश्वसनीय नहीं मान सकते क्योंकि आपने अनेक असंबंधित नकारात्मक बातों को चुना है। "
+	},
+	"ratingwindow_check_3a": {
+		"message": "अन्य उपयोगकर्ता यह प्रश्न कर सकते हैं कि क्या विषय सामग्री और साइट के कार्यकरण से संबंधित सभी नकारात्मक वक्तव्य सही हैं। "
+	},
+	"ratingwindow_check_4a": {
+		"message": "अन्य उपयोगकर्ता आपकी समीक्षा को विश्वसनीय नहीं मान सकते क्योंकि आपने अनेक असंबंधित नकारात्मक बातों को चुना है। "
+	},
+	"ratingwindow_check_5a": {
+		"message": "अन्य' श्रेणी का प्रयोग केवल तभी किया जाना चाहिए जब कोई और विकल्प लागू नहीं होता है, तथा इसके बाद लिखित टिप्पणियों में स्पष्ट किया जाना चाहिए।"
+	},
+	"ratingwindow_check_6a": {
+		"message": "बहुत सी श्रेणियों के परिणामस्वरूप लोग आपकी समीक्षा कि विश्वसनीयता पर प्रश्न चिन्ह लगा सकते हैं। "
+	},
+	"wg_title": {
+		"message": "WOT समूह<span class='wg-beta'>beta</span>"
+	},
+	"wg_edit": {
+		"message": "मेरे टैग्स संपादित करें"
+	},
+	"wg_add": {
+		"message": "टैग शामिल करें"
+	},
+	"wg_add_long": {
+		"message": "टैग्स के साथ टिप्पणी करने के लिए क्लिक करें"
+	},
+	"wg_expander": {
+		"message": "और अधिक दिखाएं"
+	},
+	"wg_expander_less": {
+		"message": "कम दिखाएं "
+	},
+	"wg_about": {
+		"message": "यह क्या है?"
+	},
+	"wg_about_ok": {
+		"message": "ठीक है, समझ लिया"
+	},
+	"wg_about_more": {
+		"message": "समूह खोलें"
+	},
+	"wg_viewer_title_wikipedia": {
+		"message": "Wikipedia"
+	},
+	"wg_about_title": {
+		"message": "WOT समूह बीटा क्या है?"
+	},
+	"wg_about_content": {
+		"message": "WOT समूह बीटा से विभिन्न समुदाय अपनी अपनी अभिलाषाओं और रूचियों के इर्द-गिर्द एक परिपूर्ण वेबसाइट ऑनलाइन निर्देशिका के सृजन में समर्थ होते हैं। फिल्टरिंग और साइट विश्वसनीयता टूल्स वेब के प्रयोग को सरल और विश्वसनीय बनाते हैं। "
+	},
+	"ratingwindow_wgcommenthints": {
+		"message": "<p>संक्षिप्त और सच्ची बात कहें</p><p>शार्टहैंड के रूप में टैग्स का इस्तेमाल करें</p><p>अपनी जानकारी के अनुसार ही टिप्पणी करें</p>"
+	}
+}

@@ -1,6 +1,6 @@
 /*
 	wot.js
-	Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2015  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -130,8 +130,6 @@ var wot = {
 		tour_scorecard: "https://www.mywot.com/support/tour/scorecard",
 		wg:         "https://beta.mywot.com/groups/g",
 		wg_about:   "https://beta.mywot.com/groups",
-		unlock:     "addon/payment/paypal/init",
-		premium_tos: "https://www.mywot.com/terms/fees-payment",
 
 		contexts: {
 			rwlogo:     "rw-logo",
@@ -272,12 +270,11 @@ var wot = {
 		MONTH: 30 * 24 * 3600
 	},
 
-	// Features lock state
-	LOCK_STATE: {
-		TRIAL: 0,
-		REMINDER: 1,
-		LOCKED: 2,
-		UNLOCKED: 3
+	STATS: {
+		SID: 	"240",
+		VER: 	"1.0",
+		URL: 	"https://secure.mywot.com/config",
+		ST: 	60 * 1000 * 30
 	},
 
 	/* logging */

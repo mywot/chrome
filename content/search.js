@@ -1,6 +1,6 @@
 /*
 	content/search.js
-	Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2015  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -235,18 +235,6 @@ wot.search = {
 		}
 	},
 
-	is_unlocked: function () {
-		var _this = wot.search,
-			unlocked = {};
-
-		if (!_this.unlock_price) return true;   // if no price, unlock the feature
-
-		unlocked[wot.LOCK_STATE.UNLOCKED] = true;
-		unlocked[wot.LOCK_STATE.TRIAL] = true;
-
-		return unlocked[_this.lock_state];
-	},
-
 	is_ninja: function(rule)
 	{
 		return rule.ninja && wot.search.settings.ninja_donuts;
@@ -269,17 +257,9 @@ wot.search = {
 				if(is_ninja) elem.setAttribute("class", "invisible");
 
 				elem_style = "cursor: pointer; " +
-					"display: inline-block;"
-
-//				if (wot.search.is_unlocked()) {
-					elem_style +=
-						"width: 16px; " +
-						"height: 16px;";
-//				} else {
-//					elem_style +=
-//						"width: 5px; " +
-//						"height: 5px;";
-//				}
+					"display: inline-block;" +
+					"width: 16px; " +
+					"height: 16px;";
 
 				elem.setAttribute("style", elem_style);
 
@@ -313,10 +293,6 @@ wot.search = {
 					// use parent to avoid hiding donut when cursor moves to it but goes out of the link
 					link_parent.addEventListener("mouseover", do_ninja, false);
 					link_parent.addEventListener("mouseout", do_ninja, false);
-				} else if (!wot.search.is_unlocked()) {
-					// get some attention to donuts when the feature is unlocked
-					var cls = elem.getAttribute("class");
-					elem.setAttribute("class", cls + " locked");
 				}
 
 				elem.addEventListener("click", this.onclickrating, false);
@@ -518,15 +494,6 @@ wot.search = {
 					wot.utils.attach_style({style: wot.search.formatcss(data.rule.prestyle)}, wot.search.getname("prestyle"), window);
 				}
 
-				if (!wot.search.is_unlocked()) {
-					var locked_style = "div[wotsearchtarget].locked:not(.invisible) {" +
-//						"-webkit-animation: wot-icon-animation 1s linear 1s 1 alternate;" +
-						"background-image: url(" + chrome.extension.getURL("/skin/fusion/16_16/plain/locked.png") + ") !important;" +
-						"background-size: 12px;" +
-						"}";
-					wot.utils.attach_style({style: locked_style}, "wotfeaturelock", window);
-				}
-
 				wot.init_categories(wot.search.settings);   // init categories
 
                 if (data.rule.popup && data.rule.popup.match &&
@@ -614,8 +581,6 @@ wot.search = {
 			wot.bind("message:search:process", function(port, data) {
 				/* load the necessary settings before starting */
 				wot.search.loadsettings(function() {
-					wot.search.lock_state = data.lock_state;
-					wot.search.unlock_price = data.unlock_price;
 					wot.search.onprocess(data);
 				});
 			});
@@ -624,10 +589,15 @@ wot.search = {
 				wot.search.onupdate(data);
 			});
 
+			wot.bind("message:loc:check", function(port, data) {
+				var url = window.location.href;
+				wot.post("search", "check", { url: url, referrer: document.referrer, top: window == window.top, visible:document.webkitVisibilityState});
+			});
+
 			document.addEventListener("DOMContentLoaded", function(e) {
 					var url = e.target.location.href;
 					if (url) {
-						wot.post("search", "hello", { url: url });
+						 wot.post("search", "hello", { url: url });
 					}
 				}, false);
 
@@ -638,9 +608,10 @@ wot.search = {
 				}
 			}
 		} catch (e) {
-			console.log("search.onload: failed with " + e);
+			console.log("search.onload: failed with ", e);
 		}
 	}
 };
+
 
 wot.search.onload();
