@@ -625,7 +625,7 @@ $.extend(wot, { ratingwindow: {
         var _rw = wot.ratingwindow,
             _comments = wot.ratingwindow.comments,
             comment_data = {},
-	        wg = cached.wg || {},
+	        wg = (cached || {}).wg || {},
             bg = chrome.extension.getBackgroundPage(),
             is_unsubmitted = false;
 
