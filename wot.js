@@ -19,7 +19,7 @@
 */
 
 var wot = {
-	version: 20140403,
+	version: 20150429,
 	platform: "opera",
     locale: "en",           // cached value of the locale
     lang: "en-US",          // cached value of the lang
@@ -281,7 +281,7 @@ var wot = {
 		URL: 	"https://secure.mywot.com/config",
 		ST: 	60 * 1000 * 30
 	},
-	
+
 	/* logging */
 
 	log: function (s)
