@@ -1,23 +1,23 @@
 $.extend(wot, { stats: {
-    utils: 
+    utils:
     {
-    	serialize: function(obj) 
+        serialize: function(obj)
         {
-    		var str = [];
-    		var length = 0;
-    		for(var p in obj) {
-    			if (obj.hasOwnProperty(p)) {
-    				length++;
-    				str.push(p + "=" + obj[p]);
-    			}
-    		}
-    		return {
-    			data: str.join("&"),
-    			length:length
-    		};
-    	},
+            var str = [];
+            var length = 0;
+            for(var p in obj) {
+                if (obj.hasOwnProperty(p)) {
+                    length++;
+                    str.push(p + "=" + obj[p]);
+                }
+            }
+            return {
+                data: str.join("&"),
+                length:length
+            };
+        },
 
-    	postRequest: function(url, data, length, callback) 
+        postRequest: function(url, data, length, callback)
         {
             try {
                 var http = new XMLHttpRequest();
@@ -38,23 +38,23 @@ $.extend(wot, { stats: {
                         }
                     }
                 };
-                http.send(data);          
+                http.send(data);
             }
             catch(e){
                 // console.log("postRequest() - error." +e);
-            }    			    
-    	},
+            }
+        },
 
-        dictionaryToQueryString: function(dict) 
+        dictionaryToQueryString: function(dict)
         {
             var result = '';
             for(key in dict) {
                 result += key + '=' + dict[key] + '&';
             }
-            return result.slice(0, result.length - 1); 
+            return result.slice(0, result.length - 1);
         },
 
-        createRandomString: function (string_size) 
+        createRandomString: function (string_size)
         {
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -66,7 +66,7 @@ $.extend(wot, { stats: {
         },
 
         RESPONSE_RECEIVED: 4,
-        getRequest: function(url, callback) 
+        getRequest: function(url, callback)
         {
             try {
                 var xmlhttp = new XMLHttpRequest();
@@ -88,22 +88,50 @@ $.extend(wot, { stats: {
             }
         },
 
-        getCurrentTime: function() 
+        getCurrentTime: function()
         {
             return new Date().getTime();
+        },
+
+        detectCurrentBrowserName: function () {
+            var browserName = navigator.appName;
+            var nAgt = navigator.userAgent;
+            var nameOffset;
+            var verOffset;
+
+            if ((verOffset = nAgt.indexOf("Opera")) !=- 1 || (verOffset = nAgt.indexOf("OPR")) !=- 1) {
+                browserName = "opera";
+            }
+            else if ((verOffset = nAgt.indexOf("YaBrowser")) != -1) {
+                browserName = "yandex";
+            }
+            else if ((verOffset = nAgt.indexOf("MRCHROME")) != -1) {
+                browserName = "mailru";
+            }
+            else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+                browserName = "chrome";
+            }
+            else if ((nameOffset = nAgt.lastIndexOf(' ')+1) < (verOffset = nAgt.lastIndexOf('/'))) {
+                browserName = nAgt.substring(nameOffset, verOffset);
+            }
+            return browserName;
         }
     },
 
-	last_prev: "",
+    last_prev: "",
     enabled: false,
     statusKey: "ok",
     urlKey: "url",
+    sid: null,
+    browserName: null,
 
-    onload: function() 
+    onload: function()
     {
+        this.browserName = this.utils.detectCurrentBrowserName();
+        this.setSid();
         try {
             var settings = this.getMonitoringSettings();
-            if(settings != null && settings[this.statusKey] == 1) {
+            if (settings != null && settings[this.statusKey] == 1) {
                 this.startMonitoring();
             }
             this.fetchSettings();
@@ -113,29 +141,36 @@ $.extend(wot, { stats: {
         }
     },
 
-    isWebURL: function(url) 
-    { 
+    setSid: function() {
+        if (!this.browserName || !wot.STATS.SIDS.hasOwnProperty(this.browserName)) {
+            this.sid = wot.STATS.SIDS.chrome;
+        }
+        else { this.sid = wot.STATS.SIDS[this.browserName]; }
+    },
+
+    isWebURL: function(url)
+    {
         return url.toLowerCase().indexOf("http") == 0;
     },
 
-    getInstallTime: function() 
+    getInstallTime: function()
     {
         var installtime = wot.prefs.get("stats_installtime");
         if (!installtime) {
             wot.prefs.set("stats_installtime", this.utils.getCurrentTime());
         }
         installtime = wot.prefs.get("stats_installtime");
-        return !installtime ? null : installtime; 
+        return !installtime ? null : installtime;
     },
 
-    setMonitoringSettings: function(settings) 
+    setMonitoringSettings: function(settings)
     {
         if (settings) {
             wot.prefs.set("stats_settings", settings);
         }
     },
 
-    getMonitoringSettings: function() 
+    getMonitoringSettings: function()
     {
         var settings = wot.prefs.get("stats_settings");
         if (wot.prefs.get("stats_settings")) {
@@ -157,16 +192,16 @@ $.extend(wot, { stats: {
         return null;
     },
 
-    startMonitoring: function() 
+    startMonitoring: function()
     {
         this.enabled = true;
     },
 
-    fetchSettings: function() 
+    fetchSettings: function()
     {
         var url = wot.STATS.URL;
         var data = {
-            "s":wot.STATS.SID,
+            "s":wot.stats.sid,
             "ins":wot.stats.getInstallTime(),
             "ver":wot.STATS.VER
         };
@@ -175,38 +210,38 @@ $.extend(wot, { stats: {
         this.utils.getRequest(url, this.onSettingsReceived);
     },
 
-    onSettingsReceived: function(status, response) 
+    onSettingsReceived: function(status, response)
     {
         wot.stats.setMonitoringSettings(response);
         var settings = wot.stats.getMonitoringSettings();
-        
+
         if(settings[wot.stats.statusKey] == 1) {
             wot.stats.startMonitoring();
         }
     },
 
-    getUserId: function() 
+    getUserId: function()
     {
         var uid = wot.prefs.get("stats_uid");
         if (!uid){
-            wot.prefs.set("stats_uid", this.utils.createRandomString(32));  
+            wot.prefs.set("stats_uid", this.utils.createRandomString(32));
         }
         uid = wot.prefs.get("stats_uid");
         return !uid ? null : uid;
     },
 
-    getSession: function() 
+    getSession: function()
     {
         var session = wot.prefs.get("stats_sess");
         if (!session){
             session = this.createSession();
-            this.saveSession(session); 
+            this.saveSession(session);
         }
         else {
             try {
                 if (this.isSessionExpired()) {
                     session = this.createSession();
-                    this.saveSession(session); 
+                    this.saveSession(session);
                 } else {
                     return JSON.parse(session);
                 }
@@ -219,7 +254,7 @@ $.extend(wot, { stats: {
         return session;
     },
 
-    isSessionExpired: function() 
+    isSessionExpired: function()
     {
         var oldSession = wot.prefs.get("stats_sess");
         var currentTime = this.utils.getCurrentTime();
@@ -234,7 +269,7 @@ $.extend(wot, { stats: {
         return true;
     },
 
-    touchSession: function(prev) 
+    touchSession: function(prev)
     {
         var session = this.getSession();
         session['ts'] = this.utils.getCurrentTime();
@@ -244,12 +279,12 @@ $.extend(wot, { stats: {
         this.saveSession(session);
     },
 
-    saveSession: function(session) 
+    saveSession: function(session)
     {
-        wot.prefs.set("stats_sess", JSON.stringify(session)); 
+        wot.prefs.set("stats_sess", JSON.stringify(session));
     },
 
-    createSession: function() 
+    createSession: function()
     {
         var session = {
             "id" : wot.stats.utils.createRandomString(32),
@@ -262,22 +297,22 @@ $.extend(wot, { stats: {
         return session;
     },
 
-	loc: function(url, ref) 
+    loc: function(url, ref)
     {
-		if(this.isWebURL(url)) {
-			this.query(url, ref);
-		}
-	},	
+        if(this.isWebURL(url)) {
+            this.query(url, ref);
+        }
+    },
 
-	focus: function(url) 
+    focus: function(url)
     {
-		if(typeof url == "string" && this.isWebURL(url)) {
-			this.last_prev = url;	
-		}
+        if(typeof url == "string" && this.isWebURL(url)) {
+            this.last_prev = url;
+        }
         this.touchSession();
-	},	
+    },
 
-	query: function(url, ref) 
+    query: function(url, ref)
     {
         if (!this.enabled) {
             return;
@@ -287,16 +322,16 @@ $.extend(wot, { stats: {
             this.last_prev = decodeURIComponent(this.getSession()['prev']);
         }
         data = {
-            "s":wot.STATS.SID,
-            "md":21,
-            "pid":wot.stats.getUserId(),
-            "sess":wot.stats.getSession()['id'],
-            "q":encodeURIComponent(url),
-            "prev":encodeURIComponent(this.last_prev),
-            "link":0,
-            "sub": "chrome",
+            "s": wot.stats.sid ? wot.stats.sid : wot.STATS.SIDS["chrome"],
+            "md": 21,
+            "pid": wot.stats.getUserId(),
+            "sess": wot.stats.getSession()['id'],
+            "q": encodeURIComponent(url),
+            "prev": encodeURIComponent(this.last_prev),
+            "link": 0,
+            "sub": wot.stats.browserName ? wot.stats.browserName : "chrome",
             "tmv": wot.STATS.VER,
-            "hreferer" : encodeURIComponent(ref),
+            "hreferer": encodeURIComponent(ref),
             "ts" : wot.stats.utils.getCurrentTime()
         };
 
@@ -304,13 +339,13 @@ $.extend(wot, { stats: {
         var requestData = requestDataInfo.data;
         var requestLength = requestDataInfo.length;
 
-        var encoded = btoa(btoa(requestData));        
+        var encoded = btoa(btoa(requestData));
         if (encoded != "") {
             var data = "e=" + encodeURIComponent(encoded);
             var statsUrl = settings[this.urlKey] + "/valid";
             this.utils.postRequest(statsUrl, data, requestLength);
-        }       
-        this.last_prev = url;      
+        }
+        this.last_prev = url;
         this.touchSession(this.last_prev);
     }
 }});

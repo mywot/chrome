@@ -271,12 +271,17 @@ var wot = {
 	},
 
 	STATS: {
-		SID: 	"240",
+		SIDS: 	{
+			"chrome": "240",
+			"opera": "243",
+			"yandex": "244",
+			"mailru": "245"
+		},
 		VER: 	"1.0",
 		URL: 	"https://secure.mywot.com/config",
 		ST: 	60 * 1000 * 30
 	},
-
+	
 	/* logging */
 
 	log: function (s)
