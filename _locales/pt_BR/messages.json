@@ -377,7 +377,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Sua pontuação de atividade agora é",
+        "message": "Sua pontuação de atividade agora é {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

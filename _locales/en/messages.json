@@ -317,7 +317,7 @@
         "message": "Thanks for sharing your experience!"
     },
     "activityscore_text": {
-        "message": "Your activity score is now "
+        "message": "Your activity score is now {SCORE}"
     },
     "activityscore_rookie": {
         "message": "rookie"

@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Vaše skóre aktivit je nyní",
+        "message": "Vaše skóre aktivit je nyní {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

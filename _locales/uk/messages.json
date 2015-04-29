@@ -391,7 +391,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Рівень вашої активності зараз",
+        "message": "Рівень вашої активності зараз {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

@@ -48,13 +48,6 @@ const WOT_POPUP_HTML =
     '<div class="wot-corners-wrapper">' +
         '<div id="wot-pp-tr" class="wot-pp-tr"></div>' +
         '<div id="wot-pp-cs" class="wot-pp-cs"></div>' +
-    '</div>' +
-    '<div id="wot-unlock">' +
-	    '<div class="wot-unlock-icon"></div>' +
-        '<div class="wot-unlock-text">Help us make WOT better. We ask for a small fee of ${PRICE} / year to activate <b>safety icons</b>.</div>' +
-        '<div id="wot-unlock-btn">Activate using PayPal</div>' +
-	    '<div id="wot-unlock-learnmore">Read more and tell us what you think <a id="wot-unlock-readmore">on our forum</a>.</div>' +
-	    '<div id="wot-unlock-tos">By clicking "Activate" you agree with <a id="wot-unlock-toslink">terms of service</a>.</div>' +
     '</div>';
 
 wot.popup = {
@@ -79,7 +72,7 @@ wot.popup = {
     rule_name:      null,
     show_wtip:      false,
     layer:          null,
-    MAX_CATEGORIES: 5,      // FIXME: WTF is that? why 5?
+    MAX_CATEGORIES: 5,
 
     add: function(parentelem, rule_name)
     {
@@ -121,11 +114,10 @@ wot.popup = {
             this.rule_name = rule_name;
 
             var layer = document.createElement("div");
-            var accessible_cls = wot.search.settings.accessible ? "wot-popup-layer-accessible" : "",
-	            locked_cls = wot.search.is_unlocked() ? "" : "wot-locked";
+            var accessible_cls = wot.search.settings.accessible ? "wot-popup-layer-accessible" : "";
 
             layer.setAttribute("id", id);
-            layer.setAttribute("class", [ "wot-popup-layer", accessible_cls, locked_cls ].join(" "));
+            layer.setAttribute("class", [ "wot-popup-layer", accessible_cls ].join(" "));
             layer.setAttribute("style", "display: none;");
 
 
@@ -139,9 +131,6 @@ wot.popup = {
                 }, {
                     from: "POPUPNOCAT",
                     to: wot.i18n("popup", "nocattext")
-                }, {
-                    from: "PRICE",
-                    to: wot.utils.htmlescape(String(wot.search.unlock_price))
                 }
             ];
 
@@ -164,21 +153,6 @@ wot.popup = {
             var rate_link = document.getElementById("wot-cat-text");
             if (rate_link) {
                 rate_link.addEventListener("click", wot.popup.on_rate_click);
-            }
-
-            var unlock_button = document.getElementById("wot-unlock-btn");
-            if (unlock_button) {
-	            unlock_button.addEventListener("click", wot.popup.on_unlock_click);
-            }
-
-            var tos_link = document.getElementById("wot-unlock-toslink");
-            if (tos_link) {
-	            tos_link.addEventListener("click", wot.popup.on_unlock_tos_click);
-            }
-
-            var read_link = document.getElementById("wot-unlock-readmore");
-            if (read_link) {
-	            read_link.addEventListener("click", wot.popup.on_unlock_read_click);
             }
 
         } catch (e) {
@@ -644,42 +618,6 @@ wot.popup = {
         } catch (e) {
             console.error("popup.onclick: failed with ", e);
         }
-    },
+    }
 
-	on_unlock_click: function (event) {
-		event.preventDefault();
-		event.stopPropagation();
-
-		wot.post("search", "openunlocker",
-			{
-				ctx: wot.urls.contexts.popupviewsc,
-				rule: wot.popup.rule_name
-			});
-
-		wot.popup.hide(wot.popup.version, true);
-	},
-
-	on_unlock_tos_click: function (event) {
-		event.preventDefault();
-		event.stopPropagation();
-
-		wot.post("search", "premium-tos",
-			{
-				ctx: wot.urls.contexts.popupviewsc,
-				rule: wot.popup.rule_name
-			});
-
-//		wot.popup.hide(wot.popup.version, true);
-	},
-
-	on_unlock_read_click: function (event) {
-		event.preventDefault();
-		event.stopPropagation();
-
-		wot.post("search", "premium-readmore",
-			{
-				ctx: wot.urls.contexts.popupviewsc,
-				rule: wot.popup.rule_name
-			});
-	}
 };

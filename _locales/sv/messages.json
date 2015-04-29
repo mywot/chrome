@@ -392,7 +392,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Din aktivitetspoäng är nu",
+        "message": "Din aktivitetspoäng är nu {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

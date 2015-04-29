@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Ocena Twojej aktywności to w tej chwili",
+        "message": "Ocena Twojej aktywności to w tej chwili {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

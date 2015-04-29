@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Ihre Aktivitätswertung beträgt jetzt",
+        "message": "Ihre Aktivitätswertung beträgt jetzt {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

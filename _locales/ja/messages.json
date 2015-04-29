@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "現在のアクティビティ・スコア",
+        "message": "現在のアクティビティ・スコア {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

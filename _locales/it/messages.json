@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Il tuo punteggio di attività ora è",
+        "message": "Il tuo punteggio di attività ora è {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

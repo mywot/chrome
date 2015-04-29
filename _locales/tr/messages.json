@@ -391,7 +391,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Etkinlik skorunuz şu anda",
+        "message": "Etkinlik skorunuz şu anda {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {

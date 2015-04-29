@@ -393,7 +393,7 @@
         "description": ""
     },
     "activityscore_text": {
-        "message": "Aktiviteettituloksesi on nyt",
+        "message": "Aktiviteettituloksesi on nyt {SCORE}",
         "description": ""
     },
     "activityscore_rookie": {
