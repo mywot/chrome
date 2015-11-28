@@ -66,13 +66,13 @@
         "message": "मेरा प्रोफाइल"
     },
     "ratingwindow_wotrating": {
-        "message": "WOT उपयोगकर्ता कहते हैं"
+        "message": "सामुदायिक रेटिंग"
     },
     "ratingwindow_myrating": {
         "message": "मेरी रेटिंग"
     },
     "ratingwindow_viewscorecard": {
-        "message": "विवरण और टिप्पणियां देखें"
+        "message": "प्रसिद्धि संबंधी विवरण और टिप्पणियां देखें"
     },
     "ratingwindow_addcomment": {
         "message": "एक टिप्पणी जोड़ें"
@@ -158,7 +158,7 @@
         "message": "अपने अनुभवों को साझा करें!"
     },
     "wt_rw_text": {
-        "message": "<p>WOT रेटिंग़ विंडो आपको दूसरे उपयोगकर्ताओं के अनुभवों के आधार पर वेबसाइट की विश्वसनीयता को दर्शाता है।</p><p>अब आप अद्यतन विंडो से सीधे रेट कर सकते हैं और टिप्पणी दे सकते हैं।</p><p>रंगीन बार पर क्लिक करके रेटिंग देना शुरू करें।</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a>WOT के बारे में</p>"
+        "message": "<p>WOT विंडो अन्य उपयोगकर्ताओं के 'अनुभवों आधार पर वेबसाइट की प्रसिद्धि दर्शाती है।</p><p>रंगीन बार्स पर क्लिक करके रेटिंग करना और टिप्पणी करना शुरू करें।</p><p class='wot-c'><a id='wt-learnmore-link'>और अधिक जानें</a> WOT के बारे में।</p>"
     },
     "wt_donut_msg": {
         "message": "<p>WOT आपको ट्रैफिक लाइट-संकेत आइकन दिखाकर दूसरे उपयोगकर्ताओं के अनुभवों के आधार पर वेबसाइट की विश्वसनीयता को दर्शाता है।</p><p>विश्वसनीयता और उसके पीछे के कारण को देखने के लिए आइकन के ऊपर माउस को घुमाएं।</p>"
@@ -233,13 +233,16 @@
         "message": "अधिक"
     },
     "ratingwindow_rerate_change": {
-        "message": "बदलें"
+        "message": "रेटिंग संपादित करें"
     },
     "ratingwindow_rerate_category": {
         "message": " "
     },
     "ratingwindow_fulllist": {
         "message": "पूरी सूची दिखाएं"
+    },
+    "ratingwindow_shortlist": {
+        "message": "कम दिखाएं"
     },
     "ratingwindow_vote_yes": {
         "message": "हाँ"
@@ -483,5 +486,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>संक्षिप्त और सच्ची बात कहें</p><p>शार्टहैंड के रूप में टैग्स का इस्तेमाल करें</p><p>अपनी जानकारी के अनुसार ही टिप्पणी करें</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "कारण",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "आत्मविश्वास",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "दिखाएं कि रेटिंग प्रणाली प्रसिद्धि को कितना विश्वसनीय समझती है।",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "हमारे समुदाय को बढ़ने में मदद करें",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT अपने अद्भुत समुदाय द्वारा संचालित होता है।</p><p>जितने अधिक उपयोगकर्ता होंगे, WOT आपकी उतनी ही बेहतर सुरक्षा कर पायेगा</p><p><strong>WOT को साझा कर समुदाय को बढ़ाने में हमारी मदद करें।</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "अभी नहीं",
+        "description": "new in RW 3.0"
 	}
 }

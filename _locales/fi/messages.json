@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "WOT-käyttäjien arvio",
+        "message": "Yhteisön arvostelut",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "Oma luokitus"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Katso lisätietoja ja kommentteja",
+        "message": "Maineeseen liittyviä tietoja",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -181,7 +181,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT-arviointi ikkuna näyttää sinulle käyttäjien kokemuksiin perustuen maineeltaan parhaimman sivuston. Nyt voi arvostella ja kommentoida suoraan päivitetystä ikkunasta. Aloita arviointi klikkaamalla väritettyjä palkkeja.</p><p class='wot-c'><a id='wt-learnmore-link'>Opi lisää</a> WOTista.</p>",
+        "message": "<p>WOT-ikkunassa näet verkkosivun maineen, joka perustuu toisten käyttäjien kokemuksiin.</p><p>Aloita arvosteleminen ja kommentointi klikkaamalla värikkäitä palkkeja.</p><p class='wot-c'><a id='wt-learnmore-link'>Lue lisää</a>WOT:sta.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -281,16 +281,18 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "vaihda",
+        "message": "Muokkaa arvostelua",
         "description": ""
     },
     "ratingwindow_rerate_category": {
-        "message": " ",
-        "description": "TODO: TRANSLATE"
+        "message": " "
     },
     "ratingwindow_fulllist": {
         "message": "näytä koko lista",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Näytä vähemmän"
     },
     "ratingwindow_vote_yes": {
         "message": "Kyllä",
@@ -575,5 +577,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Syyt",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Luottamus",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Näyttää, kuinka luotettavana mainetta pidetään arviointijärjestelmässä.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Auta yhteisöämme kasvamaan",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT on uskomattoman yhteisönsä ylläpitämä.</p><p>Mitä enemmän sillä on käyttäjiä, sen paremmin WOT voi suojella sinua. </p><p><strong>Auta meitä kasvattamaan yhteisöämme jakamalla tietoa WOT:sta eteenpäin.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Ei nyt",
+        "description": "new in RW 3.0"
 	}
 }

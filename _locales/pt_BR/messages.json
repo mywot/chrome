@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "Usuários do WOT dizem",
+        "message": "Avaliações da Comunidade",
         "description": ""
     },
     "ratingwindow_myrating": {
-        "message": "Minha classificação"
+        "message": "Avaliação"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Visualizar detahes e comentários",
+        "message": "Ver detalhes e comentários da reputação",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -180,7 +180,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>A janela de avaliação WOT mostra a reputação do site com base em experiências de outros usuários. Agora você pode avaliar e comentar diretamente da janela atualizada. Comece a avaliar clicando nas barras coloridas.</p><p class='wot-c'><a id='wt-learnmore-link'>Saiba mais</a> sobre o WOT.</p>",
+        "message": "<p>A janela WOT mostra a reputação do site com base nas experiências de outros usuários.</p><p>Comece a avaliar e comentar, clicando nas barras coloridas.</p><p class='wot-c'><a id='wt-learnmore-link'>Saiba mais</a> sobre o WOT.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -266,7 +266,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "mudar",
+        "message": "Editar Avaliação",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -275,6 +275,9 @@
     "ratingwindow_fulllist": {
         "message": "Mostrar lista completa",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Mostrar Menos"
     },
     "ratingwindow_vote_yes": {
         "message": "Sim",
@@ -558,5 +561,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Motivos",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Confiança",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Mostra quão confiável o sistema de classificação considera a reputação",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Ajude Nossa Comunidade a Crescer",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT é alimentado por sua incrível comunidade.</p><p>Quanto mais usuários, mais o WOT pode proteger você.</p><p><strong>Ajude-nos a fazer a comunidade crescer compartilhando o WOT.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Agora não",
+        "description": "new in RW 3.0"
 	}
 }

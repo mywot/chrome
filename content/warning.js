@@ -109,7 +109,13 @@ wot.warning = {
                         "<div class='wot-comp-name'>{RATINGDESC0}</div>" +
                         "<div class='wot-rep-data'>" +
                             "<div class='wot-comp-icon' r='{RATING0}'></div>" +
-                            "<div class='wot-comp-conf' c='{CONFIDENCE0}'></div>" +
+                            "<div class='wot-rating-confidence' confidence='{CONFIDENCE0}'>" +
+							    "<div class='confidence-dot confidence-dot-1'></div>" +
+							    "<div class='confidence-dot confidence-dot-2'></div>" +
+							    "<div class='confidence-dot confidence-dot-3'></div>" +
+							    "<div class='confidence-dot confidence-dot-4'></div>" +
+							    "<div class='confidence-dot confidence-dot-5'></div>" +
+							"</div>" +
                             "<div class='rating-legend-wrapper'>" +
                             "<div class='rating-legend' r='{RATING0}'>{RATINGEXPL0}</div>" +
                             "</div>" +
@@ -119,7 +125,13 @@ wot.warning = {
                         "<div class='wot-comp-name'>{RATINGDESC4}</div>" +
                         "<div class='wot-rep-data'>" +
                             "<div class='wot-comp-icon' r='{RATING4}'></div>" +
-                            "<div class='wot-comp-conf' c='{CONFIDENCE4}'></div>" +
+							"<div class='wot-rating-confidence' confidence='{CONFIDENCE4}'>" +
+								"<div class='confidence-dot confidence-dot-1'></div>" +
+								"<div class='confidence-dot confidence-dot-2'></div>" +
+								"<div class='confidence-dot confidence-dot-3'></div>" +
+								"<div class='confidence-dot confidence-dot-4'></div>" +
+								"<div class='confidence-dot confidence-dot-5'></div>" +
+							"</div>" +
                             "<div class='rating-legend-wrapper'>" +
                                 "<div class='rating-legend' r='{RATING4}'>{RATINGEXPL4}</div>" +
                             "</div>" +

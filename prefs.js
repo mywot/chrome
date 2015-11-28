@@ -58,13 +58,16 @@ $.extend(wot, { prefs: {
 		warning_unknown_2:		false,
 		warning_unknown_4:		false,
 		ratingwindow_shown:     0,   // how many times RatingWindow was opened
+		rw_opened_sharing:      0,   // how many times RatingWindow was opened, used only for showing Share Screen.
+		rw_sharing_shown:       0,   // how many times the Share screen was shown before
+		wot_shared_on:          null,   // date when user clicked any of "share WOT" buttons
 		activity_score:         0,
         show_fulllist:          false,  // Whether to show full list of categories on rating window selector
         super_wtips:            false,  // "super" settings for debug purpose: "Show welcome tips always"
         super_fbl:              false,   // "super" settings for debug purpose: "Show FBL always if question is available"
         super_showtestimonies:  false,
 
-        settingsui_warnlevel:   "normal",   // this is should not be considered by the add-on. Only to render prefs on the settings page
+        settingsui_warnlevel:   "normal",   // this should not be considered by the add-on. Only to render prefs on the settings page
         settingsui_parental:    false,
         settingsui_searchlevel: "normal",
         stats_uid: 				"",

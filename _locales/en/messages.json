@@ -6,25 +6,25 @@
         "message": "en-US"
     },
     "ext_description": {
-        "message": "WOT helps you find trustworthy websites based on millions of users’ experiences and is one of Chrome’s most popular add-ons."
+        "message": "Check out any website for reputation and safety information based on users’ experience. The official Web of Trust Chrome Extension."
     },
     "components_0": {
         "message": "Trustworthiness"
     },
     "components_4": {
-        "message": "Child safety"
+        "message": "Child Safety"
     },
     "components__short_0": {
         "message": "Trustworthiness"
     },
     "components__short_4": {
-        "message": "Child safety"
+        "message": "Child Safety"
     },
     "reputationlevels_r0": {
         "message": "Unknown"
     },
     "reputationlevels_r1": {
-        "message": "Very poor"
+        "message": "Very Poor"
     },
     "reputationlevels_r2": {
         "message": "Poor"
@@ -63,28 +63,28 @@
         "message": "Forum"
     },
     "ratingwindow_profile": {
-        "message": "My profile"
+        "message": "My Profile"
     },
     "ratingwindow_wotrating": {
-        "message": "WOT users say"
+        "message": "Community Ratings"
     },
     "ratingwindow_myrating": {
-        "message": "My rating"
+        "message": "My Rating"
     },
     "ratingwindow_viewscorecard": {
-        "message": "View details and comments"
+        "message": "View reputation details and comments"
     },
     "ratingwindow_addcomment": {
-        "message": "Add a comment"
+        "message": "Add a Comment"
     },
     "ratingwindow_editcomment": {
-        "message": "Edit the comment"
+        "message": "Edit The Comment"
     },
     "ratingwindow_backtoratings": {
-        "message": "Back to reasons"
+        "message": "Back To Reasons"
     },
     "ratingwindow_backtoratings_category": {
-        "message": "Pick a reason"
+        "message": "Pick a Reason"
     },
     "ratingwindow_newversion": {
         "message": "New version available - click to update"
@@ -114,13 +114,13 @@
         "message": "Warning!"
     },
     "warnings_goto": {
-        "message": "Go to the site"
+        "message": "Go to the Site"
     },
     "warnings_leave": {
         "message": "Exit"
     },
     "warnings_back": {
-        "message": "Go back"
+        "message": "Go Back"
     },
     "warnings_reasontitle": {
         "message": "Users have identified the following issues"
@@ -142,7 +142,7 @@
         "description": "This message appears on introduction welcome tip right after the add-on was installed"
     },
     "wt_intro_0_btn": {
-        "message": "OK, got it"
+        "message": "OK, Got It"
     },
     "wt_warning_text": {
         "message": "<p>WOT warns you if you land on a site with a poor reputation based on other users’ ratings or blacklists from third parties.</p><p>The warning also shows you the reasons behind the poor reputation.</p><p>{WT_LEARNMORE}</p><p>If you don't want to see warnings, you can turn them off.</p>",
@@ -152,19 +152,19 @@
         "message": "Turn warnings off"
     },
     "wt_warning_ok": {
-        "message": "OK, got it"
+        "message": "OK, Got It"
     },
     "wt_rw_text_hdr": {
-        "message": "Share your experiences!"
+        "message": "Share Your Experiences!"
     },
     "wt_rw_text": {
-        "message": "<p>WOT rating window shows you the website reputation based on other users’ experiences.</p><p>Now you can rate and comment directly from the updated window.</p><p>Start rating by clicking the colored bars.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
+        "message": "<p>The WOT window shows website reputations based on other users’ experiences.</p><p>Start rating and commenting by clicking the colored bars.</p><p class='wot-c'><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>"
     },
     "wt_donut_msg": {
         "message": "<p>WOT shows you website reputations based on other users’ experiences by showing you traffic light-style icons.</p><p>Hover your mouse over the icon to see the reputations and reasons behind them.</p>"
     },
     "wt_donut_btn": {
-        "message": "OK, got it"
+        "message": "OK, Got It"
     },
     "fbl_hideforever": {
         "message": "Hide forever"
@@ -188,7 +188,7 @@
         "message": "<a href='http://www.mywot.com?utm_source=addon&utm_content=fbl-whatisthis' target='_blank'>Web of Trust (WOT)</a> is working to promote safety and quality across the web for millions of users. You can help by submitting your opinions whenever you see this prompt."
     },
     "fbl_final": {
-        "message": "Thank you!"
+        "message": "Thank You!"
     },
     "fbl_this_website": {
         "message": "this website"
@@ -233,13 +233,17 @@
         "message": "more"
     },
     "ratingwindow_rerate_change": {
-        "message": "change"
+        "message": "Edit Rating",
+	    "description": "changed in 3.0"
     },
     "ratingwindow_rerate_category": {
         "message": " "
     },
     "ratingwindow_fulllist": {
-        "message": "show full list"
+        "message": "Show Full List"
+    },
+    "ratingwindow_shortlist": {
+        "message": "Show Less"
     },
     "ratingwindow_vote_yes": {
         "message": "Yes"
@@ -248,7 +252,8 @@
         "message": "I disagree"
     },
     "messages_ready": {
-        "message": "Reputation of"
+        "message": "Reputation",
+	    "description": "changed in 3.0"
     },
     "testimony_0_levels_r0": {
         "message": "click the bar to rate"
@@ -293,7 +298,7 @@
         "message": "delete"
     },
     "buttons_delete": {
-        "message": "Delete ratings"
+        "message": "Delete Ratings"
     },
     "buttons_delete_title": {
         "message": "Delete my ratings and categories for the website"
@@ -483,5 +488,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Reasons",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Confidence",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Shows how reliable the rating system considers the reputation.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Help Our Community Grow",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT is powered by it's amazing community.</p><p>The more users there are, the better WOT can protect you.</p><p><strong>Help us grow the community by sharing WOT.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Not now",
+        "description": "new in RW 3.0"
 	}
 }

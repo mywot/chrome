@@ -1,6 +1,6 @@
 /*
 	welcometips.css
-	Copyright © 2009 - 2012  WOT Services Oy <info@mywot.com>
+	Copyright © 2009 - 2015  WOT Services Oy <info@mywot.com>
 
 	This file is part of WOT.
 
@@ -76,35 +76,25 @@ body {
 }
 
 .wot-wt-button {
-    -webkit-transition: box-shadow 0.1s !important;
-    width: 12em;
-    height: 24px !important;
-    margin: 1.3em auto 0.5em auto !important;
-    padding: 0.7em 0.5em 0.2em 0.5em !important;
-
-    border: #71A939 solid 1px !important;;
-    border-radius: 3px !important;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.47);
-    text-shadow: 0px 0px 8px #fff !important;
-    background-image: -webkit-linear-gradient(top, #CCEFAC 0%, #9AD265 39%, #6FA736 83%, #83BC4A) !important;
-
-    color: #375914 !important;
-    font-size: 10pt;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
+    /*height: 24px !important;*/
+    min-width: 95px !important;
+    padding: 0.4em 1.5em !important;
+    margin: 0.2em 0.5em !important;
+    border-radius: 2px !important;
+    font-weight: 400 !important;
+    color: #656565 !important;
+    cursor: pointer !important;
+    border: 1px solid #656565 !important;
+    font-size: 13px !important;
+    text-align: center !important;
 }
 
 .wot-wt-button:hover {
-    background-image: -webkit-linear-gradient(top, #e5fad1 0%, #b2e186 39%, #83bc4a 83%, #83BC4A) !important;
+    background-color: #55A651 !important;
+    color: white !important;
+    opacity: 0.9 !important;
 }
 
-.wot-wt-button:active {
-    top: 1px;
-    border-color: #babbbb;
-    box-shadow: none;
-    background-image: -webkit-linear-gradient(top, #a9d185 0%, #8abf58 39%, #6fa736 83%, #83bc4a) !important;
-}
 
 .wot-wt-intro-body #wt-learnmore-link,
 .wot-wt-d-body #wt-learnmore-link,
@@ -134,27 +124,16 @@ body {
     position: absolute;
     display: none;
     z-index: 5;
-    right: 0px;
-    margin-top: 0px;
+    right: 28px;
+    bottom: 20px;
     min-height: 160px;
     max-height: 200px;
-}
-
-#wot-welcometip:before {
-    position: absolute;
-    top: -8px;
-    left: 20px;
-    width: 45px;
-    height: 44px;
-    content: "";
-    background-image: url(/skin/b/welcometips/orange_badge.png);
-    background-repeat: no-repeat;
 }
 
 /* RW WelcomeTip: Sticker mode */
 .rtip-sticker {
     width: 300px;
-    margin: 5px 0px 0px 10px;
+    margin: 5px 0 0 10px;
     background-image: -webkit-linear-gradient(left top, #eef9e4 0%, #dff0d0 28%, #eef9e4 59%, #f6fbf2 89%, #eef9e4 100%);
     box-shadow: 3px 3px 3px #aaa;
     margin-bottom: 10px;

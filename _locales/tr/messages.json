@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "WOT kullanıcıları diyor ki",
+        "message": "Topluluk Puanlamaları",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "Oyum"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Ayrıntıları ve yorumları görüntüle",
+        "message": "Saygınlık detaylarına ve yorumlara bak",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -179,7 +179,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT derecelendirme penceresi, diğer kullanıcıların deneyimlerine dayanarak size websitesinin itibarını gösterir. Artık doğrudan güncellenen pencereden derecelendirme ve yorum yapabilirsiniz. Renkli çubuklara tıklayarak derecelendirmeye başlayın.</p><p class='wot-c'>WOT hakkında <a id='wt-learnmore-link'>daha fazlasını öğrenin</a></p>",
+        "message": "<p>WOT penceresi diğer kullanıcıların deneyimlerine dayanarak web sitesi saygınlığını gösterir.</p><p>Renkli çubuklara tıklayarak puanlamaya ve yorum yapmaya başlayın.</p><p class='wot-c'><a id='wt-learnmore-link'>WOT hakkında</a> daha fazlasını öğren.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -279,7 +279,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "değiştir",
+        "message": "Puanlamayı düzenle",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -289,6 +289,9 @@
     "ratingwindow_fulllist": {
         "message": "tam listeyi göster",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Daha az göster"
     },
     "ratingwindow_vote_yes": {
         "message": "Evet",
@@ -573,5 +576,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Sebepler",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Güven",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Puanlama sisteminin saygınlığı göz önüne almasının ne kadar güvenilir olduğunu gösterir.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Topluluğumuzun Büyümesine Yardımcı Olun",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT, inanılmaz topluluğu tarafından desteklenmektedir.</p><p>Daha çok kullanıcı oldukça WOT sizi daha iyi koruyabilecektir.</p><p><strong>WOT'u paylaşarak topluluğumuzu büyütmemize yardımcı olun.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Şimdi değil",
+        "description": "new in RW 3.0"
 	}
 }

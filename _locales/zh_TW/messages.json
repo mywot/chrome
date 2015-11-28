@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "WOT用戶說",
+        "message": "社區評分",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "我的評等"
     },
     "ratingwindow_viewscorecard": {
-        "message": "檢視詳細內容及評語",
+        "message": "查看聲譽詳細資訊與評論",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -182,7 +182,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT 等級視窗為你顯示過去其他使用者對網站的評價。現在你也可以直接在更新的窗口評分和評論。點擊有色橫欄開始評分。</p><p class='wot-c'><a id='wt-learnmore-link'>了解更多</a> 關於 WOT 的資訊。</p>",
+        "message": "<p>WOT視窗顯示了基於其他使用者體驗得出的網站聲譽。</p><p>點擊彩色滑標以開始評分和評論。</p><p class='wot-c'><a id='wt-learnmore-link'>瞭解更多</a>WOT的資訊。</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -282,7 +282,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "更改",
+        "message": "編輯評分",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -292,6 +292,9 @@
     "ratingwindow_fulllist": {
         "message": "顯示完整清單",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "顯示更少"
     },
     "ratingwindow_vote_yes": {
         "message": "是",
@@ -576,5 +579,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "原因",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "保密",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "顯示評分系統所評價聲譽的可靠性",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "幫助我的社區成長",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT由它神奇的社區提供技術支援。</p><p>用戶越多，WOT越能更好的保護你。</p><p><strong>分享WOT，幫助我們讓社區成長。</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "不是現在",
+        "description": "new in RW 3.0"
 	}
 }

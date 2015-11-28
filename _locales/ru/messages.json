@@ -6,7 +6,7 @@
         "message": "ru-RU"
     },
     "ext_description": {
-        "message": "Web Of Trust показывает, каким сайтам люди доверяют в интернете."
+        "message": "Официальное расширение WOT информирует вас о репутации и безопасности сайтов на основе опыта и оценки интернет-пользователями."
     },
     "components_0": {
         "message": "Заслуживает доверие"
@@ -66,13 +66,13 @@
         "message": "Мой профиль"
     },
     "ratingwindow_wotrating": {
-		"message": "Пользователи WOT говорят"
+		"message": "Оценки сообщества"
     },
     "ratingwindow_myrating": {
         "message": "Моя оценка"
     },
     "ratingwindow_viewscorecard": {
-		"message": "Посмотреть подробности оценок"
+        "message": "Посмотреть репутацию и комментарии"
     },
     "ratingwindow_addcomment": {
 		"message": "Добавить комментарий"
@@ -158,7 +158,7 @@
         "message": "Поделитесь своим опытом!"
     },
     "wt_rw_text": {
-        "message": "<p>WOT показывает репутацию сайтов на основе опыта пользователей.</p><p>Теперь вы можете оценивать и комментировать сайты прямо из этого окна. Оценивайте сайты, кликнув по цветной полоске.</p><p class='wot-c'><a id='wt-learnmore-link'>Что такое WOT</a>?</p>"
+        "message": "<p>В окне WOT отображаются сведения о репутации сайтов на основе опыта пользователей при их посещении.</p><p>Начните ставить оценки и комментировать, нажимая на цветные полоски.</p><p class='wot-c'><a id='wt-learnmore-link'>Подробнее</a> о WOT.</p>"
     },
     "wt_donut_msg": {
         "message": "</p>WOT показывает репутацию сайтов на основе опыта пользователей с помощью цветных иконок светофора.</p><p>Наведите мышь на иконку, чтобы увидеть подробности и возможные причины репутации.</p>"
@@ -233,13 +233,16 @@
         "message": "ещё"
     },
     "ratingwindow_rerate_change": {
-        "message": "изменить"
+        "message": "Изменить оценку"
     },
     "ratingwindow_rerate_category": {
         "message": "указать"
     },
     "ratingwindow_fulllist": {
         "message": "полный список"
+    },
+    "ratingwindow_shortlist": {
+        "message": "Показать меньше"
     },
     "ratingwindow_vote_yes": {
         "message": "Да"
@@ -483,5 +486,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Будьте правдивы и точны</p><p>Используйте тэги</p><p>Пишите о том, что знаете</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Причины",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Уверенность",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Показывает, насколько надежна оценка репутации рейтинговой системой.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Помогите нашему сообществу расти",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT работает благодаря потрясающему сообществу.</p><p>Чем больше пользователей в нем, тем лучше WOT сможет защищать вас.</p><p><strong>Помогите нам расширять сообщество, поделившись сведениями о WOT.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Не сейчас",
+        "description": "new in RW 3.0"
 	}
 }

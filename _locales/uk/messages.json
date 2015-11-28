@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "Користувачі WOT говорять",
+        "message": "Рейтинги cпільноти",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "Мій оцінка"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Переглянути деталі та коментарі",
+        "message": "Переглянути репутації",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -180,7 +180,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>Вікно рейтингу WOT показує вам репутацію сайту, яка базується на досвіді інших користувачів.</p><p>Тепер ви можете самостійно оцінювати та коментувати безпосередньо із оновленого вікна. Почніть оцінювати, натиснувши на кольорові смужки.</p><p class='wot-c'><a id='wt-learnmore-link'>Дізнатися більше</a> про WOT.</p>",
+        "message": "<p>Вікно WOT показує репутацію вебсайту на основі досвіду інших користувачів.</p><p>Почни надавати оцінки та коментарі, натиснувши на кольорові смужки.</p><p class='wot-c'><a id='wt-learnmore-link'> Дізнатися більше </a> про WOT.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -280,7 +280,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "змінити",
+        "message": "Редагувати оцінку",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -289,6 +289,9 @@
     "ratingwindow_fulllist": {
         "message": "показати весь список",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Показати менше"
     },
     "ratingwindow_vote_yes": {
         "message": "Так",
@@ -573,5 +576,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Будьте правдивы и точны</p><p>Используйте тэги</p><p>Пишите о том, что знаете</p>"
-	}
+	},
+	"ratingwindow_reasons": {
+		"message": "Причини",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Впевненість",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Показує, наскільки надійно система оцінювання розглядає репутацію.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Допоможи нашому співтовариству розвиватися",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+        "message": "<p>Роботу WOT надихає його чудова спільнота.</p><p>Чим більша кількість користувачів, тим краще WOT може тебе захистити. </p><p><strong>Допоможи нам розвинути наше співтовариство шляхом поширення WOT.</strong></p>",
+        "description": "new in RW 3.0"
+    },
+    "ratingwindow_share_dismiss": {
+        "message": "Не зараз",
+        "description": "new in RW 3.0"
+    }
 }

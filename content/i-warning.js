@@ -62,7 +62,8 @@ wot.warning = {
 					w.add();  // create new fresh warning
 					w.removal_attempts++;
 
-					if (w.removal_attempts > 2) {
+					if (w.removal_attempts > 10) {
+						console.log('Invoking HellClearance.');
 						// so... you are trying to kill our warning, huh?
 						wot.warning.removal_attempts = 0;
 

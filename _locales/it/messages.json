@@ -58,8 +58,7 @@
         "message": "Impostazioni"
     },
     "ratingwindow_guide": {
-        "message": "Tour",
-        "description": ""
+        "message": "Tour"
     },
     "ratingwindow_forum": {
         "message": "Forum"
@@ -69,14 +68,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "Cosa dicono gli utenti di WOT",
+        "message": "Valutazioni della community",
         "description": ""
     },
     "ratingwindow_myrating": {
-        "message": "Valutazione personale"
+        "message": "Valutazione"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Visualizza dettagli e commenti",
+        "message": "Dettagli e i commenti sulla reputazione",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -181,7 +180,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>La finestra di valutazione di WOT ti mostra la reputazione del sito Web in base all'esperienza di altri utenti. Ora puoi valutare e commentare direttamente dalla finestra aggiornata. Inizia a valutare facendo clic sulle barre colorate.</p><p class='wot-c'><a id='wt-learnmore-link'>Ulteriori informazioni</a> su WOT.</p>",
+        "message": "<p>La finestra WOT mostra le reputazioni del sito internet sulla base delle esperienze degli altri utenti.</p><p>Inizia a valutare e commentare cliccando sulle barre colorate.</p><p class='wot-c'><a id='wt-learnmore-link'>Scopri di più</a> su WOT.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -281,7 +280,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "cambia",
+        "message": "Modifica valutazione",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -291,6 +290,9 @@
     "ratingwindow_fulllist": {
         "message": "lista completa",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Mostra meno informazioni"
     },
     "ratingwindow_vote_yes": {
         "message": "Sì",
@@ -575,5 +577,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Motivazioni",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Fiducia",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Mostra quanto affidabile il sistema di valutazione considera la reputazione.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Aiuta a far crescere la nostra community",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT dipende dalla sua fantastica community.</p><p>Maggiore è il numero degli utenti, maggiore è la protezione che WOT è in grado di offrirti.</p><p><strong>Aiuta a far crescere la community condividendo WOT.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Non ora",
+        "description": "new in RW 3.0"
 	}
 }

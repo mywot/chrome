@@ -1,6 +1,6 @@
 /*
  ratingwindow.js
- Copyright © 2009 - 2014  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2015  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -20,7 +20,7 @@
 
 $.extend(wot, { ratingwindow: {
     MAX_VOTED_VISIBLE: 4,   // how many voted categories we can show in one line
-	sliderwidth: 154,
+	sliderwidth: 230,
     slider_shift: -4,       // adjustment
     opened_time: null,
     was_in_ratemode: false,
@@ -139,9 +139,6 @@ $.extend(wot, { ratingwindow: {
             new_votes_arr = _rw.cat_selector.get_user_votes(false); // get votes as array
         }
 
-//        console.log("old", old_votes);
-//        console.log("new", new_votes_arr);
-
         for(var i in new_votes_arr) {
             cat = new_votes_arr[i];
             new_votes_obj[cat.id] = cat.v;
@@ -159,7 +156,6 @@ $.extend(wot, { ratingwindow: {
             }
         }
 
-//        console.log("diff", diff);
         return diff;
     },
 
@@ -168,8 +164,6 @@ $.extend(wot, { ratingwindow: {
         for (var cat in diff) {
             votes.push(String(cat) + ":" + diff[cat]);
         }
-
-//        console.log("votes", votes);
 
         if (votes.length > 0) {
             return votes.join("/") + "/";
@@ -397,7 +391,7 @@ $.extend(wot, { ratingwindow: {
         /* target */
         if (_this.current.target && cached.status == wot.cachestatus.ok) {
             visible_hostname = normalized_target;
-            rw_title = wot.i18n("messages", "ready");
+            rw_title = ''; //wot.i18n("messages", "ready");
         } else if (cached.status == wot.cachestatus.busy) {
             rw_title = wot.i18n("messages", "loading");
         } else if (cached.status == wot.cachestatus.error) {
@@ -526,51 +520,215 @@ $.extend(wot, { ratingwindow: {
             $("#wot-user-0").css("display", "block");
         }
 
+	    // create static tooltips
+		$('.rating-values').tooltip({
+			items: '.wot-rating-confidence-block',
+			position: { my: 'left bottom-24px' },
+			//hide: 999999999,
+			content: function () {
+				var $container = wot.ratingwindow.get_tooltip_container(wot.i18n('ratingwindow', 'confidence'), true);
+				$container
+					.append(
+						$('<div class="desc"></div>').text(wot.i18n('ratingwindow', 'confidence_explainer'))
+					);
+
+				return $("<div></div>").append($container).html();
+			}
+		});
+
+
 	    // WOT Groups feature discontinued: commented out the code below
 //	    _this.wg.update_wg_visibility();
 //	    _this.wg.update_wg_tags();
 
     },
 
+	get_tooltip_container: function (title, showLogo) {
+		var $container = $('<div class="wot-tooltip">' +
+			'<div class="tooltip-title">' +
+				(showLogo ? '<div class="tooltip-logo"></div>' : '' ) +
+				'<span></span>' +
+			'</div>' +
+		'</div>');
+
+		$container.find('.tooltip-title span').text(title);
+
+		return $container;
+	},
+
+	update_cat_tooltips: function ($elem, cat_list) {
+
+		var $hostElem = $elem.closest('.rating-reasons');
+
+		try {
+			$($hostElem).tooltip('destroy');
+		} catch (e) {
+			// silently ignore errors
+		}
+
+
+		// no need in tooltip if there is one or zero items in the list
+		if (cat_list.length < 2) {
+			return;
+		}
+
+		$($hostElem).tooltip({
+			items: '.categories-area',
+			position: {
+				my: 'left bottom-46px'
+			},
+			//hide: 9999999,
+			content: function () {
+
+				var $container = wot.ratingwindow.get_tooltip_container(wot.i18n('ratingwindow', 'reasons'), false);
+
+				var $list = $('<div class="categories-tooltip"></div>');
+				$container.append($list);
+
+				for (var i in cat_list) {
+					var cdata = cat_list[i];
+					var cat_id = cdata.id,
+						cat_conf = wot.getlevel(wot.confidencelevels, cdata.c).name,
+						cgroup_style = wot.get_category_css(cat_id),
+						cat_text = wot.get_category_name(cat_id, true);
+
+
+					var $item = $('<div class="cat-item"></div>');
+					$item.text(cat_text);
+					$item.addClass([cgroup_style, cat_conf].join(" "));
+
+					$list.append($item);
+				}
+
+				return $("<div></div>").append($container).html();
+			}
+		});
+	},
+
+	update_mycat_tooltips: function ($elem, cat_list) {
+
+		var $hostElem = $elem.find('.wot-rating-help');
+
+		try {
+			$($hostElem).tooltip('destroy');
+		} catch (e) {
+			// silently ignore errors
+		}
+
+		if (cat_list && cat_list.length == 0) return;   // don't attach tooltip for empty list of reasons
+
+		$($hostElem).tooltip({
+			items: '.wot-rating-helptext',
+			tooltipClass: 'tail-top',
+			position: {
+				my: 'left-20px top+10px'
+			},
+			//hide: 9999999,
+			content: function () {
+
+				var $container = wot.ratingwindow.get_tooltip_container(wot.i18n('ratingwindow', 'myrating'), false);
+
+				var $list = $('<div class="categories-tooltip"></div>');
+				$container.append($list);
+
+				for (var i in cat_list) {
+					var cdata = cat_list[i];
+					var cat_id = cdata.id,
+						cgroup_style = wot.get_category_css(cat_id),
+						cat_text = wot.get_category_name(cat_id, true);
+
+
+					var $item = $('<div class="cat-item"></div>');
+					$item.text(cat_text);
+					$item.addClass([cgroup_style, 'my-vote'].join(" "));
+
+					$list.append($item);
+				}
+
+				return $("<div></div>").append($container).html();
+			}
+		});
+	},
     insert_categories: function (cat_list, $_target) {
         $_target.hide();   // to prevent blinking during modification
-        $("li", $_target).remove(); // clean the list
+	    $_target.closest('.rating-reasons').hide();  // hide whole "reasons" block
+        $('.cat-item', $_target).remove(); // clean the list
 
-        for (var i in cat_list) {
-            var cdata = cat_list[i];
-            var cat_id = cdata.id,
-                cat_conf = wot.getlevel(wot.confidencelevels, cdata.c).name,
-                cgroup_style = wot.get_category_css(cat_id),
-                $_new_cat = $("<li class='cat-item'></li>"),
-                cat_text = wot.get_category_name(cat_id, true),
-                $_ico = $("<div class='ico'></div>");
+        if (cat_list.length > 0) {
 
-            if (cat_text) {
-                $_new_cat.text(cat_text);
-                $_new_cat.addClass([cgroup_style, cat_conf].join(" "));   // set group style, confidence style
-                $_ico.addClass([cgroup_style, cat_conf].join(" "));
-                $_new_cat.prepend($_ico);
-                $_target.append($_new_cat);
-            }
+	        for (var i in cat_list) {
+		        var cdata = cat_list[i];
+		        var cat_id = cdata.id,
+			        cat_conf = wot.getlevel(wot.confidencelevels, cdata.c).name,
+			        cgroup_style = wot.get_category_css(cat_id),
+			        $_new_cat = $("<span class='cat-item'></span>"),
+			        $_name_container = $("<span class='cat-item-limited'></span>"),
+			        cat_text = wot.get_category_name(cat_id, true);
+
+		        $_new_cat.addClass([cgroup_style, cat_conf].join(" "));   // set group style, confidence style
+		        $_name_container.text(cat_text);
+		        if (cat_text && cat_text.length > 15) {
+			        $_name_container.addClass('faded');
+		        }
+
+		        $_new_cat.append($_name_container);
+
+		        if (i < cat_list.length - 1) {
+			        $_new_cat.append($('<span class="cat-separator">,&nbsp;</span>'));
+		        }
+
+		        if (cat_text) {
+			        $_target.append($_new_cat);
+		        }
+	        }
+
+	        if (cat_list.length > 2) {
+		        // add limitation on width of category names
+		        $_target.addClass('names-limited');
+	        }
+
+	        $_target.show();
+	        $_target.closest('.rating-reasons').show();
+
+	        var $prevElem = null;
+	        // now go over each item and check if it's visible in order to remove 'comma' before the first invisible element
+	        $('.cat-item').each(function () {
+		        var $elem = $(this);
+		        var $parent = $elem.parent();
+		        var bottomPoint = $elem.position().top + $elem.height();
+		        var isVisible = bottomPoint > 0 && bottomPoint < $parent.height();
+
+		        if (!isVisible) {
+			        // hide previous separator and current item
+			        $prevElem.find('.cat-separator').hide();
+			        $elem.hide();
+		        }
+
+		        $prevElem = $elem;
+	        });
         }
-        $_target.show();
+
+	    wot.ratingwindow.update_cat_tooltips($_target, cat_list);
     },
 
     update_categories: function () {
 //        console.log("wot.ratingwindow.update_categories()");
         var _rw = wot.ratingwindow,
-            cached = _rw.getcached(),
-            $_tr_list = $("#tr-categories-list");
+            cached = _rw.getcached();
+        var $_tr_list = $("#tr-categories-list");
+        var $_cs_list = $("#cs-categories-list");
 
         try {
             // delete categories from the visible area
             _rw.insert_categories({}, $_tr_list);
+            _rw.insert_categories({}, $_cs_list);
 
             if (_rw.current.target && cached.status == wot.cachestatus.ok && cached.value) {
                 var cats = cached.value.cats;
                 if (!wot.utils.isEmptyObject(cats)) {
                     var sorted = wot.rearrange_categories(wot.select_identified(cats));    // sort categories and split into two parts (TR, CS)
-                    _rw.insert_categories(sorted.all, $_tr_list);
+                    _rw.insert_categories(sorted.trustworthy, $_tr_list);
+                    _rw.insert_categories(sorted.childsafety, $_cs_list);
                 }
             }
         } catch (e) {
@@ -625,7 +783,7 @@ $.extend(wot, { ratingwindow: {
         var _rw = wot.ratingwindow,
             _comments = wot.ratingwindow.comments,
             comment_data = {},
-	        wg = (cached || {}).wg || {},
+	        wg = cached.wg || {},
             bg = chrome.extension.getBackgroundPage(),
             is_unsubmitted = false;
 
@@ -739,6 +897,9 @@ $.extend(wot, { ratingwindow: {
         var counter = bg.wot.prefs.get(wot.engage_settings.invite_to_rw.pref_name);
         counter = counter + 1;
         bg.wot.prefs.set(wot.engage_settings.invite_to_rw.pref_name, counter);
+
+	    // Increment similar counter for ShareScreen purposes
+	    bg.wot.prefs.set('rw_opened_sharing', 1 + (bg.wot.prefs.get('rw_opened_sharing') || 0));
     },
 
     reveal_ratingwindow: function (no_animation) {
@@ -768,6 +929,40 @@ $.extend(wot, { ratingwindow: {
         }, 500);
     },
 
+	showhide_share_wot_screen: function (show) {
+
+		var $wot_elements = $('#wot-elements');
+		var $share_screen = $('#wot-share');
+
+		$share_screen.toggle(show);
+		$wot_elements.toggleClass('blur', show);
+	},
+
+	compose_share_tweet: function () {
+
+		var params = {
+			text: "I use @Web_of_Trust to avoid untrustworthy web links. Download it too and surf safer!",
+			url: "https://www.mywot.com"
+		};
+
+		return "https://twitter.com/intent/tweet?" + wot.utils.query_param(params);
+
+	},
+
+	compose_share_facebook: function () {
+
+		var params = {
+			app_id: 122398707842455,
+			display: 'page',
+			text: 'I use @Web_of_Trust to avoid untrustworthy web links. Download it too and surf safer!',
+			href: 'https://www.mywot.com',
+			redirect_uri: 'https://www.mywot.com'
+		};
+
+		return "https://www.facebook.com/dialog/share?" + wot.utils.query_param(params);
+
+	},
+
     localize: function () {
 	    var bgwot = wot.ratingwindow.get_bg().wot;
 
@@ -777,18 +972,18 @@ $.extend(wot, { ratingwindow: {
             $("#wot-rating-" + n + "-header").text(wot.i18n("components", n));
             $("#wot-myrating-"+ n +"-header").text(wot.i18n("ratingwindow", "question" + n));
 
-            $("#wot-rating-" + n + "-boundleft").text(wot.i18n("testimony", item.name + "_levels_" + wot.getlevel(wot.reputationlevels, 0).name));
-            $("#wot-rating-" + n + "-boundright").text(wot.i18n("testimony", item.name + "_levels_" + wot.getlevel(wot.reputationlevels, 100).name));
+//            $("#wot-rating-" + n + "-boundleft").text(wot.i18n("testimony", item.name + "_levels_" + wot.getlevel(wot.reputationlevels, 0).name));
+//            $("#wot-rating-" + n + "-boundright").text(wot.i18n("testimony", item.name + "_levels_" + wot.getlevel(wot.reputationlevels, 100).name));
         });
 
         [
-            { selector: "#myrating-header",         text: wot.i18n("ratingwindow", "myrating") },
+            { selector: ".wot-rating-helplink",     text: wot.i18n("ratingwindow", "myrating") + ':' },
             { selector: "#wot-header-link-guide",   text: wot.i18n("ratingwindow", "guide") },
             { selector: "#wot-header-link-forum",   text: wot.i18n("ratingwindow", "forum") },
             { selector: "#wot-header-link-settings",text: wot.i18n("ratingwindow", "settings") },
             { selector: "#header-link-profile-text", text: wot.i18n("ratingwindow", "profile") },
             { selector: "#wot-title-text",          text: wot.i18n("messages", "initializing") },
-            { selector: "#wot-rating-header-wot",   text: wot.i18n("ratingwindow", "wotrating") },
+            { selector: ".rep-block-header",        text: wot.i18n("ratingwindow", "wotrating") },
             { selector: "#wot-rating-header-my",    text: wot.i18n("ratingwindow", "myrating") },
             { selector: "#wot-scorecard-visit",     text: wot.i18n("ratingwindow", "viewscorecard") },
             { selector: "#wot-scorecard-comment",   text: wot.i18n("ratingwindow", "addcomment") },
@@ -800,6 +995,9 @@ $.extend(wot, { ratingwindow: {
             { selector: "#btn-submit",              text: wot.i18n("buttons", "save") },
             { selector: "#btn-thanks-ok",           text: wot.i18n("buttons", "ok") },
             { selector: ".category-title",          text: wot.i18n("ratingwindow", "categories") },
+            { selector: ".wot-rating-confidence-label", text: wot.i18n("ratingwindow", "confidence") + ':' },
+            { selector: ".rating-reasons-label",        text: wot.i18n("ratingwindow", "reasons") + ':' },
+            { selector: "#chk-full-list-label",     text: wot.i18n("ratingwindow", "fulllist") },
             { selector: "#change-ratings",          text: wot.i18n("ratingwindow", "rerate_change") },
             { selector: ".comment-title",           text: wot.i18n("ratingwindow", "comment") },
             { selector: "#user-comment",            placeholder: wot.i18n("ratingwindow", "comment_placeholder") },
@@ -816,7 +1014,11 @@ $.extend(wot, { ratingwindow: {
             { selector: "#wg-about-ok",             text: wot.i18n("wg", "about_ok") },
             { selector: "#wg-about-learnmore",      text: wot.i18n("wg", "about_more") },
             { selector: "#comment-captcha-text",    text: wot.i18n("ratingwindow", "comment_captchatext") },
-            { selector: "#comment-captcha-link",    text: wot.i18n("ratingwindow", "comment_captchalink") }
+	        { selector: "#comment-captcha-link",    text: wot.i18n("ratingwindow", "comment_captchalink") },
+	        // share screen
+            { selector: ".wot-share-title",         text: wot.i18n("ratingwindow", "share_title") },
+            { selector: ".wot-share-text",          html: wot.i18n("ratingwindow", "share_text") },
+            { selector: "#wot-share-close",         text: wot.i18n("ratingwindow", "share_dismiss") }
 
         ].forEach(function(item) {
                 var $elem = $(item.selector);
@@ -855,14 +1057,9 @@ $.extend(wot, { ratingwindow: {
 
     update_uservoted: function () {
         var _rw = wot.ratingwindow;
-        var res = "",
-            up_voted = [],
+        var up_voted = [],
             down_voted = [],
-            cat = null,
-            $_change = $("#change-ratings"),
-            $_voted_content = $("#voted-categories-content"),
-            $_voted_categories = $("#voted-categories"),
-            change_link_text = "";
+            cat = null;
 
         // try to get user's votes from the category selector (if there are any)
         var voted = _rw.cat_selector.get_user_votes();
@@ -870,9 +1067,9 @@ $.extend(wot, { ratingwindow: {
             for (var i = 0; i < voted.length; i++) {
                 cat = voted[i];
                 if (cat.v == 1) {
-                    up_voted.push(_rw.build_voted_category_html(cat, cat.v));
+                    up_voted.push(wot.get_category(cat.id));
                 } else if (cat.v == -1) {
-                    down_voted.push(_rw.build_voted_category_html(cat, cat.v));
+                    down_voted.push(wot.get_category(cat.id));
                 }
             }
         } else {
@@ -880,45 +1077,15 @@ $.extend(wot, { ratingwindow: {
             voted = wot.select_voted(_rw.getcached().value.cats);
             for(cat in voted) {
                 if (voted[cat].v == 1) {
-                    up_voted.push(_rw.build_voted_category_html(wot.get_category(cat), voted[cat].v));
+                    up_voted.push(wot.get_category(cat));
                 } else if (voted[cat].v == -1) {
-                    down_voted.push(_rw.build_voted_category_html(wot.get_category(cat), voted[cat].v));
+                    down_voted.push(wot.get_category(cat));
                 }
             }
         }
 
-        $_voted_content.empty();
-
-        if (up_voted.length > 0) {
-
-            $_voted_categories.removeClass("wider");
-
-            up_voted.forEach(function(elem) {
-                $_voted_content.append(elem);
-            });
-
-            down_voted.forEach(function(elem) {
-                $_voted_content.append(elem);
-            });
-
-            var more_voted = up_voted.length + down_voted.length - _rw.MAX_VOTED_VISIBLE;
-
-            if (more_voted > 0) {
-                var $_more = $('<div class="more-categories"></div>');
-                $_more.text("+" + more_voted + " " + wot.i18n("ratingwindow", "morecats"));
-                $_voted_content.append($_more);
-            }
-
-            change_link_text = wot.i18n("ratingwindow", "rerate_change");
-        } else {
-            $_voted_categories.addClass("wider");
-            $_voted_content.text(wot.i18n("ratingwindow", "novoted"));
-            change_link_text = "";
-        }
-
-        $("#rated-votes").toggleClass("voted", (up_voted.length > 0));
-        $_change.text(change_link_text);
-        $_change.toggle(change_link_text && change_link_text.length > 0);
+	    /// TODO: show downvotes as well
+	    wot.ratingwindow.update_mycat_tooltips($('#ratings-area'), up_voted);
     },
 
     has_1upvote: function (votes_obj) {
@@ -1013,6 +1180,31 @@ $.extend(wot, { ratingwindow: {
 
         _rw.delete_action = delete_action;
     },
+
+	engage_with_share_screen: function () {
+		// Shows Share WOT screen when conditions are met: on 5th and 15th open of the RW, if not shared before
+
+		var bg = chrome.extension.getBackgroundPage();
+		var _rw = wot.ratingwindow;
+		var opened = _rw.prefs.get('rw_opened_sharing');
+		var share_screen_shown = _rw.prefs.get('rw_sharing_shown') || 0;
+		var opens_points = [5, 15]; // engage with user when RW is opened these number of times
+
+		if (_rw.prefs.get('wot_shared_on')) {
+			// skip the 'Share WOT' engagement at all because the user already shared WOT before
+			return;
+		}
+
+		if (opens_points.indexOf(opened) < 0) {
+			// number of RW opens doesn't meet criteria for engaging
+			return;
+		}
+
+		_rw.showhide_share_wot_screen(true);
+		bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_SS_OPENED, String(opened));
+
+		_rw.prefs.set('rw_sharing_shown', share_screen_shown + 1);
+	},
 
     onload: function()
     {
@@ -1186,6 +1378,29 @@ $.extend(wot, { ratingwindow: {
             }
         });
 
+	    $(".wot-share-icon-twitter").bind("click", function() {
+		    _rw.prefs.set('wot_shared_on', new Date());
+		    bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_SS_TWEETED, String(_rw.prefs.get('rw_opened_sharing')));
+		    wot.ratingwindow.navigate(wot.ratingwindow.compose_share_tweet());
+	    });
+
+	    $(".wot-share-icon-fb").bind("click", function() {
+		    _rw.prefs.set('wot_shared_on', new Date());
+		    bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_SS_FBSHARED, String(_rw.prefs.get('rw_opened_sharing')));
+		    wot.ratingwindow.navigate(wot.ratingwindow.compose_share_facebook());
+	    });
+
+	    $(".wot-share-icon-mail").bind("click", function() {
+		    _rw.prefs.set('wot_shared_on', new Date());
+		    bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_SS_EMAIL, String(_rw.prefs.get('rw_opened_sharing')));
+		    wot.ratingwindow.navigate('https://www.mywot.com/referral?src=addon');
+	    });
+
+	    $("#wot-share-close").bind("click", function() {
+		    bg.wot.ga.fire_event(wot.ga.categories.RW, wot.ga.actions.RW_SS_DISMISS, String(_rw.prefs.get('rw_opened_sharing')));
+		    _rw.showhide_share_wot_screen(false);
+	    });
+
         $(window).unload(wot.ratingwindow.on_unload);
 
         _rw.rate_control.init(); // init handlers of rating controls
@@ -1238,6 +1453,7 @@ $.extend(wot, { ratingwindow: {
 
 	    // increment "RatingWindow shown" counter
         _rw.count_window_opened();
+	    _rw.engage_with_share_screen();
         bg.wot.core.badge.text = "";
         bg.wot.core.badge.type = null;
 
@@ -1510,17 +1726,8 @@ $.extend(wot, { ratingwindow: {
                 var helptext = wot.get_level_label(item.name, rep, true);
 
                 if (helptext.length) {
-	                var show_helptext = true;
-	                if (rep == "r0" && _rw.prefs.get("activity_score") >= 3000) {
-		                show_helptext = false;
-	                }
-
-	                if (show_helptext) {
-		                elems.helptext.text(helptext).show();
-		                elems.helptext.attr("r", rep);
-	                } else {
-		                elems.helptext.text("");
-	                }
+	                elems.helptext.text(helptext).show();
+	                elems.helptext.attr("r", rep);
                 } else {
 	                elems.helptext.hide();
                 }
@@ -1538,7 +1745,7 @@ $.extend(wot, { ratingwindow: {
         unrated: {
             visible: ["#ratings-area", "#reputation-info", "#user-communication", ".user-comm-social", "#main-area"],
             invisible: ["#rate-buttons", "#categories-selection-area", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area", "#change-ratings"],
             addclass: "view-mode unrated",
             removeclass: "rated commenting thanks rate wgcommenting wgexpanded wgabout",
 
@@ -1582,6 +1789,7 @@ $.extend(wot, { ratingwindow: {
 
 	            $rated_votes.toggle(show_comment_icon);
 	            $(".user-comm-activity").toggle(!show_comment_icon);
+	            wot.ratingwindow.update_mycat_tooltips($('#ratings-area'), []); // clear "My Ratings" tooltip
 
 	            wot.ratingwindow.wg.update_wg_visibility();
                 return true;
@@ -1589,7 +1797,7 @@ $.extend(wot, { ratingwindow: {
         },
 
         rated: {
-            visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social", "#main-area"],
+            visible: ["#ratings-area", "#reputation-info", "#user-communication", "#rated-votes", ".user-comm-social", "#main-area", "#change-ratings"],
             invisible: ["#rate-buttons", "#categories-selection-area",
                 "#commenting-area", "#thanks-area", "#ok-button", "#wg-about-area"],
             addclass: "view-mode rated",
@@ -1631,7 +1839,7 @@ $.extend(wot, { ratingwindow: {
         rate: {
             visible: ["#ratings-area", "#rate-buttons", "#categories-selection-area", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#rated-votes",
-                "#commenting-area", "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
+                "#commenting-area", "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area", "#change-ratings"],
             addclass: "rate",
             removeclass: "view-mode rated unrated commenting thanks wgcommenting wgexpanded wgabout",
 
@@ -1674,7 +1882,7 @@ $.extend(wot, { ratingwindow: {
         comment: { // Commenting during rating process
             visible: ["#ratings-area", "#rate-buttons", "#commenting-area", "#rated-votes", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area"],
+                "#thanks-area", "#ok-button", "#wg-area", "#wg-about-area", "#change-ratings"],
             addclass: "commenting",
             removeclass: "view-mode rated unrated rate thanks wgcommenting wgexpanded wgabout",
 
@@ -1717,7 +1925,7 @@ $.extend(wot, { ratingwindow: {
         wgcomment: { // Quick Comment mode for WebGuide feature
             visible: ["#wg-area", "#commenting-area", "#main-area"],  // "#rate-buttons" will be shown after animation
             invisible: ["#ratings-area", "#reputation-info", "#user-communication", "#categories-selection-area",
-                "#thanks-area", "#ok-button", "#rated-votes", "#wg-about-area"],
+                "#thanks-area", "#ok-button", "#rated-votes", "#wg-about-area", "#change-ratings"],
 
 	        addclass: "wgcommenting",
 	        removeclass: "view-mode rated unrated rate thanks wgexpanded wgabout",
@@ -1767,7 +1975,7 @@ $.extend(wot, { ratingwindow: {
 	    wgexpanded: { // Full view of WOT Groups feature
 		    visible: ["#wg-area", "#ratings-area" ],
 		    invisible: [ "#reputation-info", "#user-communication", "#categories-selection-area",
-			    "#thanks-area", "#ok-button", "#commenting-area", "#wg-about-area", "#ok-button"],
+			    "#thanks-area", "#ok-button", "#commenting-area", "#wg-about-area", "#ok-button", "#change-ratings"],
 
 		    addclass: "wgexpanded",
 		    removeclass: "rate thanks wgcommenting commenting wgabout",
@@ -1815,7 +2023,7 @@ $.extend(wot, { ratingwindow: {
         thanks: {
             visible: ["#thanks-area", "#ratings-area", "#rated-votes", "#ok-button", "#main-area"],
             invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-                "#commenting-area", "#rate-buttons", "#wg-area", "#wg-about-area"],
+                "#commenting-area", "#rate-buttons", "#wg-area", "#wg-about-area", "#change-ratings"],
             addclass: "thanks view-mode",
             removeclass: "rated unrated rate commenting wgcommenting wgexpanded wgabout",
 
@@ -1841,7 +2049,7 @@ $.extend(wot, { ratingwindow: {
 			// the explanation screen "What's this?" for WOT Groups
 		    visible: ["#wg-area", "#wg-about-area", "#ratings-area", "#main-area"],
 		    invisible: ["#reputation-info", "#user-communication", "#categories-selection-area",
-			    "#commenting-area", "#rate-buttons" ],
+			    "#commenting-area", "#rate-buttons", "#change-ratings" ],
 		    addclass: "wgabout view-mode",
 		    removeclass: "rated unrated rate commenting thanks wgcommenting wgexpanded",
 
@@ -1981,17 +2189,6 @@ $.extend(wot, { ratingwindow: {
                     _this.$_cat_selector.append($_li);
                 }
             }
-
-            var _i18n_fulllist = wot.i18n("ratingwindow", "fulllist");
-
-            if (_i18n_fulllist) {
-                var chk_html = '<div class="cat-full-list">' +
-                    '<input type="checkbox" id="chk-full-list" class="css-checkbox"/>' +
-                    '<label for="chk-full-list" class="css-label">' + _i18n_fulllist + '</label>' +
-                    '</div>';
-
-                _this.$_cat_selector.append($(chk_html));
-            }
         },
 
         _build_grouping: function (grouping_text, grouping_name) {
@@ -2026,6 +2223,7 @@ $.extend(wot, { ratingwindow: {
                         $_po_cat.attr("data-cat", cat.id);
                         $_po_cat.toggleClass("omni", omni);
 						$_po_cat.toggleClass("dynamic", dynamic);
+						$_po_cat.attr("grp-index", Math.floor(cat.id / 100));
 
                         if (cat.fullonly) {
                             $_po_cat.addClass("fullonly");
@@ -2041,11 +2239,7 @@ $.extend(wot, { ratingwindow: {
 		                    $("<div></div>").addClass("cat-vote-left").appendTo($_cat_vote);
 	                    }
 
-//	                    $("<div></div>").addClass("delete-icon")
-//		                    .appendTo($("<div></div>").addClass("cat-vote-del").appendTo($_cat_vote));
-
 	                    $_cat_vote.appendTo($_po_cat);
-
 
                         $("<div></div>")    // the category line
                             .text(wot.get_category_name(cat.id, true))
@@ -2238,11 +2432,7 @@ $.extend(wot, { ratingwindow: {
 
             _this.init_voted();
 
-            $(".dropdown-menu").menuAim({
-                active_selector: ".maintainHover",
-                activate: _this.activate_submenu,
-                deactivate: _this.deactivate_submenu
-            });
+	        $(_this.$_cat_selector).on('click', '.dropdown-menu > li', _this.activate_submenu);
 
             $(_this.$_cat_selector).on("click", ".category, .cat-vote-left, .cat-vote-right, .cat-vote-del", _this.vote);
 
@@ -2256,8 +2446,9 @@ $.extend(wot, { ratingwindow: {
                 attr("checked", _this.short_list ? null : "checked");
 
             _this.$_cat_selector.toggleClass("shortlist", _this.short_list); // change appearance of the list
+	        $('#chk-full-list-label').text(_this.short_list ? wot.i18n('ratingwindow', 'fulllist') : wot.i18n('ratingwindow', 'shortlist'));
 
-            _this.update_categories_visibility();
+	        _this.update_categories_visibility();
 
             this.inited = true;
         },
@@ -2278,7 +2469,7 @@ $.extend(wot, { ratingwindow: {
             if (is_hovered && cat_description) {
                 $_category_title.hide(0, function () {
                     $_cat_description.text(cat_description);
-                    $_cat_description.show();
+                    $_cat_description.css({ display: 'table-cell'});    // for vertical text alignment
                 });
 
             } else {
@@ -2296,6 +2487,8 @@ $.extend(wot, { ratingwindow: {
             _rw.prefs.set("show_fulllist", !_this.short_list);  // store the value
 
             _this.$_cat_selector.toggleClass("shortlist", _this.short_list); // change appearance of the list
+
+	        $('#chk-full-list-label').text(_this.short_list ? wot.i18n('ratingwindow', 'fulllist') : wot.i18n('ratingwindow', 'shortlist'));
 
             _this.update_categories_visibility();
         },
@@ -2330,6 +2523,18 @@ $.extend(wot, { ratingwindow: {
         },
 
         activate_submenu: function(elem) {
+
+	        var _rw = wot.ratingwindow,
+		        _this = _rw.cat_selector;
+
+	        _this.deactivate_all();
+
+	        console.log();
+
+	        if (elem.currentTarget) {
+		        elem = this;
+	        }
+
             var menu = $(".dropdown-menu");
             var category_title = $(".category-title");
             var $_external_container = $("#categories-selection-area");
@@ -2338,8 +2543,8 @@ $.extend(wot, { ratingwindow: {
 
             selected_elem.addClass("maintainHover");
 
-            var left_distance = 162; //menu.outerWidth() + (menu.offset().left - $_external_container.offset().left);
-            var top_distance = 10;//menu.offset().top;
+            var left_distance = 113; //menu.outerWidth() + (menu.offset().left - $_external_container.offset().left);
+            var top_distance = 6;//menu.offset().top;
 
             //TO DO: what if user changes category manully.
 
@@ -2469,7 +2674,7 @@ $.extend(wot, { ratingwindow: {
 		    if (warning) {
 			    $_category_title.hide(0, function () {
 				    $_cat_description.text(warn_text);
-				    $_cat_description.show();
+				    $_cat_description.css({ display: 'table-cell' });
 			    });
 		    } else {
 			    if (previously_warned) {
@@ -2666,7 +2871,7 @@ $.extend(wot, { ratingwindow: {
             $("#comment-register").hide();
             $("#comment-captcha").hide();
             $("#comment-side-hint").show();
-            $("#user-comment").removeClass("warning").attr("disabled", null);
+            $("#user-comment").removeClass("warning").attr("contenteditable", true);
         },
 
         show_register_invitation: function () {
@@ -2677,7 +2882,7 @@ $.extend(wot, { ratingwindow: {
 
         show_captcha_invitation: function () {
             $("#comment-side-hint").hide();
-            $("#user-comment").addClass("warning").attr("disabled", "1");
+            $("#user-comment").addClass("warning").attr("contenteditable", false);
             $("#comment-captcha").show();
         },
 
@@ -3015,7 +3220,6 @@ $.extend(wot, { ratingwindow: {
 
 				tags_ac = tags_ac.map(function (item) { return "#" + item });  // prepend with # char since it is required by the autocomplete feature
 
-//			console.log(tags_ac);
 			}
 
 			return tags_ac;

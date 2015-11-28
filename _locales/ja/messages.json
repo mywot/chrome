@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "WOT（Web of Trust）ユーザーは言います",
+        "message": "コミュニティ評価",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "自分の評価"
     },
     "ratingwindow_viewscorecard": {
-        "message": "詳細とコメントを見る",
+        "message": "評判詳細とコメントを表示",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -181,7 +181,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT評価のウインドウは、他のユーザの経験に基づくウェブサイトの評判を示しています。アップデートされたウインドウから直接、評価やコメントをすることができます。 色の付いたバーをクリックして評価を始めてください。</p><p class='wot-c'>WOTについて<a id='wt-learnmore-link'>詳細を見る</a></p>",
+        "message": "<p>WOTウィンドウではユーザーの体験に基づくウェブサイトの評価を表示します。</p><p>カラーバーをクリックして評価とコメントを開始しましょう。</p><p class='wot-c'><a id='wt-learnmore-link'>WOTについて</a>さらに詳しく</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -281,7 +281,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "変更",
+        "message": "評価を編集",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -291,6 +291,9 @@
     "ratingwindow_fulllist": {
         "message": "全リスト",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "少なく表示"
     },
     "ratingwindow_vote_yes": {
         "message": "はい",
@@ -575,5 +578,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "理由",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "自信",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "評価システムでは評判を考慮した信頼性の高い方法を示します。",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "コミュニティの成長を助ける",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOTは素晴らしいコミュニティによって形成されています。</p><p>ユーザーが多ければ多いほどWOTのあなたを守る力も増します。</p><p><strong>WOTを共有することでコミュニティを成長させてください。</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "後で",
+        "description": "new in RW 3.0"
 	}
 }

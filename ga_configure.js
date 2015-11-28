@@ -65,6 +65,12 @@ $.extend(wot, { ga: {
 		RW_BTNCANCEL:   "RW_btn_cancel",
 		RW_PROFILELNK:  "RW_profilelnk",
 
+		RW_SS_OPENED:   'RW_Share_shown',
+		RW_SS_DISMISS:   'RW_Share_dismiss',
+		RW_SS_TWEETED:   'RW_Share_tweeted',
+		RW_SS_FBSHARED:   'RW_Share_FB_shared',
+		RW_SS_EMAIL:   'RW_Share_mail_shared',
+
 		WS_SHOW:        "WS_shown",
 		WS_BTN_ENTER:   "WS_btn_enter",
 		WS_BTN_CLOSE:   "WS_btn_close",

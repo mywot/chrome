@@ -21,8 +21,7 @@
         "message": "Bezpečnost dětí"
     },
     "reputationlevels_r0": {
-        "message": "Neznámý",
-        "description": ""
+        "message": "Neznámý"
     },
     "reputationlevels_r1": {
         "message": "Velmi špatná"
@@ -58,61 +57,49 @@
         "message": "Nastavení"
     },
     "ratingwindow_guide": {
-        "message": "Prohlídka",
-        "description": ""
+        "message": "Prohlídka"
     },
     "ratingwindow_forum": {
         "message": "Forum"
     },
     "ratingwindow_profile": {
-        "message": "Můj profil",
-        "description": ""
+        "message": "Můj profil"
     },
     "ratingwindow_wotrating": {
-        "message": "Uživatelé WOT říkají",
-        "description": ""
+        "message": "Komunitní hodnocení"
     },
     "ratingwindow_myrating": {
         "message": "Moje hodnocení"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Zobrazit detaily a komentáře",
-        "description": ""
+        "message": "Zobrazit detaily o reputaci a komentáře"
     },
     "ratingwindow_addcomment": {
-        "message": "Přidat komentář",
-        "description": ""
+        "message": "Přidat komentář"
     },
     "ratingwindow_editcomment": {
-        "message": "Upravit komentář",
-        "description": ""
+        "message": "Upravit komentář"
     },
     "ratingwindow_backtoratings": {
-        "message": "Zpět na důvody",
-        "description": ""
+        "message": "Zpět na důvody"
     },
     "ratingwindow_backtoratings_category": {
-        "message": "Vybrat důvod",
-        "description": ""
+        "message": "Vybrat důvod"
     },
     "ratingwindow_newversion": {
         "message": "K dispozici je nová verze - kliknutím sem proveďte aktualizaci"
     },
     "ratingwindow_invite_rw": {
-        "message": "Používáním toho nástroje můžete hodnotit webové stránky. Pro vyjádření nakolik důvěřujete webové stránce klikněte na barevné pruhy.",
-        "description": ""
+        "message": "Používáním toho nástroje můžete hodnotit webové stránky. Pro vyjádření nakolik důvěřujete webové stránce klikněte na barevné pruhy."
     },
     "warnings_information": {
-        "message": "Zobrazit detaily a komentáře",
-        "description": ""
+        "message": "Zobrazit detaily a komentáře"
     },
     "warnings_ratesite": {
-        "message": "Pokud důvěřujete této stránce, pak ji, prosím, <a>ohodnoťte</a>",
-        "description": ""
+        "message": "Pokud důvěřujete této stránce, pak ji, prosím, <a>ohodnoťte</a>"
     },
     "warnings_reratesite": {
-        "message": "<a>Klikněte zde</a>, pokud chcete znovu ohodnotit tuto stránku",
-        "description": ""
+        "message": "<a>Klikněte zde</a>, pokud chcete znovu ohodnotit tuto stránku"
     },
     "warnings_reputation": {
         "message": "Reputace této stránky je špatná"
@@ -181,7 +168,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>Okno WOT hodnocení Vám ukáže reputaci webové stránky na základě zkušeností ostatních uživatelů. Nyní je možné ohodnotit a poskytnout komentář přímo z aktualizovaného okna. Začněte hodnotit kliknutím na barevné pruhy.</p><p class='wot-c'><a id='wt-learnmore-link'>Dovězte se více</a> o WOT.</p>",
+        "message": "<p>Okno WOT ukazuje webovou reputaci na základě zkušeností ostatních uživatelů.</p><p>Začněte hodnotit a komentovat tak, že kliknete na barevné pruhy.</p><p class='wot-c'><a id='wt-learnmore-link'>Zjistěte více</a> o WOT.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -281,16 +268,18 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "změnit",
+        "message": "Upravit hodnocení",
         "description": ""
     },
     "ratingwindow_rerate_category": {
-        "message": " ",
-        "description": "TODO: TRANSLATE"
+        "message": " "
     },
     "ratingwindow_fulllist": {
         "message": "zobrazit úplný seznam",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Ukázat méně"
     },
     "ratingwindow_vote_yes": {
         "message": "Ano",
@@ -377,8 +366,7 @@
         "description": ""
     },
     "buttons_ok": {
-        "message": "OK",
-        "description": ""
+        "message": "OK"
     },
     "popup_headertext": {
         "message": "klikněte pro zobrazení detailů",
@@ -575,5 +563,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Důvody",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Důvěra",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Ukazuje spolehlivost reputace podle hodnotícího systému.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Pomozte nám s růstem",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT je založeno na úžasné komunitě.</p><p>Čím více je zde uživatelů, tím lépe vás WOT dokáže ochránit.</p><p><strong>Pomozte nám rozšířit komunitu tak, že budete sdílet WOT.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Nyní ne",
+        "description": "new in RW 3.0"
 	}
 }

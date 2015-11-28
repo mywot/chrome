@@ -128,37 +128,54 @@
     background-position: 0 0;
 }
 
-.wot-cnf {
-    height: 42px;
-    margin-left: -2px;
-    margin-top: -5px;
-    width: 34px;
-    background: url("../b/confidence_150dpi.png") top left no-repeat;
-    background-size: 33px auto;
-    background-position: 0 -168px;
-    padding: 0;
-    float: left;
+/* Styles for Confidence are copied from Warning and Rating Window */
+
+.wot-rating-confidence {
+    position: absolute;
+    margin-top: 14px;
+    margin-left: 40px;
+    width: 44px;
 }
 
-.wot-cnf[confidence="c1"] {
-    background-position: 0 -126px;
+.confidence-dot {
+    border: 1px solid #676767;
+    border-radius: 50%/50%;
+    width: 4px;
+    height: 4px;
+    margin-right: 2px;
+    display: inline-block;
 }
 
-.wot-cnf[confidence="c2"] {
-    background-position: 0 -84px;
+.wot-rating-confidence[confidence="c1"] .confidence-dot-1 {
+    background-color: #676767;
 }
 
-.wot-cnf[confidence="c3"] {
-    background-position: 0 -42px;
+.wot-rating-confidence[confidence="c2"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c2"] .confidence-dot-2 {
+    background-color: #676767;
 }
 
-.wot-cnf[confidence="c4"] {
-    background-position: 0 0;
+.wot-rating-confidence[confidence="c3"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c3"] .confidence-dot-2,
+.wot-rating-confidence[confidence="c3"] .confidence-dot-3 {
+    background-color: #676767;
 }
 
-.wot-cnf[confidence="c5"] {
-    background-position: 0 -210px;
+.wot-rating-confidence[confidence="c4"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c4"] .confidence-dot-2,
+.wot-rating-confidence[confidence="c4"] .confidence-dot-3,
+.wot-rating-confidence[confidence="c4"] .confidence-dot-4 {
+    background-color: #676767;
 }
+
+.wot-rating-confidence[confidence="c5"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-2,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-3,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-4,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-5 {
+    background-color: #676767;
+}
+
 
 .wot-popup-layer .rating-legend-wrapper {
     /*position: absolute;*/

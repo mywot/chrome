@@ -18,6 +18,11 @@
 	along with WOT. If not, see <http://www.gnu.org/licenses/>.
 */
 
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
 #wotwarning, #wotwrapper {
     position: fixed;
     left: 0;
@@ -50,7 +55,7 @@
     padding: 0 0 17px;
     z-index: 2147483647;
     text-align: center;
-    font-family: "Arial", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     border: #babbbb solid 1px;
@@ -67,8 +72,8 @@
 .wotcontainer * {
     position: static;
     line-height: normal;
-    font-family: "Arial", sans-serif;
-    font-weight: normal;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
     cursor: default;
     font-size: 10pt;
     letter-spacing: 0;
@@ -171,7 +176,7 @@
     padding: 8px 0 0.5em 0;
     color: #454545;
     text-align: left;
-    font-size: 12px;
+    font-size: 13px;
     white-space: nowrap;
     min-height: 18px;
 }
@@ -192,8 +197,8 @@
     background-size: 35px 198px;
     height: 33px;
     width: 35px;
-    margin-left: -5px;
-    margin-top: 10px;
+    margin-left: 8px;
+    margin-top: 12px;
 }
 
 #wotcontainer.accessible .wot-comp-icon {
@@ -220,68 +225,109 @@
     background-position: 0 0;
 }
 
-.wot-comp-conf {
+/*.wot-comp-conf {*/
+    /*position: absolute;*/
+    /*height: 42px;*/
+    /*margin-left: 26px;*/
+    /*margin-top: -2px;*/
+    /*width: 34px;*/
+    /*background: url("../b/confidence_150dpi.png") top left no-repeat;*/
+    /*background-size: 33px auto;*/
+    /*background-position: 0 -168px;*/
+/*}*/
+
+/*.wot-comp-conf[c="c1"] {*/
+    /*background-position: 0 -126px;*/
+/*}*/
+/*.wot-comp-conf[c="c2"] {*/
+    /*background-position: 0 -84px;*/
+/*}*/
+/*.wot-comp-conf[c="c3"] {*/
+    /*background-position: 0 -42px;*/
+/*}*/
+/*.wot-comp-conf[c="c4"] {*/
+    /*background-position: 0 0;*/
+/*}*/
+/*.wot-comp-conf[c="c5"] {*/
+    /*background-position: 0 -210px;*/
+/*}*/
+
+.wot-rating-confidence {
     position: absolute;
-    height: 42px;
-    margin-left: 26px;
-    margin-top: -2px;
-    width: 34px;
-    background: url("../b/confidence_150dpi.png") top left no-repeat;
-    background-size: 33px auto;
-    background-position: 0 -168px;
+    margin-top: 16px;
+    margin-left: 46px;
+    width: 44px;
 }
 
-.wot-comp-conf[c="c1"] {
-    background-position: 0 -126px;
+.confidence-dot {
+    border: 1px solid #676767;
+    border-radius: 50%/50%;
+    width: 4px;
+    height: 4px;
+    margin-right: 2px;
+    display: inline-block;
 }
-.wot-comp-conf[c="c2"] {
-    background-position: 0 -84px;
+
+.wot-rating-confidence[confidence="c1"] .confidence-dot-1 {
+    background-color: #676767;
 }
-.wot-comp-conf[c="c3"] {
-    background-position: 0 -42px;
+
+.wot-rating-confidence[confidence="c2"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c2"] .confidence-dot-2 {
+    background-color: #676767;
 }
-.wot-comp-conf[c="c4"] {
-    background-position: 0 0;
+
+.wot-rating-confidence[confidence="c3"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c3"] .confidence-dot-2,
+.wot-rating-confidence[confidence="c3"] .confidence-dot-3 {
+    background-color: #676767;
 }
-.wot-comp-conf[c="c5"] {
-    background-position: 0 -210px;
+
+.wot-rating-confidence[confidence="c4"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c4"] .confidence-dot-2,
+.wot-rating-confidence[confidence="c4"] .confidence-dot-3,
+.wot-rating-confidence[confidence="c4"] .confidence-dot-4 {
+    background-color: #676767;
+}
+
+.wot-rating-confidence[confidence="c5"] .confidence-dot-1,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-2,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-3,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-4,
+.wot-rating-confidence[confidence="c5"] .confidence-dot-5 {
+    background-color: #676767;
 }
 
 .rating-legend-wrapper {
-    position: relative;
-    margin: 3px 18px auto 74px;
-    background: url("../b/bubl_speech_c_150.png")  top left repeat-x;
-    background-size: 1px 23px;
-    height: 23px;
-    left: 1px;
-    display: inline-block;
-    padding: 4px 0;
+    position: absolute;
+    margin-left: 0;
+    margin-top: -10px;
 }
 
-.rating-legend-wrapper:before {
-    position: absolute;
-    content: "";
-    height: 23px;
-    width: 17px;
-    background: url("../b/bubl_speech_l_150.png") top left no-repeat;
-    background-size: 17px 23px;
-    left: -17px;
-    top: 0;
-}
+/*.rating-legend-wrapper:before {*/
+    /*position: absolute;*/
+    /*content: "";*/
+    /*height: 23px;*/
+    /*width: 17px;*/
+    /*background: url("../b/bubl_speech_l_150.png") top left no-repeat;*/
+    /*background-size: 17px 23px;*/
+    /*left: -17px;*/
+    /*top: 0;*/
+/*}*/
 
-.rating-legend-wrapper:after {
-    position: absolute;
-    content: "";
-    height: 23px;
-    width: 17px;
-    right: -17px;
-    background: url("../b/bubl_speech_r_150.png") top left no-repeat;
-    background-size: 10px 23px;
-    top: 0;
-}
+/*.rating-legend-wrapper:after {*/
+    /*position: absolute;*/
+    /*content: "";*/
+    /*height: 23px;*/
+    /*width: 17px;*/
+    /*right: -17px;*/
+    /*background: url("../b/bubl_speech_r_150.png") top left no-repeat;*/
+    /*background-size: 10px 23px;*/
+    /*top: 0;*/
+/*}*/
 
 .rating-legend {
-    position: relative;
+    /*position: relative;*/
     height: 24px;
     min-width: 48px;
     margin: 2px 0 0em;
@@ -293,6 +339,26 @@
     display: inline;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.rating-legend[r=r1] {
+    color: #dd2e31;
+}
+
+.rating-legend[r=r2] {
+    color: #e25533;
+}
+
+.rating-legend[r=r3] {
+    color: #de7c1b;
+}
+
+.rating-legend[r=r4] {
+    color: #5bab28;
+}
+
+.rating-legend[r=r5] {
+    color: #3b9013;
 }
 
 .ws-categories-area {
@@ -335,7 +401,7 @@
     content: "";
     position: absolute;
     margin-left: -1.65em;
-    margin-top: 1px;
+    margin-top: 2px;
 }
 
 .c-neutral.cat-item:before {
@@ -344,11 +410,11 @@
     border-color: #7d7d7d;
 }
 
-#wotcontainer.accessible .c-neutral.cat-item:before {
-    background-color: #707070;
-    background: -webkit-radial-gradient(center, ellipse cover, #9B9898 0%, #7E7E7E 100%);
-    border-color: #707070;
-}
+/*#wotcontainer.accessible .c-neutral.cat-item:before {*/
+    /*background-color: #707070;*/
+    /*background: -webkit-radial-gradient(center, ellipse cover, #9B9898 0%, #7E7E7E 100%);*/
+    /*border-color: #707070;*/
+/*}*/
 
 .c-questionable.cat-item:before {
     background-color: #ffd100;
@@ -356,11 +422,11 @@
     border-color: #f6cd0e;
 }
 
-#wotcontainer.accessible .c-questionable.cat-item:before {
-    background-color: #F6CD0E;
-    background: -webkit-radial-gradient(center, ellipse cover, #FEE68A 0%, #F5CC33 100%);
-    border-color: #F6CD0E;
-}
+/*#wotcontainer.accessible .c-questionable.cat-item:before {*/
+    /*background-color: #F6CD0E;*/
+    /*background: -webkit-radial-gradient(center, ellipse cover, #FEE68A 0%, #F5CC33 100%);*/
+    /*border-color: #F6CD0E;*/
+/*}*/
 
 .c-negative.cat-item:before {
     background-color: #f66d3f;
@@ -368,11 +434,11 @@
     border-color: #f66d3f;
 }
 
-#wotcontainer.accessible .c-negative.cat-item:before {
-    background-color: #1F1F1F;
-    background: -webkit-radial-gradient(center, ellipse cover,#939393 0%, #1F1F1F 100%);
-    border-color: #1F1F1F;
-}
+/*#wotcontainer.accessible .c-negative.cat-item:before {*/
+    /*background-color: #1F1F1F;*/
+    /*background: -webkit-radial-gradient(center, ellipse cover,#939393 0%, #1F1F1F 100%);*/
+    /*border-color: #1F1F1F;*/
+/*}*/
 
 .c-positive.cat-item:before {
     background-color: #68c800;
@@ -380,11 +446,11 @@
     border-color: #6dc14a;
 }
 
-#wotcontainer.accessible .c-positive.cat-item:before {
-    background-color: #B8B8B8;
-    background: -webkit-radial-gradient(center, ellipse cover, #FDFDFD 0%, #F7F7F7 100%);
-    border-color: #B8B8B8;
-}
+/*#wotcontainer.accessible .c-positive.cat-item:before {*/
+    /*background-color: #B8B8B8;*/
+    /*background: -webkit-radial-gradient(center, ellipse cover, #FDFDFD 0%, #F7F7F7 100%);*/
+    /*border-color: #B8B8B8;*/
+/*}*/
 
 .c0 {
     font-size: 11px;
@@ -489,33 +555,16 @@
 .wot-button {
     display: inline;
     float: left;
-    border-style: solid;
-    border-width: 1px;
-    border-top-color: #DFDFDF;
-    border-right-color: #C2C2C2;
-    border-left-color: #D1CECE;
-    border-bottom-color: #AEAEAE;
-    padding: 0.5em 1.5em;
-    margin: 0.4em 1em;
     min-width: 95px;
+    padding: 0.4em 1.5em;
+    margin: 0.2em 0.5em;
     border-radius: 2px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #585858;
-
-    background-image: -webkit-linear-gradient(top, #FFF 0%, #e7e5e5 100%);
-    box-shadow: 1px 1px 5px #d2d2d2;
-    text-shadow: 1px 1px rgba(255,255,255,0.75);
+    font-weight: 400;
+    color: #656565;
     cursor: pointer;
-}
-
-.wot-button:hover {
-    background-image: -webkit-linear-gradient(top, #FFF 0%,#dadada 83%, #f3f1f1 100%);
-}
-
-.wot-button:active {
-    box-shadow: 1px 1px 1px #d2d2d2 inset;
-    text-shadow: 0px 0px #DDD;
+    border: 1px solid #656565;
+    font-size: 13px;
+    text-align: center;
 }
 
 #wot-btn-hide, #wot-btn-leave {
@@ -526,17 +575,24 @@
     left: 25px;
 }
 
-#wot-btn-hide:active {
-    left: 26px;
-}
-
 #wot-btn-leave {
     right: 25px;
 }
 
-#wot-btn-leave:active {
-    right: 24px;
+#wot-btn-hide:hover {
+    background-color: #d90012;
+    border-color: #d90012;
+    color: white;
+    opacity: 0.9;
 }
+
+#wot-btn-leave:hover {
+    background-color: #55A651;
+    border-color: #55A651;
+    color: white;
+    opacity: 0.9;
+}
+
 
 #wot-wt-warning-wrapper {
     width: 0;
@@ -604,40 +660,29 @@
 
 /* BEGIN: Copy&Paste from welcometips.css */
 .wot-wt-button {
-    -webkit-transition: box-shadow 0.1s;
-    width: 12em;
-    height: 24px;
-    margin: 1.3em auto 0.5em auto;
-    padding: 0.7em 0.5em 0.2em 0.5em;
-
-    border: #71A939 solid 1px;;
-    border-radius: 3px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.47);;
-    text-shadow: 0px 0px 8px #fff;
-    background-image: -webkit-linear-gradient(top, #CCEFAC 0%, #9AD265 39%, #6FA736 83%, #83BC4A);
-
-    color: #375914;
-    font-size: 10pt;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
+    display: inline-block !important;
+    min-width: 95px !important;
+    padding: 0.4em 1.5em !important;
+    margin: 0.2em 0.5em !important;
+    border-radius: 2px !important;
+    font-weight: 400 !important;
+    color: #656565 !important;
+    cursor: pointer !important;
+    border: 1px solid #656565 !important;
+    font-size: 13px !important;
+    text-align: center !important;
 }
 
 .wot-wt-button:hover {
-    background-image: -webkit-linear-gradient(top, #e5fad1 0%, #b2e186 39%, #83bc4a 83%, #83BC4A);
-}
-
-.wot-wt-button:active {
-    top: 1px;
-    border-color: #babbbb;
-    box-shadow: none;
-    background-image: -webkit-linear-gradient(top, #a9d185 0%, #8abf58 39%, #6fa736 83%, #83bc4a);
+    background-color: #55A651 !important;
+    color: white !important;
+    opacity: 0.9 !important;
 }
 /* END */
 
 .wot-wt-warn-button {
-    font-weight: bold;
-    color: #375914;
+    border-color: #55A651 !important;
+    color: #55A651 !important;
 }
 
 .wot-wt-warn-footer {

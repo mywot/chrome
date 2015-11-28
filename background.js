@@ -629,7 +629,7 @@ $.extend(wot, { core: {
             return (user_level == h);
 
         } catch (e) {
-            console.error("wot.core.is_level failed", e);
+            // console.error("wot.core.is_level failed", e);
             return false;   // in case of errors it is safer to assume that user is not registered yet
         }
     },

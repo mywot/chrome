@@ -30,14 +30,14 @@
 		<script type="text/javascript" src="libs/caret-position.js"></script>
 		<script type="text/javascript" src="libs/bootstrap-tagautocomplete.js"></script>
 
-
-
 		<script type="text/javascript" src="wot.js"></script>
 		<script type="text/javascript" src="keeper.js"></script>
         <script type="text/javascript" src="ga_configure.js"></script>
 		<script type="text/javascript" src="ratingwindow.js"></script>
 
 		<style type="text/css">
+            @import "skin/fonts/openSans.css";
+        	@import "skin/jquery-ui-1.9.2.custom.css";
         	@import "skin/typeahead.css";
         	@import "skin/ratingslider.css";
 			@import "skin/ratingwindow.css";
@@ -52,6 +52,12 @@
 				<div id="wot-header">
                     <div id="header-line-1">
                         <div id="wot-header-logo"></div>
+                        <div id="target-title">
+                            <span id="hostname-text"></span>
+                            <span id="wot-title-text"></span>
+                        </div>
+
+
                         <div id="wot-header-links">
                             <div id="message-indicator"></div>
                     		<div id="wot-header-link-profile" class="wot-header-link notlink">
@@ -62,11 +68,10 @@
                             <div id="wot-header-link-guide" class="wot-header-link"></div>
                             <div id="wot-header-link-settings" class="wot-header-link"></div>
                         </div>
-                        <div id="wot-header-close"></div>
+                        <!--<div id="wot-header-close"></div>-->
                     </div>
                     <div id="header-line-2">
-                        <span id="wot-title-text"></span>
-                        <span id="hostname-text"></span>
+                        <div id="wot-scorecard-visit" class="link"></div>
                     </div>
 				</div>
 
@@ -77,9 +82,12 @@
                 <div id="ratings-area">
                     <!-- rating header -->
                     <div id="wot-myratings-header">
-                        <div id="myrating-header" class="title"></div>
-                        <div id="wot-myrating-0-header"></div>
-                        <div id="wot-myrating-4-header"></div>
+                        <div class="user-comm-activity">
+                            <div id="wot-user-0-header" class="wot-user-header"></div>
+                            <div id="wot-user-0-notice" class="wot-user-notice"></div>
+                        </div>
+
+                        <!--<div id="myrating-header" class="title"></div>-->
                     </div>
 
             		<!-- Tiny thank you message -->
@@ -87,16 +95,17 @@
 
                     <!-- rating 0 / Trustworthiness -->
                     <div id="wot-rating-0" class="wot-rating">
+                        <div id="wot-rating-0-header" class="wot-rating-header"></div>
                         <div id="wot-rating-0-data" class="wot-rating-data" component="0">
                             <div id="wot-rating-0-testimony" class="wot-rating-testimony">
                                 <div id="wot-rating-0-help" class="wot-rating-help">
-                                    <div id="wot-rating-0-helptext" class="wot-rating-helptext"></div>
                                     <div id="wot-rating-0-helplink" class="wot-rating-helplink"></div>
+                                    <div id="wot-rating-0-helptext" class="wot-rating-helptext"></div>
                                 </div>
-                                <div class="wot-rating-bounds">
-                                    <div id="wot-rating-0-boundleft" class="rating-bound-left"></div>
-                                    <div id="wot-rating-0-boundright" class="rating-bound-right"></div>
-                                </div>
+                                <!--<div class="wot-rating-bounds">-->
+                                    <!--<div id="wot-rating-0-boundleft" class="rating-bound-left"></div>-->
+                                    <!--<div id="wot-rating-0-boundright" class="rating-bound-right"></div>-->
+                                <!--</div>-->
                                 <div id="wot-rating-0-stack" class="wot-rating-stack" component="0">
                                     <div id="wot-rating-0-slider" class="wot-rating-slider"></div>
                                     <div id="wot-rating-0-indicator" class="wot-rating-indicator"></div>
@@ -111,16 +120,17 @@
 
                     <!-- rating 4 / Child Safety -->
                     <div id="wot-rating-4" class="wot-rating">
+                        <div id="wot-rating-4-header" class="wot-rating-header"></div>
                         <div id="wot-rating-4-data" class="wot-rating-data" component="4">
                             <div id="wot-rating-4-testimony" class="wot-rating-testimony">
                                 <div id="wot-rating-4-help" class="wot-rating-help">
-                                    <div id="wot-rating-4-helptext" class="wot-rating-helptext"></div>
                                     <div id="wot-rating-4-helplink" class="wot-rating-helplink"></div>
+                                    <div id="wot-rating-4-helptext" class="wot-rating-helptext"></div>
                                 </div>
-                                <div class="wot-rating-bounds">
-                                    <div id="wot-rating-4-boundleft" class="rating-bound-left"></div>
-                                    <div id="wot-rating-4-boundright" class="rating-bound-right"></div>
-                                </div>
+                                <!--<div class="wot-rating-bounds">-->
+                                    <!--<div id="wot-rating-4-boundleft" class="rating-bound-left"></div>-->
+                                    <!--<div id="wot-rating-4-boundright" class="rating-bound-right"></div>-->
+                                <!--</div>-->
                                 <div id="wot-rating-4-stack" class="wot-rating-stack" component="4">
                                     <div id="wot-rating-4-slider" class="wot-rating-slider"></div>
                                     <div id="wot-rating-4-indicator" class="wot-rating-indicator"></div>
@@ -133,65 +143,89 @@
                         </div>
                     </div>
 
-                    <div class="user-comm-activity">
-                        <div id="wot-user-0-header" class="wot-user-header"></div>
-                        <div id="wot-user-0-notice" class="wot-user-notice"></div>
-                    </div>
-
                     <div id="rated-votes">
                     <div id="voted-categories">
                         <div id="voted-categories-content"></div>
                     </div>
-                    <div id="change-ratings" class="pseudo-link"></div>
                     </div>
                 </div>
 
                 <div id="main-area" class="view-mode">
                     <div id="reputation-info">
-                        <div id="wot-rating-header-wot" class="title"></div>
-                        <div id="wot-scorecard-visit" class="wot-scorecard-text link"></div>
+                        <!--<div id="wot-rating-header-wot" class="title"></div>-->
 
                         <div class="rep-info-sections">
-                            <div id="rep-block">
+                            <div id="rep-blocks">
 
-                                <div id="rep-0" class="rep-tr-block">
-                                    <div id="wot-rating-0-header" class="wot-rating-header"></div>
+                                <div id="rep-0" class="rep-block rep-tr-block">
+                                    <div class="rep-block-header"></div>
+                                    <div class="rating-legend-wrapper">
+                                        <div class="rating-legend"></div>
+                                    </div>
+                                    <!--<div id="wot-rating-0-header" class="wot-rating-header"></div>-->
                                     <div class="rating-values">
                                         <div id="wot-rating-0-reputation" class="wot-rating-reputation"></div>
-                                        <div id="wot-rating-0-confidence" class="wot-rating-confidence"></div>
-                                        <div class="rating-legend-wrapper">
-                                            <div class="rating-legend"></div>
+                                        <div class="wot-rating-confidence-block">
+                                            <span class="wot-rating-confidence-label"></span>
+                                            <div id="wot-rating-0-confidence" class="wot-rating-confidence">
+                                                <div class="confidence-dot confidence-dot-1"></div>
+                                                <div class="confidence-dot confidence-dot-2"></div>
+                                                <div class="confidence-dot confidence-dot-3"></div>
+                                                <div class="confidence-dot confidence-dot-4"></div>
+                                                <div class="confidence-dot confidence-dot-5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="rating-reasons" style="display: none;">
+                                            <div class="rating-reasons-label"></div>
+                                            <div class="categories-area" style="display: block;">
+                                                <div id="tr-categories-list" style="display: none;"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="rep-4" class="rep-cs-block">
-                                    <div id="wot-rating-4-header" class="wot-rating-header"></div>
+                                <div id="rep-4" class="rep-block rep-cs-block">
+                                    <div class="rep-block-header"></div>
+                                    <div class="rating-legend-wrapper">
+                                        <div class="rating-legend"></div>
+                                    </div>
+                                    <!--<div id="wot-rating-4-header" class="wot-rating-header"></div>-->
                                     <div class="rating-values">
                                         <div id="wot-rating-4-reputation" class="wot-rating-reputation"></div>
-                                        <div id="wot-rating-4-confidence" class="wot-rating-confidence"></div>
-                                        <div class="rating-legend-wrapper">
-                                            <div class="rating-legend"></div>
+                                        <div class="wot-rating-confidence-block">
+                                            <span class="wot-rating-confidence-label"></span>
+                                            <div id="wot-rating-4-confidence" class="wot-rating-confidence">
+                                                <div class="confidence-dot confidence-dot-1"></div>
+                                                <div class="confidence-dot confidence-dot-2"></div>
+                                                <div class="confidence-dot confidence-dot-3"></div>
+                                                <div class="confidence-dot confidence-dot-4"></div>
+                                                <div class="confidence-dot confidence-dot-5"></div>
+                                            </div>
                                         </div>
+                                        <div class="rating-reasons" style="display: none;">
+                                            <div class="rating-reasons-label"></div>
+                                            <div class="categories-area" style="display: block;">
+                                                <div id="cs-categories-list" style="display: none;"></div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="categories-area" style="display: block;">
-                                <ul id="tr-categories-list"></ul>
-                            </div>
+                            <div id="change-ratings" class=""></div>
                         </div>
                     </div>
 
                     <!-- Welcome Tip area -->
                     <div id="wot-welcometip" class="rtip-sticker">
                         <div class="wt-rw-header">
-                            <span class="wt-rw-header-text">Share your experiences!</span>
+                            <span class="wt-rw-header-text">Share Your Experiences!</span>
                             <div class="wt-rw-close"></div>
                         </div>
                         <div class="wt-rw-body">
-                            <p>WOT shows website reputations based on experiences from millions of users.</p>
-                            <p>Leave your own rating by clicking the colored bars to indicate what you think of the site. Your rating helps other users surf safer.</p>
+                            <p>The WOT window shows website reputations based on other users' experiences.</p>
+                            <p>Start rating and commenting by clicking the colored bars.</p>
                             <p class="wot-c"><a id='wt-learnmore-link'>Learn more</a> about WOT.</p>
                         </div>
                     </div>
@@ -203,6 +237,12 @@
                         <div class="category-selector">
                             <ul class="dropdown-menu"></ul>
                         </div>
+                        <div class="cat-full-list">
+                            <input type="checkbox" id="chk-full-list" class="css-checkbox"/>
+                            <label for="chk-full-list" class="css-label">
+                                <span id="chk-full-list-label"></span>
+                            </label>
+                        </div>
                     </div>
 
                     <div id="commenting-area">
@@ -210,12 +250,12 @@
                         <div id="comment-top-hint">Use hash symbol (#) to link the website to a WOT Group.<br/>Example: I like this site about #cycling for the excellent #photos.</div>
                         <div id="comment-side-hint"></div>
                         <div id="comment-register">
-                            <div id="comment-register-text"></div><br/>
-                            <div><span id="comment-register-link" class="link"></span></div>
+                            <span id="comment-register-text"></span>
+                            <span id="comment-register-link" class="link"></span>
                         </div>
                         <div id="comment-captcha">
-                            <div id="comment-captcha-text"></div><br/>
-                            <div><span id="comment-captcha-link" class="link"></span></div>
+                            <span id="comment-captcha-text"></span><br>
+                            <span id="comment-captcha-link" class="link"></span>
                         </div>
                         <div class="user-comment-wrapper">
                             <div id="user-comment" placeholder="" contenteditable="true"></div>
@@ -226,9 +266,10 @@
                     <div id="thanks-area">
                         <div class="thanks-text"></div>
                         <div class="thanks-activityscore">
-                            <span class="thanks-activityscore-text"></span>
+                            <span class="thanks-activityscore-text"></span>.
+                            <span class="thanks-ratemore"></span>
                         </div>
-                        <div class="thanks-ratemore"></div>
+
                     </div>
 
                     <div id="wg-about-area">
@@ -279,8 +320,8 @@
                                 <div class="btn-delete_label"></div>
                             </div>
                         </div>
+                        <div id="btn-comment" class="rw-button" title=""></div>
                         <div class="right-side">
-                            <div id="btn-comment" class="rw-button" title=""></div>
                             <div id="btn-cancel" class="rw-button" title=""></div>
                             <div id="btn-submit" class="rw-button btn-submit disabled" title=""></div>
                         </div>
@@ -308,6 +349,24 @@
         <div id="wot-user-0-stack" class="wot-user-stack" style="display: none;"></div>
         <div id="wot-user-0-text-container" class="wot-user-text-container" style="display: none;"></div>
 
+    </div>
+
+    <div id="wot-share">
+        <div class="wot-share-title"></div>
+        <div class="wot-share-graphics"></div>
+        <div class="wot-share-text">
+            <p>WOT is powered by it's amazing community.</p>
+            <p>The more users there are, the better WOT can protect you.</p>
+            <p><strong>Help us grow the community by sharing WOT.</strong></p>
+        </div>
+        <div class="wot-share-icons">
+            <a class="wot-share-icon wot-share-icon-fb"></a>
+            <a class="wot-share-icon wot-share-icon-twitter"></a>
+            <a class="wot-share-icon wot-share-icon-mail"></a>
+        </div>
+        <div class="wot-share-close-line">
+            <span id="wot-share-close"></span>
+        </div>
     </div>
 
 </div>

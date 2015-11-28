@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "WOT användarna säger",
+        "message": "Community-Betyg",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "Min klassificering"
     },
     "ratingwindow_viewscorecard": {
-        "message": "Visa detaljer och kommentarer",
+        "message": "Visa ryktes-detaljer och kommentarer",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -180,7 +180,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT betygfönster visar dig webbsidans rykte baserat på andra användares erfarenheter.</p><p>Nu kan du betygsätta och kommentera direkt från det uppdaterade fönstret. Börja betygsätta genom att klicka på de färgade skalorna.</p><p class='wot-c'><a id='wt-learnmore-link'>Lär dig mer</a>om WOT.</p>",
+        "message": "<p>WOT fönstret visar webbsidans rykte baserat på användarnas upplevelser.</p><p>Starta din betygssättning, och kommentera genom att klicka på färgstaplarna.</p><p class='wot-c'><a id='wt-learnmore-link'>Lär dig mer</a> om WOT.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -280,7 +280,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "ändra",
+        "message": "Redigera Betyg",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -290,6 +290,9 @@
     "ratingwindow_fulllist": {
         "message": "visa hela listan",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "Visa Mindre"
     },
     "ratingwindow_vote_yes": {
         "message": "Ja",
@@ -574,5 +577,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "Anledningar",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "Förtroende",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "Visar hur tillförlitligt betygs-systemet inkluderar ryktet i resultatet",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "Hjälp vårt Community att växa",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT backas upp av sitt fantatiska community.</p><p>Ju mer användare WOT har, desto mer kan vi skydda dig..</p><p><strong>Hjälp oss att växa vårt Community genom att dela WOT.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "Inte nu",
+        "description": "new in RW 3.0"
 	}
 }

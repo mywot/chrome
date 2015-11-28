@@ -1,6 +1,6 @@
 /*
  content/popup.js
- Copyright © 2009 - 2013  WOT Services Oy <info@mywot.com>
+ Copyright © 2009 - 2015  WOT Services Oy <info@mywot.com>
 
  This file is part of WOT.
 
@@ -25,7 +25,13 @@ const WOT_POPUP_HTML =
         '<div id="wot-r0-stack{ID}" class="wot-stack wot-stack-left">' +
             '<div id="wot-r0-header{ID}" class="wot-header">{POPUPTEXT0}</div>' +
             '<div id="wot-r0-rep{ID}" class="wot-rep"></div>' +
-            '<div id="wot-r0-cnf{ID}" class="wot-cnf"></div>' +
+		    '<div id="wot-r0-cnf{ID}" class="wot-rating-confidence">' +
+			    "<div class='confidence-dot confidence-dot-1'></div>" +
+			    "<div class='confidence-dot confidence-dot-2'></div>" +
+			    "<div class='confidence-dot confidence-dot-3'></div>" +
+			    "<div class='confidence-dot confidence-dot-4'></div>" +
+			    "<div class='confidence-dot confidence-dot-5'></div>" +
+		    "</div>" +
             '<div class="rating-legend-wrapper">' +
                 '<div class="rating-legend">{REPTEXT0}</div>' +
             '</div>' +
@@ -34,7 +40,13 @@ const WOT_POPUP_HTML =
         '<div id="wot-r4-stack{ID}" class="wot-stack wot-stack-right">' +
 	        '<div id="wot-r4-header{ID}" class="wot-header">{POPUPTEXT4}</div>' +
 	        '<div id="wot-r4-rep{ID}" class="wot-rep"></div>' +
-            '<div id="wot-r4-cnf{ID}" class="wot-cnf"></div>' +
+		    "<div id='wot-r4-cnf{ID}' class='wot-rating-confidence'>" +
+			    "<div class='confidence-dot confidence-dot-1'></div>" +
+			    "<div class='confidence-dot confidence-dot-2'></div>" +
+			    "<div class='confidence-dot confidence-dot-3'></div>" +
+			    "<div class='confidence-dot confidence-dot-4'></div>" +
+			    "<div class='confidence-dot confidence-dot-5'></div>" +
+		    "</div>" +
             '<div class="rating-legend-wrapper">' +
                 '<div class="rating-legend">{REPTEXT4}</div>' +
             '</div>' +

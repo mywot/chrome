@@ -1,23 +1,23 @@
 $.extend(wot, { stats: {
     utils:
     {
-        serialize: function(obj)
+    	serialize: function(obj)
         {
-            var str = [];
-            var length = 0;
-            for(var p in obj) {
-                if (obj.hasOwnProperty(p)) {
-                    length++;
-                    str.push(p + "=" + obj[p]);
-                }
-            }
-            return {
-                data: str.join("&"),
-                length:length
-            };
-        },
+    		var str = [];
+    		var length = 0;
+    		for(var p in obj) {
+    			if (obj.hasOwnProperty(p)) {
+    				length++;
+    				str.push(p + "=" + obj[p]);
+    			}
+    		}
+    		return {
+    			data: str.join("&"),
+    			length:length
+    		};
+    	},
 
-        postRequest: function(url, data, length, callback)
+    	postRequest: function(url, data, length, callback)
         {
             try {
                 var http = new XMLHttpRequest();
@@ -43,7 +43,7 @@ $.extend(wot, { stats: {
             catch(e){
                 // console.log("postRequest() - error." +e);
             }
-        },
+    	},
 
         dictionaryToQueryString: function(dict)
         {
@@ -118,7 +118,7 @@ $.extend(wot, { stats: {
         }
     },
 
-    last_prev: "",
+	last_prev: "",
     enabled: false,
     statusKey: "ok",
     urlKey: "url",
@@ -297,22 +297,22 @@ $.extend(wot, { stats: {
         return session;
     },
 
-    loc: function(url, ref)
+	loc: function(url, ref)
     {
-        if(this.isWebURL(url)) {
-            this.query(url, ref);
-        }
-    },
+		if(this.isWebURL(url)) {
+			this.query(url, ref);
+		}
+	},
 
-    focus: function(url)
+	focus: function(url)
     {
-        if(typeof url == "string" && this.isWebURL(url)) {
-            this.last_prev = url;
-        }
+		if(typeof url == "string" && this.isWebURL(url)) {
+			this.last_prev = url;
+		}
         this.touchSession();
-    },
+	},
 
-    query: function(url, ref)
+	query: function(url, ref)
     {
         if (!this.enabled) {
             return;

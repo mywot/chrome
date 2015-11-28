@@ -69,14 +69,14 @@
         "description": ""
     },
     "ratingwindow_wotrating": {
-        "message": "WOT 사용자 리뷰",
+        "message": "커뮤니티 등급",
         "description": ""
     },
     "ratingwindow_myrating": {
         "message": "나의 평가"
     },
     "ratingwindow_viewscorecard": {
-        "message": "내용 및 댓글 보기",
+        "message": "평판 세부 정보 및 의견 보기",
         "description": ""
     },
     "ratingwindow_addcomment": {
@@ -181,7 +181,7 @@
         "description": ""
     },
     "wt_rw_text": {
-        "message": "<p>WOT의 순위창에는 다른 사용자들의 경험에 따른 웹사이트 평가결과가 나옵니다. 이제 당신이 업데이트 창을 이용하여 순위를 매기고 평가의견을 제시할 수 있습니다. 색깔이 있는 바를 클릭하시고 순위를 매겨 보세요.</p><p class='wot-c'>WOT에 대해 <a id='wt-learnmore-link'>더 알아보기</a>.</p>",
+        "message": "<p>WOT 창은 사용자의 경험을 기반으로한 웹사이트의 평판을 보여줍니다.</p><p>채색된 표시줄을 클릭하여, 평가와 의견을 게시하기 시작합니다. WOT에 대해 </p><p class='wot-c'><a id='wt-learnmore-link'>자세히 알아봅니다</a>.</p>",
         "description": ""
     },
     "wt_donut_msg": {
@@ -281,7 +281,7 @@
         "description": ""
     },
     "ratingwindow_rerate_change": {
-        "message": "바꾸기",
+        "message": "평가 편집",
         "description": ""
     },
     "ratingwindow_rerate_category": {
@@ -291,6 +291,9 @@
     "ratingwindow_fulllist": {
         "message": "전체 목록 보여주기",
         "description": ""
+    },
+    "ratingwindow_shortlist": {
+        "message": "다음 이하 표시"
     },
     "ratingwindow_vote_yes": {
         "message": "네",
@@ -575,5 +578,29 @@
 	},
 	"ratingwindow_wgcommenthints": {
 		"message": "<p>Be precise and truthful</p><p>Use tags as shorthand</p><p>Comment what you know</p>"
+	},
+	"ratingwindow_reasons": {
+		"message": "이유",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence": {
+		"message": "자신감",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_confidence_explainer": {
+		"message": "평가 시스템은 평판을 고려하는 신뢰할 수 있는 방법을 표시합니다.",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_title": {
+		"message": "우리 커뮤니티가 자라도록 도움",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_text": {
+		"message": "<p>WOT는 멋진 커뮤니티에 의해 제공됩니다. </p><p>사용자가 많을수록, 더 나은 WOT로 사용자를 보호할 수 있습니다.</p><p><strong>WOT를 공유하여 커뮤니티를 성장하도록 도와주십시오.</strong></p>",
+        "description": "new in RW 3.0"
+	},
+	"ratingwindow_share_dismiss": {
+		"message": "지금 아님",
+        "description": "new in RW 3.0"
 	}
 }
